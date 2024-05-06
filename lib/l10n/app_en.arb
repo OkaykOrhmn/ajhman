@@ -1,0 +1,32 @@
+{
+  "title": "English",
+  "smartScheduleTitle": "English",
+  "reject": "Reject",
+  "confirm": "Confirm",
+  "choiceDay": "Please study the days of the week when you can\nSelect",
+  "welcomeSmartSchedule": "Dear Mr. Mousavi, welcome to Ajman\nTo schedule learning days, please complete the following steps",
+  "timeTitle": "Determine the amount of time you can devote to learning",
+  "timerTitle": "Choose the hour you want to study",
+  "continues": "Continue",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "enterTime": "Enter Desired duration",
+  "min15": "15 minutes",
+  "min30": "30 minutes",
+  "min45": "45 minutes",
+  "pleaseEnterMobileNumber": "Please enter your mobile number",
+  "loginWithPassword": "Login with password",
+  "loginWithOtp": "Login with a one-time password",
+  "textFieldEnterNumberError": "The mobile number is wrong",
+  "otpSendToNumber": "One-time password to the number",
+  "sent": "Sent",
+  "changeNumber": "Change Number",
+  "resendPassword": "Minutes to resend one-time password"
+
+
+}
