@@ -26,7 +26,20 @@
   "otpSendToNumber": "One-time password to the number",
   "sent": "Sent",
   "changeNumber": "Change Number",
-  "resendPassword": "Minutes to resend one-time password"
+  "resendPassword": "Minutes to resend one-time password",
+  "sendAgain": "Send Again",
+  "getCodeAgain": "Get the code again",
+  "enterNumberHint": "*********09",
+  "pleaseEnterUsername": "Please enter your Username",
+  "username": "Username",
+  "pleaseEnterPassword": "Please enter your Password",
+  "password": "Password",
+  "forgetPassword": "Forgot your password?"
+
+
+
+
+
 
 
 }

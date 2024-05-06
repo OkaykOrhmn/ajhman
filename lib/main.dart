@@ -1,14 +1,20 @@
+import 'package:ajhman/data/bloc/otp/otp_bloc.dart';
+import 'package:ajhman/data/bloc/pin/pin_bloc.dart';
+import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
 import 'package:ajhman/data/bloc/auth/auth_screen_bloc.dart';
 import 'package:ajhman/data/bloc/smart_schedule/smart_schedule_bloc.dart';
+import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
 import 'package:ajhman/utils/app_locale.dart';
 import 'package:ajhman/utils/language/bloc/language_bloc.dart';
+import 'package:ajhman/utils/timer/Ticker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'data/bloc/ticker/timer_bloc.dart';
 
 void main() {
   runApp(MultiBlocProvider(providers: [
@@ -32,7 +38,6 @@ void main() {
         return bloc;
       },
     ),
-
     BlocProvider<AuthScreensBloc>(
       create: (buildContext) {
         final bloc = AuthScreensBloc();
@@ -40,7 +45,24 @@ void main() {
         return bloc;
       },
     ),
-
+    BlocProvider<OtpBloc>(
+      create: (buildContext) {
+        final bloc = OtpBloc();
+        return bloc;
+      },
+    ),
+    BlocProvider<PinBloc>(
+      create: (buildContext) {
+        final bloc = PinBloc();
+        return bloc;
+      },
+    ),
+    BlocProvider<TimerBloc>(
+      create: (buildContext) {
+        final bloc = TimerBloc(ticker: const Ticker());
+        return bloc;
+      },
+    ),
   ], child: const MyApp()));
 }
 
@@ -52,6 +74,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Future<Widget> _getMainScreen() async {
+    final token = await getToken();
+    if (token.isEmpty) {
+      return const AuthPageStarted();
+    } else {
+      return const HomePage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ChangeLocale changeLocale = ChangeLocale(context);
@@ -79,7 +110,17 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              home: AuthPageStarted(),
+              home: FutureBuilder(
+                  future: _getMainScreen(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return snapshot.data!;
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
             );
           },
         );

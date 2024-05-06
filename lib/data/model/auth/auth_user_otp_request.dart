@@ -6,13 +6,13 @@ class AuthUserOtpRequest {
 
   AuthUserOtpRequest.fromJson(Map<String, dynamic> json) {
     mobileNumber = json['mobileNumber'];
-    otp = json['pin'];
+    otp = json['otp'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mobileNumber'] = this.mobileNumber;
-    data['pin'] = this.otp;
+    data['mobileNumber'] = this.mobileNumber.toString();
+    data['otp'] = this.otp.toString();
     return data;
   }
 }

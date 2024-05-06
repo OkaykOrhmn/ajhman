@@ -15,21 +15,16 @@ part 'auth_screen_state.dart';
 class AuthScreensBloc extends Bloc<AuthScreensEvent, AuthScreensState> {
   AuthScreensBloc() : super(const AuthScreensState()) {
     on<AuthScreensEvent>((event, emit) async {
-
-      if(event is AuthNavigateOtpEvent){
+      if (event is AuthNavigateOtpEvent) {
         emit(state.copyWith(
-            authScreen: AuthScreens.otp
-        ));
+            authScreen: AuthScreens.otp, phoneNumber: event.phoneNumber));
       }
-      if(event is AuthNavigatePasswordEvent){
-        emit(state.copyWith(
-            authScreen: AuthScreens.password
-        ));
+      if (event is AuthNavigatePasswordEvent) {
+        emit(state.copyWith(authScreen: AuthScreens.password));
       }
-      if(event is AuthNavigatePinEvent){
+      if (event is AuthNavigatePinEvent) {
         emit(state.copyWith(
-            authScreen: AuthScreens.pin
-        ));
+            authScreen: AuthScreens.pin, phoneNumber: event.phoneNumber));
       }
 
 /*

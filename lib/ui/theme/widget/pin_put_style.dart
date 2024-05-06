@@ -26,3 +26,11 @@ final submittedPinTheme = defaultPinTheme.copyWith(
     borderRadius: BorderRadius.circular(8),
   ),
 );
+
+
+final errorPinTheme = defaultPinTheme.copyWith(
+  decoration: defaultPinTheme.decoration?.copyWith(
+    border: Border.all(color: errorMain),
+    borderRadius: BorderRadius.circular(8),
+  ),
+);

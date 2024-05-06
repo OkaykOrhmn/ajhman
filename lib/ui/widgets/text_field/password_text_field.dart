@@ -4,59 +4,63 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../gen/assets.gen.dart';
 import '../../theme/text/text_styles.dart';
 
-class MobileNumberTextField extends StatefulWidget {
+class PasswordTextField extends StatefulWidget {
   final TextEditingController textEditingController;
-  final bool error;
-  final bool readOnly;
+  final String hint;
   final Function(String) onChange;
+  final bool error;
 
-  const MobileNumberTextField(
+  const PasswordTextField(
       {super.key,
       required this.textEditingController,
+      required this.hint,
       required this.onChange,
-      this.error = false,
-      this.readOnly = false});
+      this.error = false});
 
   @override
-  State<MobileNumberTextField> createState() => _MobileNumberTextFieldState();
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
 }
 
-class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
+class _PasswordTextFieldState extends State<PasswordTextField> {
+  bool _passwordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextField(
-        readOnly: widget.readOnly,
         controller: widget.textEditingController,
+        style: AppTextStyles.primaryTextFieldText,
         onChanged: (val) {
           setState(() {
-            widget.onChange(val);
+            try {
+              widget.onChange(val);
+            } catch (ex) {}
           });
         },
-
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: _passwordVisible,
+        obscuringCharacter: "*",
         decoration: InputDecoration(
-          counterText: "",
-          suffixIcon: widget.textEditingController.text.isNotEmpty
-              ? InkWell(
-            onTap: () {
-              setState(() {
-                widget.textEditingController.clear();
-              });
-            },
-            child: const Icon(
-              CupertinoIcons.xmark,
-              size: 12,
-            ),
-          )
-              : null,
-          suffixIconColor: widget.error ? errorMain : primaryColor,
+          suffixIcon: InkWell(
+              onTap: () {
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
+                child: _passwordVisible
+                    ? Assets.icon.outline.eye.svg(width: 24, height: 24 ,color:  widget.error ? errorMain : grayColor200)
+                    : Assets.icon.outline.eyeSlash.svg(width: 24, height: 24, color:  widget.error ? errorMain : grayColor200),
+              )),
           errorText: widget.error
               ? ChangeLocale(context).appLocal!.textFieldEnterNumberError
               : null,
           filled: true,
-          hintText: ChangeLocale(context).appLocal!.enterNumberHint.toString(),
+          hintText: widget.hint,
           fillColor: backgroundColor200,
           hintStyle: AppTextStyles.primaryTextFieldHint,
           focusedBorder: OutlineInputBorder(
@@ -76,11 +80,6 @@ class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        style: AppTextStyles.primaryTextFieldText,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        keyboardType: TextInputType.number,
-        maxLength: 11,
-
       ),
     );
   }

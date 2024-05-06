@@ -14,12 +14,12 @@ class AuthLoginUserRepository implements AuthRegisterUserOtp {
   AuthLoginUserRepository(this.dioHelper);
 
   @override
-  Future<int?> getOtp(String number) async {
+  Future<Response> getOtp(String number) async {
     try {
       Response response = await dioHelper.sendRequest
           .get("${ApiEndPoints.authRegisterUserOtp}/$number");
       final postMaps = response.data;
-      return response.statusCode;
+      return response;
     } catch (ex) {
       rethrow;
     }
@@ -28,8 +28,11 @@ class AuthLoginUserRepository implements AuthRegisterUserOtp {
   @override
   Future<AuthUserToken> postOtp(AuthUserOtpRequest request) async {
     try {
+      print("req is: ${request.toJson()}");
       Response response = await dioHelper.sendRequest
-          .post(ApiEndPoints.authLoginUserOtp, data: request.toJson());
+          .post(ApiEndPoints.authLoginUserOtp, data: request.toJson()
+
+      );
       final postMaps = response.data;
       return AuthUserToken.fromJson(postMaps);
     } catch (ex) {
@@ -51,7 +54,7 @@ class AuthLoginUserRepository implements AuthRegisterUserOtp {
 }
 
 abstract class AuthRegisterUserOtp {
-  Future<int?> getOtp(String phoneNumber);
+  Future<Response> getOtp(String phoneNumber);
 
   Future<AuthUserToken> postOtp(AuthUserOtpRequest request);
 

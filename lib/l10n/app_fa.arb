@@ -26,5 +26,14 @@
   "otpSendToNumber": "رمز یکبار مصرف به شماره",
   "sent": "ارسال شد",
   "changeNumber": "تغییر شماره",
-  "resendPassword": "دقیقه تا ارسال مجدد رمز یکبار مصرف"
+  "resendPassword": "دقیقه تا ارسال مجدد رمز یکبار مصرف",
+  "sendAgain": "ارسال مجدد",
+  "getCodeAgain": "کد را دوباره دریافت کنید",
+  "enterNumberHint": "*********۰۹",
+  "pleaseEnterUsername": "لطفا نام کاربری خود را وارد کنید",
+  "username": "نام کاربری",
+  "pleaseEnterPassword": "لطفا رمز عبور خود را وارد کنید",
+  "password": "رمز عبور",
+  "forgetPassword": "رمز عبور خود را فراموش کرده\u200Cاید؟"
+
 }

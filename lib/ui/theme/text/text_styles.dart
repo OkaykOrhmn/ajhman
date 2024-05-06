@@ -8,6 +8,7 @@ class AppTextStyles {
 
   static TextStyle headerBoldWhite = headline3.copyWith(color: Colors.white);
   static TextStyle hintText = body1.copyWith(color: grayColor);
+  static TextStyle errorText = body2.copyWith(color: errorMain);
 
   static TextStyle primaryButtonText = body1.copyWith(color: Colors.white);
   static TextStyle primaryTextFieldText = body1.copyWith(color: grayColor700);

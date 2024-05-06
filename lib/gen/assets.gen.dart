@@ -327,6 +327,13 @@ class $AssetsIconOutlineGen {
   /// File path: assets/icon/outline/edit-2.svg
   SvgGenImage get edit2 => const SvgGenImage('assets/icon/outline/edit-2.svg');
 
+  /// File path: assets/icon/outline/eye-slash.svg
+  SvgGenImage get eyeSlash =>
+      const SvgGenImage('assets/icon/outline/eye-slash.svg');
+
+  /// File path: assets/icon/outline/eye.svg
+  SvgGenImage get eye => const SvgGenImage('assets/icon/outline/eye.svg');
+
   /// File path: assets/icon/outline/flash.svg
   SvgGenImage get flash => const SvgGenImage('assets/icon/outline/flash.svg');
 
@@ -376,8 +383,8 @@ class $AssetsIconOutlineGen {
   /// File path: assets/icon/outline/link.svg
   SvgGenImage get link => const SvgGenImage('assets/icon/outline/link.svg');
 
-  /// File path: assets/icon/outline/login_otp.svg
-  SvgGenImage get login => const SvgGenImage('assets/icon/outline/login_otp.svg');
+  /// File path: assets/icon/outline/login.svg
+  SvgGenImage get login => const SvgGenImage('assets/icon/outline/login.svg');
 
   /// File path: assets/icon/outline/logout.svg
   SvgGenImage get logout => const SvgGenImage('assets/icon/outline/logout.svg');
@@ -527,6 +534,8 @@ class $AssetsIconOutlineGen {
         download,
         edit21,
         edit2,
+        eyeSlash,
+        eye,
         flash,
         folder2,
         forward5Seconds,
