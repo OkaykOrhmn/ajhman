@@ -34,6 +34,7 @@
   "username": "نام کاربری",
   "pleaseEnterPassword": "لطفا رمز عبور خود را وارد کنید",
   "password": "رمز عبور",
-  "forgetPassword": "رمز عبور خود را فراموش کرده\u200Cاید؟"
+  "forgetPassword": "رمز عبور خود را فراموش کرده\u200Cاید؟",
+  "wrong": "اشتباه است!"
 
 }

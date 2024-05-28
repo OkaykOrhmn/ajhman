@@ -1,29 +1,27 @@
 import 'dart:ui';
 
-import 'package:ajhman/data/bloc/smart_schedule/smart_schedule_bloc.dart';
-import 'package:ajhman/ui/screens/smarts/time_screen.dart';
-import 'package:ajhman/ui/screens/smarts/timer_screen.dart';
+import 'package:ajhman/ui/pages/smart_schedule/screens/time_screen.dart';
+import 'package:ajhman/ui/pages/smart_schedule/screens/timer_screen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/widgets/app_bar/primary_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
-import 'package:ajhman/ui/widgets/grid/grid_days_view.dart';
-import 'package:ajhman/utils/app_locale.dart';
-import 'package:ajhman/utils/language/bloc/language_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/model/days.dart';
+import '../../../core/bloc/smart_schedule/smart_schedule_bloc.dart';
+import '../../../core/utils/app_locale.dart';
+import '../../../core/utils/language/bloc/language_bloc.dart';
 import '../../../data/model/language.dart';
 import '../../../gen/assets.gen.dart';
-import '../../screens/smarts/calender_screen.dart';
+import 'screens/calender_screen.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../theme/text/text_styles.dart';
 import '../../widgets/card/rounded_card_icon.dart';
 import '../../widgets/divider/dashed_line.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SmartSchedulePage extends StatefulWidget {
   const SmartSchedulePage({super.key});
@@ -39,37 +37,8 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: themeData.primaryColor,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-              onTap: () {
-                BlocProvider.of<ThemeBloc>(context).add(ThemeSwitchEvent());
-              },
-              child: Assets.icon.profile.svg(color: Colors.white),
-            ),
-            Text(
-              ChangeLocale(context).appLocal!.smartScheduleTitle,
-              style: AppTextStyles.headerBoldWhite,
-            ),
-            InkWell(
-              onTap: () {
-                if (context.read<LanguageBloc>().state.selectedLanguage ==
-                    Language.english) {
-                  context.read<LanguageBloc>().add(
-                      const ChangeLanguage(selectedLanguage: Language.farsi));
-                } else {
-                  context.read<LanguageBloc>().add(
-                      const ChangeLanguage(selectedLanguage: Language.english));
-                }
-              },
-              child: Assets.icon.notification.svg(color: Colors.white),
-            ),
-          ],
-        ),
-      ),
+      appBar: PrimaryAppBar(title: ChangeLocale
+        (context).appLocal!.smartScheduleTitle,),
       body: BlocConsumer<SmartScheduleBloc, SmartScheduleState>(
         listener: (context, state) {
           if (state is SmartScheduleCalender) {

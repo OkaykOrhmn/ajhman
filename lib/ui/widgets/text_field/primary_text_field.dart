@@ -1,5 +1,5 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/utils/app_locale.dart';
+import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,12 +12,13 @@ class PrimaryTextField extends StatefulWidget {
   final String hint;
   final Function(String) onChange;
   final bool error;
+  final String errorHint;
 
   const PrimaryTextField(
       {super.key,
       required this.textEditingController,
       required this.hint,
-      required this.onChange,  this.error = false});
+      required this.onChange,  this.error = false, this.errorHint = ""});
 
   @override
   State<PrimaryTextField> createState() => _PrimaryTextFieldState();
@@ -54,7 +55,7 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
               : null,
           suffixIconColor: widget.error ? errorMain : primaryColor,
           errorText: widget.error
-              ? ChangeLocale(context).appLocal!.textFieldEnterNumberError
+              ? widget.errorHint
               : null,
           filled: true,
           hintText: widget.hint,

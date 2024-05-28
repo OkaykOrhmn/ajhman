@@ -5,6 +5,7 @@ import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
 import 'package:dio/dio.dart';
 
 import '../api/api_end_points.dart';
+import '../model/auth/auth_login_user_rsponse.dart';
 
 final authLoginUserRepository = AuthLoginUserRepository(DioHelper());
 

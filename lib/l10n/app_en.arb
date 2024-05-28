@@ -34,7 +34,8 @@
   "username": "Username",
   "pleaseEnterPassword": "Please enter your Password",
   "password": "Password",
-  "forgetPassword": "Forgot your password?"
+  "forgetPassword": "Forgot your password?",
+  "wrong": "is Wrong!"
 
 
 

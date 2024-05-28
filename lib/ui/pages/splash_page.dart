@@ -1,6 +1,22 @@
+import 'package:ajhman/core/routes/route_generator.dart';
+import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/main.dart';
+import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
+import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../core/bloc/profile/profile_bloc.dart';
+import '../../core/enum/state_status.dart';
+import '../../data/api/dio_helper.dart';
+import '../../data/model/error_response_model.dart';
+import '../../data/model/profile_response_model.dart';
+import '../../data/shared_preferences/auth_token.dart';
+import '../../data/shared_preferences/profile_data.dart';
+import '../widgets/dialogs/dialog_handler.dart';
+import 'home/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -9,30 +25,50 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
+late String? token;
+
 class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    context.read<ProfileBloc>().add(GetProfileInfo());
+    super.initState();
+  }
+
+  void _tryAgain() {
+    setState(() {
+      clearToken();
+      DialogHandler.pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(AppLocalizations.of(context)!.title.toString()),
-
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
+      body: BlocConsumer<ProfileBloc, ProfileState>(builder: (context, state) {
+        switch (state.status) {
+          case StateStatus.success:
+            return const HomePage();
+          case StateStatus.fail:
+            return const AuthPageStarted();
+          case StateStatus.loading:
+          default:
+            return const Center(child: CircularProgressIndicator());
+        }
+      }, listener: (context, state) {
+        if (state.status == StateStatus.loading) {}
+        if (state.status == StateStatus.success) {
+          setProfile(state.data);
+        } else if (state.status == StateStatus.fail) {
+          var data = ErrorResponseModel.fromJson(state.data);
+          Future.delayed(
+            Duration.zero,
+            () => DialogHandler.showErrorDialog(
+                data.message!.message.toString(),
+                "صفحه ورورد",
+                () => _tryAgain()),
+          );
+        }
+      }),
     );
   }
 }

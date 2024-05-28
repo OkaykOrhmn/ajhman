@@ -1,6 +1,5 @@
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
-import 'package:ajhman/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,7 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(buttons.length, (index) {
-        void _click() {
+        void click() {
           for (int indexBtn = 0; indexBtn < buttons.length; indexBtn++) {
             if (indexBtn == index) {
               buttons[indexBtn].active = true;
@@ -49,7 +48,7 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
                 title: buttons[index].name,
                 onClick: () {
                   setState(() {
-                    _click();
+                    click();
                   });
                 },
               )
@@ -57,7 +56,7 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
                 title: buttons[index].name,
                 onClick: () {
                   setState(() {
-                    _click();
+                    click();
                   });
                 },
               );

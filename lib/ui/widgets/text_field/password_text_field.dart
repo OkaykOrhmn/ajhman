@@ -1,5 +1,5 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/utils/app_locale.dart';
+import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,7 +57,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                     : Assets.icon.outline.eyeSlash.svg(width: 24, height: 24, color:  widget.error ? errorMain : grayColor200),
               )),
           errorText: widget.error
-              ? ChangeLocale(context).appLocal!.textFieldEnterNumberError
+              ? "${ChangeLocale(context).appLocal!.password} ${ChangeLocale(context).appLocal!.wrong}"
               : null,
           filled: true,
           hintText: widget.hint,

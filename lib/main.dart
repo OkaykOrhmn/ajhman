@@ -1,20 +1,33 @@
-import 'package:ajhman/data/bloc/otp/otp_bloc.dart';
-import 'package:ajhman/data/bloc/pin/pin_bloc.dart';
+import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
+import 'package:ajhman/core/enum/state_status.dart';
+import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/data/model/error_response_model.dart';
+import 'package:ajhman/data/model/profile_response_model.dart';
+import 'package:ajhman/data/shared_preferences/profile_data.dart';
+import 'package:ajhman/ui/pages/home/cubit/selected_index_cubit.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
-import 'package:ajhman/data/bloc/auth/auth_screen_bloc.dart';
-import 'package:ajhman/data/bloc/smart_schedule/smart_schedule_bloc.dart';
+
 import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
-import 'package:ajhman/utils/app_locale.dart';
-import 'package:ajhman/utils/language/bloc/language_bloc.dart';
-import 'package:ajhman/utils/timer/Ticker.dart';
+import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'data/bloc/ticker/timer_bloc.dart';
+import 'core/bloc/auth/auth_screen_bloc.dart';
+import 'core/bloc/otp/otp_bloc.dart';
+import 'core/bloc/pin/pin_bloc.dart';
+import 'core/bloc/smart_schedule/smart_schedule_bloc.dart';
+import 'core/bloc/ticker/timer_bloc.dart';
+import 'core/routes/route_generator.dart';
+import 'core/utils/app_locale.dart';
+import 'core/utils/language/bloc/language_bloc.dart';
+import 'core/utils/timer/ticker.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   runApp(MultiBlocProvider(providers: [
@@ -63,6 +76,15 @@ void main() {
         return bloc;
       },
     ),
+    BlocProvider<ProfileBloc>(
+      create: (buildContext) {
+        final bloc = ProfileBloc();
+        return bloc;
+      },
+    ),
+    BlocProvider(
+      create: (context) => SelectedIndexCubit(),
+    ),
   ], child: const MyApp()));
 }
 
@@ -74,13 +96,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<Widget> _getMainScreen() async {
-    final token = await getToken();
-    if (token.isEmpty) {
-      return const AuthPageStarted();
-    } else {
-      return const HomePage();
-    }
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -92,6 +110,7 @@ class _MyAppState extends State<MyApp> {
         return BlocBuilder<LanguageBloc, LanguageState>(
           builder: (context, state) {
             return MaterialApp(
+              navigatorKey: navigatorKey,
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
               locale: state.selectedLanguage.value,
@@ -110,17 +129,9 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              home: FutureBuilder(
-                  future: _getMainScreen(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return snapshot.data!;
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  }),
+              initialRoute: RoutePaths.splash,
+              onGenerateRoute: (settings) =>
+                  RouteGenerator.destination(settings),
             );
           },
         );

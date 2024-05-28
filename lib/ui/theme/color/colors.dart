@@ -12,10 +12,86 @@ class AppColorsTheme {
   );
 }
 
+extension AppColorScheme on ColorScheme{
+  Color get appPrimary =>
+      brightness == Brightness.light
+          ? primaryColor
+          : primaryColor;
+
+  Color get secondary =>
+      brightness == Brightness.light
+          ? secondaryColor
+          : secondaryColor;
+
+  Color get tertiary =>
+      brightness == Brightness.light
+          ? tertiaryColor
+          : tertiaryColor;
+
+  Color get appBackground =>
+      brightness == Brightness.light
+          ? backgroundColor
+          : backgroundColor900;
+
+  Color get gray =>
+      brightness == Brightness.light
+          ? grayColor
+          : grayColor;
+
+  Color get warning =>
+      brightness == Brightness.light
+          ? warningMain
+          : warningMain;
+
+  Color get success =>
+      brightness == Brightness.light
+          ? successMain
+          : successMain;
+
+  Color get error =>
+      brightness == Brightness.light
+          ? errorMain
+          : errorMain;
+
+  Color get info =>
+      brightness == Brightness.light
+          ? infoMain
+          : infoMain;
+
+  Color get gold =>
+      brightness == Brightness.light
+          ? goldColor
+          : goldColor;
+
+  Color get silver =>
+      brightness == Brightness.light
+          ? silverColor
+          : silverColor;
+
+  Color get bronze =>
+      brightness == Brightness.light
+          ? bronzeColor
+          : bronzeColor;
+
+  Color get appOnBackground =>
+      brightness == Brightness.light
+          ? Colors.white
+          : Colors.black;
+
+  Color get appOnSurface =>
+      brightness == Brightness.light
+          ? grayColor
+          : backgroundColor;
+
+
+
+}
+
+
 const primaryColorLight = primaryColor;
 const primaryColorDark = Color(0xff444848);
 
-//Primary
+
 const primaryColor50 = Color(0xffe6f2f2);
 const primaryColor100 = Color(0xffb0d7d7);
 const primaryColor200 = Color(0xff8ac4c4);

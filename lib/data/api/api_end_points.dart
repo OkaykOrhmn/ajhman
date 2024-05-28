@@ -4,5 +4,6 @@ class ApiEndPoints {
   static String authRegisterUserOtp = '/auth/otp/';
   static String authLoginUserPassword = '/auth/login';
   static String authLoginUserOtp = '/auth/login/otp';
+  static String profile = '/auth/profile';
 
 }

@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:flutter/material.dart';
 
+const _defaultFontFamily = 'Dana';
+
 class AppTextStyles {
-  static const defaultFontFamily = 'Dana';
 
   static TextStyle headerBoldWhite = headline3.copyWith(color: Colors.white);
   static TextStyle hintText = body1.copyWith(color: grayColor);
@@ -15,6 +16,7 @@ class AppTextStyles {
   static TextStyle primaryTextFieldHint = body1.copyWith(color: grayColor200);
 
   static TextStyle pinPutTextStyle = body1.copyWith(color: grayColor800);
+  static TextStyle navbarTitle = AppTextStyles.body5;
 
   static TextStyle outlinedPrimaryButtonText =
       body1.copyWith(color: primaryColor);
@@ -29,21 +31,21 @@ class AppTextStyles {
     return TextStyle(
         color: themeData.colorScheme.onBackground,
         fontWeight: FontWeight.bold,
-        fontFamily: defaultFontFamily,
+        fontFamily: _defaultFontFamily,
         fontSize: 18);
   }
 
   //Headline
   static TextStyle headline1 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 24, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 24, fontFamily: _defaultFontFamily);
   static TextStyle headline2 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 20, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 20, fontFamily: _defaultFontFamily);
   static TextStyle headline3 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 18, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 18, fontFamily: _defaultFontFamily);
   static TextStyle headline4 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 16, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 16, fontFamily: _defaultFontFamily);
   static TextStyle headline5 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 14, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 14, fontFamily: _defaultFontFamily);
 
   //Headline
 
@@ -51,20 +53,30 @@ class AppTextStyles {
   static TextStyle body1 = const TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 14,
-      fontFamily: defaultFontFamily);
+      fontFamily: _defaultFontFamily);
   static TextStyle body2 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 14, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 14, fontFamily: _defaultFontFamily);
   static TextStyle body3 = const TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 12,
-      fontFamily: defaultFontFamily);
+      fontFamily: _defaultFontFamily);
   static TextStyle body4 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 12, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 12, fontFamily: _defaultFontFamily);
   static TextStyle body5 = const TextStyle(
       fontWeight: FontWeight.normal,
       fontSize: 10,
-      fontFamily: defaultFontFamily);
+      fontFamily: _defaultFontFamily);
   static TextStyle body6 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 10, fontFamily: defaultFontFamily);
+      fontWeight: FontWeight.bold, fontSize: 10, fontFamily: _defaultFontFamily);
 //Body
+}
+
+extension AppTextStyle on TextTheme{
+
+
+  TextStyle get headerBold => AppTextStyles.headline3;
+  TextStyle get dialogTitle => AppTextStyles.headline4;
+  TextStyle get titleBold => AppTextStyles.headline5;
+  TextStyle get navbarTitle => AppTextStyles.body5;
+  TextStyle get searchHint => AppTextStyles.body3;
 }

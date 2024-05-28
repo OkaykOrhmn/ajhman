@@ -1,4 +1,4 @@
-import 'package:ajhman/utils/app_locale.dart';
+import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

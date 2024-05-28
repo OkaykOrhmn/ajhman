@@ -1,14 +1,14 @@
-import 'package:ajhman/ui/screens/auth/login_password/login_password_screen.dart';
+import 'package:ajhman/ui/pages/auth/screens/login_otp/login_otp_screen.dart';
+import 'package:ajhman/ui/pages/auth/screens/login_password/login_password_screen.dart';
+import 'package:ajhman/ui/pages/auth/screens/pin/pin_screen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/utils/app_locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/bloc/auth/auth_screen_bloc.dart';
+import '../../../core/bloc/auth/auth_screen_bloc.dart';
+import '../../../core/utils/app_locale.dart';
 import '../../../gen/assets.gen.dart';
-import '../../screens/auth/login_otp/login_otp_screen.dart';
-import '../../screens/auth/pin/pin_screen.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});

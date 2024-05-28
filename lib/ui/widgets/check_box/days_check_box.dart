@@ -8,7 +8,7 @@ class DaysCheckBox extends StatefulWidget {
   final Function(bool?)? onChange;
 
 
-  DaysCheckBox({required this.value, this.onChange});
+  DaysCheckBox({super.key, required this.value, this.onChange});
 
   @override
   State<DaysCheckBox> createState() => _DaysCheckBoxState();

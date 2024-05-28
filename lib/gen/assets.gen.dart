@@ -112,6 +112,10 @@ class $AssetsIconBlodGen {
 class $AssetsIconBoldGen {
   const $AssetsIconBoldGen();
 
+  /// File path: assets/icon/bold/close-circle.svg
+  SvgGenImage get closeCircle =>
+      const SvgGenImage('assets/icon/bold/close-circle.svg');
+
   /// File path: assets/icon/bold/dislike.svg
   SvgGenImage get dislike => const SvgGenImage('assets/icon/bold/dislike.svg');
 
@@ -161,6 +165,7 @@ class $AssetsIconBoldGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+        closeCircle,
         dislike,
         documentText1,
         documentText,
