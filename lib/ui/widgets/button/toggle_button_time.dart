@@ -3,6 +3,8 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../theme/widget/design_config.dart';
+
 class ToggleButtonTime extends StatefulWidget {
   final bool active;
   final String title;
@@ -25,7 +27,7 @@ class _ToggleButtonTimeState extends State<ToggleButtonTime> {
         height: 46,
         decoration: BoxDecoration(
             color: widget.active ? Colors.white : backgroundColor100,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
             border: Border.all(
                 color: widget.active ? primaryColor : backgroundColor100)),
         child: Center(

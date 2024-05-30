@@ -11,6 +11,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../core/utils/app_locale.dart';
 import '../../../theme/text/text_styles.dart';
+import '../../../theme/widget/design_config.dart';
 import '../../../widgets/button/toggle_button_time.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
@@ -72,7 +73,7 @@ class _TimerScreenState extends State<TimerScreen>
           padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: DesignConfig.highBorderRadius,
               color: Colors.white,
             ),
             child: Column(
@@ -82,9 +83,9 @@ class _TimerScreenState extends State<TimerScreen>
                   height: 120,
                   child: Center(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: DesignConfig.aHighBorderRadius,
+                        topRight: DesignConfig.aHighBorderRadius,
                       ),
                       child: Stack(
                         children: [

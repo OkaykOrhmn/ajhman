@@ -18,6 +18,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'core/bloc/auth/auth_screen_bloc.dart';
+import 'core/bloc/course/main/course_main_bloc.dart';
 import 'core/bloc/otp/otp_bloc.dart';
 import 'core/bloc/pin/pin_bloc.dart';
 import 'core/bloc/smart_schedule/smart_schedule_bloc.dart';
@@ -82,6 +83,12 @@ void main() {
         return bloc;
       },
     ),
+    BlocProvider<CourseMainBloc>(
+      create: (buildContext) {
+        final bloc = CourseMainBloc();
+        return bloc;
+      },
+    ),
     BlocProvider(
       create: (context) => SelectedIndexCubit(),
     ),
@@ -129,7 +136,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.splash,
+              initialRoute: RoutePaths.curseMain,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );

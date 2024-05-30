@@ -11,6 +11,17 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 
+class $AssetsGifGen {
+  const $AssetsGifGen();
+
+  /// File path: assets/gif/road-map-loading.gif
+  AssetGenImage get roadMapLoading =>
+      const AssetGenImage('assets/gif/road-map-loading.gif');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [roadMapLoading];
+}
+
 class $AssetsIconGen {
   const $AssetsIconGen();
 
@@ -658,6 +669,7 @@ class $AssetsImageMoonGen {
 class Assets {
   Assets._();
 
+  static const $AssetsGifGen gif = $AssetsGifGen();
   static const $AssetsIconGen icon = $AssetsIconGen();
   static const $AssetsImageGen image = $AssetsImageGen();
 }

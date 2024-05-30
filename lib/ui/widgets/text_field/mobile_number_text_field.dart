@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../theme/text/text_styles.dart';
+import '../../theme/widget/design_config.dart';
 
 class MobileNumberTextField extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -61,19 +62,19 @@ class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
           hintStyle: AppTextStyles.primaryTextFieldHint,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: primaryColor),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius:DesignConfig.mediumBorderRadius,
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: errorMain),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
           ),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: errorMain),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
           ),
         ),
         style: AppTextStyles.primaryTextFieldText,

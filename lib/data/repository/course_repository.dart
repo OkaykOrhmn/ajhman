@@ -3,6 +3,7 @@ import 'package:ajhman/data/api/options.dart';
 import 'package:ajhman/data/model/auth/auth_login_user_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
+import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:dio/dio.dart';
@@ -10,19 +11,19 @@ import 'package:dio/dio.dart';
 import '../api/api_end_points.dart';
 import '../model/auth/auth_login_user_rsponse.dart';
 
-final profileRepository = ProfileRepository(DioHelper());
+final courseRepository = CourseRepository(DioHelper());
 
-class ProfileRepository implements ProfileInformation {
+class CourseRepository implements ProfileInformation {
   final DioHelper dioHelper;
 
-  ProfileRepository(this.dioHelper);
+  CourseRepository(this.dioHelper);
 
   @override
-  Future<ProfileResponseModel> getProfile() async {
+  Future<CourseMainResponseModel> getMainCurse(int categoriesId) async {
     try {
-      Response response = await dioHelper.getRequest(ApiEndPoints.profile);
+      Response response = await dioHelper.getRequest(ApiEndPoints.mainCourse+categoriesId.toString());
       final postMaps = response.data;
-      return ProfileResponseModel.fromJson(postMaps);
+      return CourseMainResponseModel.fromJson(postMaps);
     } catch (ex) {
       rethrow;
     }
@@ -30,5 +31,5 @@ class ProfileRepository implements ProfileInformation {
 }
 
 abstract class ProfileInformation {
-  Future<ProfileResponseModel> getProfile();
+  Future<CourseMainResponseModel> getMainCurse(int categoriesId);
 }

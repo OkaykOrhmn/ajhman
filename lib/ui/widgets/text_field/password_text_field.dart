@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../theme/text/text_styles.dart';
+import '../../theme/widget/design_config.dart';
 
 class PasswordTextField extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -63,21 +64,21 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           hintText: widget.hint,
           fillColor: backgroundColor200,
           hintStyle: AppTextStyles.primaryTextFieldHint,
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: primaryColor),
-            borderRadius: BorderRadius.circular(12),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: primaryColor),
+            borderRadius: DesignConfig.mediumBorderRadius,
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: errorMain),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
           ),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: errorMain),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
           ),
         ),
       ),

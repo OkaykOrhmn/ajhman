@@ -6,7 +6,9 @@ import 'package:ajhman/ui/pages/home/screens/learning_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/my_treasure_screen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/bottom_navigation/bottom_navigation_Btn.dart';
+import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -25,81 +27,82 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  Future<bool> _onWillPop() async {
+    DialogHandler.showExitBottomSheet();
+
+    return false;
+
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     var state = context.watch<SelectedIndexCubit>().state;
-    return Scaffold(
-        backgroundColor: themeData.colorScheme.background,
-        appBar: PrimaryAppBar(
-          title: state.title,
-        ),
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: IndexedStack(
-                index: state.index,
-                children: [
-                  HomeScreen(),
-                  MyTreasureScreen(),
-                  LearningScreen(),
-                  ForYouScreen(),
-                ],
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+          backgroundColor: themeData.colorScheme.background,
+          appBar: PrimaryAppBar(
+            title: state.title,
+          ),
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: IndexedStack(
+                  index: state.index,
+                  children: const [
+                    HomeScreen(),
+                    MyTreasureScreen(),
+                    LearningScreen(),
+                    ForYouScreen(),
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
+              Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: const BoxDecoration(
-                        //this is why click effect Inkwell not work
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            offset: const Offset(
-                              5.0,
-                              5.0,
-                            ),
-                            blurRadius: 10.0,
-                            spreadRadius: 1.0,
-                          )
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration:  BoxDecoration(
+                          //this is why click effect Inkwell not work
+                          color: Colors.white,
+                          boxShadow: DesignConfig.mediumShadow,
+                          borderRadius: const BorderRadius.only(
+                              topRight: DesignConfig.aHighBorderRadius,
+                              topLeft: DesignConfig.aHighBorderRadius)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          BottomNavigationBtn(
+                              index: 0,
+                              title: "Home",
+                              selectedIcon: Assets.icon.bold.home,
+                              unselectedIcon: Assets.icon.outline.home),
+                          BottomNavigationBtn(
+                              index: 1,
+                              title: "MyT",
+                              selectedIcon: Assets.icon.bold.ranking,
+                              unselectedIcon: Assets.icon.outline.ranking),
+                          BottomNavigationBtn(
+                              index: 2,
+                              title: "Learn",
+                              selectedIcon: Assets.icon.bold.documentText,
+                              unselectedIcon: Assets.icon.outline.documentText),
+                          BottomNavigationBtn(
+                              index: 3,
+                              title: "For U",
+                              selectedIcon: Assets.icon.bold.lamp,
+                              unselectedIcon: Assets.icon.outline.lamp)
                         ],
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(16),
-                            topLeft: Radius.circular(16))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BottomNavigationBtn(
-                            index: 0,
-                            title: "Home",
-                            selectedIcon: Assets.icon.bold.home,
-                            unselectedIcon: Assets.icon.outline.home),
-                        BottomNavigationBtn(
-                            index: 1,
-                            title: "MyT",
-                            selectedIcon: Assets.icon.bold.ranking,
-                            unselectedIcon: Assets.icon.outline.ranking),
-                        BottomNavigationBtn(
-                            index: 2,
-                            title: "Learn",
-                            selectedIcon: Assets.icon.bold.documentText,
-                            unselectedIcon: Assets.icon.outline.documentText),
-                        BottomNavigationBtn(
-                            index: 3,
-                            title: "For U",
-                            selectedIcon: Assets.icon.bold.lamp,
-                            unselectedIcon: Assets.icon.outline.lamp)
-                      ],
+                      ),
                     ),
-                  ),
-                ))
-          ],
-        ));
+                  ))
+            ],
+          )),
+    );
     ;
   }
 }

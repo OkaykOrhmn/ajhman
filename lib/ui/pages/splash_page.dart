@@ -25,8 +25,6 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-late String? token;
-
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
@@ -44,31 +42,37 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<ProfileBloc, ProfileState>(builder: (context, state) {
-        switch (state.status) {
-          case StateStatus.success:
-            return const HomePage();
-          case StateStatus.fail:
-            return const AuthPageStarted();
-          case StateStatus.loading:
-          default:
-            return const Center(child: CircularProgressIndicator());
-        }
-      }, listener: (context, state) {
-        if (state.status == StateStatus.loading) {}
-        if (state.status == StateStatus.success) {
-          setProfile(state.data);
-        } else if (state.status == StateStatus.fail) {
-          var data = ErrorResponseModel.fromJson(state.data);
-          Future.delayed(
-            Duration.zero,
-            () => DialogHandler.showErrorDialog(
-                data.message!.message.toString(),
-                "صفحه ورورد",
-                () => _tryAgain()),
-          );
-        }
-      }),
+      body: FutureBuilder(
+          future: getToken(),
+          builder: (context, snapshot) {
+            return BlocConsumer<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+              switch (state.status) {
+                case StateStatus.success:
+                  return const HomePage();
+                case StateStatus.fail:
+                  return const AuthPageStarted();
+                case StateStatus.loading:
+                default:
+                  return const Center(child: CircularProgressIndicator());
+              }
+            }, listener: (context, state) {
+              if (state.status == StateStatus.loading) {}
+              if (state.status == StateStatus.success) {
+                setProfile(state.data);
+              } else if (state.status == StateStatus.fail) {
+                var data = ErrorResponseModel.fromJson(state.data);
+                if (snapshot.hasData) {
+                  if (snapshot.data!.isNotEmpty) {
+                    DialogHandler.showErrorDialog(
+                        data.message!.message.toString(),
+                        "صفحه ورورد",
+                        () => _tryAgain());
+                  }
+                }
+              }
+            });
+          }),
     );
   }
 }

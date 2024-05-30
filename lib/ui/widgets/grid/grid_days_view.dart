@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../data/model/days.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/text/text_styles.dart';
+import '../../theme/widget/design_config.dart';
 import '../check_box/days_check_box.dart';
 
 class GridDaysView extends StatefulWidget {
@@ -68,7 +69,7 @@ class _GridDaysViewState extends State<GridDaysView> {
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: DesignConfig.mediumBorderRadius,
             border: Border.all(
                 color: days[index].isSelected ? primaryColor : Colors.white)),
         child: Padding(

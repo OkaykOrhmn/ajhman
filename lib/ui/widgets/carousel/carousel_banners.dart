@@ -1,4 +1,6 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_state.dart';
@@ -73,33 +75,32 @@ class _CarouseBannersState extends State<CarouseBanners> {
 
   FutureBuilder<Null> _bannerIndicator(ThemeData themeData) {
     return FutureBuilder(
-          future: _buttonCarouselController.onReady,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: themeData.colorScheme.appPrimary,
-                      borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(16),
-                          topLeft: Radius.circular(16))),
-                  padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),
-                  child: SmoothPageIndicator(
-                      controller:
-                          _buttonCarouselController.state!.pageController!,
-                      count: widget.items.length,
-                      effect: const ExpandingDotsEffect(
-                          dotWidth: 8,
-                          dotHeight: 8,
-                          activeDotColor: Colors.black,
-                          dotColor: Colors.white)),
-                ),
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        );
+      future: _buttonCarouselController.onReady,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Center(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: themeData.colorScheme.appPrimary,
+                  borderRadius: BorderRadius.only(
+                      topRight: DesignConfig.aHighBorderRadius,
+                      topLeft: DesignConfig.aHighBorderRadius)),
+              padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),
+              child: SmoothPageIndicator(
+                  controller: _buttonCarouselController.state!.pageController!,
+                  count: widget.items.length,
+                  effect: const ExpandingDotsEffect(
+                      dotWidth: 8,
+                      dotHeight: 8,
+                      activeDotColor: Colors.black,
+                      dotColor: Colors.white)),
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
   }
 
   Padding _banner(BuildContext context, int itemIndex) {
@@ -108,10 +109,13 @@ class _CarouseBannersState extends State<CarouseBanners> {
       child: Container(
         width: MediaQuery.sizeOf(context).width,
         height: 140,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: CupertinoColors.white,
-            borderRadius: BorderRadius.circular(16)),
-        child: Center(child: Text(widget.items[itemIndex])),
+            borderRadius: DesignConfig.highBorderRadius),
+        child: const PrimaryImageNetwork(
+            src:
+                "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+            aspectRatio: 16 / 9),
       ),
     );
   }

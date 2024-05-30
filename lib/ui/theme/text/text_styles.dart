@@ -77,6 +77,8 @@ extension AppTextStyle on TextTheme{
   TextStyle get headerBold => AppTextStyles.headline3;
   TextStyle get dialogTitle => AppTextStyles.headline4;
   TextStyle get titleBold => AppTextStyles.headline5;
+  TextStyle get title => AppTextStyles.body1;
   TextStyle get navbarTitle => AppTextStyles.body5;
   TextStyle get searchHint => AppTextStyles.body3;
+  TextStyle get rate => AppTextStyles.body4;
 }

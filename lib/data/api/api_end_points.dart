@@ -5,5 +5,6 @@ class ApiEndPoints {
   static String authLoginUserPassword = '/auth/login';
   static String authLoginUserOtp = '/auth/login/otp';
   static String profile = '/auth/profile';
+  static String mainCourse = '/course/';
 
 }
