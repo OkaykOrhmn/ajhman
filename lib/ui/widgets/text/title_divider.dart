@@ -4,26 +4,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
+import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 
 class TitleDivider extends StatelessWidget {
   final String title;
   final Function()? btn;
+  final bool hasPadding;
 
-  const TitleDivider({super.key, required this.title, this.btn});
+  const TitleDivider(
+      {super.key, required this.title, this.btn, this.hasPadding = true});
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      padding:
+          EdgeInsets.fromLTRB(hasPadding ? 16 : 0, 0, hasPadding ? 16 : 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           PrimaryText(
               text: title,
-              style: themeData.textTheme.titleBold,
+              style: mThemeData.textTheme.titleBold,
               color: primaryColor900),
           btn != null
               ? InkWell(
@@ -34,7 +37,7 @@ class TitleDivider extends StatelessWidget {
                     children: [
                       PrimaryText(
                         text: "مشاهده همه",
-                        style: themeData.textTheme.searchHint,
+                        style: mThemeData.textTheme.searchHint,
                         color: primaryColor,
                       ),
                       Assets.icon.outline.arrowLeft

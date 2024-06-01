@@ -33,7 +33,6 @@ class SmartSchedulePage extends StatefulWidget {
 class _SmartSchedulePageState extends State<SmartSchedulePage> {
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

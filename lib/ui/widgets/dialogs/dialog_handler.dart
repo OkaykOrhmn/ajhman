@@ -12,14 +12,13 @@ import 'package:flutter/widgets.dart';
 import '../../../gen/assets.gen.dart';
 
 class DialogHandler {
-  static BuildContext context = navigatorKey.currentContext!;
-  static ThemeData themeData = Theme.of(context);
+  static ThemeData themeData = Theme.of(mContext);
 
   static Future<void> showErrorDialog(
       String title, String btnTitle, Function()? onTap) async {
     await showDialog(
       barrierDismissible: false,
-      context: context,
+      context: mContext,
       builder: (context) => Dialog(
         backgroundColor: Colors.white,
         insetPadding: const EdgeInsets.all(16),
@@ -62,7 +61,7 @@ class DialogHandler {
 
   static Future<void> showExitBottomSheet() async {
     await showModalBottomSheet(
-        context: context,
+        context: mContext,
         builder: (context) {
           return Column(
             children: [
@@ -82,6 +81,6 @@ class DialogHandler {
   }
 
   static void pop() {
-    Navigator.of(context).pop();
+    Navigator.of(mContext).pop();
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
+import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../button/primary_button.dart';
@@ -19,7 +20,6 @@ class OnlineCard extends StatefulWidget {
 class _OnlineCardState extends State<OnlineCard> {
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 40),
       child: Container(
@@ -34,8 +34,8 @@ class _OnlineCardState extends State<OnlineCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _image(),
-              _title(themeData),
-              _info(themeData),
+              _title(),
+              _info(),
               Container(
                   width: double.infinity,
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -47,7 +47,7 @@ class _OnlineCardState extends State<OnlineCard> {
     );
   }
 
-  Padding _info(ThemeData themeData) {
+  Padding _info( ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -60,25 +60,24 @@ class _OnlineCardState extends State<OnlineCard> {
           ),
           PrimaryText(
               text: "دکتر کوروش شایگان",
-              style: themeData.textTheme.searchHint,
+              style: mThemeData.textTheme.searchHint,
               color: grayColor600)
         ],
       ),
     );
   }
 
-  Padding _title(ThemeData themeData) {
+  Padding _title( ) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: PrimaryText(
           text: "مدیریت کسب و کار حرفه‌ای Post DBA",
-          style: themeData.textTheme.titleBold,
+          style: mThemeData.textTheme.titleBold,
           color: grayColor900),
     );
   }
 
   Stack _image() {
-    final ThemeData themeData = Theme.of(context);
     return Stack(
       children: [
         PrimaryImageNetwork(
@@ -116,7 +115,7 @@ class _OnlineCardState extends State<OnlineCard> {
                 ),
                 PrimaryText(
                     text: "در حال برگزاری",
-                    style: themeData.textTheme.searchHint,
+                    style: mThemeData.textTheme.searchHint,
                     color: successMain)
               ],
             ),

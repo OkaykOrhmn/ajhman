@@ -18,3 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 flutter gen-l10n
 dart pub run build_runner build       
 flutter packages pub run build_runner build
+

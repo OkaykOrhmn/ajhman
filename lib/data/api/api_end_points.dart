@@ -6,5 +6,8 @@ class ApiEndPoints {
   static String authLoginUserOtp = '/auth/login/otp';
   static String profile = '/auth/profile';
   static String mainCourse = '/course/';
+  static String chapter = '/chapter';
+  static String subchapter = '/subchapter';
+  static String comment = '/comment';
 
 }

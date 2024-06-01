@@ -1,3 +1,4 @@
+import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,8 @@ class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return AppBar(
-      backgroundColor: themeData.primaryColor,
+      backgroundColor: mThemeData.primaryColor,
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,7 +27,7 @@ class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
           Assets.icon.outline.arrowLeft.svg(color: Colors.transparent),
           PrimaryText(
               text: title,
-              style: themeData.textTheme.headerBold,
+              style: mThemeData.textTheme.headerBold,
               color: Colors.white),
           InkWell(
               onTap: () {

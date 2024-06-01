@@ -1,4 +1,3 @@
-
 import 'package:ajhman/ui/theme/color/colors.dart';
 import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../gen/assets.gen.dart';
+import '../../../main.dart';
 import '../../theme/text/text_styles.dart';
 import '../../theme/widget/design_config.dart';
 
@@ -33,11 +33,10 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return SizedBox(
       child: TextField(
         controller: widget.textEditingController,
-        style: themeData.textTheme.searchHint,
+        style: mThemeData.textTheme.searchHint,
         onChanged: (val) {
           setState(() {
             _onChange(val);

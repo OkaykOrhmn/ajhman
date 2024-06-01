@@ -1,6 +1,7 @@
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/ui/pages/auth/auth_page.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
+import 'package:ajhman/ui/pages/course/course_page.dart';
 import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:ajhman/ui/pages/splash_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,8 +26,10 @@ class RouteGenerator {
 
       case RoutePaths.smartSchedule:
         return _createRoute(const SmartSchedulePage());
-      case RoutePaths.curseMain:
+      case RoutePaths.courseMain:
         return _createRoute(const CourseMainPage());
+      case RoutePaths.course:
+        return _createRoute(const CoursePage());
       default:
         return _createRoute(const SizedBox());
     }

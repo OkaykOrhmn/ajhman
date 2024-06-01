@@ -26,7 +26,7 @@ class PrimaryText extends StatelessWidget {
       maxLines:
           maxLines,
       overflow: maxLines == null?TextOverflow.visible: TextOverflow.ellipsis,
-      softWrap: false,
+      softWrap: true,
     );
   }
 }

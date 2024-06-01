@@ -1,3 +1,4 @@
+import 'package:ajhman/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,9 +16,8 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return AppBar(
-      backgroundColor: themeData.primaryColor,
+      backgroundColor: mThemeData.primaryColor,
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

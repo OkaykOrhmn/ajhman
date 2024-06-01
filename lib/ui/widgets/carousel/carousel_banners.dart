@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../main.dart';
+
 class CarouseBanners extends StatefulWidget {
   final List<String> items;
 
@@ -52,7 +54,6 @@ class _CarouseBannersState extends State<CarouseBanners> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return Stack(
       children: [
         CarouselSlider.builder(
@@ -67,13 +68,13 @@ class _CarouseBannersState extends State<CarouseBanners> {
           bottom: 12,
           left: 0,
           right: 0,
-          child: _bannerIndicator(themeData),
+          child: _bannerIndicator(),
         )
       ],
     );
   }
 
-  FutureBuilder<Null> _bannerIndicator(ThemeData themeData) {
+  FutureBuilder<Null> _bannerIndicator( ) {
     return FutureBuilder(
       future: _buttonCarouselController.onReady,
       builder: (context, snapshot) {
@@ -81,7 +82,7 @@ class _CarouseBannersState extends State<CarouseBanners> {
           return Center(
             child: Container(
               decoration: BoxDecoration(
-                  color: themeData.colorScheme.appPrimary,
+                  color: mThemeData.colorScheme.appPrimary,
                   borderRadius: BorderRadius.only(
                       topRight: DesignConfig.aHighBorderRadius,
                       topLeft: DesignConfig.aHighBorderRadius)),

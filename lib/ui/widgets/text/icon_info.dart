@@ -4,6 +4,7 @@ import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../main.dart';
 import '../../theme/color/colors.dart';
 
 class IconInfo extends StatelessWidget {
@@ -14,7 +15,6 @@ class IconInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -24,7 +24,7 @@ class IconInfo extends StatelessWidget {
         ),
         PrimaryText(
             text: desc,
-            style: themeData.textTheme.searchHint,
+            style: mThemeData.textTheme.searchHint,
             maxLines: 1,
             color: grayColor600)
       ],

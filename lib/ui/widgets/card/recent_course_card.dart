@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
+import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../text/primary_text.dart';
@@ -24,7 +25,6 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
   Widget build(BuildContext context) {
     final index = widget.index;
     final items = [1, 2, 3, 4];
-    final ThemeData themeData = Theme.of(context);
 
     return Stack(
       children: [
@@ -62,7 +62,7 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
             left: 20,
             child: PrimaryText(
               text: "23/40",
-              style: themeData.textTheme.searchHint,
+              style: mThemeData.textTheme.searchHint,
               color: grayColor900,
             ))
       ],
@@ -70,7 +70,6 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
   }
 
   Column _infoes() {
-    final ThemeData themeData = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -84,17 +83,16 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
   }
 
   Container _title(String text) {
-    final ThemeData themeData = Theme.of(context);
 
     return Container(
-      height: (themeData.textTheme.title.fontSize! * 3),
+      height: (mThemeData.textTheme.title.fontSize! * 3),
       constraints: const BoxConstraints(
         minWidth: 100,
         maxWidth: 190,
       ),
       child: PrimaryText(
         text: text,
-        style: themeData.textTheme.title,
+        style: mThemeData.textTheme.title,
         textAlign: TextAlign.start,
         color: grayColor900,
         maxLines: 2,

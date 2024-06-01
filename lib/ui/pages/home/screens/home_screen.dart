@@ -1,3 +1,4 @@
+import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
@@ -34,14 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 120),
         child: Column(
           children: [
-            _mainAppBar(context, themeData),
-            _searchBar(themeData),
+            _mainAppBar(context),
+            _searchBar(),
             _gridLayout(),
             const TitleDivider(title: "آنلاین‌شو"),
             const OnlineCard(),
@@ -73,12 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Container _mainAppBar(BuildContext context, ThemeData themeData) {
+  Container _mainAppBar(BuildContext context) {
     return Container(
       width: MediaQuery
           .sizeOf(context)
           .width,
-      decoration: BoxDecoration(color: themeData.colorScheme.appPrimary),
+      decoration: BoxDecoration(color: mThemeData.colorScheme.appPrimary),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(top: 16, bottom: 24),
             child: PrimaryText(
                 text: "ظهر بخیر آقای موسوی",
-                style: themeData.textTheme.titleBold,
+                style: mThemeData.textTheme.titleBold,
                 color: Colors.white),
           ),
           CarouseBanners(
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Padding _searchBar(ThemeData themeData) {
+  Padding _searchBar() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
       child: InkWell(
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               PrimaryText(
                   text: "دنبال چی می گردی؟",
-                  style: themeData.textTheme.searchHint,
+                  style: mThemeData.textTheme.searchHint,
                   color: backgroundColor600)
             ],
           ),
@@ -160,7 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _iconBtn(String title, SvgGenImage icon) {
-    ThemeData themeData = Theme.of(context);
     return Expanded(
       child: InkWell(
         borderRadius: DesignConfig.highBorderRadius,
@@ -176,13 +175,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                icon.svg(color: themeData.colorScheme.appPrimary),
+                icon.svg(color: mThemeData.colorScheme.appPrimary),
                 const SizedBox(
                   height: 8,
                 ),
                 PrimaryText(
                     text: title,
-                    style: themeData.textTheme.searchHint,
+                    style: mThemeData.textTheme.searchHint,
                     color: grayColor700)
               ],
             ),

@@ -34,6 +34,10 @@ class DioHelper {
     return await sendRequest.get(apiEndPoint, options: await getDioOptions());
   }
 
+  Future<Response> putRequest(String apiEndPoint,Object? data,) async {
+    return await sendRequest.put(apiEndPoint,data: data, options: await getDioOptions());
+  }
+
   Future<Response> postRequest(String apiEndPoint, Object? data,
       Map<String, dynamic>? queryParameters) async {
     return await sendRequest.post(apiEndPoint,

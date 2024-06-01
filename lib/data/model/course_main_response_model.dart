@@ -59,8 +59,9 @@ class Chapters {
   String? name;
   int? score;
   List<Subchapters>? subchapters;
+  bool? isOpen;
 
-  Chapters({this.id, this.name, this.score, this.subchapters});
+  Chapters({this.id, this.name, this.score, this.subchapters, this.isOpen});
 
   Chapters.fromJson(Map<String, dynamic> json) {
     id = json['id'];

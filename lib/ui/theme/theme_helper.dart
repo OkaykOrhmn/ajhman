@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> isDark() async {
@@ -9,4 +10,7 @@ Future<void> setTheme(bool isDark) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool("is_dark", !isDark);
 }
+
+
+
 

@@ -1,3 +1,4 @@
+import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/home/cubit/selected_index_cubit.dart';
 import 'package:ajhman/ui/pages/home/cubit/selected_index_cubit.dart';
 import 'package:ajhman/ui/pages/home/screens/for_you_screen.dart';
@@ -37,12 +38,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     var state = context.watch<SelectedIndexCubit>().state;
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-          backgroundColor: themeData.colorScheme.background,
+          backgroundColor: mThemeData.colorScheme.background,
           appBar: PrimaryAppBar(
             title: state.title,
           ),

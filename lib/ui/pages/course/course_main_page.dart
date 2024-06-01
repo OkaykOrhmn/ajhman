@@ -46,15 +46,11 @@ class _CourseMainPageState extends State<CourseMainPage> {
           if (state.type == ApiEndPoints.mainCourse) {
             switch (state.status) {
               case StateStatus.success:
+                state.data.chapters!.forEach((element) {
+                  element.isOpen ??= false;
+                });
                 return SingleChildScrollView(
-                    child: Column(
-                  children: [
-                    CourseInfoScreen(response: state.data),
-                    const SizedBox(
-                      height: 200,
-                    )
-                  ],
-                ));
+                    child: CourseInfoScreen(response: state.data));
               case StateStatus.fail:
                 return Container(
                   width: 200,

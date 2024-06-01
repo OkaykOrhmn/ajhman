@@ -12,10 +12,10 @@ class HighlightListView extends StatefulWidget {
 
   const HighlightListView(
       {super.key,
-        required this.items,
-         this.height,
-        required this.item,
-        this.width});
+      required this.items,
+      this.height,
+      required this.item,
+      this.width});
 
   @override
   State<HighlightListView> createState() => _HighlightListViewState();
@@ -26,10 +26,9 @@ class _HighlightListViewState extends State<HighlightListView> {
   Widget build(BuildContext context) {
     final length = widget.items == null ? 4 : widget.items!.length;
     return SizedBox(
-      width: MediaQuery.sizeOf(context).width,
-      height: widget.height,
-      child: DefaultPlaceHolder(
-        widget: ListView.builder(
+        width: MediaQuery.sizeOf(context).width,
+        height: widget.height,
+        child: ListView.builder(
             scrollDirection: Axis.vertical,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -40,15 +39,12 @@ class _HighlightListViewState extends State<HighlightListView> {
                 child: Center(
                   child: widget.items == null
                       ? SizedBox(
-                    width: widget.width,
-                    height: widget.height,
-                  )
+                          width: widget.width,
+                          height: widget.height,
+                        )
                       : widget.item(index),
                 ),
               );
-            }),
-        isLoading: widget.items == null,
-      ),
-    );
+            }));
   }
 }

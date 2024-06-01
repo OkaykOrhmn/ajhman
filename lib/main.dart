@@ -1,3 +1,4 @@
+import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
 import 'package:ajhman/core/enum/state_status.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
@@ -29,7 +30,8 @@ import 'core/utils/language/bloc/language_bloc.dart';
 import 'core/utils/timer/ticker.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
+final BuildContext mContext = navigatorKey.currentContext!;
+final ThemeData mThemeData = Theme.of(mContext);
 void main() {
   runApp(MultiBlocProvider(providers: [
     BlocProvider<ThemeBloc>(
@@ -89,6 +91,13 @@ void main() {
         return bloc;
       },
     ),
+
+    BlocProvider<CommentsBloc>(
+      create: (buildContext) {
+        final bloc = CommentsBloc();
+        return bloc;
+      },
+    ),
     BlocProvider(
       create: (context) => SelectedIndexCubit(),
     ),
@@ -136,7 +145,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.curseMain,
+              initialRoute: RoutePaths.course,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );
