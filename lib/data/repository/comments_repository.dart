@@ -1,5 +1,6 @@
 import 'package:ajhman/data/api/dio_helper.dart';
 import 'package:ajhman/data/api/options.dart';
+import 'package:ajhman/data/model/add_comment_response_model.dart';
 import 'package:ajhman/data/model/auth/auth_login_user_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
@@ -43,10 +44,29 @@ class CommentsRepository implements ProfileInformation {
       rethrow;
     }
   }
+
+  @override
+  Future<AddCommentResponseModel> addComment(
+      int chapter, int subchapter, Object? data) async {
+    try {
+      Response response = await dioHelper.postRequest(
+          "${ApiEndPoints.chapter}/$chapter${ApiEndPoints.subchapter}/$subchapter${ApiEndPoints.comment}",
+          data,
+          null);
+      final postMaps = response.data;
+      return AddCommentResponseModel.fromJson(postMaps);
+    } catch (ex) {
+      rethrow;
+    }
+  }
 }
 
 abstract class ProfileInformation {
   Future<List<CommentsResponseModel>> getComments(int chapter, int subchapter);
 
-  Future<Response> putFeed(int chapter, int subchapter, int commentId, bool? feed);
+  Future<Response> putFeed(
+      int chapter, int subchapter, int commentId, bool? feed);
+
+  Future<AddCommentResponseModel> addComment(
+      int chapter, int subchapter, Object? data);
 }

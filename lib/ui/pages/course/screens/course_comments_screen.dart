@@ -1,11 +1,14 @@
 import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/enum/comment.dart';
+import 'package:ajhman/data/model/add_comment_request_model.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
+import 'package:ajhman/ui/widgets/comment/comment_layout.dart';
+import 'package:ajhman/ui/widgets/comment/reply_layout.dart';
 import 'package:ajhman/ui/widgets/image/profile_image_network.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
@@ -15,9 +18,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_btn/loading_btn.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/enum/state_status.dart';
 import '../../../../gen/assets.gen.dart';
+import '../../../widgets/button/loading_btn.dart';
 
 class CourseCommentsScreen extends StatefulWidget {
   const CourseCommentsScreen({super.key});
@@ -34,15 +40,8 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
   }
 
   List<CommentsResponseModel> comments = [];
-
-  void _clickFeed(Comment comment, bool? feed) {
-    context.read<CommentsBloc>().add(ChangeFeedComment(
-        id: comment.id!,
-        type: comment.commentType!,
-        feed: feed,
-        chapter: 1,
-        subChapter: 1));
-  }
+  final TextEditingController _text = TextEditingController();
+  final TextEditingController _resource = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,23 +68,30 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
     );
   }
 
-  BlocBuilder<CommentsBloc, CommentsState> _comments() {
-    return BlocBuilder<CommentsBloc, CommentsState>(
+  Widget _comments() {
+    return BlocConsumer<CommentsBloc, CommentsState>(
+      listener: (context, state) {
+        if (state.status == CommentStatus.success) {
+          _text.clear();
+          _resource.clear();
+        }
+      },
       builder: (context, state) {
         switch (state.status) {
-          case StateStatus.changeStatus:
-          case StateStatus.success:
+          case CommentStatus.addComment:
+          case CommentStatus.changeStatus:
+          case CommentStatus.success:
             comments = state.data!;
             return VerticalListView(
                 item: (index) {
                   return Column(
                     children: [
-                      _commentLayout(
-                          Comment.setCommentOwn(comments[index], index)),
+                      CommentLayout(index: index, data: comments[index]),
                       VerticalListView(
                         item: (indexR) {
-                          return _commentLayout(Comment.setReply(
-                              comments[index].replies![indexR], index, indexR));
+                          return ReplyLayout(
+                              index: index,
+                              data: comments[index].replies![indexR]);
                         },
                         items: comments[index].replies,
                         physics: const NeverScrollableScrollPhysics(),
@@ -97,7 +103,7 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
                 height: MediaQuery.sizeOf(context).height / 3,
                 items: comments,
                 physics: const NeverScrollableScrollPhysics());
-          case StateStatus.fail:
+          case CommentStatus.fail:
             return SizedBox();
           default:
             return VerticalListView(
@@ -259,204 +265,6 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
     );
   }
 
-  Widget _commentLayout(Comment comment) {
-    return Column(
-      children: [
-        Container(
-          width: MediaQuery.sizeOf(context).width,
-          margin: const EdgeInsets.symmetric(vertical: 8).copyWith(
-              right: comment.commentType == CommentType.reply ? 32 : 0),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: comment.commentType == CommentType.owner
-                  ? primaryColor50
-                  : Colors.white,
-              borderRadius: DesignConfig.highBorderRadius,
-              boxShadow: DesignConfig.lowShadow),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _profile(),
-              const SizedBox(
-                height: 16,
-              ),
-              _commentInfoes(comment),
-              const SizedBox(
-                height: 16,
-              ),
-              _commentButtons(comment)
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row _commentButtons(Comment comment) {
-    return Row(
-      children: [
-        InkWell(
-            onTap: () {
-              bool? feed;
-              if (comment.userFeedback == true) {
-                feed= null;
-              } else {
-               feed = true;
-              }
-              _clickFeed(comment, feed);
-            },
-            child: _commentButton(comment.likes.toString(), CommentBtnType.like,
-                comment.userFeedback)),
-        const SizedBox(
-          width: 12,
-        ),
-        Container(
-          height: 12,
-          width: 1,
-          color: secondaryColor,
-        ),
-        const SizedBox(
-          width: 12,
-        ),
-        InkWell(
-          onTap: () {
-            bool? feed;
-            if (comment.userFeedback == false) {
-              feed= null;
-            } else {
-              feed = false;
-            }
-            _clickFeed(comment, feed);
-          },
-          child: _commentButton(
-              comment.dislikes.toString(),
-              CommentBtnType.disLike,
-              comment.userFeedback != null ? !comment.userFeedback! : null),
-        ),
-        const SizedBox(
-          width: 12,
-        ),
-        Container(
-          height: 12,
-          width: 1,
-          color: secondaryColor,
-        ),
-        const SizedBox(
-          width: 12,
-        ),
-        _commentButton(comment.replies == 0 ? '' : comment.replies.toString(),
-            CommentBtnType.reply, null),
-      ],
-    );
-  }
-
-  Row _commentButton(String number, CommentBtnType type, bool? active) {
-    String src = type.icon;
-    Color color = grayColor400;
-    if (active != null && active) {
-      src = type.fill;
-      color = errorMain;
-    }
-    return Row(
-      children: [
-        SvgGenImage(src).svg(color: color, width: 16, height: 16),
-        const SizedBox(
-          width: 8,
-        ),
-        PrimaryText(
-            text: number,
-            style: mThemeData.textTheme.title,
-            color: grayColor800)
-      ],
-    );
-  }
-
-  Column _commentInfoes(Comment comment) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        PrimaryText(
-            text: comment.text.toString(),
-            style: mThemeData.textTheme.title,
-            textAlign: TextAlign.justify,
-            color: grayColor800),
-        const SizedBox(
-          height: 16,
-        ),
-        comment.resource != null
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const TitleDivider(
-                    title: "منبع",
-                    hasPadding: false,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  PrimaryText(
-                      text: comment.resource.toString(),
-                      style: mThemeData.textTheme.title,
-                      textAlign: TextAlign.justify,
-                      color: grayColor800),
-                ],
-              )
-            : const SizedBox(),
-      ],
-    );
-  }
-
-  Column _repliesInfoes(Replies replies) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        PrimaryText(
-            text: "${replies.replyUser!.name} ${replies.text}",
-            style: mThemeData.textTheme.title,
-            textAlign: TextAlign.justify,
-            color: grayColor800),
-      ],
-    );
-  }
-
-  Row _profile() {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 48,
-          height: 48,
-          child: ProfileImageNetwork(
-              src:
-                  "https://s3-alpha-sig.figma.com/img/6979/d837/b8c3d365a834f21f938e34ba7b745063?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=K5k8b9iabWknGQvO~8wp0LRu~RGy9OZ2VdUcVft8gfvP9Hh0qfeRPKnzO-88UhmPSqGvsGOVXBU55tiIDZDBuAoEOUcd4RH9MJKhew9grmawB3a0uivmEKHZhhH46-hQfBUd-nbWkcu7GJY83hfpVubdYPpmlCpG7w87j01acFOCfcJvuAcprbyHxELs5NuJ4TRsgRRc1sOBx5yr08PI2xWZ3nlgw2z1KAeFACXAhTqizMFE7Qfv39MQoQM0~TvskHP2vZLUMNNowHRqDHrwPbXi75NS4cz6LYvAPPv1~uEa~mLEJn0M~k1KsFXhSE73zlSp8fbO~eA25n6EVLTI-g__"),
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              PrimaryText(
-                  text: "علی موسوی",
-                  style: mThemeData.textTheme.rate,
-                  color: grayColor900),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  PrimaryText(
-                      text: "کارشناس ارشد",
-                      style: mThemeData.textTheme.navbarTitle,
-                      color: grayColor700),
-                  IconInfo(icon: Assets.icon.outline.clock, desc: "۹ ساعت پیش"),
-                ],
-              )
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
   Column _header() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -468,27 +276,51 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
         const SizedBox(
           height: 16,
         ),
-        _commentTextField("اطلاعات خود را با همکارانتان به اشتراک بگذارید ",
-            "مثال: برای کسب امتیاز بیشتر باید در مذاکره آرام باشیم", true),
+        _commentTextField(
+            "اطلاعات خود را با همکارانتان به اشتراک بگذارید ",
+            "مثال: برای کسب امتیاز بیشتر باید در مذاکره آرام باشیم",
+            true,
+            _text),
         const SizedBox(
           height: 16,
         ),
-        _commentTextField("افزودن منابع ",
-            "در صورت نیاز منابع خود را به صورت لینک وارد کنید", false),
+        _commentTextField(
+            "افزودن منابع ",
+            "در صورت نیاز منابع خود را به صورت لینک وارد کنید",
+            false,
+            _resource),
         const SizedBox(
           height: 16,
         ),
-        PrimaryButton(
-          title: "تایید و ارسال",
-          onClick: () {},
-          fill: true,
-          height: 48,
-        ),
+        PrimaryLoadingButton(
+            disable: false,
+            title: "تایید و ارسال",
+            onTap: (Function startLoading, Function stopLoading,
+                ButtonState btnState) async {
+              if (_text.text.isNotEmpty) {
+                if (btnState == ButtonState.idle) {
+                  startLoading();
+                  AddCommentRequestModel request = AddCommentRequestModel(
+                      text: _text.text,
+                      resource: _resource.text,
+                      commentId: null,
+                      replyUserId: null);
+                  context.read<CommentsBloc>().add(
+                      AddComment(chapter: 1, subChapter: 1, comment: request));
+                  await context.read<CommentsBloc>().stream.firstWhere(
+                      (state) =>
+                          state.status == CommentStatus.success ||
+                          state.status == CommentStatus.fail);
+                  stopLoading();
+                }
+              }
+            }),
       ],
     );
   }
 
-  Column _commentTextField(String title, String hint, bool important) {
+  Column _commentTextField(String title, String hint, bool important,
+      TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -516,6 +348,7 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
               boxShadow: DesignConfig.lowShadow),
           padding: EdgeInsets.all(16),
           child: TextField(
+            controller: controller,
             minLines: 4,
             keyboardType: TextInputType.multiline,
             textInputAction: TextInputAction.newline,

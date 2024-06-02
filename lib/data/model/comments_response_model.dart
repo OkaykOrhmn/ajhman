@@ -175,7 +175,7 @@ class Comment {
     dislikes = comment.dislikes;
     replies = comment.replies!.length;
     userFeedback = comment.userFeedback;
-    commentType = CommentType.owner;
+    commentType = CommentType.normal;
   }
 
   Comment.setReply(Replies comment, int indexC, int indexR) {

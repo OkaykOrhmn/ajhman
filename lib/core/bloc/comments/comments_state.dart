@@ -1,16 +1,28 @@
 part of 'comments_bloc.dart';
 
 @immutable
+enum CommentStatus { init, loading, changeStatus, success, fail, loaded,addComment }
+
 class CommentsState extends Equatable {
-  final StateStatus status;
+  final CommentStatus status;
   final String type;
   final dynamic data;
+  final int? commentId;
 
-  const CommentsState({this.status = StateStatus.loading, this.type = '', this.data});
+  const CommentsState({
+    this.status = CommentStatus.loading,
+    this.type = '',
+    this.data,
+    this.commentId,
+  });
 
   CommentsState copyWith(
-      {required StateStatus status,required String type, dynamic data}) {
-    return CommentsState(status: status , type: type, data: data ?? this.data);
+      {CommentStatus? status, String? type, dynamic data, int? commentId}) {
+    return CommentsState(
+        status: status ?? this.status,
+        type: type ?? this.type,
+        data: data ?? this.data,
+        commentId: commentId ?? this.commentId);
   }
 
   @override

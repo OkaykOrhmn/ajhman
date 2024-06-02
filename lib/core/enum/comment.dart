@@ -11,6 +11,5 @@ enum CommentBtnType {
 
 enum CommentType{
   normal,
-  owner,
   reply
 }

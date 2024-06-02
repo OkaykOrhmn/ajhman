@@ -13,14 +13,18 @@ class GetComments extends CommentsEvent {
 class ChangeFeedComment extends CommentsEvent {
   final int chapter;
   final int subChapter;
-  final int id;
-  final CommentType type;
-  final bool? feed;
+  final dynamic comment;
+  final CommentType commentType;
 
-  ChangeFeedComment(
-      {required this.chapter,
-      required this.subChapter,
-      required this.id,
-      required this.type,
-      required this.feed});
+  ChangeFeedComment({required this.chapter, required this.subChapter, required this.comment,required this.commentType});
+
+
+
+}
+class AddComment extends CommentsEvent{
+  final int chapter;
+  final int subChapter;
+  final AddCommentRequestModel comment;
+
+  AddComment({required this.chapter, required this.subChapter, required this.comment});
 }

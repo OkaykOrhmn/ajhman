@@ -1,6 +1,7 @@
 import 'package:ajhman/core/enum/levels.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:intl/intl.dart';
 
 import '../enum/course_types.dart';
 
@@ -44,4 +45,16 @@ String getChapterNumber(int index, List<Chapters?> chapters) {
     result = list[index];
   }
   return result;
+}
+
+double daysBetween(DateTime from, DateTime to) {
+  from = DateTime(from.year, from.month, from.day);
+  to = DateTime(to.year, to.month, to.day);
+  return (to.difference(from).inHours).toDouble();
+}
+
+double convertDatetimeComment(String createdAt) {
+  DateTime createdDate = DateFormat('yyyy-MM-ddThh:mm:ss').parse(createdAt);
+  DateTime todayDate = DateTime.now();
+  return daysBetween(createdDate, todayDate);
 }
