@@ -14,12 +14,15 @@ import 'package:flutter/services.dart';
 class $AssetsGifGen {
   const $AssetsGifGen();
 
+  /// File path: assets/gif/exit.gif
+  AssetGenImage get exit => const AssetGenImage('assets/gif/exit.gif');
+
   /// File path: assets/gif/road-map-loading.gif
   AssetGenImage get roadMapLoading =>
       const AssetGenImage('assets/gif/road-map-loading.gif');
 
   /// List of all assets
-  List<AssetGenImage> get values => [roadMapLoading];
+  List<AssetGenImage> get values => [exit, roadMapLoading];
 }
 
 class $AssetsIconGen {

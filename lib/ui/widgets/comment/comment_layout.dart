@@ -127,10 +127,11 @@ class _CommentLayoutState extends State<CommentLayout> {
   }
 
   Widget _commentButtons() {
+    final state = context.watch<CommentsBloc>().state;
     return Row(
       children: [
         InkWell(
-            onTap: () {
+            onTap: state.status == CommentStatus.loading || state.status == CommentStatus.changeStatus? null: () {
               bool? feed = data.userFeedback;
               int countLike = data.likes!;
               int countDisLike = data.dislikes!;
@@ -166,7 +167,7 @@ class _CommentLayoutState extends State<CommentLayout> {
           width: 12,
         ),
         InkWell(
-          onTap: () {
+          onTap: state.status == CommentStatus.loading || state.status == CommentStatus.changeStatus? null: () {
             bool? feed = data.userFeedback;
             int countLike = data.likes!;
             int countDisLike = data.dislikes!;

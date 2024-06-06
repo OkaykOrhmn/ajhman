@@ -1,9 +1,7 @@
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/pages/home/cubit/selected_index_cubit.dart';
-import 'package:ajhman/ui/pages/home/cubit/selected_index_cubit.dart';
 import 'package:ajhman/ui/pages/home/screens/for_you_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/home_screen.dart';
-import 'package:ajhman/ui/pages/home/screens/learning_screen.dart';
+import 'package:ajhman/ui/pages/home/screens/learning/learning_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/my_treasure_screen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -16,6 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../core/cubit/home/selected_index_cubit.dart';
 import '../../../core/utils/app_locale.dart';
 import '../../../gen/assets.gen.dart';
 import '../../widgets/app_bar/primary_app_bar.dart';
@@ -30,7 +29,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   Future<bool> _onWillPop() async {
-    DialogHandler.showExitBottomSheet();
+    var read = context.read<SelectedIndexCubit>();
+    if(read.state.index == 0){
+      DialogHandler.showExitBottomSheet();
+
+    }else{
+      read.changeSelectedIndex(0, "خانه");
+
+    }
 
     return false;
 

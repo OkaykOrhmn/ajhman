@@ -45,6 +45,7 @@ class _SplashPageState extends State<SplashPage> {
       body: FutureBuilder(
           future: getToken(),
           builder: (context, snapshot) {
+            print(snapshot.data);
             return BlocConsumer<ProfileBloc, ProfileState>(
                 builder: (context, state) {
               switch (state.status) {

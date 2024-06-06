@@ -1,11 +1,12 @@
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/pages/home/cubit/selected_index_cubit.dart';
 import 'package:ajhman/gen/assets.gen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../core/cubit/home/selected_index_cubit.dart';
 
 class BottomNavigationBtn extends StatelessWidget{
   final int index;

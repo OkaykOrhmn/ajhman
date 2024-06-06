@@ -1,3 +1,4 @@
+import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -47,11 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
             const OnlineCard(),
             TitleDivider(title: "دوره‌های اخیرا دیده شده", btn: () {}),
             HorizontalListView(
-              height: 195,
-              item: (index) =>
-                  RecentCourseCard(
-                    index: index,
-                  ),
+              height: 190,
+              width: MediaQuery.sizeOf(context).width/1.1,
+              item: (index) => RecentCourseCard(
+                  index: index,
+                  padding: DesignConfig.horizontalListViwItemPadding(
+                      16, index, items.length)),
               items: items,
             ),
             const SizedBox(
@@ -59,14 +61,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TitleDivider(title: "جدیدترین دوره ها", btn: () {}),
             HorizontalListView(
-              height: 430,
-              item: (index) => NewCourseCard(index: index),
+              height: 500,
+              item: (index) => NewCourseCard(
+                type: CardType.marked,
+                index: index,
+                padding: DesignConfig.horizontalListViwItemPadding(
+                    16, index, items.length),
+              ),
               items: items,
-              width: MediaQuery
-                  .sizeOf(context)
-                  .width / 1.6,
+              width: MediaQuery.sizeOf(context).width / 1.2,
             ),
-
           ],
         ),
       ),
@@ -75,9 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Container _mainAppBar(BuildContext context) {
     return Container(
-      width: MediaQuery
-          .sizeOf(context)
-          .width,
+      width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(color: mThemeData.colorScheme.appPrimary),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

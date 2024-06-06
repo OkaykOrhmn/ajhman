@@ -1,17 +1,9 @@
 import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
-import 'package:ajhman/core/enum/state_status.dart';
+import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
-import 'package:ajhman/data/model/error_response_model.dart';
-import 'package:ajhman/data/model/profile_response_model.dart';
-import 'package:ajhman/data/shared_preferences/profile_data.dart';
-import 'package:ajhman/ui/pages/home/cubit/selected_index_cubit.dart';
-import 'package:ajhman/data/shared_preferences/auth_token.dart';
-import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
 
-import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
-import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +16,7 @@ import 'core/bloc/otp/otp_bloc.dart';
 import 'core/bloc/pin/pin_bloc.dart';
 import 'core/bloc/smart_schedule/smart_schedule_bloc.dart';
 import 'core/bloc/ticker/timer_bloc.dart';
+import 'core/cubit/home/selected_index_cubit.dart';
 import 'core/routes/route_generator.dart';
 import 'core/utils/app_locale.dart';
 import 'core/utils/language/bloc/language_bloc.dart';
@@ -32,6 +25,7 @@ import 'core/utils/timer/ticker.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final BuildContext mContext = navigatorKey.currentContext!;
 final ThemeData mThemeData = Theme.of(mContext);
+
 void main() {
   runApp(MultiBlocProvider(providers: [
     BlocProvider<ThemeBloc>(
@@ -91,7 +85,6 @@ void main() {
         return bloc;
       },
     ),
-
     BlocProvider<CommentsBloc>(
       create: (buildContext) {
         final bloc = CommentsBloc();
@@ -100,6 +93,9 @@ void main() {
     ),
     BlocProvider(
       create: (context) => SelectedIndexCubit(),
+    ),
+    BlocProvider(
+      create: (context) => SelectedTabCubit(),
     ),
   ], child: const MyApp()));
 }
@@ -145,7 +141,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.course,
+              initialRoute: RoutePaths.splash,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );

@@ -7,8 +7,10 @@ import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:gif/gif.dart';
+import 'dart:io';
 import '../../../gen/assets.gen.dart';
 
 class DialogHandler {
@@ -62,19 +64,62 @@ class DialogHandler {
   static Future<void> showExitBottomSheet() async {
     await showModalBottomSheet(
         context: mContext,
+        useSafeArea: true,
         builder: (context) {
-          return Column(
+          return Stack(
             children: [
-              PrimaryText(
-                  text: "قصد خارج شدن از برنامه را دارید؟",
-                  style: themeData.textTheme.titleBold,
-                  color: Colors.black),
-              Row(
+              Column(
                 children: [
-                  PrimaryButton(title: "بله"), 
-                  OutlinedPrimaryButton(title: "خیر")
+                  Container(
+                    height: 5,
+                    width: MediaQuery.sizeOf(context).width / 4,
+                    margin: EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: DesignConfig.highBorderRadius,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  PrimaryText(
+                      text: "قصد خارج شدن از برنامه را دارید؟",
+                      style: themeData.textTheme.titleBold,
+                      color: Colors.black),
+                  Gif(
+                    image: Assets.gif.exit.provider(),
+                    autostart: Autostart.loop,
+                    width: MediaQuery.sizeOf(context).width / 1.3,
+                    height: MediaQuery.sizeOf(context).width / 1.3,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                          width: MediaQuery.sizeOf(context).width / 2,
+                          padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
+                          child: PrimaryButton(
+                            title: "بله",
+                            onClick: () {
+                              if (Platform.isAndroid) {
+                                SystemNavigator.pop();
+                              } else if (Platform.isIOS) {
+                                exit(0);
+                              }
+                            },
+                          )),
+                      Container(
+                          width: MediaQuery.sizeOf(context).width / 2,
+                          padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
+                          child: OutlinedPrimaryButton(
+                            title: "خیر",
+                            onClick: () {
+                              pop();
+                            },
+                          ))
+                    ],
+                  ),
                 ],
-              )
+              ),
             ],
           );
         });

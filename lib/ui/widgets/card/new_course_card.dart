@@ -1,5 +1,7 @@
+import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
+import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,11 @@ import '../text/primary_text.dart';
 
 class NewCourseCard extends StatefulWidget {
   final int index;
+  final CardType type;
+  final EdgeInsetsGeometry? padding;
 
-  const NewCourseCard({super.key, required this.index});
+  const NewCourseCard(
+      {super.key, required this.index, this.padding, required this.type});
 
   @override
   State<NewCourseCard> createState() => _RecentCurseCardState();
@@ -25,23 +30,112 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   Widget build(BuildContext context) {
     final index = widget.index;
     final items = [1, 2, 3, 4];
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _image(
-            "https://s3-alpha-sig.figma.com/img/af96/c5c5/f30aa9b307c9cea4157fd83e8241313f?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=cUzaT649xZG-13eTH-mOoyfpa4N3X7e8LPaEavVJgnMknI6xj62nO7ddzNjkRzGUd-i3sFIoEURHBNcN7ZJ7gfRCABnjqRqPoOsC2ysgIXSo3hM48I8UgWJDcDDi7D8vSkl4Y-qpsaEpXiON~caKrz1cc3VEuvyv4jNqFEBGjjXQkDYsB3d0FzuGI5M6PhCK9JF9vRY1fFF4OdD6M2hV~S1t8zVmyGYYmDBANz89cKQUa1Z5fqwW8P7SxmNojwPa2Qiszw-2f05JM9FxrzVuobtBkHdV9epFixt~r39-bl-QJEaj9tKk-BOTUb7jHA59CLZguJEgkAjE~af33dbopw__",
-            "3.4"),
-        _title(),
-        _infoes(),
-        const SizedBox(
-            width: double.infinity,
-            child: PrimaryButton(title: "ورود به جلسه")),
-      ],
+
+    return Padding(
+      padding: widget.padding ?? EdgeInsets.zero,
+      child: Center(
+        child: Container(
+            decoration: BoxDecoration(
+                borderRadius: DesignConfig.highBorderRadius,
+                boxShadow: DesignConfig.defaultShadow,
+                color: Colors.white),
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _image(
+                    "https://s3-alpha-sig.figma.com/img/af96/c5c5/f30aa9b307c9cea4157fd83e8241313f?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=cUzaT649xZG-13eTH-mOoyfpa4N3X7e8LPaEavVJgnMknI6xj62nO7ddzNjkRzGUd-i3sFIoEURHBNcN7ZJ7gfRCABnjqRqPoOsC2ysgIXSo3hM48I8UgWJDcDDi7D8vSkl4Y-qpsaEpXiON~caKrz1cc3VEuvyv4jNqFEBGjjXQkDYsB3d0FzuGI5M6PhCK9JF9vRY1fFF4OdD6M2hV~S1t8zVmyGYYmDBANz89cKQUa1Z5fqwW8P7SxmNojwPa2Qiszw-2f05JM9FxrzVuobtBkHdV9epFixt~r39-bl-QJEaj9tKk-BOTUb7jHA59CLZguJEgkAjE~af33dbopw__",
+                    "3.4"),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _title(),
+                      _infoes(),
+                      _footer(),
+                    ],
+                  ),
+                )
+              ],
+            )),
+      ),
     );
   }
 
-  Column _infoes( ) {
+  Widget _footer() {
+    switch (widget.type) {
+      case CardType.onLearning:
+        return Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Divider(
+                height: 1,
+                color: backgroundColor600,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                        width: MediaQuery.sizeOf(context).width/5,
+                        child: LinearProgress(value: 0.8, minHeight: 8)),
+                    SizedBox(width: 8,),
+                    PrimaryText(
+                        text: "۵۴/۶۳",
+                        style: mThemeData.textTheme.navbarTitle,
+                        color: grayColor900),
+                  ],
+                ),
+                PrimaryButton(title: "دریافت گواهینامه")
+              ],
+            )
+          ],
+        );
+
+      case CardType.marked:
+        return const SizedBox(
+            width: double.infinity,
+            child: PrimaryButton(title: "ورود به جلسه"));
+
+      case CardType.completed:
+        return Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Divider(
+                height: 1,
+                color: backgroundColor600,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    PrimaryText(
+                        text: "امتیاز شما: ",
+                        style: mThemeData.textTheme.navbarTitle,
+                        color: grayColor600),
+                    PrimaryText(
+                        text: "۵۴۶۳ امتیاز",
+                        style: mThemeData.textTheme.navbarTitleBold,
+                        color: primaryColor),
+                  ],
+                ),
+                PrimaryButton(title: "دریافت گواهینامه")
+              ],
+            )
+          ],
+        );
+    }
+  }
+
+  Column _infoes() {
     return Column(
       children: [
         const SizedBox(
@@ -51,10 +145,12 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: IconInfo(icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
+              child: IconInfo(
+                  icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
             ),
             Expanded(
-              child: IconInfo(icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
+              child: IconInfo(
+                  icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
             ),
           ],
         ),
@@ -65,7 +161,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: IconInfo(icon: Assets.icon.outline.moreCircle, desc: "۱٬۳۴۲ فراگیر"),
+              child: IconInfo(
+                  icon: Assets.icon.outline.moreCircle, desc: "۱٬۳۴۲ فراگیر"),
             ),
             Expanded(
               child: IconInfo(icon: Assets.icon.outline.clock, desc: "۵۶ ساعت"),
@@ -79,10 +176,12 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: IconInfo(icon: Assets.icon.outline.chart, desc: "سطح متوسط"),
+              child:
+                  IconInfo(icon: Assets.icon.outline.chart, desc: "سطح متوسط"),
             ),
             Expanded(
-              child: IconInfo(icon: Assets.icon.outline.note2, desc: "مدیریت کسب و کار"),
+              child: IconInfo(
+                  icon: Assets.icon.outline.note2, desc: "مدیریت کسب و کار"),
             ),
           ],
         ),
@@ -134,7 +233,6 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   }
 
   Container _rateBar(String rate) {
-
     return Container(
       decoration: const BoxDecoration(
           color: Colors.white, borderRadius: DesignConfig.highBorderRadius),
