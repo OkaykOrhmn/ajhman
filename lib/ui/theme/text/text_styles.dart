@@ -93,6 +93,7 @@ class AppTextStyles {
 
 extension AppTextStyle on TextTheme {
   TextStyle get headerBold => AppTextStyles.headline3;
+  TextStyle get headerLargeBold => AppTextStyles.headline2;
 
   TextStyle get dialogTitle => AppTextStyles.headline4;
 

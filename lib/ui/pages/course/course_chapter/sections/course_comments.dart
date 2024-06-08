@@ -21,18 +21,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_btn/loading_btn.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../core/enum/state_status.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../widgets/button/loading_btn.dart';
+import '../../../../../gen/assets.gen.dart';
+import '../../../../widgets/button/loading_btn.dart';
 
-class CourseCommentsScreen extends StatefulWidget {
-  const CourseCommentsScreen({super.key});
+class CourseComments extends StatefulWidget {
+  const CourseComments({super.key});
 
   @override
-  State<CourseCommentsScreen> createState() => _CourseCommentsScreenState();
+  State<CourseComments> createState() => _CourseCommentsState();
 }
 
-class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
+class _CourseCommentsState extends State<CourseComments> {
   @override
   void initState() {
     context.read<CommentsBloc>().add(GetComments(chapter: 1, subChapter: 1));
@@ -83,12 +82,12 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
           case CommentStatus.success:
             comments = state.data!;
             return VerticalListView(
-                item: (index) {
+                item: (context, index) {
                   return Column(
                     children: [
                       CommentLayout(index: index, data: comments[index]),
                       VerticalListView(
-                        item: (indexR) {
+                        item: (contextR, indexR) {
                           return ReplyLayout(
                               index: index,
                               data: comments[index].replies![indexR]);
@@ -107,7 +106,7 @@ class _CourseCommentsScreenState extends State<CourseCommentsScreen> {
             return SizedBox();
           default:
             return VerticalListView(
-                item: (index) => Container(
+                item: (context,index) => Container(
                       width: MediaQuery.sizeOf(context).width,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       padding: const EdgeInsets.all(16),

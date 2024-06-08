@@ -43,16 +43,14 @@ class _LearningCompleteScreenState extends State<LearningCompleteScreen> {
             ),
           ),
           VerticalListView(
-            item: (index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: NewCourseCard(
-                type: widget.cardType,
-                index: index,
-                padding: DesignConfig.verticalListViwItemPadding(16, index, 4),
-              ),
+            item: (context,index) => NewCourseCard(
+              type: widget.cardType,
+              index: index,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16).copyWith(top: index == 0? 0: 8),
             ),
             items: [1, 2, 3, 4],
           ),
+          const SizedBox(height: 100,)
         ],
       ),
     );

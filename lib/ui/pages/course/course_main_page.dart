@@ -1,7 +1,7 @@
 import 'package:ajhman/core/enum/state_status.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
-import 'package:ajhman/ui/pages/course/screens/course_info_screen.dart';
+import 'package:ajhman/ui/pages/course/course_info.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
@@ -50,7 +50,7 @@ class _CourseMainPageState extends State<CourseMainPage> {
                   element.isOpen ??= false;
                 });
                 return SingleChildScrollView(
-                    child: CourseInfoScreen(response: state.data));
+                    child: CourseInfo(response: state.data));
               case StateStatus.fail:
                 return Container(
                   width: 200,

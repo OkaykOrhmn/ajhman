@@ -21,7 +21,7 @@ import 'screens/calender_screen.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../theme/text/text_styles.dart';
 import '../../widgets/card/rounded_card_icon.dart';
-import '../../widgets/divider/dashed_line.dart';
+import '../../widgets/divider/horizontal_dashed_line.dart';
 
 class SmartSchedulePage extends StatefulWidget {
   const SmartSchedulePage({super.key});
@@ -174,7 +174,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
               svgGenImage: Assets.icon.outline.calendarTick,
               active: activeCalender),
           Expanded(
-            child: MySeparator(
+            child: HorizontalDashedLine(
               active: activeCalender,
               dashed: activeCalender,
               dashSize: 8,
@@ -184,7 +184,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
           RoundedCardIcon(
               svgGenImage: Assets.icon.outline.timer, active: activeTime),
           Expanded(
-            child: MySeparator(
+            child: HorizontalDashedLine(
               active: activeTime,
               dashed: activeTime,
               dashSize: 8,

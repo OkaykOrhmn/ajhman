@@ -55,6 +55,8 @@ dependencies:
   shimmer: any
   cached_network_image: ^3.3.1
   gif: ^2.3.0
+  audioplayers: ^6.0.0
+  audio_wave: ^0.1.5
 
 dev_dependencies:
   build_runner:

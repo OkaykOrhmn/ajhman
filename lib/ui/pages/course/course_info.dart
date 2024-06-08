@@ -6,29 +6,29 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../gen/assets.gen.dart';
-import '../../../../main.dart';
-import '../../../theme/color/colors.dart';
-import '../../../theme/widget/design_config.dart';
-import '../../../widgets/animation/animated_visibility.dart';
-import '../../../widgets/button/outlined_primary_button.dart';
-import '../../../widgets/image/primary_image_network.dart';
-import '../../../widgets/image/profile_image_network.dart';
-import '../../../widgets/listview/highlight_listview.dart';
-import '../../../widgets/text/icon_info.dart';
-import '../../../widgets/text/primary_text.dart';
-import '../../../widgets/text/title_divider.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../main.dart';
+import '../../theme/color/colors.dart';
+import '../../theme/widget/design_config.dart';
+import '../../widgets/animation/animated_visibility.dart';
+import '../../widgets/button/outlined_primary_button.dart';
+import '../../widgets/image/primary_image_network.dart';
+import '../../widgets/image/profile_image_network.dart';
+import '../../widgets/listview/highlight_listview.dart';
+import '../../widgets/text/icon_info.dart';
+import '../../widgets/text/primary_text.dart';
+import '../../widgets/text/title_divider.dart';
 
-class CourseInfoScreen extends StatefulWidget {
-  const CourseInfoScreen({super.key, required this.response});
+class CourseInfo extends StatefulWidget {
+  const CourseInfo({super.key, required this.response});
 
   final CourseMainResponseModel response;
 
   @override
-  State<CourseInfoScreen> createState() => _CourseInfoScreenState();
+  State<CourseInfo> createState() => _CourseInfoState();
 }
 
-class _CourseInfoScreenState extends State<CourseInfoScreen> {
+class _CourseInfoState extends State<CourseInfo> {
   late CourseMainResponseModel data;
 
   @override

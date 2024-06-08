@@ -47,22 +47,19 @@ class _LearningScreenState extends State<LearningScreen>
         children: [
           _tabBar(),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
-              child: TabBarView(
-                controller: _controller,
-                children: [
-                  LearningCompleteScreen(
-                    cardType: CardType.completed,
-                  ),
-                  LearningCompleteScreen(
-                    cardType: CardType.onLearning,
-                  ),
-                  LearningCompleteScreen(
-                    cardType: CardType.marked,
-                  ),
-                ],
-              ),
+            child: TabBarView(
+              controller: _controller,
+              children: const [
+                LearningCompleteScreen(
+                  cardType: CardType.completed,
+                ),
+                LearningCompleteScreen(
+                  cardType: CardType.onLearning,
+                ),
+                LearningCompleteScreen(
+                  cardType: CardType.marked,
+                ),
+              ],
             ),
           ),
         ],

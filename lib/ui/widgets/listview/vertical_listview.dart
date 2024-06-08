@@ -10,7 +10,7 @@ class VerticalListView extends StatefulWidget {
   final double? width;
   final double? height;
   final ScrollPhysics? physics;
-  final dynamic Function(int) item;
+  final Widget Function(BuildContext,int) item;
 
   const VerticalListView(
       {super.key,
@@ -49,7 +49,7 @@ class _VerticalListViewState extends State<VerticalListView> {
                       width: MediaQuery.sizeOf(context).width,
                       height: 175,
                     ))
-                : widget.item(index);
+                : widget.item(context,index);
           }),
     );
   }
