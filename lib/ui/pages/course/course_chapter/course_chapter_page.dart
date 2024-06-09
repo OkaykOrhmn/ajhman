@@ -3,6 +3,7 @@ import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_audio.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_image.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_text.dart';
+import 'package:ajhman/ui/pages/course/course_chapter/screens/course_video.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_comments.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_details.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_header.dart';
@@ -26,6 +27,14 @@ class CourseChapterPage extends StatefulWidget {
 }
 
 class _CourseChapterPageState extends State<CourseChapterPage> {
+  late CourseTypes courseTypes;
+
+  @override
+  void initState() {
+    courseTypes = CourseTypes.audio;
+    super.initState();
+  }
+
   Widget _chapter(CourseTypes type) {
     switch (type) {
       case CourseTypes.audio:
@@ -38,12 +47,14 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
         return CourseText();
 
       case CourseTypes.video:
-        return SizedBox();
+        return CourseVideo();
 
       default:
         return SizedBox();
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
             _main(),
             CourseDetails(),
             CourseRating(),
-            CourseComments()
+            // CourseComments()
           ],
         ),
       ),
@@ -67,7 +78,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   Column _main() {
     return Column(
       children: [
-        _chapter(CourseTypes.audio),
+        _chapter(courseTypes),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 40),
           child: Row(

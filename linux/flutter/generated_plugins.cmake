@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_linux
   flutter_localization
+  flutter_volume_controller
   smart_auth
 )
 

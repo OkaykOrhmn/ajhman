@@ -9,6 +9,7 @@
 #include <audioplayers_windows/audioplayers_windows_plugin.h>
 #include <connectivity_plus_windows/connectivity_plus_windows_plugin.h>
 #include <flutter_localization/flutter_localization_plugin_c_api.h>
+#include <flutter_volume_controller/flutter_volume_controller_plugin_c_api.h>
 #include <smart_auth/smart_auth_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
@@ -18,6 +19,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("ConnectivityPlusWindowsPlugin"));
   FlutterLocalizationPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterLocalizationPluginCApi"));
+  FlutterVolumeControllerPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterVolumeControllerPluginCApi"));
   SmartAuthPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("SmartAuthPlugin"));
 }

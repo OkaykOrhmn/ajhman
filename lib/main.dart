@@ -1,6 +1,8 @@
 import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
+import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
+import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
@@ -97,6 +99,12 @@ void main() {
     BlocProvider(
       create: (context) => SelectedTabCubit(),
     ),
+    BlocProvider(
+      create: (context) => VideoPlayerCubit(),
+    ),
+    BlocProvider(
+      create: (context) => AudioPlayerCubit(),
+    ),
   ], child: const MyApp()));
 }
 
@@ -141,7 +149,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.splash,
+              initialRoute: RoutePaths.course,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );

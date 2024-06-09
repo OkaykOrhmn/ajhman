@@ -1,15 +1,20 @@
 import 'dart:math';
 
+import 'package:ajhman/core/services/audio_handler.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/widgets/audio/audio_bar.dart';
 import 'package:ajhman/ui/widgets/carousel/carousel_course_image.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:audio_wave/audio_wave.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../gen/assets.gen.dart';
 
@@ -21,22 +26,62 @@ class CourseAudio extends StatefulWidget {
 }
 
 class _CourseAudioState extends State<CourseAudio> {
-
   List<AudioWaveBar> bars = [];
-
+  int size = 100;
+  late AudioHandler audioHandler;
+  late Duration? duration;
+  late Duration? position;
+  late PlayerState? playerState = null;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    audioHandler = AudioHandler();
+    duration = audioHandler.audioDuration;
+    position = audioHandler.audioPosition;
+    _initStreams();
+
     bars.clear();
-    for (int i = 0; i <= 100; i++) {
+    for (int i = 0; i <= size; i++) {
       Random random = Random();
       double randomNumber1 = random.nextDouble();
       bars.add(
         AudioWaveBar(
-            heightFactor: randomNumber1,
-            color: i>60? primaryColor:grayColor300,
-            radius: 16),
+            heightFactor: randomNumber1, color: grayColor300, radius: 16),
       );
+    }
+
+    super.initState();
+  }
+
+  void _initStreams() {
+    audioHandler.durationSubscription((d) => setState(() => duration = d));
+    audioHandler.positionSubscription((p) => setState(() => position = p));
+    audioHandler.playerCompleteSubscription(() => null);
+    audioHandler.playerStateChangeSubscription(
+        (p0) => setState(() => playerState = p0));
+  }
+
+  @override
+  void dispose() {
+    audioHandler.durationSubscriptionS?.cancel();
+    audioHandler.positionSubscriptionS?.cancel();
+    audioHandler.playerCompleteSubscriptionS?.cancel();
+    audioHandler.playerStateChangeSubscriptionS?.cancel();
+    if (audioHandler.isPlaying) {
+      audioHandler.stop();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    for (int i = 0; i <= size; i++) {
+      final a = (position!.inMilliseconds * 100) / duration!.inMilliseconds;
+      if (i <= a) {
+        bars[i].color = primaryColor;
+      } else {
+        bars[i].color = grayColor300;
+      }
     }
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -49,66 +94,100 @@ class _CourseAudioState extends State<CourseAudio> {
           SizedBox(
             height: 16,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 24,horizontal: 16),
-            decoration: BoxDecoration(
-                borderRadius: DesignConfig.highBorderRadius,
-                boxShadow: DesignConfig.lowShadow,
-                color: backgroundColor100),
-            child: Column(
-              children: [
-                AudioWave(
-                  height: 60,
-                  width: MediaQuery.sizeOf(context).width - 64,
-                  spacing: 2.5,
-                  beatRate: Duration.zero,
-                  animationLoop: 0,
-                  bars: bars,
-                  animation: false,
-                ),
-                SizedBox(height: 16,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        PrimaryText(
-                            text: "1X",
-                            style: mThemeData.textTheme.navbarTitle,
-                            color: grayColor900),
-                        SizedBox(
-                          width: 16,
+          playerState == null
+              ? SizedBox(
+                  height: 200,
+                  child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        color: Colors.white,
+                      )),
+                )
+              : Container(
+                  padding: EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                  decoration: BoxDecoration(
+                      borderRadius: DesignConfig.highBorderRadius,
+                      boxShadow: DesignConfig.lowShadow,
+                      color: backgroundColor100),
+                  child: Column(
+                    children: [
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Stack(
+                          children: [
+                            AudioWave(
+                              height: 60,
+                              width: MediaQuery.sizeOf(context).width - 64,
+                              spacing: 2.5,
+                              beatRate: Duration.zero,
+                              animationLoop: 0,
+                              bars: bars,
+                              animation: false,
+                            ),
+                            Positioned.fill(
+                              child: SliderTheme(
+                                data: const SliderThemeData(
+                                  thumbShape: RoundSliderThumbShape(
+                                      elevation: 0,
+                                      disabledThumbRadius: 0,
+                                      enabledThumbRadius: 0,
+                                      pressedElevation: 0),
+                                  overlayColor: Colors.transparent,
+                                ),
+                                child: Slider(
+                                  inactiveColor: Colors.transparent,
+                                  activeColor: Colors.transparent,
+                                  secondaryActiveColor: Colors.transparent,
+                                  thumbColor: Colors.transparent,
+                                  overlayColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) => Colors.transparent),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (duration == null) {
+                                        return;
+                                      }
+
+                                      final position =
+                                          value * duration!.inMilliseconds;
+                                      audioHandler.player.seek(Duration(
+                                          milliseconds: position.round()));
+
+                                      var a = (position * size) /
+                                          duration!.inMilliseconds;
+                                      for (int i = 0; i <= size; i++) {
+                                        if (i <= a) {
+                                          bars[i].color = primaryColor;
+                                        } else {
+                                          bars[i].color = grayColor300;
+                                        }
+                                      }
+                                    });
+                                  },
+                                  value: (position != null &&
+                                          duration != null &&
+                                          position!.inMilliseconds > 0 &&
+                                          position!.inMilliseconds <
+                                              duration!.inMilliseconds)
+                                      ? position!.inMilliseconds /
+                                          duration!.inMilliseconds
+                                      : 0.0,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        Assets.icon.outline.download
-                            .svg(width: 24, height: 24, color: grayColor800),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Assets.icon.outline.volumeHigh
-                            .svg(width: 24, height: 24, color: grayColor800),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Assets.icon.outline.forward5Seconds
-                            .svg(width: 24, height: 24, color: grayColor800),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Assets.icon.outline.backward5Seconds
-                            .svg(width: 24, height: 24, color: grayColor800),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Assets.icon.outline.pause
-                            .svg(width: 24, height: 24, color: primaryColor),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      AudioBar(
+                        audioHandler: audioHandler,
+                      )
+                    ],
+                  ),
+                )
         ],
       ),
     );

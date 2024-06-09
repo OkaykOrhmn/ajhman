@@ -6,6 +6,7 @@ enum FadeMode {
   vertical,
   horizontal,
   both,
+  none,
 }
 
 class AnimatedVisibility extends StatefulWidget {

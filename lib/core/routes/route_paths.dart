@@ -6,6 +6,5 @@ class RoutePaths{
   static const String smartSchedule = '/smart-schedule';
   static const String courseMain = '/course-main';
   static const String course = '/course';
-  static const String audio = '/audio-player';
 
 }
