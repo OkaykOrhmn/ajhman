@@ -91,13 +91,15 @@ class Subchapters {
   int? id;
   String? type;
   String? name;
+  bool? visited;
 
-  Subchapters({this.id, this.type, this.name});
+  Subchapters({this.id, this.type, this.name,this.visited});
 
   Subchapters.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     name = json['name'];
+    visited = json['visited'];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +107,7 @@ class Subchapters {
     data['id'] = this.id;
     data['type'] = this.type;
     data['name'] = this.name;
+    data['visited'] = this.visited;
     return data;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:ajhman/core/enum/card_type.dart';
+import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -125,7 +126,7 @@ class ForYouScreen extends StatelessWidget {
                       child: SizedBox(
                           height: 480,
                           child: NewCourseCard(
-                              index: index, type: CardType.onLearning)),
+                              index: index, type: CardType.onLearning, response: NewCourseCardModel(),)),
                     )
                   ],
                 );

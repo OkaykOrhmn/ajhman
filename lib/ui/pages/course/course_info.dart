@@ -1,6 +1,7 @@
 import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
+import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,10 +71,9 @@ class _CourseInfoState extends State<CourseInfo> {
                   bottomRight: DesignConfig.aVeryHighBorderRadius),
               color: primaryColor,
             ),
-            child: const PrimaryImageNetwork(
-                src:
-                    "https://s3-alpha-sig.figma.com/img/3f9b/aad8/77bb617140ad8559927012205237ce01?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Snv8nK5EGr8NvHp4mj0wsxxtBVycYzhqCGZD5Ax8j-JT6ZpmEJ-nG5zNsHin6KSTaKka-av0R4QQ--XoX5zxdiQjTtKC32faE5sXtNnYIRBa3C12y-yq2q3WZ9RlmgRveutvI96Ag4Au9bLtXoa0ZYCrdXs1S2NArDN0FUfxDEuLwuYN7H9mSxLbNfH783YRuCESs9qzjb1u4tG4RSN9J96qSQmKfjvpfRvyqE2nzUDBV3hOPUhtIzRHFUHsjpFJ42ZRHtRLbCDn1xpeHEvPP4Skz5m8BHz-vWSW09Y-37~P-~YRgVL6DsqfCaGnzv7HxLw3jKrz9uFDtovhobMdEQ__",
-                // src: getImageUrl(data.image),
+            child: PrimaryImageNetwork(
+                // src: "https://s3-alpha-sig.figma.com/img/3f9b/aad8/77bb617140ad8559927012205237ce01?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Snv8nK5EGr8NvHp4mj0wsxxtBVycYzhqCGZD5Ax8j-JT6ZpmEJ-nG5zNsHin6KSTaKka-av0R4QQ--XoX5zxdiQjTtKC32faE5sXtNnYIRBa3C12y-yq2q3WZ9RlmgRveutvI96Ag4Au9bLtXoa0ZYCrdXs1S2NArDN0FUfxDEuLwuYN7H9mSxLbNfH783YRuCESs9qzjb1u4tG4RSN9J96qSQmKfjvpfRvyqE2nzUDBV3hOPUhtIzRHFUHsjpFJ42ZRHtRLbCDn1xpeHEvPP4Skz5m8BHz-vWSW09Y-37~P-~YRgVL6DsqfCaGnzv7HxLw3jKrz9uFDtovhobMdEQ__",
+                src: getImageUrl(data.image),
                 aspectRatio: 16 / 9),
           ),
         ),
@@ -548,17 +548,18 @@ class _CourseInfoState extends State<CourseInfo> {
     final subchapter = chapter.subchapters![index];
     CourseTypes type = getType(subchapter.type!);
     return InkWell(
-      onTap: (){
-        Navigator.of(context).pushNamed(RoutePaths.course);
+      onTap: () {
+        Navigator.of(context).pushNamed(RoutePaths.course,
+            arguments: CourseArgs(chapter.id,chapter.name, subchapter.id, type));
       },
       child: Center(
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           padding: const EdgeInsets.all(18),
           margin: const EdgeInsets.symmetric(vertical: 8),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: backgroundColor200),
+              color: subchapter.visited! ? backgroundColor200 : primaryColor50),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

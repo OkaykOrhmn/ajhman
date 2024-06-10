@@ -1,10 +1,17 @@
+import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
+import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
+import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/core/utils/usefull_funcs.dart';
+import 'package:ajhman/data/args/course_main_args.dart';
+import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
@@ -17,20 +24,30 @@ class NewCourseCard extends StatefulWidget {
   final int index;
   final CardType type;
   final EdgeInsetsGeometry? padding;
+  final NewCourseCardModel response;
 
-  const NewCourseCard(
-      {super.key, required this.index, this.padding, required this.type});
+  const NewCourseCard({super.key,
+    required this.index,
+    this.padding,
+    required this.type,
+    required this.response});
 
   @override
   State<NewCourseCard> createState() => _RecentCurseCardState();
 }
 
 class _RecentCurseCardState extends State<NewCourseCard> {
+  late NewCourseCardModel response;
+
+  @override
+  void initState() {
+    response = widget.response;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final index = widget.index;
-    final items = [1, 2, 3, 4];
-
     return Padding(
       padding: widget.padding ?? EdgeInsets.zero,
       child: Center(
@@ -44,9 +61,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _image(
-                    "https://s3-alpha-sig.figma.com/img/af96/c5c5/f30aa9b307c9cea4157fd83e8241313f?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=cUzaT649xZG-13eTH-mOoyfpa4N3X7e8LPaEavVJgnMknI6xj62nO7ddzNjkRzGUd-i3sFIoEURHBNcN7ZJ7gfRCABnjqRqPoOsC2ysgIXSo3hM48I8UgWJDcDDi7D8vSkl4Y-qpsaEpXiON~caKrz1cc3VEuvyv4jNqFEBGjjXQkDYsB3d0FzuGI5M6PhCK9JF9vRY1fFF4OdD6M2hV~S1t8zVmyGYYmDBANz89cKQUa1Z5fqwW8P7SxmNojwPa2Qiszw-2f05JM9FxrzVuobtBkHdV9epFixt~r39-bl-QJEaj9tKk-BOTUb7jHA59CLZguJEgkAjE~af33dbopw__",
-                    "3.4"),
+                _image(getImageUrl(response.image.toString()), "3.4"),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
@@ -82,9 +97,13 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                 Row(
                   children: [
                     SizedBox(
-                        width: MediaQuery.sizeOf(context).width/5,
+                        width: MediaQuery
+                            .sizeOf(context)
+                            .width / 5,
                         child: LinearProgress(value: 0.8, minHeight: 8)),
-                    SizedBox(width: 8,),
+                    SizedBox(
+                      width: 8,
+                    ),
                     PrimaryText(
                         text: "۵۴/۶۳",
                         style: mThemeData.textTheme.navbarTitle,
@@ -97,10 +116,15 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           ],
         );
 
-      case CardType.marked:
-        return const SizedBox(
-            width: double.infinity,
-            child: PrimaryButton(title: "ورود به جلسه"));
+      case CardType.normal:
+        return PrimaryButton(
+          fill: true,
+          title: "ورود به جلسه",
+          onClick: () {
+            navigatorKey.currentState!.pushNamed(RoutePaths.courseMain,
+                arguments: CourseMainArgs(courseId: response.id!));
+          },
+        );
 
       case CardType.completed:
         return Column(
@@ -162,10 +186,13 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           children: [
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.moreCircle, desc: "۱٬۳۴۲ فراگیر"),
+                  icon: Assets.icon.outline.moreCircle,
+                  desc: "${response.users.toString()} فراگیر"),
             ),
             Expanded(
-              child: IconInfo(icon: Assets.icon.outline.clock, desc: "۵۶ ساعت"),
+              child: IconInfo(
+                  icon: Assets.icon.outline.clock,
+                  desc: "${response.time.toString()} ساعت"),
             ),
           ],
         ),
@@ -176,12 +203,14 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child:
-                  IconInfo(icon: Assets.icon.outline.chart, desc: "سطح متوسط"),
+              child: IconInfo(
+                  icon: Assets.icon.outline.chart,
+                  desc: "سطح ${getLevel(response.level)}"),
             ),
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.note2, desc: "مدیریت کسب و کار"),
+                  icon: Assets.icon.outline.note2,
+                  desc: response.category!.name.toString()),
             ),
           ],
         ),
@@ -202,7 +231,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           maxWidth: 190,
         ),
         child: PrimaryText(
-          text: "جایگاه مدیریت دانش و فناوری اطلاعات در سازمان یادگیرنده",
+          text: response.name.toString(),
           style: mThemeData.textTheme.titleBold,
           textAlign: TextAlign.start,
           color: grayColor900,
@@ -217,9 +246,9 @@ class _RecentCurseCardState extends State<NewCourseCard> {
       children: [
         PrimaryImageNetwork(src: src, aspectRatio: 16 / 9),
         Positioned(
-            top: 4,
-            right: 4,
-            left: 4,
+            top: 12,
+            right: 12,
+            left: 12,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -236,7 +265,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
     return Container(
       decoration: const BoxDecoration(
           color: Colors.white, borderRadius: DesignConfig.highBorderRadius),
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       child: Center(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,7 +278,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                   color: grayColor700),
             ),
             const SizedBox(
-              width: 2,
+              width: 4,
             ),
             const Icon(
               CupertinoIcons.star_fill,
@@ -262,15 +291,37 @@ class _RecentCurseCardState extends State<NewCourseCard> {
     );
   }
 
-  Container _bookMark() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-      padding: const EdgeInsets.all(5),
-      child: Assets.icon.outlineArchive
-          .svg(width: 14, height: 14, color: primaryColor),
+  Widget _bookMark() {
+    return BlocProvider(
+      create: (context) => MarkCubit(response.marked!),
+      child: BlocBuilder<MarkCubit, MarkState>(
+          builder: (context, state) {
+            response.marked = state.mark;
+            return InkWell(
+                onTap: () {
+                  final event = context.read<MarkCubit>();
+                  if (state.mark) {
+                    event.deleteMark(response.id!);
+                  } else {
+                    event.postMark(response.id!);
+                  }
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  width: 28,
+                  height: 28,
+                  child: Center(
+                    child: state.mark
+                        ? Assets.icon.boldArchive
+                        .svg(width: 18, height: 18, color: primaryColor)
+                        : Assets.icon.outlineArchive
+                        .svg(width: 18, height: 18, color: primaryColor),
+                  ),
+                ));
+          }),
     );
   }
 }

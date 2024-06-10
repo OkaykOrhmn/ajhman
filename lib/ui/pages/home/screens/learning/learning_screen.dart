@@ -57,7 +57,7 @@ class _LearningScreenState extends State<LearningScreen>
                   cardType: CardType.onLearning,
                 ),
                 LearningCompleteScreen(
-                  cardType: CardType.marked,
+                  cardType: CardType.normal,
                 ),
               ],
             ),

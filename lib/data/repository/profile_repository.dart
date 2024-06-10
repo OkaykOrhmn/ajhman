@@ -20,7 +20,7 @@ class ProfileRepository implements ProfileInformation {
   @override
   Future<ProfileResponseModel> getProfile() async {
     try {
-      Response response = await dioHelper.getRequest(ApiEndPoints.profile);
+      Response response = await dioHelper.getRequest(ApiEndPoints.profile,null);
       final postMaps = response.data;
       return ProfileResponseModel.fromJson(postMaps);
     } catch (ex) {

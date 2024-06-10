@@ -1,7 +1,10 @@
+import 'package:ajhman/core/bloc/roadmap/roadmap_bloc.dart';
 import 'package:ajhman/core/enum/state_status.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
+import 'package:ajhman/data/args/course_main_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/ui/pages/course/course_info.dart';
+import 'package:ajhman/ui/pages/roadmap/roadmap_page.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
@@ -24,7 +27,9 @@ import '../../../core/bloc/course/main/course_main_bloc.dart';
 import '../../../gen/assets.gen.dart';
 
 class CourseMainPage extends StatefulWidget {
-  const CourseMainPage({super.key});
+  final CourseMainArgs args;
+
+  const CourseMainPage({super.key, required this.args});
 
   @override
   State<CourseMainPage> createState() => _CourseMainPageState();
@@ -33,7 +38,8 @@ class CourseMainPage extends StatefulWidget {
 class _CourseMainPageState extends State<CourseMainPage> {
   @override
   void initState() {
-    context.read<CourseMainBloc>().add(GetCourseMainInfo(categoriesId: 4));
+    // context.read<CourseMainBloc>().add(GetCourseMainInfo(courseId: widget.args.courseId!));
+    context.read<RoadmapBloc>().add(GetRoadMap(courseId: widget.args.courseId!));
     super.initState();
   }
 
@@ -41,16 +47,16 @@ class _CourseMainPageState extends State<CourseMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const ReversibleAppBar(title: "محتوای دوره"),
-      body: BlocBuilder<CourseMainBloc, CourseMainState>(
+      body: BlocBuilder<RoadmapBloc, RoadmapState>(
         builder: (context, state) {
-          if (state.type == ApiEndPoints.mainCourse) {
             switch (state.status) {
               case StateStatus.success:
-                state.data.chapters!.forEach((element) {
-                  element.isOpen ??= false;
-                });
-                return SingleChildScrollView(
-                    child: CourseInfo(response: state.data));
+                // state.data.chapters!.forEach((element) {
+                //   element.isOpen ??= false;
+                // });
+                // return SingleChildScrollView(
+                //     child: CourseInfo(response: state.data));
+                return RoadMapPage(response: state.data!);
               case StateStatus.fail:
                 return Container(
                   width: 200,
@@ -68,14 +74,7 @@ class _CourseMainPageState extends State<CourseMainPage> {
                   ),
                 );
             }
-          } else {
-            return Center(
-              child: Gif(
-                image: Assets.gif.roadMapLoading.provider(),
-                autostart: Autostart.loop,
-              ),
-            );
-          }
+
         },
       ),
     );

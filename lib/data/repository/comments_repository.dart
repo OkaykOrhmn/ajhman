@@ -14,7 +14,7 @@ import '../model/auth/auth_login_user_rsponse.dart';
 
 final commentsRepository = CommentsRepository(DioHelper());
 
-class CommentsRepository implements ProfileInformation {
+class CommentsRepository implements Comment {
   final DioHelper dioHelper;
 
   CommentsRepository(this.dioHelper);
@@ -24,7 +24,7 @@ class CommentsRepository implements ProfileInformation {
       int chapter, int subchapter) async {
     try {
       Response response = await dioHelper.getRequest(
-          "${ApiEndPoints.chapter}/$chapter${ApiEndPoints.subchapter}/$subchapter${ApiEndPoints.comment}");
+          "${ApiEndPoints.chapter}/$chapter${ApiEndPoints.subchapter}/$subchapter${ApiEndPoints.comment}",null);
       final List<dynamic> postMaps = response.data;
       return postMaps.map((e) => CommentsResponseModel.fromJson(e)).toList();
     } catch (ex) {
@@ -61,7 +61,7 @@ class CommentsRepository implements ProfileInformation {
   }
 }
 
-abstract class ProfileInformation {
+abstract class Comment {
   Future<List<CommentsResponseModel>> getComments(int chapter, int subchapter);
 
   Future<Response> putFeed(

@@ -1,4 +1,7 @@
 import 'package:ajhman/core/enum/card_type.dart';
+import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/data/args/category_args.dart';
+import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -49,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TitleDivider(title: "دوره‌های اخیرا دیده شده", btn: () {}),
             HorizontalListView(
               height: 190,
-              width: MediaQuery.sizeOf(context).width/1.1,
+              width: MediaQuery.sizeOf(context).width / 1.1,
               item: (index) => RecentCourseCard(
                   index: index,
                   padding: DesignConfig.horizontalListViwItemPadding(
@@ -63,10 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
             HorizontalListView(
               height: 500,
               item: (index) => NewCourseCard(
-                type: CardType.marked,
+                type: CardType.normal,
                 index: index,
                 padding: DesignConfig.horizontalListViwItemPadding(
                     16, index, items.length),
+                response: NewCourseCardModel(),
               ),
               items: items,
               width: MediaQuery.sizeOf(context).width / 1.2,
@@ -144,16 +148,17 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Row(
             children: [
-              _iconBtn("توسعه فردی", Assets.icon.twotone.userOctagon),
-              _iconBtn("مدیریت کسب و کار", Assets.icon.twotone.presentionChart),
-              _iconBtn("آژمان پلاس", Assets.icon.twotone.crown),
+              _iconBtn(1, "توسعه فردی", Assets.icon.twotone.userOctagon),
+              _iconBtn(
+                  2, "مدیریت کسب و کار", Assets.icon.twotone.presentionChart),
+              _iconBtn(3, "آژمان پلاس", Assets.icon.twotone.crown),
             ],
           ),
           Row(
             children: [
-              _iconBtn("سواد مالی", Assets.icon.twotone.securityCard),
-              _iconBtn("سواد فناوری", Assets.icon.twotone.monitorMobbile),
-              _iconBtn("لقمه کتاب", Assets.icon.twotone.book),
+              _iconBtn(4, "سواد مالی", Assets.icon.twotone.securityCard),
+              _iconBtn(5, "سواد فناوری", Assets.icon.twotone.monitorMobbile),
+              _iconBtn(6, "لقمه کتاب", Assets.icon.twotone.book),
             ],
           ),
         ],
@@ -161,11 +166,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _iconBtn(String title, SvgGenImage icon) {
+  Widget _iconBtn(int index, String title, SvgGenImage icon) {
     return Expanded(
       child: InkWell(
         borderRadius: DesignConfig.highBorderRadius,
-        onTap: () {},
+        onTap: () {
+          navigatorKey.currentState!.pushNamed(RoutePaths.category,
+              arguments: CategoryArgs(categoriesId: index));
+        },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 0, 8, 16),
           child: Container(

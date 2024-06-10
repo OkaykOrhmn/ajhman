@@ -1,4 +1,5 @@
 import 'package:ajhman/core/enum/card_type.dart';
+import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,7 +47,7 @@ class _LearningCompleteScreenState extends State<LearningCompleteScreen> {
             item: (context,index) => NewCourseCard(
               type: widget.cardType,
               index: index,
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16).copyWith(top: index == 0? 0: 8),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16).copyWith(top: index == 0? 0: 8), response: NewCourseCardModel(),
             ),
             items: [1, 2, 3, 4],
           ),

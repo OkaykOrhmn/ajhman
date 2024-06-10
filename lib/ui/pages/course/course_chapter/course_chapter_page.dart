@@ -16,11 +16,16 @@ import 'package:ajhman/ui/widgets/button/custom_primary_button.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../data/args/course_args.dart';
 import '../../../../gen/assets.gen.dart';
 
 class CourseChapterPage extends StatefulWidget {
-  const CourseChapterPage({super.key});
+  final CourseArgs args;
+
+  const CourseChapterPage({super.key, required this.args});
 
   @override
   State<CourseChapterPage> createState() => _CourseChapterPageState();
@@ -31,7 +36,8 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
 
   @override
   void initState() {
-    courseTypes = CourseTypes.audio;
+    courseTypes = widget.args.courseType!;
+    context.read<ChapterBloc>().add(GetInfoChapter(args: widget.args));
     super.initState();
   }
 
@@ -54,23 +60,31 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const ReversibleAppBar(title: "محتوای دوره"),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            CourseHeader(),
-            _main(),
-            CourseDetails(),
-            CourseRating(),
-            // CourseComments()
-          ],
-        ),
+      body: BlocBuilder<ChapterBloc, ChapterState>(
+        builder: (context, state) {
+          if (state.status == ChapterStateStatus.success) {
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  CourseHeader(title: widget.args.chapterTitle.toString(),),
+                  _main(),
+                  CourseDetails(),
+                  CourseRating(),
+                  // CourseComments()
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
@@ -80,7 +94,8 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
       children: [
         _chapter(courseTypes),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 40),
+          padding:
+              const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 40),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

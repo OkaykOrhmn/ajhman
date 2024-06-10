@@ -28,7 +28,7 @@ class AudioHandler {
 
   String get positionText => audioPosition?.toString().split('.').first ?? '';
 
-  AudioHandler() {
+  AudioHandler(String url) {
     _player = AudioPlayer();
 
     // Set the release mode to keep the source after playback has completed.
@@ -38,8 +38,9 @@ class AudioHandler {
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
 
     _player
-        .play(UrlSource(
-            'https://bedunim.ir/wp-content/uploads/2024/06/02.Mehrad-Hidden-Shayea-Romania-320.mp3'))
+        // .play(UrlSource(
+        //     'https://bedunim.ir/wp-content/uploads/2024/06/02.Mehrad-Hidden-Shayea-Romania-320.mp3'))
+        .play(UrlSource(url))
         .then((value) {
       _player.pause();
       isLoading = false;
@@ -73,6 +74,7 @@ class AudioHandler {
   StreamSubscription? playerCompleteSubscription(Function() func) {
     return playerCompleteSubscriptionS =
         player.onPlayerComplete.listen((event) {
+      stop();
       func();
     });
   }

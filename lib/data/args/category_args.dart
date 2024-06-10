@@ -1,9 +1,9 @@
-class CurseMainArgs {
+class CategoryArgs {
   int? categoriesId;
 
-  CurseMainArgs({this.categoriesId});
+  CategoryArgs({this.categoriesId});
 
-  CurseMainArgs.fromJson(Map<String, dynamic> json) {
+  CategoryArgs.fromJson(Map<String, dynamic> json) {
     categoriesId = json['categoriesId'];
   }
 

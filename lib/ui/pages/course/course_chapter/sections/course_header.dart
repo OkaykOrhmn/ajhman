@@ -6,9 +6,13 @@ import 'package:ajhman/ui/widgets/progress/circle_progress.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/bloc/chapter/chapter_bloc.dart';
 
 class CourseHeader extends StatefulWidget {
-  const CourseHeader({super.key});
+  final String title;
+  const CourseHeader({super.key, required this.title});
 
   @override
   State<CourseHeader> createState() => _CourseHeaderState();
@@ -17,6 +21,7 @@ class CourseHeader extends StatefulWidget {
 class _CourseHeaderState extends State<CourseHeader> {
   @override
   Widget build(BuildContext context) {
+    final data = context.read<ChapterBloc>().state.data!;
     return Column(
       children: [
         Container(
@@ -28,7 +33,7 @@ class _CourseHeaderState extends State<CourseHeader> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               PrimaryText(
-                  text: "دوره آموزشی فنون مذاکره ",
+                  text: widget.title,
                   style: mThemeData.textTheme.titleBold,
                   color: CupertinoColors.white),
               Container(
@@ -65,7 +70,7 @@ class _CourseHeaderState extends State<CourseHeader> {
           ),
         ),
         SizedBox(height: 24,),
-        PrimaryText(text: "بهترین روش مذاکره در ملاقات‌های شرکتی", style: mThemeData.textTheme.titleBold, color: primaryColor900),
+        PrimaryText(text: data.name.toString(), style: mThemeData.textTheme.titleBold, color: primaryColor900),
         SizedBox(height: 40,),
 
 

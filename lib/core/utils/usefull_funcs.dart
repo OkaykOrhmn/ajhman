@@ -58,3 +58,12 @@ double convertDatetimeComment(String createdAt) {
   DateTime todayDate = DateTime.now();
   return daysBetween(createdDate, todayDate);
 }
+
+CourseTypes? getTypeOfCourse(String type){
+  for (var element in CourseTypes.values) {
+    if(element.type == type){
+      return element;
+    }
+  }
+  return null;
+}

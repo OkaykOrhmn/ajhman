@@ -43,23 +43,25 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
           } catch (ex) {}
         }
 
-        return buttons[index].active
-            ? PrimaryButton(
-                title: buttons[index].name,
-                onClick: () {
-                  setState(() {
-                    click();
-                  });
-                },
-              )
-            : OutlinedPrimaryButton(
-                title: buttons[index].name,
-                onClick: () {
-                  setState(() {
-                    click();
-                  });
-                },
-              );
+        return Expanded(
+          child: buttons[index].active
+              ? PrimaryButton(
+                  title: buttons[index].name,
+                  onClick: () {
+                    setState(() {
+                      click();
+                    });
+                  },
+                )
+              : OutlinedPrimaryButton(
+                  title: buttons[index].name,
+                  onClick: () {
+                    setState(() {
+                      click();
+                    });
+                  },
+                ),
+        );
       }),
     );
   }

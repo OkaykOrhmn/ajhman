@@ -2,5 +2,5 @@
 enum CardType{
   completed,
   onLearning,
-  marked
+  normal
 }

@@ -44,9 +44,9 @@ class VideoHandler{
 
 
 
-  VideoHandler(BuildContext context , Function() whenInitialize){
+  VideoHandler(BuildContext context ,String url, Function() whenInitialize){
     _customVideoPlayerWebSettings =   CustomVideoPlayerWebSettings(
-      src: longVideo,
+      src: url,
     );
     _videoPlayerController = CachedVideoPlayerController.network(
       longVideo,

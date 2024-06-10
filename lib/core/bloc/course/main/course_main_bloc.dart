@@ -1,4 +1,5 @@
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:ajhman/data/model/roadmap_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -19,7 +20,7 @@ class CourseMainBloc extends Bloc<CourseMainEvent, CourseMainState> {
         var result = state;
         var type = ApiEndPoints.mainCourse;
         try {
-          CourseMainResponseModel response = await courseRepository.getMainCurse(event.categoriesId);
+          CourseMainResponseModel response = await courseRepository.getMainCurse(event.courseId);
           result = CourseMainState(
               status: StateStatus.success, type: type, data: response);
           emit(result);

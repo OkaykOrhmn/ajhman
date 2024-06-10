@@ -113,6 +113,38 @@ class $AssetsImageGen {
   List<AssetGenImage> get values => [calendaFrame, timerFrame];
 }
 
+class $AssetsShapeGen {
+  const $AssetsShapeGen();
+
+  /// File path: assets/shape/shape-1.svg
+  SvgGenImage get shape1 => const SvgGenImage('assets/shape/shape-1.svg');
+
+  /// File path: assets/shape/shape-2.svg
+  SvgGenImage get shape2 => const SvgGenImage('assets/shape/shape-2.svg');
+
+  /// File path: assets/shape/shape-3.svg
+  SvgGenImage get shape3 => const SvgGenImage('assets/shape/shape-3.svg');
+
+  /// File path: assets/shape/shape-4.svg
+  SvgGenImage get shape4 => const SvgGenImage('assets/shape/shape-4.svg');
+
+  /// File path: assets/shape/shape-5.svg
+  SvgGenImage get shape5 => const SvgGenImage('assets/shape/shape-5.svg');
+
+  /// File path: assets/shape/shape-6.svg
+  SvgGenImage get shape6 => const SvgGenImage('assets/shape/shape-6.svg');
+
+  /// File path: assets/shape/shape-7.svg
+  SvgGenImage get shape7 => const SvgGenImage('assets/shape/shape-7.svg');
+
+  /// File path: assets/shape/shape.svg
+  SvgGenImage get shape => const SvgGenImage('assets/shape/shape.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values =>
+      [shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape];
+}
+
 class $AssetsIconBlodGen {
   const $AssetsIconBlodGen();
 
@@ -675,6 +707,7 @@ class Assets {
   static const $AssetsGifGen gif = $AssetsGifGen();
   static const $AssetsIconGen icon = $AssetsIconGen();
   static const $AssetsImageGen image = $AssetsImageGen();
+  static const $AssetsShapeGen shape = $AssetsShapeGen();
 }
 
 class AssetGenImage {

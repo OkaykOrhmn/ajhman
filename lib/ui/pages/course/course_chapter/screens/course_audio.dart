@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/core/services/audio_handler.dart';
+import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -14,8 +16,11 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../../core/cubit/audio/audio_player_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
 
 class CourseAudio extends StatefulWidget {
@@ -32,10 +37,23 @@ class _CourseAudioState extends State<CourseAudio> {
   late Duration? duration;
   late Duration? position;
   late PlayerState? playerState = null;
+  late ChapterModel data;
+  late Media banner;
+  late Media audio;
 
   @override
   void initState() {
-    audioHandler = AudioHandler();
+    data = context.read<ChapterBloc>().state.data!;
+    for (var element in data.media!) {
+      if (element.type == CourseTypes.image.type) {
+        banner = element;
+      }
+      if (element.type == CourseTypes.audio.type) {
+        audio = element;
+      }
+    }
+
+    audioHandler = AudioHandler(audio.source.toString());
     duration = audioHandler.audioDuration;
     position = audioHandler.audioPosition;
     _initStreams();
@@ -56,9 +74,11 @@ class _CourseAudioState extends State<CourseAudio> {
   void _initStreams() {
     audioHandler.durationSubscription((d) => setState(() => duration = d));
     audioHandler.positionSubscription((p) => setState(() => position = p));
-    audioHandler.playerCompleteSubscription(() => null);
-    audioHandler.playerStateChangeSubscription(
-        (p0) => setState(() => playerState = p0));
+    audioHandler.playerCompleteSubscription(
+        () => context.read<AudioPlayerCubit>().setPause(true));
+    audioHandler.playerStateChangeSubscription((p0) => setState(() {
+          playerState = p0;
+        }));
   }
 
   @override
@@ -83,13 +103,15 @@ class _CourseAudioState extends State<CourseAudio> {
         bars[i].color = grayColor300;
       }
     }
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           PrimaryImageNetwork(
-              src:
-                  "https://www.figma.com/file/Qe9pcE7Ts9ZtdwPvUUlBmA/image/ff1d273ecaa678018bbc0b2e8ad787cda708a713",
+              // src:
+              // "https://www.figma.com/file/Qe9pcE7Ts9ZtdwPvUUlBmA/image/ff1d273ecaa678018bbc0b2e8ad787cda708a713",
+              src: banner.source.toString(),
               aspectRatio: 16 / 9),
           SizedBox(
             height: 16,

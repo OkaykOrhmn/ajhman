@@ -17,8 +17,10 @@ import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
 import 'package:appinio_video_player/src/fullscreen_video_player.dart';
 
+import '../../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../../core/cubit/video/video_player_cubit.dart';
 import '../../../../../core/services/video_handler.dart';
+import '../../../../../data/model/chapter_model.dart';
 import '../../../../../gen/assets.gen.dart';
 
 class CourseVideo extends StatefulWidget {
@@ -31,6 +33,8 @@ class CourseVideo extends StatefulWidget {
 class _CourseVideoState extends State<CourseVideo> {
   bool loading = true;
   late VideoHandler videoHandler;
+  late ChapterModel data;
+  late Media video;
 
   void _whenInitialize() {
     final read = context.read<VideoPlayerCubit>();
@@ -41,8 +45,11 @@ class _CourseVideoState extends State<CourseVideo> {
   @override
   void initState() {
     super.initState();
+    data = context.read<ChapterBloc>().state.data!;
+    video = data.media![0];
 
-    videoHandler = VideoHandler(context, _whenInitialize);
+    videoHandler =
+        VideoHandler(context, video.source.toString(), _whenInitialize);
 
     videoHandler.customVideoPlayerController.videoPlayerController
         .addListener(() {
@@ -81,6 +88,11 @@ class _CourseVideoState extends State<CourseVideo> {
   @override
   void dispose() {
     videoHandler.customVideoPlayerController.dispose();
+    if (videoHandler
+        .customVideoPlayerController.videoPlayerController.value.isPlaying) {
+      videoHandler.customVideoPlayerController.videoPlayerController.pause();
+      videoHandler.customVideoPlayerController.videoPlayerController.dispose();
+    }
     super.dispose();
   }
 

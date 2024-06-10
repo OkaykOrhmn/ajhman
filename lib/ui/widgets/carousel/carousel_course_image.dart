@@ -1,3 +1,4 @@
+import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
@@ -12,7 +13,7 @@ import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
 
 class CarouseCourseImage extends StatefulWidget {
-  final List<String> items;
+  final List<Media?> items;
 
   const CarouseCourseImage({super.key, required this.items});
 
@@ -157,6 +158,7 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
   }
 
   Padding _banner(BuildContext context, int itemIndex) {
+    print( widget.items[itemIndex]!.source);
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
@@ -164,9 +166,9 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
         decoration: const BoxDecoration(
             color: CupertinoColors.white,
             borderRadius: DesignConfig.highBorderRadius),
-        child: const PrimaryImageNetwork(
-            src:
-                "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+        child:  PrimaryImageNetwork(
+            // src: "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+            src: widget.items[itemIndex]!.source.toString(),
             aspectRatio: 16 / 10),
       ),
     );

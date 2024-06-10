@@ -5,9 +5,11 @@ class ApiEndPoints {
   static String authLoginUserPassword = '/auth/login';
   static String authLoginUserOtp = '/auth/login/otp';
   static String profile = '/auth/profile';
-  static String mainCourse = '/course/';
+  static String mainCourse = '/course';
   static String chapter = '/chapter';
   static String subchapter = '/subchapter';
   static String comment = '/comment';
+  static String mark = '/mark';
+  static String roadmap = '/roadmap';
 
 }

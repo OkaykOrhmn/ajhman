@@ -1,5 +1,8 @@
+import 'package:ajhman/core/bloc/category/category_bloc.dart';
+import 'package:ajhman/core/bloc/chapter/chapter_bloc.dart';
 import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
+import 'package:ajhman/core/bloc/roadmap/roadmap_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
@@ -93,6 +96,25 @@ void main() {
         return bloc;
       },
     ),
+    BlocProvider<CategoryBloc>(
+      create: (buildContext) {
+        final bloc = CategoryBloc();
+        return bloc;
+      },
+    ),
+    BlocProvider<ChapterBloc>(
+      create: (buildContext) {
+        final bloc = ChapterBloc();
+        return bloc;
+      },
+    ),
+
+    BlocProvider<RoadmapBloc>(
+      create: (buildContext) {
+        final bloc = RoadmapBloc();
+        return bloc;
+      },
+    ),
     BlocProvider(
       create: (context) => SelectedIndexCubit(),
     ),
@@ -149,7 +171,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.course,
+              initialRoute: RoutePaths.courseMain,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );

@@ -3,7 +3,8 @@ part of 'course_main_bloc.dart';
 @immutable
 sealed class CourseMainEvent {}
 class GetCourseMainInfo extends CourseMainEvent{
-  final int categoriesId;
+  final int courseId;
 
-  GetCourseMainInfo({required this.categoriesId});
+  GetCourseMainInfo({required this.courseId});
 }
+
