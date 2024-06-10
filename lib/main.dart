@@ -171,7 +171,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.courseMain,
+              initialRoute: RoutePaths.splash,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );
