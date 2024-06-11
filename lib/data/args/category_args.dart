@@ -1,5 +1,5 @@
 class CategoryArgs {
-  int? categoriesId;
+  List<int>? categoriesId;
 
   CategoryArgs({this.categoriesId});
 

@@ -56,7 +56,7 @@ class _CourseMainPageState extends State<CourseMainPage> {
                 // });
                 // return SingleChildScrollView(
                 //     child: CourseInfo(response: state.data));
-                return RoadMapPage(response: state.data!);
+                return RoadMapPage(response: state.data!, courseId: widget.args.courseId!,);
               case StateStatus.fail:
                 return Container(
                   width: 200,

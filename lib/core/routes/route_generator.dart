@@ -11,6 +11,7 @@ import 'package:ajhman/ui/pages/splash_page.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/args/course_args.dart';
+import '../../ui/pages/course/course_info.dart';
 import '../../ui/pages/course/course_main_page.dart';
 import '../../ui/pages/smart_schedule/smart_schedule_page.dart';
 
@@ -32,6 +33,8 @@ class RouteGenerator {
         return _createRoute(const SmartSchedulePage());
       case RoutePaths.courseMain:
         return _createRoute( CourseMainPage(  args:CourseMainArgs(courseId: 4),));
+      case RoutePaths.courseInfo:
+        return _createRoute( CourseInfo(  response:routeSettings.arguments as CourseMainResponseModel,));
       case RoutePaths.course:
         return _createRoute( CourseChapterPage(args: routeSettings.arguments as CourseArgs));
       case RoutePaths.category:

@@ -1,8 +1,14 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:ajhman/core/enum/levels.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
+import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:ajhman/data/model/roadmap_view.dart';
 import 'package:intl/intl.dart';
 
+import '../../gen/assets.gen.dart';
 import '../enum/course_types.dart';
 
 String getLevel(int? level) => Levels.values[level!].value;
@@ -23,7 +29,7 @@ CourseTypes getType(String? type) {
 
 String getTypeImage(int? level) => Levels.values[level!].value;
 
-String getImageUrl(String? image) => ApiEndPoints.baseURL + image!;
+String getImageUrl(String? image) => ApiEndPoints.baseURL + image.toString();
 
 String getChapterNumber(int index, List<Chapters?> chapters) {
   final list = [
@@ -59,11 +65,61 @@ double convertDatetimeComment(String createdAt) {
   return daysBetween(createdDate, todayDate);
 }
 
-CourseTypes? getTypeOfCourse(String type){
+CourseTypes? getTypeOfCourse(String type) {
   for (var element in CourseTypes.values) {
-    if(element.type == type){
+    if (element.type == type) {
       return element;
     }
   }
   return null;
+}
+
+RoadmapView getLockRoadMapContainer =
+    RoadmapView(Color(0xffD6D6D6), Assets.shape.shape4);
+
+RoadmapView getRoadMapContainer(bool inRandom, RoadmapView? lastRoadMapView) {
+  List<RoadmapView> colors = [
+    RoadmapView(Color(0xffFF5EEA), Assets.shape.shape),
+    RoadmapView(Color(0xff50FDAE), Assets.shape.shape1),
+    RoadmapView(Color(0xffFEC86F), Assets.shape.shape2),
+    RoadmapView(Color(0xffF817CFF), Assets.shape.shape4),
+    RoadmapView(Color(0xffFB7A3E), Assets.shape.shape5),
+    RoadmapView(Color(0xffA6DC59), Assets.shape.shape7),
+  ];
+
+  Random random = Random();
+  int randomIndex = random.nextInt(colors.length);
+  RoadmapView result = colors[0];
+  if (inRandom) {
+    result = colors[randomIndex];
+  } else {
+    if (lastRoadMapView != null) {
+      for (int i = 0; i < colors.length; i++) {
+        if (colors[i].color == lastRoadMapView.color) {
+          return colors[i + 1];
+        }
+      }
+    }
+  }
+  return result;
+}
+
+double getProgressCard(String progress) {
+  try {
+    final p = progress.replaceAll(" ", "");
+    final indexOf = p.indexOf("/");
+    final value = p.substring(0, indexOf);
+    final all = p.substring(indexOf + 1);
+    print(p);
+    print(indexOf);
+    print(value);
+    print(all);
+    if (all.startsWith("0")) {
+      return 0;
+    }
+    final result = double.parse(value) / double.parse(all);
+    return result;
+  } catch (e) {
+    return 0;
+  }
 }

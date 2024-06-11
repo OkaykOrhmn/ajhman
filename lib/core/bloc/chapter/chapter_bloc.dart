@@ -19,10 +19,11 @@ class ChapterBloc extends Bloc<ChapterEvent, ChapterState> {
         emit(const ChapterState(status: ChapterStateStatus.loading));
         try {
           ChapterModel response = await chapterRepository.getChapter(
-              event.args.chapterId!, event.args.subChapterId!);
-          emit(ChapterState(status: ChapterStateStatus.success,data: response));
+              event.chapterId, event.subChapterId);
+          emit(
+              ChapterState(status: ChapterStateStatus.success, data: response));
         } on DioError catch (e) {
-          emit(const ChapterState(status: ChapterStateStatus.fail,data: null));
+          emit(const ChapterState(status: ChapterStateStatus.fail, data: null));
         }
       }
     });

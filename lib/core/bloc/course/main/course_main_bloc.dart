@@ -19,6 +19,7 @@ class CourseMainBloc extends Bloc<CourseMainEvent, CourseMainState> {
       if (event is GetCourseMainInfo) {
         var result = state;
         var type = ApiEndPoints.mainCourse;
+        emit(result.copyWith(status: StateStatus.loading, type: type));
         try {
           CourseMainResponseModel response = await courseRepository.getMainCurse(event.courseId);
           result = CourseMainState(
@@ -26,7 +27,7 @@ class CourseMainBloc extends Bloc<CourseMainEvent, CourseMainState> {
           emit(result);
         } on DioError catch (e) {
           result = CourseMainState(
-              status: StateStatus.fail, type: type, data: e.response!.data);
+              status: StateStatus.fail, type: type, data: null);
           emit(result);
         }
       }

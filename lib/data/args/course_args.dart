@@ -4,15 +4,29 @@ class CourseArgs {
   int? chapterId;
   String? chapterTitle;
   int? subChapterId;
-  CourseTypes? courseType;
+  List<int>? ids;
 
-  CourseArgs(this.chapterId, this.chapterTitle,this.subChapterId, this.courseType);
+  CourseArgs(this.chapterId, this.chapterTitle, this.subChapterId, this.ids);
+
+  CourseArgs copyWith({
+    int? chapterId,
+    String? chapterTitle,
+    int? subChapterId,
+    List<int>? ids,
+  }) {
+    return CourseArgs(
+      chapterId ?? this.chapterId,
+      chapterTitle ?? this.chapterTitle,
+      subChapterId ?? this.subChapterId,
+      ids ?? this.ids,
+    );
+  }
 
   CourseArgs.fromJson(Map<String, dynamic> json) {
     chapterId = json['courseId'];
     chapterTitle = json['chapterTitle'];
     subChapterId = json['subChapterId'];
-    courseType = json['courseType'];
+    ids = json['ids'];
   }
 
   Map<String, dynamic> toJson() {
@@ -20,7 +34,7 @@ class CourseArgs {
     data['chapterId'] = this.chapterId;
     data['chapterTitle'] = this.chapterTitle;
     data['subChapterId'] = this.subChapterId;
-    data['courseType'] = this.courseType;
+    data['ids'] = this.ids;
     return data;
   }
 }

@@ -10,13 +10,14 @@ class HorizontalListView extends StatefulWidget {
   final double? width;
   final double? height;
   final dynamic Function(int) item;
+  final dynamic Function(int)? placeholder;
 
   const HorizontalListView(
       {super.key,
       required this.items,
        this.height,
       required this.item,
-      this.width});
+      this.width, this.placeholder});
 
   @override
   State<HorizontalListView> createState() => _HorizontalListViewState();
@@ -35,22 +36,10 @@ class _HorizontalListViewState extends State<HorizontalListView> {
           shrinkWrap: true,
           itemCount: length,
           itemBuilder: (context, index) {
-            return Container(
+            return SizedBox(
               width: widget.width,
               child: widget.items == null
-                  ? Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: DesignConfig.highBorderRadius,
-                            color: Colors.white,
-                            boxShadow: DesignConfig.lowShadow),
-                        padding: EdgeInsets.all(16),
-                        margin: EdgeInsets.all(16),
-                        width: MediaQuery.sizeOf(context).width,
-                        height: 400,
-                      ))
+                  ? widget.placeholder != null? widget.placeholder!(index) : const SizedBox()
                   : widget.item(index),
             );
           }),

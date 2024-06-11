@@ -4,9 +4,9 @@ part of 'course_main_bloc.dart';
 class CourseMainState extends Equatable {
   final StateStatus status;
   final String type;
-  final dynamic data;
+  final CourseMainResponseModel? data;
 
-  const CourseMainState({this.status = StateStatus.loading, this.type = '', this.data});
+  const CourseMainState({this.status = StateStatus.init, this.type = '', this.data});
 
   CourseMainState copyWith(
       {required StateStatus status,required String type, dynamic data}) {

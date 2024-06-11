@@ -122,12 +122,12 @@ class ForYouScreen extends StatelessWidget {
                     SizedBox(
                       width: 8,
                     ),
-                    Expanded(
-                      child: SizedBox(
-                          height: 480,
-                          child: NewCourseCard(
-                              index: index, type: CardType.onLearning, response: NewCourseCardModel(),)),
-                    )
+                    // Expanded(
+                    //   child: SizedBox(
+                    //       height: 480,
+                    //       child: NewCourseCard(
+                    //           index: index, type: CardType.onLearning, response: NewCourseCardModel(),)),
+                    // )
                   ],
                 );
               },

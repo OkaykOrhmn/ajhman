@@ -1,5 +1,7 @@
+import 'package:ajhman/core/bloc/learning/leaning_bloc.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
+import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -23,13 +25,29 @@ class LearningScreen extends StatefulWidget {
 class _LearningScreenState extends State<LearningScreen>
     with TickerProviderStateMixin {
   late TabController _controller;
+  String path = '';
 
   @override
   void initState() {
     super.initState();
     _controller = TabController(length: 3, vsync: this);
+    context.read<LeaningBloc>().add(GetCards(path: ApiEndPoints.learned));
+
     _controller.addListener(() {
       context.read<SelectedTabCubit>().changeSelectedIndex(_controller.index);
+      String path = '';
+      switch (_controller.index) {
+        case 0:
+          path = ApiEndPoints.learned;
+          break;
+        case 1:
+          path = ApiEndPoints.learning;
+          break;
+        case 2:
+          path = ApiEndPoints.marked;
+          break;
+      }
+      context.read<LeaningBloc>().add(GetCards(path: path));
     });
   }
 
@@ -48,6 +66,7 @@ class _LearningScreenState extends State<LearningScreen>
           _tabBar(),
           Expanded(
             child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: _controller,
               children: const [
                 LearningCompleteScreen(

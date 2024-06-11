@@ -11,6 +11,7 @@ class VerticalListView extends StatefulWidget {
   final double? height;
   final ScrollPhysics? physics;
   final Widget Function(BuildContext,int) item;
+  final Widget? placeholder;
 
   const VerticalListView(
       {super.key,
@@ -18,7 +19,7 @@ class VerticalListView extends StatefulWidget {
       this.width,
       this.height,
       required this.item,
-      this.physics = const NeverScrollableScrollPhysics()});
+      this.physics = const NeverScrollableScrollPhysics(), this.placeholder});
 
   @override
   State<VerticalListView> createState() => _VerticalListViewState();
@@ -28,6 +29,7 @@ class _VerticalListViewState extends State<VerticalListView> {
   @override
   Widget build(BuildContext context) {
     final length = widget.items == null ? 4 : widget.items!.length;
+    widget.placeholder?? const SizedBox();
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: ListView.builder(
@@ -36,19 +38,7 @@ class _VerticalListViewState extends State<VerticalListView> {
           itemCount: length,
           itemBuilder: (context, index) {
             return widget.items == null
-                ? Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: DesignConfig.highBorderRadius,
-                          color: Colors.white,
-                          boxShadow: DesignConfig.lowShadow),
-                      padding: EdgeInsets.all(16),
-                      margin: EdgeInsets.all(16),
-                      width: MediaQuery.sizeOf(context).width,
-                      height: 175,
-                    ))
+                ? widget.placeholder
                 : widget.item(context,index);
           }),
     );

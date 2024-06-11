@@ -5,6 +5,7 @@ class RoutePaths{
   static const String auth = '/auth';
   static const String smartSchedule = '/smart-schedule';
   static const String courseMain = '/course-main';
+  static const String courseInfo = '/course-info';
   static const String course = '/course';
   static const String category = '/category';
 

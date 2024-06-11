@@ -1,3 +1,4 @@
+import 'package:ajhman/core/bloc/category/category_bloc.dart';
 import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/args/category_args.dart';
@@ -10,6 +11,7 @@ import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
 import 'package:ajhman/ui/widgets/card/online_card.dart';
 import 'package:ajhman/ui/widgets/card/recent_course_card.dart';
+import 'package:ajhman/ui/widgets/card/recent_course_card_placeholder.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/listview/horizontal_listview.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
@@ -20,9 +22,14 @@ import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../core/bloc/learning/leaning_bloc.dart';
+import '../../../../core/enum/tags.dart';
+import '../../../../data/api/api_end_points.dart';
 import '../../../../gen/assets.gen.dart';
+import '../../../widgets/card/news_course_card_placeholder.dart';
 import '../../../widgets/carousel/carousel_banners.dart';
 import '../../../widgets/states/place_holder/default_place_holder.dart';
 
@@ -36,6 +43,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchText = TextEditingController();
   final items = [1, 2, 3, 4];
+  List<NewCourseCardModel>? newsCards;
+  List<NewCourseCardModel>? recentCards;
+
+  @override
+  void initState() {
+    context.read<LeaningBloc>().add(GetCards(path: ApiEndPoints.learning));
+
+    context
+        .read<CategoryBloc>()
+        .add(GetAllCategoryCards(categories: [1, 2, 3], tag: Tags.none));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,33 +66,78 @@ class _HomeScreenState extends State<HomeScreen> {
             _mainAppBar(context),
             _searchBar(),
             _gridLayout(),
-            const TitleDivider(title: "آنلاین‌شو"),
-            const OnlineCard(),
+            // const TitleDivider(title: "آنلاین‌شو"),
+            // const OnlineCard(),
             TitleDivider(title: "دوره‌های اخیرا دیده شده", btn: () {}),
-            HorizontalListView(
-              height: 190,
-              width: MediaQuery.sizeOf(context).width / 1.1,
-              item: (index) => RecentCourseCard(
-                  index: index,
-                  padding: DesignConfig.horizontalListViwItemPadding(
-                      16, index, items.length)),
-              items: items,
+            BlocBuilder<LeaningBloc, LeaningState>(
+              builder: (context, state) {
+                if (state is LeaningLoading) {
+                  recentCards = null;
+                } else if (state is LeaningSuccess) {
+                  recentCards = state.response;
+                }
+                return recentCards != null && recentCards!.isEmpty
+                    ? SizedBox()
+                    : HorizontalListView(
+                        placeholder: (index) => RecentCourseCardPlaceholder(
+                          padding: DesignConfig.horizontalListViwItemPadding(
+                              16, index, items.length),
+                        ),
+                        height: 190,
+                        width: MediaQuery.sizeOf(context).width / 1.1,
+                        item: (index) => InkWell(
+                          onTap: () {
+                            navigatorKey.currentState!
+                                .pushNamed(RoutePaths.courseMain);
+                          },
+                          child: RecentCourseCard(
+                            index: index,
+                            padding: DesignConfig.horizontalListViwItemPadding(
+                                16, index, items.length),
+                            response: recentCards![index],
+                          ),
+                        ),
+                        items: recentCards,
+                      );
+              },
             ),
+
             const SizedBox(
               height: 40,
             ),
-            TitleDivider(title: "جدیدترین دوره ها", btn: () {}),
-            HorizontalListView(
-              height: 500,
-              item: (index) => NewCourseCard(
-                type: CardType.normal,
-                index: index,
-                padding: DesignConfig.horizontalListViwItemPadding(
-                    16, index, items.length),
-                response: NewCourseCardModel(),
-              ),
-              items: items,
-              width: MediaQuery.sizeOf(context).width / 1.2,
+            TitleDivider(
+                title: "جدیدترین دوره ها",
+                btn: () {
+                  navigatorKey.currentState!.pushNamed(RoutePaths.category,
+                      arguments: CategoryArgs(categoriesId: [1, 2, 3]));
+                }),
+            BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is CategoryLoadingState) {
+                  newsCards = null;
+                } else if (state is CategorySuccessState) {
+                  newsCards = state.newsCards;
+                }
+                return newsCards != null && newsCards!.isEmpty
+                    ? SizedBox()
+                    : HorizontalListView(
+                        height: 500,
+                        placeholder: (index) => const NewCourseCardPlaceholder(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          type: CardType.normal,
+                        ),
+                        item: (index) => NewCourseCard(
+                          type: CardType.normal,
+                          index: index,
+                          padding: DesignConfig.horizontalListViwItemPadding(
+                              16, index, items.length),
+                          response: newsCards![index],
+                        ),
+                        items: newsCards,
+                        width: MediaQuery.sizeOf(context).width / 1.2,
+                      );
+              },
             ),
           ],
         ),
@@ -172,10 +236,10 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: DesignConfig.highBorderRadius,
         onTap: () {
           navigatorKey.currentState!.pushNamed(RoutePaths.category,
-              arguments: CategoryArgs(categoriesId: index));
+              arguments: CategoryArgs(categoriesId: [index]));
         },
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 16),
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(

@@ -1,13 +1,20 @@
+import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/widgets/divider/vertical_dashed_line.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 
+import 'divider/horizontal_dashed_line.dart';
+
 class Road extends StatefulWidget {
   final int index;
+  final int length;
+  final double? height;
 
-  const Road({super.key, required this.index});
+  const Road({super.key, required this.index, required this.length, this.height});
 
   @override
   State<Road> createState() => _RoadState();
@@ -24,11 +31,124 @@ class _RoadState extends State<Road> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _roadLine(),
-      ],
+    return Center(
+      child: Container(
+        width: 80,
+        height: widget.height?? 100,
+        child: Stack(
+          children: [
+            top(),
+            isEven ? left() : right(),
+            // Positioned(
+            //     left: 12,
+            //     right: 18,
+            //     bottom: 0,
+            //     top: 18,
+            //     child: DottedBorder(
+            //       strokeWidth: 2,
+            //       color: Colors.white,
+            //       borderType: BorderType.RRect,
+            //       radius: Radius.circular(10),
+            //       dashPattern: [5, 5],
+            //       child: Container(
+            //         width: 200,
+            //         height: 100,
+            //         color: Colors.transparent,
+            //       ),
+            //     )),
+
+            // bottom(),
+          ],
+        ),
+      ),
     );
+  }
+
+  // Positioned bottom() {
+  //   return Positioned(
+  //       right: 0,
+  //       bottom: 0,
+  //       left: 0,
+  //       child: Container(
+  //         height: 40,
+  //         decoration: BoxDecoration(
+  //             borderRadius: DesignConfig.veryHighBorderRadius,
+  //             gradient: LinearGradient(colors: [
+  //               Color(0xff4A4A4A),
+  //               Color(0xff575757),
+  //             ])),
+  //       ));
+  // }
+
+  Positioned right() {
+    return Positioned(
+        right: 0,
+        bottom: 0,
+        top: 0,
+        child: Container(
+          width: 30,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.zero,
+                bottomRight: Radius.zero,
+                topRight: isEven? Radius.zero:DesignConfig.aVeryHighBorderRadius,
+                topLeft: isEven? DesignConfig.aVeryHighBorderRadius:Radius.zero,
+              ),
+              gradient: LinearGradient(colors: [
+                Color(0xff4A4A4A),
+                Color(0xff575757),
+              ])),
+          // child: VerticalDashedLine(width: 2,active: Colors.white, dashed: true),
+
+        ));
+  }
+
+  Positioned left() {
+    return Positioned(
+        left: 0,
+        bottom: 0,
+        top: 0,
+        child: Container(
+          width: 30,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.zero,
+                topLeft: DesignConfig.aVeryHighBorderRadius,
+                bottomLeft: Radius.zero,
+                bottomRight: Radius.zero
+              ),
+              gradient: LinearGradient(colors: [
+                Color(0xff4A4A4A),
+                Color(0xff575757),
+              ])),
+          // child: VerticalDashedLine(width: 2,active: Colors.white, dashed: true),
+
+        ));
+  }
+
+  Positioned top() {
+    return Positioned(
+        left: 0,
+        right: 0,
+        top: 0,
+        child: Container(
+          height: 30,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topRight:
+                    isEven ? Radius.zero : DesignConfig.aVeryHighBorderRadius,
+                topLeft:   isEven
+                    ? DesignConfig.aVeryHighBorderRadius
+                    : Radius.zero,
+                bottomLeft: DesignConfig.aVeryHighBorderRadius,
+                bottomRight: DesignConfig.aVeryHighBorderRadius,
+              ),
+              gradient: LinearGradient(colors: [
+                Color(0xff4A4A4A),
+                Color(0xff575757),
+              ])),
+          // child: HorizontalDashedLine(height: 2,active: true, dashed: true),
+        ));
   }
 
   Widget _roadLine() {
@@ -36,11 +156,11 @@ class _RoadState extends State<Road> {
     final border =
         BorderSide(width: size, color: Colors.black, style: BorderStyle.solid);
     final top = BorderSide(
-        width: widget.index != 1? size/2:size,
+        width: widget.index != 1 ? size / 2 : size,
         color: Colors.black,
         style: BorderStyle.solid);
     final bottom = BorderSide(
-        width: widget.index != 5? size/2:size,
+        width: widget.index != 5 ? size / 2 : size,
         color: Colors.black,
         style: BorderStyle.solid);
     return Center(
@@ -58,52 +178,55 @@ class _RoadState extends State<Road> {
               ),
             ),
           ),
-        Positioned(
-          top: 0,
-          left: size/3,
-          right: size/3,
-          bottom: 0,
-          child: DashedRect(
-            color: Colors.red,
-            strokeWidth: 2.0,
-            gap: 8.0,
-            dashedContainerAlign: [
-              isEven ? DashedContainerAlign.left : DashedContainerAlign.right,
-            ],
+          Positioned(
+            top: 0,
+            left: size / 3,
+            right: size / 3,
+            bottom: 0,
+            child: DashedRect(
+              color: Colors.red,
+              strokeWidth: 2.0,
+              gap: 8.0,
+              dashedContainerAlign: [
+                isEven ? DashedContainerAlign.left : DashedContainerAlign.right,
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          top: size/3,
-          left: 0,
-          right: 0,
-          bottom: size/3,
-          child: DashedRect(
-
-            color: Colors.red,
-            strokeWidth: 2.0,
-            gap: 8.0,
-            dashedContainerAlign: [
-              widget.index == 1? DashedContainerAlign.top:DashedContainerAlign.none,
-              widget.index == 5? DashedContainerAlign.bottom:DashedContainerAlign.none,
-            ],
+          Positioned(
+            top: size / 3,
+            left: 0,
+            right: 0,
+            bottom: size / 3,
+            child: DashedRect(
+              color: Colors.red,
+              strokeWidth: 2.0,
+              gap: 8.0,
+              dashedContainerAlign: [
+                widget.index == 1
+                    ? DashedContainerAlign.top
+                    : DashedContainerAlign.none,
+                widget.index == 5
+                    ? DashedContainerAlign.bottom
+                    : DashedContainerAlign.none,
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: DashedRect(
-
-            color: Colors.red,
-            strokeWidth: 2.0,
-            gap: 8.0,
-            dashedContainerAlign: [
-              widget.index != 5? DashedContainerAlign.bottom:DashedContainerAlign.none,
-            ],
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: DashedRect(
+              color: Colors.red,
+              strokeWidth: 2.0,
+              gap: 8.0,
+              dashedContainerAlign: [
+                widget.index != 5
+                    ? DashedContainerAlign.bottom
+                    : DashedContainerAlign.none,
+              ],
+            ),
           ),
-        ),
-
         ],
       ),
     );

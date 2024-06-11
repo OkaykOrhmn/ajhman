@@ -10,6 +10,7 @@ import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/toggle_buttons_row.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
+import 'package:ajhman/ui/widgets/card/news_course_card_placeholder.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,7 @@ import '../../../data/model/t_buttons.dart';
 
 class CategoryPage extends StatefulWidget {
   final CategoryArgs args;
+
   const CategoryPage({super.key, required this.args});
 
   @override
@@ -41,9 +43,8 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-    context
-        .read<CategoryBloc>()
-        .add(GetAllCategoryCards(categories: [widget.args.categoriesId!], tag: Tags.none));
+    context.read<CategoryBloc>().add(GetAllCategoryCards(
+        categories: widget.args.categoriesId!, tag: Tags.none));
     super.initState();
   }
 
@@ -115,11 +116,20 @@ class _CategoryPageState extends State<CategoryPage> {
                   }
                   return cards != null && cards!.isEmpty
                       ? Padding(
-                        padding:  EdgeInsets.only(top: (MediaQuery.sizeOf(context).width/2) + 24 + 12 + 32),
-                        child: const EmptyScreen(),
-                      )
+                          padding: EdgeInsets.only(
+                              top: (MediaQuery.sizeOf(context).width / 2) +
+                                  24 +
+                                  12 +
+                                  32),
+                          child: const EmptyScreen(),
+                        )
                       : VerticalListView(
                           items: cards,
+                          placeholder: const NewCourseCardPlaceholder(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
+                            type: CardType.normal,
+                          ),
                           item: (context, index) => Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 12),

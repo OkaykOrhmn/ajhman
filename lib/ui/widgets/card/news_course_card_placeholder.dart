@@ -8,9 +8,11 @@ import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
+import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../gen/assets.gen.dart';
@@ -20,29 +22,22 @@ import '../../theme/widget/design_config.dart';
 import '../button/primary_button.dart';
 import '../text/primary_text.dart';
 
-class NewCourseCard extends StatefulWidget {
-  final int index;
+class NewCourseCardPlaceholder extends StatefulWidget {
   final CardType type;
   final EdgeInsetsGeometry? padding;
-  final NewCourseCardModel response;
 
-  const NewCourseCard({super.key,
-    required this.index,
+  const NewCourseCardPlaceholder({super.key,
     this.padding,
-    required this.type,
-    required this.response});
+    required this.type});
 
   @override
-  State<NewCourseCard> createState() => _RecentCurseCardState();
+  State<NewCourseCardPlaceholder> createState() => _RecentCurseCardState();
 }
 
-class _RecentCurseCardState extends State<NewCourseCard> {
-  late NewCourseCardModel response;
+class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
 
   @override
   void initState() {
-    response = widget.response;
-
     super.initState();
   }
 
@@ -61,7 +56,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _image(getImageUrl(response.image.toString()), "3.4"),
+                DefaultPlaceHolder(child: _image("", "3.4"))
+                ,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
@@ -82,7 +78,6 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   Widget _footer() {
     switch (widget.type) {
       case CardType.onLearning:
-        final p = getProgressCard(response.progress.toString());
         return Column(
           children: [
             const Padding(
@@ -101,30 +96,32 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                         width: MediaQuery
                             .sizeOf(context)
                             .width / 5,
-                        child: LinearProgress(value: p, minHeight: 8)),
+                        child: DefaultPlaceHolder(child: LinearProgress(value: 0.8, minHeight: 8))),
                     SizedBox(
                       width: 8,
                     ),
-                    PrimaryText(
-                        text: response.progress.toString(),
-                        style: mThemeData.textTheme.navbarTitle,
-                        color: grayColor900),
+                    DefaultPlaceHolder(
+                      child: PrimaryText(
+                          text: "response.progress.toString()",
+                          style: mThemeData.textTheme.navbarTitle,
+                          color: grayColor900),
+                    ),
                   ],
                 ),
-                PrimaryButton(title: "دریافت گواهینامه")
+                DefaultPlaceHolder(child: PrimaryButton(title: "دریافت گواهینامه"))
               ],
             )
           ],
         );
 
       case CardType.normal:
-        return PrimaryButton(
-          fill: true,
-          title: "ورود به جلسه",
-          onClick: () {
-            navigatorKey.currentState!.pushNamed(RoutePaths.courseMain,
-                arguments: CourseMainArgs(courseId: response.id!));
-          },
+        return DefaultPlaceHolder(
+          child: PrimaryButton(
+            fill: true,
+            title: "ورود به جلسه",
+            onClick: () {
+            },
+          ),
         );
 
       case CardType.completed:
@@ -142,17 +139,21 @@ class _RecentCurseCardState extends State<NewCourseCard> {
               children: [
                 Row(
                   children: [
-                    PrimaryText(
-                        text: "امتیاز شما: ",
-                        style: mThemeData.textTheme.navbarTitle,
-                        color: grayColor600),
-                    PrimaryText(
-                        text: "${response.score} امتیاز",
-                        style: mThemeData.textTheme.navbarTitleBold,
-                        color: primaryColor),
+                    DefaultPlaceHolder(
+                      child: PrimaryText(
+                          text: "امتیاز شما: ",
+                          style: mThemeData.textTheme.navbarTitle,
+                          color: grayColor600),
+                    ),
+                    DefaultPlaceHolder(
+                      child: PrimaryText(
+                          text: "{response.score} امتیاز",
+                          style: mThemeData.textTheme.navbarTitleBold,
+                          color: primaryColor),
+                    ),
                   ],
                 ),
-                PrimaryButton(title: "دریافت گواهینامه")
+                DefaultPlaceHolder(child: PrimaryButton(title: "دریافت گواهینامه"))
               ],
             )
           ],
@@ -170,30 +171,26 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: DefaultPlaceHolder(
+                  child: Expanded(
+                    child: IconInfo(
+                        icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
+                  ),
+                ),
+              ),
             ),
             Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.moreCircle,
-                  desc: "${response.users.toString()} فراگیر"),
-            ),
-            Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.clock,
-                  desc: "${response.time.toString()} ساعت"),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: DefaultPlaceHolder(
+                  child: Expanded(
+                    child: IconInfo(
+                        icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -204,14 +201,56 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.chart,
-                  desc: "سطح ${getLevel(response.level)}"),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: DefaultPlaceHolder(
+                  child: Expanded(
+                    child: IconInfo(
+                        icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
+                  ),
+                ),
+              ),
             ),
             Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.note2,
-                  desc: response.category!.name.toString()),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: DefaultPlaceHolder(
+                  child: Expanded(
+                    child: IconInfo(
+                        icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: DefaultPlaceHolder(
+                  child: Expanded(
+                    child: IconInfo(
+                        icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: DefaultPlaceHolder(
+                  child: Expanded(
+                    child: IconInfo(
+                        icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -225,14 +264,9 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   Padding _title() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Container(
-        height: (mThemeData.textTheme.titleBold.fontSize! * 3),
-        constraints: const BoxConstraints(
-          minWidth: 100,
-          maxWidth: 190,
-        ),
+      child: DefaultPlaceHolder(
         child: PrimaryText(
-          text: response.name.toString(),
+          text: "response.name.toString()",
           style: mThemeData.textTheme.titleBold,
           textAlign: TextAlign.start,
           color: grayColor900,
@@ -246,18 +280,18 @@ class _RecentCurseCardState extends State<NewCourseCard> {
     return Stack(
       children: [
         PrimaryImageNetwork(src: src, aspectRatio: 16 / 9),
-        Positioned(
-            top: 12,
-            right: 12,
-            left: 12,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _bookMark(),
-                _rateBar(rate),
-              ],
-            ))
+        // Positioned(
+        //     top: 12,
+        //     right: 12,
+        //     left: 12,
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         _bookMark(),
+        //         _rateBar(rate),
+        //       ],
+        //     ))
       ],
     );
   }
@@ -292,37 +326,39 @@ class _RecentCurseCardState extends State<NewCourseCard> {
     );
   }
 
-  Widget _bookMark() {
-    return BlocProvider(
-      create: (context) => MarkCubit(response.marked!),
-      child: BlocBuilder<MarkCubit, MarkState>(
-          builder: (context, state) {
-            response.marked = state.mark;
-            return InkWell(
-                onTap: () {
-                  final event = context.read<MarkCubit>();
-                  if (state.mark) {
-                    event.deleteMark(response.id!);
-                  } else {
-                    event.postMark(response.id!);
-                  }
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  width: 28,
-                  height: 28,
-                  child: Center(
-                    child: state.mark
-                        ? Assets.icon.boldArchive
-                        .svg(width: 18, height: 18, color: primaryColor)
-                        : Assets.icon.outlineArchive
-                        .svg(width: 18, height: 18, color: primaryColor),
-                  ),
-                ));
-          }),
-    );
-  }
+  // Widget _bookMark() {
+  //   // return BlocProvider(
+  //   //   create: (context) => MarkCubit(response.marked!),
+  //   //   child: BlocBuilder<MarkCubit, MarkState>(
+  //   //       builder: (context, state) {
+  //           // response.marked = state.mark;
+  //           return InkWell(
+  //               onTap: () {
+  //                 // final event = context.read<MarkCubit>();
+  //                 // if (state.mark) {
+  //                 //   event.deleteMark(response.id!);
+  //                 // } else {
+  //                 //   event.postMark(response.id!);
+  //                 // }
+  //               },
+  //               child: Container(
+  //                 decoration: const BoxDecoration(
+  //                   color: Colors.white,
+  //                   shape: BoxShape.circle,
+  //                 ),
+  //                 width: 28,
+  //                 height: 28,
+  //                 child: Center(
+  //                   child:
+  //                   // state.mark
+  //                   //     ? Assets.icon.boldArchive
+  //                   //     .svg(width: 18, height: 18, color: primaryColor)
+  //                   //     :
+  //                   Assets.icon.outlineArchive
+  //                       .svg(width: 18, height: 18, color: primaryColor),
+  //                 ),
+  //               ));
+  //         // }),
+  //   // );
+  // }
 }

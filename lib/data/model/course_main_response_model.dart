@@ -2,6 +2,8 @@ class CourseMainResponseModel {
   int? id;
   String? name;
   int? level;
+  int? time;
+  int? users;
   String? image;
   List<String>? highlight;
   String? description;
@@ -12,6 +14,8 @@ class CourseMainResponseModel {
       {this.id,
         this.name,
         this.level,
+        this.time,
+        this.users,
         this.image,
         this.highlight,
         this.description,
@@ -22,6 +26,8 @@ class CourseMainResponseModel {
     id = json['id'];
     name = json['name'];
     level = json['level'];
+    time = json['time'];
+    users = json['users'];
     image = json['image'];
     highlight = json['highlight'].cast<String>();
     description = json['description'];
@@ -41,6 +47,8 @@ class CourseMainResponseModel {
     data['id'] = this.id;
     data['name'] = this.name;
     data['level'] = this.level;
+    data['time'] = this.time;
+    data['users'] = this.users;
     data['image'] = this.image;
     data['highlight'] = this.highlight;
     data['description'] = this.description;
@@ -58,6 +66,7 @@ class Chapters {
   int? id;
   String? name;
   int? score;
+  int? time;
   List<Subchapters>? subchapters;
   bool? isOpen;
 
@@ -67,6 +76,7 @@ class Chapters {
     id = json['id'];
     name = json['name'];
     score = json['score'];
+    time = json['time'];
     if (json['Subchapters'] != null) {
       subchapters = <Subchapters>[];
       json['Subchapters'].forEach((v) {
@@ -80,6 +90,7 @@ class Chapters {
     data['id'] = this.id;
     data['name'] = this.name;
     data['score'] = this.score;
+    data['time'] = this.time;
     if (this.subchapters != null) {
       data['Subchapters'] = this.subchapters!.map((v) => v.toJson()).toList();
     }

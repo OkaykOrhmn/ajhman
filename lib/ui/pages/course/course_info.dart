@@ -35,27 +35,29 @@ class _CourseInfoState extends State<CourseInfo> {
   @override
   Widget build(BuildContext context) {
     data = widget.response;
-    return SingleChildScrollView(
-        child: Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _header(),
-          _information(),
-          Center(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SizedBox(
-                width: MediaQuery.sizeOf(context).width,
-                child: const OutlinedPrimaryButton(
-                    title: "رفتن به نوشته و نشان شده‌ها")),
-          )),
-          _pointsPlatform(),
-          data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
-        ],
-      ),
-    ));
+    return Scaffold(
+      body: SingleChildScrollView(
+          child: Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _header(),
+            _information(),
+            Center(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  child: const OutlinedPrimaryButton(
+                      title: "رفتن به نوشته و نشان شده‌ها")),
+            )),
+            _pointsPlatform(),
+            data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
+          ],
+        ),
+      )),
+    );
   }
 
   Widget _header() {
@@ -397,6 +399,13 @@ class _CourseInfoState extends State<CourseInfo> {
   Container _chapterLayout(int index) {
     final chapter = data.chapters![index];
     final isShow = chapter.isOpen!;
+    bool completed = true;
+    chapter.subchapters?.forEach((element) {
+      if (element.visited == false) {
+        completed = false;
+        return;
+      }
+    });
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(16),
@@ -425,10 +434,15 @@ class _CourseInfoState extends State<CourseInfo> {
                     SizedBox(
                       width: 8,
                     ),
-                    PrimaryText(
-                        text: "(گذرانده)",
-                        style: mThemeData.textTheme.titleBold,
-                        color: successMain),
+                    completed
+                        ? PrimaryText(
+                            text: "(گذرانده)",
+                            style: mThemeData.textTheme.titleBold,
+                            color: successMain)
+                        : PrimaryText(
+                            text: "(در حال یادگیری)",
+                            style: mThemeData.textTheme.titleBold,
+                            color: warningMain),
                   ],
                 ),
                 isShow
@@ -475,9 +489,6 @@ class _CourseInfoState extends State<CourseInfo> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
                       Container(
                         decoration: const BoxDecoration(
                             color: backgroundColor200,
@@ -491,14 +502,11 @@ class _CourseInfoState extends State<CourseInfo> {
                               width: 8,
                             ),
                             PrimaryText(
-                                text: "۷۲ ساعت",
+                                text: "${chapter.time} ساعت",
                                 style: mThemeData.textTheme.searchHint,
                                 color: secondaryColor)
                           ],
                         ),
-                      ),
-                      const SizedBox(
-                        width: 8,
                       ),
                       Container(
                         decoration: const BoxDecoration(
@@ -507,13 +515,12 @@ class _CourseInfoState extends State<CourseInfo> {
                         padding: const EdgeInsets.all(8),
                         child: Row(
                           children: [
-                            Assets.icon.outline.documentCopy
-                                .svg(color: secondaryColor),
+                            Assets.icon.outlineMedal.svg(color: secondaryColor),
                             const SizedBox(
                               width: 8,
                             ),
                             PrimaryText(
-                                text: "بدون گواهی نامه",
+                                text: "${chapter.score} امتیاز",
                                 style: mThemeData.textTheme.searchHint,
                                 color: secondaryColor)
                           ],
@@ -549,8 +556,16 @@ class _CourseInfoState extends State<CourseInfo> {
     CourseTypes type = getType(subchapter.type!);
     return InkWell(
       onTap: () {
+        List<int> result = [];
+        for (var element in chapter.subchapters!) {
+          result.add(element.id!);
+        }
         Navigator.of(context).pushNamed(RoutePaths.course,
-            arguments: CourseArgs(chapter.id,chapter.name, subchapter.id, type));
+            arguments: CourseArgs(
+                chapter.id,
+                chapter.name,
+                index,
+                result));
       },
       child: Center(
         child: Container(

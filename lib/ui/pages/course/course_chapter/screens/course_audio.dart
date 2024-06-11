@@ -36,7 +36,7 @@ class _CourseAudioState extends State<CourseAudio> {
   late AudioHandler audioHandler;
   late Duration? duration;
   late Duration? position;
-  late PlayerState? playerState = null;
+  PlayerState? playerState = null;
   late ChapterModel data;
   late Media banner;
   late Media audio;
@@ -83,13 +83,16 @@ class _CourseAudioState extends State<CourseAudio> {
 
   @override
   void dispose() {
-    audioHandler.durationSubscriptionS?.cancel();
-    audioHandler.positionSubscriptionS?.cancel();
-    audioHandler.playerCompleteSubscriptionS?.cancel();
-    audioHandler.playerStateChangeSubscriptionS?.cancel();
-    if (audioHandler.isPlaying) {
-      audioHandler.stop();
+    if (playerState != null) {
+      audioHandler.durationSubscriptionS?.cancel();
+      audioHandler.positionSubscriptionS?.cancel();
+      audioHandler.playerCompleteSubscriptionS?.cancel();
+      audioHandler.playerStateChangeSubscriptionS?.cancel();
+      if (audioHandler.isPlaying) {
+        audioHandler.stop();
+      }
     }
+
     super.dispose();
   }
 
@@ -116,22 +119,16 @@ class _CourseAudioState extends State<CourseAudio> {
           SizedBox(
             height: 16,
           ),
-          playerState == null
-              ? SizedBox(
-                  height: 200,
-                  child: Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      child: Container(
-                        color: Colors.white,
-                      )),
-                )
-              : Container(
-                  padding: EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-                  decoration: BoxDecoration(
-                      borderRadius: DesignConfig.highBorderRadius,
-                      boxShadow: DesignConfig.lowShadow,
-                      color: backgroundColor100),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+            decoration: BoxDecoration(
+                borderRadius: DesignConfig.highBorderRadius,
+                boxShadow: DesignConfig.lowShadow,
+                color: backgroundColor100),
+            child: Stack(
+              children: [
+                IgnorePointer(
+                  ignoring: playerState == null,
                   child: Column(
                     children: [
                       Directionality(
@@ -209,7 +206,19 @@ class _CourseAudioState extends State<CourseAudio> {
                       )
                     ],
                   ),
-                )
+                ),
+                playerState == null
+                    ? Positioned.fill(
+                        child: Container(
+                        color: Colors.white.withOpacity(0.5),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ))
+                    : SizedBox(),
+              ],
+            ),
+          )
         ],
       ),
     );

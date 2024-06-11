@@ -1,4 +1,5 @@
 import 'package:ajhman/core/enum/course_types.dart';
+import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_audio.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_image.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../core/routes/route_paths.dart';
 import '../../../../data/args/course_args.dart';
 import '../../../../gen/assets.gen.dart';
 
@@ -33,11 +35,15 @@ class CourseChapterPage extends StatefulWidget {
 
 class _CourseChapterPageState extends State<CourseChapterPage> {
   late CourseTypes courseTypes;
+  late CourseArgs courseArgs;
 
   @override
   void initState() {
-    courseTypes = widget.args.courseType!;
-    context.read<ChapterBloc>().add(GetInfoChapter(args: widget.args));
+    courseArgs = widget.args;
+    context.read<ChapterBloc>().add(GetInfoChapter(
+        subChapterId: widget.args.ids![widget.args.subChapterId!],
+        chapterId: widget.args.chapterId!));
+
     super.initState();
   }
 
@@ -67,15 +73,18 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
       body: BlocBuilder<ChapterBloc, ChapterState>(
         builder: (context, state) {
           if (state.status == ChapterStateStatus.success) {
+            courseTypes = getType(state.data!.type);
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  CourseHeader(title: widget.args.chapterTitle.toString(),),
+                  CourseHeader(
+                    title: widget.args.chapterTitle.toString(),
+                  ),
                   _main(),
                   CourseDetails(),
                   CourseRating(),
-                  // CourseComments()
+                  CourseComments()
                 ],
               ),
             );
@@ -102,7 +111,14 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
               CustomPrimaryButton(
                 color: Colors.white,
                 elevation: 0,
-                onClick: () {},
+                onClick: () {
+                  // if (widget.args.subChapterId != 0) {
+                  context.read<ChapterBloc>().add(GetInfoChapter(
+                      chapterId: courseArgs.chapterId!,
+                      subChapterId:
+                          courseArgs.ids![courseArgs.subChapterId!] - 1));
+                  // }
+                },
                 child: Row(
                   children: [
                     Assets.icon.outline.arrowRight
@@ -118,19 +134,28 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                 ),
               ),
               CustomOutlinedPrimaryButton(
+                  onClick: () {
+                    // if (widget.args.subChapterId !=
+                    //     widget.args.ids!.length ) {
+                    context.read<ChapterBloc>().add(GetInfoChapter(
+                        chapterId: courseArgs.chapterId!,
+                        subChapterId:
+                        courseArgs.ids![courseArgs.subChapterId!] + 1));
+                    // }
+                  },
                   child: Row(
-                children: [
-                  PrimaryText(
-                      text: "درس بعدی",
-                      style: mThemeData.textTheme.rate,
-                      color: primaryColor),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Assets.icon.outline.arrowLeft1
-                      .svg(color: primaryColor, width: 16, height: 16)
-                ],
-              ))
+                    children: [
+                      PrimaryText(
+                          text: "درس بعدی",
+                          style: mThemeData.textTheme.rate,
+                          color: primaryColor),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Assets.icon.outline.arrowLeft1
+                          .svg(color: primaryColor, width: 16, height: 16)
+                    ],
+                  ))
             ],
           ),
         )

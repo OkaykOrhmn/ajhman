@@ -99,6 +99,12 @@ class $AssetsIconGen {
 class $AssetsImageGen {
   const $AssetsImageGen();
 
+  /// File path: assets/image/Flag.svg
+  SvgGenImage get flag => const SvgGenImage('assets/image/Flag.svg');
+
+  /// File path: assets/image/Gang.png
+  AssetGenImage get gang => const AssetGenImage('assets/image/Gang.png');
+
   /// File path: assets/image/calenda_frame.png
   AssetGenImage get calendaFrame =>
       const AssetGenImage('assets/image/calenda_frame.png');
@@ -110,7 +116,7 @@ class $AssetsImageGen {
       const AssetGenImage('assets/image/timer_frame.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [calendaFrame, timerFrame];
+  List<dynamic> get values => [flag, gang, calendaFrame, timerFrame];
 }
 
 class $AssetsShapeGen {

@@ -4,8 +4,9 @@ part of 'chapter_bloc.dart';
 sealed class ChapterEvent {}
 
 class GetInfoChapter extends ChapterEvent{
-  final CourseArgs args;
+  final int chapterId;
+  final int subChapterId;
 
-  GetInfoChapter({required this.args});
+  GetInfoChapter({required this.chapterId, required this.subChapterId});
 
 }

@@ -2,6 +2,7 @@ import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
+import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,26 +15,19 @@ import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../text/primary_text.dart';
 
-class RecentCourseCard extends StatefulWidget {
-  final int index;
+class RecentCourseCardPlaceholder extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
-  final NewCourseCardModel response;
 
 
-  const RecentCourseCard({super.key, required this.index, this.padding, required this.response});
+  const RecentCourseCardPlaceholder({super.key, this.padding,});
 
   @override
-  State<RecentCourseCard> createState() => _RecentCourseCardState();
+  State<RecentCourseCardPlaceholder> createState() => _RecentCourseCardState();
 }
 
-class _RecentCourseCardState extends State<RecentCourseCard> {
-  late NewCourseCardModel response;
+class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
   @override
   Widget build(BuildContext context) {
-    final index = widget.index;
-    final items = [1, 2, 3, 4];
-    response = widget.response;
-    final p = getProgressCard(response.progress.toString());
 
 
 
@@ -50,15 +44,17 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _image(
-                      getImageUrl(response.image)),
+                  DefaultPlaceHolder(
+                    child: _image(
+                        ""),
+                  ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _title(response.name.toString()),
+                          DefaultPlaceHolder(child: _title("response.name.toString()")),
                           const SizedBox(
                             height: 8,
                           ),
@@ -66,11 +62,13 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
                           const SizedBox(
                             height: 8,
                           ),
-                          Container(
-                            width: 100,
-                            decoration:
-                            BoxDecoration(boxShadow: DesignConfig.defaultShadow),
-                            child:  LinearProgress(value: p, minHeight: 8),
+                          DefaultPlaceHolder(
+                            child: Container(
+                              width: 100,
+                              decoration:
+                              BoxDecoration(boxShadow: DesignConfig.defaultShadow),
+                              child:  LinearProgress(value: 0.8, minHeight: 8),
+                            ),
                           ),
                         ],
                       ),
@@ -81,10 +79,12 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
               Positioned(
                   bottom: 18,
                   left: 20,
-                  child: PrimaryText(
-                    text: p.toString().replaceAll(".", " / "),
-                    style: mThemeData.textTheme.searchHint,
-                    color: grayColor900,
+                  child: DefaultPlaceHolder(
+                    child: PrimaryText(
+                      text: "response.progress.toString()",
+                      style: mThemeData.textTheme.searchHint,
+                      color: grayColor900,
+                    ),
                   ))
             ],
           )),
@@ -95,11 +95,11 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        IconInfo(icon: Assets.icon.outline.chart, desc: "سطح ${getLevel(response.level)}"),
+        DefaultPlaceHolder(child: Container(width: 100,height: 12,)),
         const SizedBox(
           height: 8,
         ),
-        IconInfo(icon: Assets.icon.outline.note2, desc: response.category!.name.toString())
+        DefaultPlaceHolder(child: Container(width: 100,height: 12,)),
       ],
     );
   }
@@ -107,11 +107,6 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
   Container _title(String text) {
 
     return Container(
-      height: (mThemeData.textTheme.title.fontSize! * 3),
-      constraints: const BoxConstraints(
-        minWidth: 100,
-        maxWidth: 190,
-      ),
       child: PrimaryText(
         text: text,
         style: mThemeData.textTheme.title,

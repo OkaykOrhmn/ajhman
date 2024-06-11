@@ -10,6 +10,10 @@ class ApiEndPoints {
   static String subchapter = '/subchapter';
   static String comment = '/comment';
   static String mark = '/mark';
+  static String marked = '/marked';
+  static String learning = '/learning';
+  static String learned = '/learned';
   static String roadmap = '/roadmap';
+  static String  question = '/question';
 
 }

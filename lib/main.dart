@@ -17,6 +17,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'core/bloc/auth/auth_screen_bloc.dart';
 import 'core/bloc/course/main/course_main_bloc.dart';
+import 'core/bloc/learning/leaning_bloc.dart';
 import 'core/bloc/otp/otp_bloc.dart';
 import 'core/bloc/pin/pin_bloc.dart';
 import 'core/bloc/smart_schedule/smart_schedule_bloc.dart';
@@ -112,6 +113,13 @@ void main() {
     BlocProvider<RoadmapBloc>(
       create: (buildContext) {
         final bloc = RoadmapBloc();
+        return bloc;
+      },
+    ),
+
+    BlocProvider<LeaningBloc>(
+      create: (buildContext) {
+        final bloc = LeaningBloc();
         return bloc;
       },
     ),
