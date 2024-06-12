@@ -5,6 +5,7 @@ import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 
@@ -108,41 +109,44 @@ class _PinScreenState extends State<PinScreen> {
                             Text(ChangeLocale(context).appLocal!.changeNumber),
                           ],
                         )),
-                    Pinput(
-                      readOnly: _complete,
-                      length: 5,
-                      androidSmsAutofillMethod:
-                          AndroidSmsAutofillMethod.smsRetrieverApi,
-                      onCompleted: (pin) async {
-                        _complete = true;
-                        final req = await AuthUserOtpRequest(
-                            mobileNumber: context
-                                .read<AuthScreensBloc>()
-                                .state
-                                .phoneNumber
-                                .toString(),
-                            otp: pin.toString());
-                        context.read<PinBloc>().add(PostOtp(req));
-                        await context.read<PinBloc>().stream.lastWhere(
-                            (state) =>
-                                state is PinErrorState ||
-                                state is PinSuccessState);
-                      },
-                      defaultPinTheme: _error ? errorPinTheme : defaultPinTheme,
-                      focusedPinTheme: focusedPinTheme,
-                      submittedPinTheme:
-                          _error ? errorPinTheme : submittedPinTheme,
-                      closeKeyboardWhenCompleted: true,
-                      onChanged: (s) {
-                        if (s.length < 6) {
-                          setState(() {
-                            _complete = false;
-                            _error = false;
-                          });
-                        }
-                      },
-                      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                      showCursor: true,
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Pinput(
+                        readOnly: _complete,
+                        length: 5,
+                        androidSmsAutofillMethod:
+                            AndroidSmsAutofillMethod.smsRetrieverApi,
+                        onCompleted: (pin) async {
+                          _complete = true;
+                          final req = await AuthUserOtpRequest(
+                              mobileNumber: context
+                                  .read<AuthScreensBloc>()
+                                  .state
+                                  .phoneNumber
+                                  .toString(),
+                              otp: pin.toString());
+                          context.read<PinBloc>().add(PostOtp(req));
+                          await context.read<PinBloc>().stream.lastWhere(
+                              (state) =>
+                                  state is PinErrorState ||
+                                  state is PinSuccessState);
+                        },
+                        defaultPinTheme: _error ? errorPinTheme : defaultPinTheme,
+                        focusedPinTheme: focusedPinTheme,
+                        submittedPinTheme:
+                            _error ? errorPinTheme : submittedPinTheme,
+                        closeKeyboardWhenCompleted: true,
+                        onChanged: (s) {
+                          if (s.length < 6) {
+                            setState(() {
+                              _complete = false;
+                              _error = false;
+                            });
+                          }
+                        },
+                        pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                        showCursor: true,
+                      ),
                     ),
                     _error
                         ? Padding(

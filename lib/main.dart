@@ -4,7 +4,9 @@ import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
 import 'package:ajhman/core/bloc/roadmap/roadmap_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
+import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
+import 'package:ajhman/core/cubit/search/search_cubit.dart';
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 
@@ -23,6 +25,7 @@ import 'core/bloc/pin/pin_bloc.dart';
 import 'core/bloc/smart_schedule/smart_schedule_bloc.dart';
 import 'core/bloc/ticker/timer_bloc.dart';
 import 'core/cubit/home/selected_index_cubit.dart';
+import 'core/cubit/timer/timer_cubit.dart';
 import 'core/routes/route_generator.dart';
 import 'core/utils/app_locale.dart';
 import 'core/utils/language/bloc/language_bloc.dart';
@@ -135,6 +138,15 @@ void main() {
     BlocProvider(
       create: (context) => AudioPlayerCubit(),
     ),
+    BlocProvider(
+      create: (context) => TimerCubit(),
+    ),
+    BlocProvider(
+      create: (context) => AnswerCubit(),
+    ),
+    BlocProvider(
+      create: (context) => SearchCubit(),
+    ),
   ], child: const MyApp()));
 }
 
@@ -179,7 +191,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.splash,
+              initialRoute: RoutePaths.search,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );

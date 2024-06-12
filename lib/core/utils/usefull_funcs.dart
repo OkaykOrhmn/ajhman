@@ -123,3 +123,32 @@ double getProgressCard(String progress) {
     return 0;
   }
 }
+
+String getFormatDuration(int totalSeconds) {
+  final duration = Duration(seconds: totalSeconds);
+  final minutes = duration.inMinutes;
+  final seconds = totalSeconds % 60;
+
+  final minutesString = '$minutes'.padLeft(2, '0');
+  final secondsString = '$seconds'.padLeft(2, '0');
+  return '$minutesString:$secondsString';
+}
+
+
+String getAlphIndex(int index) {
+  switch(index){
+    case 0:
+      return "الف) ";
+    case 1:
+      return "ب) ";
+    case 2:
+      return "ج) ";
+    case 3:
+      return "د) ";
+
+    default:
+      return '';
+
+  }
+}
+

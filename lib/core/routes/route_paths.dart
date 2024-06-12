@@ -8,5 +8,9 @@ class RoutePaths{
   static const String courseInfo = '/course-info';
   static const String course = '/course';
   static const String category = '/category';
+  static const String examInfo = '/exam-info';
+  static const String exam = '/exam';
+  static const String examResult = '/exam-result';
+  static const String search = '/search';
 
 }

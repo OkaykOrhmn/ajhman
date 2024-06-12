@@ -3,6 +3,7 @@ import 'package:ajhman/data/api/options.dart';
 import 'package:ajhman/data/model/auth/auth_login_user_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
+import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/model/roadmap_model.dart';
@@ -41,9 +42,25 @@ class CourseRepository implements Course {
     }
 
   }
+
+  @override
+  Future<List<NewCourseCardModel>> getSearch( String type, String search) async{
+    try {
+      Map<String, dynamic>? q = {
+        "type": type,
+        "q": search,
+      };
+      Response response = await dioHelper.getRequest(ApiEndPoints.mainCourse,q);
+      final List<dynamic> postMaps = response.data;
+      return postMaps.map((e) => NewCourseCardModel.fromJson(e)).toList();
+    } catch (ex) {
+      rethrow;
+    }
+  }
 }
 
 abstract class Course {
   Future<CourseMainResponseModel> getMainCurse(int courseId);
   Future<RoadmapModel> getRoadmap(int courseId);
+  Future<List<NewCourseCardModel>> getSearch(String type,String search);
 }

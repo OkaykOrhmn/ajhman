@@ -13,8 +13,9 @@ import '../../theme/text/text_styles.dart';
 
 class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final bool canBack;
 
-  const ReversibleAppBar({super.key, required this.title});
+  const ReversibleAppBar({super.key, required this.title, this.canBack = true});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +31,14 @@ class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: mThemeData.textTheme.headerBold,
               color: Colors.white),
           InkWell(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+              onTap: canBack
+                  ? () {
+                      Navigator.of(context).pop();
+                    }
+                  : null,
               borderRadius: BorderRadius.circular(360),
-              child: Assets.icon.outline.arrowLeft1.svg(color: Colors.white)),
+              child: Assets.icon.outline.arrowLeft1
+                  .svg(color: canBack ? Colors.white : Colors.transparent)),
         ],
       ),
     );

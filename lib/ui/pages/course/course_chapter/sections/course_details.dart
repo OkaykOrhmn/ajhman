@@ -51,23 +51,7 @@ class _CourseDetailsState extends State<CourseDetails> {
               ),
               HighlightListView(
                   items: data.highlight!,
-                  item: (index) => Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Icon(
-                          Icons.circle,
-                          size: 8,
-                          color: grayColor600,
-                        ),
-                      ),
-                      PrimaryText(
-                          text: data.highlight![index].toString(),
-                          style: mThemeData.textTheme.title,
-                          color: grayColor600)
-                    ],
-                  ))
+              )
             ],
           ),
         ),

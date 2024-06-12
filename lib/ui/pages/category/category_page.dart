@@ -56,55 +56,59 @@ class _CategoryPageState extends State<CategoryPage> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 24, 8, 12),
-                child: GroupButton(
-                  controller: controller,
-                  options: GroupButtonOptions(
-                    borderRadius: DesignConfig.highBorderRadius,
-                    alignment: Alignment.center,
-                    buttonHeight: 32,
-                    crossGroupAlignment: CrossGroupAlignment.center,
-                    direction: Axis.horizontal,
-                    groupingType: GroupingType.row,
-                    runSpacing: 8,
-                    selectedColor: primaryColor,
-                    selectedTextStyle: mThemeData.textTheme.navbarTitle
-                        .copyWith(color: Colors.white),
-                    unselectedBorderColor: primaryColor,
-                    unselectedColor: Colors.white,
-                    unselectedTextStyle: mThemeData.textTheme.navbarTitle
-                        .copyWith(color: primaryColor),
-                    textAlign: TextAlign.center,
-                    textPadding: EdgeInsets.symmetric(horizontal: 16),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 24, 8, 12),
+                  child: GroupButton(
+                    controller: controller,
+                    options: GroupButtonOptions(
+                      borderRadius: DesignConfig.highBorderRadius,
+                      alignment: Alignment.center,
+                      buttonHeight: 32,
+                      crossGroupAlignment: CrossGroupAlignment.center,
+                      direction: Axis.horizontal,
+                      groupingType: GroupingType.row,
+                      runSpacing: 4,
+                      selectedColor: primaryColor,
+                      selectedTextStyle: mThemeData.textTheme.navbarTitle
+                          .copyWith(color: Colors.white),
+                      unselectedBorderColor: primaryColor,
+                      unselectedColor: Colors.white,
+                      unselectedTextStyle: mThemeData.textTheme.navbarTitle
+                          .copyWith(color: primaryColor),
+                      textAlign: TextAlign.center,
+                      textPadding: EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                    isRadio: true,
+                    onSelected: (_, index, isSelected) {
+                      late Tags t;
+                      switch (index) {
+                        case 0:
+                          t = Tags.none;
+                          break;
+                        case 1:
+                          t = Tags.online;
+                          break;
+                        case 2:
+                          t = Tags.mini;
+                          break;
+                        case 3:
+                          t = Tags.international;
+                          break;
+                      }
+                      context
+                          .read<CategoryBloc>()
+                          .add(GetAllCategoryCards(categories: [2, 3], tag: t));
+                    },
+                    buttons: const [
+                      "تازه‌ترین‌ها",
+                      "آنلاین شو",
+                      "مینی‌دوره‌ها",
+                      "اینترنشنال شو"
+                    ],
                   ),
-                  isRadio: true,
-                  onSelected: (_, index, isSelected) {
-                    late Tags t;
-                    switch (index) {
-                      case 0:
-                        t = Tags.none;
-                        break;
-                      case 1:
-                        t = Tags.online;
-                        break;
-                      case 2:
-                        t = Tags.mini;
-                        break;
-                      case 3:
-                        t = Tags.international;
-                        break;
-                    }
-                    context
-                        .read<CategoryBloc>()
-                        .add(GetAllCategoryCards(categories: [2, 3], tag: t));
-                  },
-                  buttons: const [
-                    "تازه‌ترین‌ها",
-                    "آنلاین شو",
-                    "مینی‌دوره‌ها",
-                    "اینترنشنال شو"
-                  ],
                 ),
               ),
               BlocBuilder<CategoryBloc, CategoryState>(

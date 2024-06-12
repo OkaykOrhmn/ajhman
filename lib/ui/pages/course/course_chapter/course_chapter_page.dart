@@ -102,63 +102,63 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
     return Column(
       children: [
         _chapter(courseTypes),
-        Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomPrimaryButton(
-                color: Colors.white,
-                elevation: 0,
-                onClick: () {
-                  // if (widget.args.subChapterId != 0) {
-                  context.read<ChapterBloc>().add(GetInfoChapter(
-                      chapterId: courseArgs.chapterId!,
-                      subChapterId:
-                          courseArgs.ids![courseArgs.subChapterId!] - 1));
-                  // }
-                },
-                child: Row(
-                  children: [
-                    Assets.icon.outline.arrowRight
-                        .svg(color: primaryColor, width: 16, height: 16),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    PrimaryText(
-                        text: "درس قبلی",
-                        style: mThemeData.textTheme.rate,
-                        color: primaryColor),
-                  ],
-                ),
-              ),
-              CustomOutlinedPrimaryButton(
-                  onClick: () {
-                    // if (widget.args.subChapterId !=
-                    //     widget.args.ids!.length ) {
-                    context.read<ChapterBloc>().add(GetInfoChapter(
-                        chapterId: courseArgs.chapterId!,
-                        subChapterId:
-                        courseArgs.ids![courseArgs.subChapterId!] + 1));
-                    // }
-                  },
-                  child: Row(
-                    children: [
-                      PrimaryText(
-                          text: "درس بعدی",
-                          style: mThemeData.textTheme.rate,
-                          color: primaryColor),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Assets.icon.outline.arrowLeft1
-                          .svg(color: primaryColor, width: 16, height: 16)
-                    ],
-                  ))
-            ],
-          ),
-        )
+        // Padding(
+        //   padding:
+        //       const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 40),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       CustomPrimaryButton(
+        //         color: Colors.white,
+        //         elevation: 0,
+        //         onClick: () {
+        //           // if (widget.args.subChapterId != 0) {
+        //           // context.read<ChapterBloc>().add(GetInfoChapter(
+        //           //     chapterId: courseArgs.chapterId!,
+        //           //     subChapterId:
+        //           //         courseArgs.ids![courseArgs.subChapterId!] - 1));
+        //           // }
+        //         },
+        //         child: Row(
+        //           children: [
+        //             Assets.icon.outline.arrowRight
+        //                 .svg(color: primaryColor, width: 16, height: 16),
+        //             SizedBox(
+        //               width: 8,
+        //             ),
+        //             PrimaryText(
+        //                 text: "درس قبلی",
+        //                 style: mThemeData.textTheme.rate,
+        //                 color: primaryColor),
+        //           ],
+        //         ),
+        //       ),
+        //       CustomOutlinedPrimaryButton(
+        //           onClick: () {
+        //             // if (widget.args.subChapterId !=
+        //             //     widget.args.ids!.length ) {
+        //             // context.read<ChapterBloc>().add(GetInfoChapter(
+        //             //     chapterId: courseArgs.chapterId!,
+        //             //     subChapterId:
+        //             //     courseArgs.ids![courseArgs.subChapterId!] + 1));
+        //             // }
+        //           },
+        //           child: Row(
+        //             children: [
+        //               PrimaryText(
+        //                   text: "درس بعدی",
+        //                   style: mThemeData.textTheme.rate,
+        //                   color: primaryColor),
+        //               SizedBox(
+        //                 width: 8,
+        //               ),
+        //               Assets.icon.outline.arrowLeft1
+        //                   .svg(color: primaryColor, width: 16, height: 16)
+        //             ],
+        //           ))
+        //     ],
+        //   ),
+        // )
       ],
     );
   }

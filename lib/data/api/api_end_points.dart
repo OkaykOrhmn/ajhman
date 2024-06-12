@@ -15,5 +15,6 @@ class ApiEndPoints {
   static String learned = '/learned';
   static String roadmap = '/roadmap';
   static String  question = '/question';
+  static String  exam = '/exam';
 
 }

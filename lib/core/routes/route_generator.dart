@@ -1,16 +1,24 @@
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/args/category_args.dart';
 import 'package:ajhman/data/args/course_main_args.dart';
+import 'package:ajhman/data/args/exam_args.dart';
+import 'package:ajhman/data/model/answer_result_model.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:ajhman/data/model/exam_response_model.dart';
 import 'package:ajhman/ui/pages/auth/auth_page.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
 import 'package:ajhman/ui/pages/category/category_page.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/course_chapter_page.dart';
+import 'package:ajhman/ui/pages/exam/exam_info.dart';
+import 'package:ajhman/ui/pages/exam/exam_page.dart';
+import 'package:ajhman/ui/pages/exam/exam_result_page.dart';
 import 'package:ajhman/ui/pages/home/home_page.dart';
+import 'package:ajhman/ui/pages/search/search_page.dart';
 import 'package:ajhman/ui/pages/splash_page.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/args/course_args.dart';
+import '../../data/model/answer_request_model.dart';
 import '../../ui/pages/course/course_info.dart';
 import '../../ui/pages/course/course_main_page.dart';
 import '../../ui/pages/smart_schedule/smart_schedule_page.dart';
@@ -41,6 +49,19 @@ class RouteGenerator {
         return _createRoute(CategoryPage(
           args: routeSettings.arguments as CategoryArgs,
         ));
+      case RoutePaths.exam:
+        return _createRoute(ExamPage(
+          response: routeSettings.arguments as ExamArgs,
+          // response: ExamResponseModel(),
+        ));
+      case RoutePaths.examInfo:
+        return _createRoute(const ExamInfo());
+      case RoutePaths.examResult:
+        return _createRoute( ExamResultPage(
+            result: routeSettings.arguments as AnswerResultModel
+        ));
+      case RoutePaths.search:
+        return _createRoute( SearchPage());
       default:
         return _createRoute(const SizedBox());
     }

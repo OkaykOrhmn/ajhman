@@ -44,15 +44,15 @@ class _CourseInfoState extends State<CourseInfo> {
           children: [
             _header(),
             _information(),
-            Center(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SizedBox(
-                  width: MediaQuery.sizeOf(context).width,
-                  child: const OutlinedPrimaryButton(
-                      title: "رفتن به نوشته و نشان شده‌ها")),
-            )),
-            _pointsPlatform(),
+            // Center(
+            //     child: Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16),
+            //   child: SizedBox(
+            //       width: MediaQuery.sizeOf(context).width,
+            //       child: const OutlinedPrimaryButton(
+            //           title: "رفتن به نوشته و نشان شده‌ها")),
+            // )),
+            // _pointsPlatform(),
             data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
           ],
         ),
@@ -217,25 +217,7 @@ class _CourseInfoState extends State<CourseInfo> {
                         height: 16,
                       ),
                       HighlightListView(
-                          items: data.highlight,
-                          item: (index) => Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      size: 8,
-                                      color: grayColor600,
-                                    ),
-                                  ),
-                                  PrimaryText(
-                                      text: data.highlight![index],
-                                      style: mThemeData.textTheme.title,
-                                      color: grayColor600)
-                                ],
-                              ))
+                          items: data.highlight!)
                     ],
                   )
                 : SizedBox()

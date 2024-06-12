@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/enum/course_types.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
 import '../../theme/color/colors.dart';
@@ -26,11 +27,12 @@ class NewCourseCard extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final NewCourseCardModel response;
 
-  const NewCourseCard({super.key,
-    required this.index,
-    this.padding,
-    required this.type,
-    required this.response});
+  const NewCourseCard(
+      {super.key,
+      required this.index,
+      this.padding,
+      required this.type,
+      required this.response});
 
   @override
   State<NewCourseCard> createState() => _RecentCurseCardState();
@@ -98,9 +100,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                 Row(
                   children: [
                     SizedBox(
-                        width: MediaQuery
-                            .sizeOf(context)
-                            .width / 5,
+                        width: MediaQuery.sizeOf(context).width / 5,
                         child: LinearProgress(value: p, minHeight: 8)),
                     SizedBox(
                       width: 8,
@@ -163,31 +163,12 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   Column _infoes() {
     return Column(
       children: [
-        const SizedBox(
-          height: 16,
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
-            ),
-            Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: IconInfo(
-                  icon: Assets.icon.outline.moreCircle,
+                  icon: Assets.icon.user,
                   desc: "${response.users.toString()} فراگیر"),
             ),
             Expanded(
@@ -243,6 +224,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   }
 
   Widget _image(String src, String rate) {
+    CourseTypes courseTypes = getType(widget.response.type);
+
     return Stack(
       children: [
         PrimaryImageNetwork(src: src, aspectRatio: 16 / 9),
@@ -257,6 +240,25 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                 _bookMark(),
                 _rateBar(rate),
               ],
+            )),
+        Positioned(
+            bottom: 12,
+            right: 12,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.5),
+                  boxShadow: DesignConfig.lowShadow,
+                  borderRadius: DesignConfig.highBorderRadius),
+              padding: EdgeInsets.symmetric(horizontal: 12,vertical: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgGenImage(courseTypes.icon)
+                      .svg(color: secondaryColor, width: 14, height: 14),
+                  SizedBox(width: 8,),
+                  PrimaryText(text: courseTypes.title, style: mThemeData.textTheme.searchHint, color: secondaryColor)
+                ],
+              ),
             ))
       ],
     );
@@ -295,34 +297,33 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   Widget _bookMark() {
     return BlocProvider(
       create: (context) => MarkCubit(response.marked!),
-      child: BlocBuilder<MarkCubit, MarkState>(
-          builder: (context, state) {
-            response.marked = state.mark;
-            return InkWell(
-                onTap: () {
-                  final event = context.read<MarkCubit>();
-                  if (state.mark) {
-                    event.deleteMark(response.id!);
-                  } else {
-                    event.postMark(response.id!);
-                  }
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  width: 28,
-                  height: 28,
-                  child: Center(
-                    child: state.mark
-                        ? Assets.icon.boldArchive
+      child: BlocBuilder<MarkCubit, MarkState>(builder: (context, state) {
+        response.marked = state.mark;
+        return InkWell(
+            onTap: () {
+              final event = context.read<MarkCubit>();
+              if (state.mark) {
+                event.deleteMark(response.id!);
+              } else {
+                event.postMark(response.id!);
+              }
+            },
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              width: 28,
+              height: 28,
+              child: Center(
+                child: state.mark
+                    ? Assets.icon.boldArchive
                         .svg(width: 18, height: 18, color: primaryColor)
-                        : Assets.icon.outlineArchive
+                    : Assets.icon.outlineArchive
                         .svg(width: 18, height: 18, color: primaryColor),
-                  ),
-                ));
-          }),
+              ),
+            ));
+      }),
     );
   }
 }

@@ -109,14 +109,26 @@ class $AssetsImageGen {
   AssetGenImage get calendaFrame =>
       const AssetGenImage('assets/image/calenda_frame.png');
 
+  /// File path: assets/image/fail-exam.svg
+  SvgGenImage get failExam => const SvgGenImage('assets/image/fail-exam.svg');
+
+  /// File path: assets/image/finish-exam.svg
+  SvgGenImage get finishExam =>
+      const SvgGenImage('assets/image/finish-exam.svg');
+
   $AssetsImageMoonGen get moon => const $AssetsImageMoonGen();
+
+  /// File path: assets/image/success-exam.svg
+  SvgGenImage get successExam =>
+      const SvgGenImage('assets/image/success-exam.svg');
 
   /// File path: assets/image/timer_frame.png
   AssetGenImage get timerFrame =>
       const AssetGenImage('assets/image/timer_frame.png');
 
   /// List of all assets
-  List<dynamic> get values => [flag, gang, calendaFrame, timerFrame];
+  List<dynamic> get values =>
+      [flag, gang, calendaFrame, failExam, finishExam, successExam, timerFrame];
 }
 
 class $AssetsShapeGen {

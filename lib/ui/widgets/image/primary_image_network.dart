@@ -33,7 +33,7 @@ class PrimaryImageNetwork extends StatelessWidget {
                       color: Colors.white,
                     )),
                 errorWidget: (context, url, error) => Center(
-                  child: Assets.image.moon.son.image(),
+                  child: Assets.image.moon.moon.image(),
                 ),
                 fit: BoxFit.cover,
               ),
