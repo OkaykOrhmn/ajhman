@@ -21,6 +21,7 @@ import '../../../../theme/text/text_styles.dart';
 import '../../../../theme/widget/app_buttons_style.dart';
 import '../../../../theme/widget/pin_put_style.dart';
 import '../../../../widgets/button/primary_button.dart';
+import '../../../../widgets/loading/three_bounce_loading.dart';
 
 class PinScreen extends StatefulWidget {
   const PinScreen({super.key});
@@ -167,7 +168,7 @@ class _PinScreenState extends State<PinScreen> {
                   ],
                 ),
                 pinState is PinLoadingState
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const ThreeBounceLoading()
                     : const SizedBox(),
                 SizedBox(
                     width: double.infinity,

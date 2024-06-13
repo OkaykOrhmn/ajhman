@@ -23,6 +23,7 @@ import '../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../core/routes/route_paths.dart';
 import '../../../../data/args/course_args.dart';
 import '../../../../gen/assets.gen.dart';
+import '../../../widgets/loading/three_bounce_loading.dart';
 
 class CourseChapterPage extends StatefulWidget {
   final CourseArgs args;
@@ -89,9 +90,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
               ),
             );
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return ThreeBounceLoading();
           }
         },
       ),

@@ -15,11 +15,12 @@ import 'package:ajhman/ui/pages/exam/exam_result_page.dart';
 import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:ajhman/ui/pages/search/search_page.dart';
 import 'package:ajhman/ui/pages/splash_page.dart';
+import 'package:ajhman/ui/pages/summery/summery_page.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../data/args/course_args.dart';
 import '../../data/model/answer_request_model.dart';
-import '../../ui/pages/course/course_info.dart';
+import '../../ui/pages/course/course_info_page.dart';
 import '../../ui/pages/course/course_main_page.dart';
 import '../../ui/pages/smart_schedule/smart_schedule_page.dart';
 
@@ -40,9 +41,9 @@ class RouteGenerator {
       case RoutePaths.smartSchedule:
         return _createRoute(const SmartSchedulePage());
       case RoutePaths.courseMain:
-        return _createRoute( CourseMainPage(  args:CourseMainArgs(courseId: 4),));
+        return _createRoute( CourseMainPage(  args:routeSettings.arguments as CourseMainArgs,));
       case RoutePaths.courseInfo:
-        return _createRoute( CourseInfo(  response:routeSettings.arguments as CourseMainResponseModel,));
+        return _createRoute( CourseInfoPage(  response:routeSettings.arguments as CourseMainResponseModel,));
       case RoutePaths.course:
         return _createRoute( CourseChapterPage(args: routeSettings.arguments as CourseArgs));
       case RoutePaths.category:
@@ -55,13 +56,15 @@ class RouteGenerator {
           // response: ExamResponseModel(),
         ));
       case RoutePaths.examInfo:
-        return _createRoute(const ExamInfo());
+        return _createRoute( ExamInfo(courseId: routeSettings.arguments as int,));
       case RoutePaths.examResult:
         return _createRoute( ExamResultPage(
             result: routeSettings.arguments as AnswerResultModel
         ));
       case RoutePaths.search:
         return _createRoute( SearchPage());
+        case RoutePaths.summery:
+        return _createRoute( SummeryPage(id: routeSettings.arguments as int));
       default:
         return _createRoute(const SizedBox());
     }

@@ -25,6 +25,7 @@ import '../../../data/repository/exam_repository.dart';
 import '../../../gen/assets.gen.dart';
 import '../../theme/widget/design_config.dart';
 import '../../widgets/dialogs/dialog_handler.dart';
+import '../../widgets/loading/three_bounce_loading.dart';
 
 class ExamPage extends StatefulWidget {
   final ExamArgs response;
@@ -338,9 +339,7 @@ class _ExamPageState extends State<ExamPage>
                       ignoring: timOut,
                       child: Container(
                         color: Colors.white.withOpacity(0.5),
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                        child: ThreeBounceLoading(),
                       ),
                     )
                   : const SizedBox()

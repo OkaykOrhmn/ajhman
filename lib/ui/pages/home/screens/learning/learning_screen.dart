@@ -64,22 +64,8 @@ class _LearningScreenState extends State<LearningScreen>
       child: Column(
         children: [
           _tabBar(),
-          Expanded(
-            child: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _controller,
-              children: const [
-                LearningCompleteScreen(
-                  cardType: CardType.completed,
-                ),
-                LearningCompleteScreen(
-                  cardType: CardType.onLearning,
-                ),
-                LearningCompleteScreen(
-                  cardType: CardType.normal,
-                ),
-              ],
-            ),
+          const Expanded(
+            child: LearningCompleteScreen(),
           ),
         ],
       ),

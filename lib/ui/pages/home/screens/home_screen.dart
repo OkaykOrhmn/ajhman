@@ -28,6 +28,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../core/bloc/learning/leaning_bloc.dart';
 import '../../../../core/enum/tags.dart';
 import '../../../../data/api/api_end_points.dart';
+import '../../../../data/args/course_main_args.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../widgets/card/news_course_card_placeholder.dart';
 import '../../../widgets/carousel/carousel_banners.dart';
@@ -68,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _gridLayout(),
             // const TitleDivider(title: "آنلاین‌شو"),
             // const OnlineCard(),
-            TitleDivider(title: "دوره‌های اخیرا دیده شده", btn: () {}),
+
             BlocBuilder<LeaningBloc, LeaningState>(
               builder: (context, state) {
                 if (state is LeaningLoading) {
@@ -78,26 +79,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 return recentCards != null && recentCards!.isEmpty
                     ? SizedBox()
-                    : HorizontalListView(
-                        placeholder: (index) => RecentCourseCardPlaceholder(
-                          padding: DesignConfig.horizontalListViwItemPadding(
-                              16, index, items.length),
-                        ),
-                        height: 190,
-                        width: MediaQuery.sizeOf(context).width / 1.1,
-                        item: (index) => InkWell(
-                          onTap: () {
-                            navigatorKey.currentState!
-                                .pushNamed(RoutePaths.courseMain);
-                          },
-                          child: RecentCourseCard(
-                            index: index,
-                            padding: DesignConfig.horizontalListViwItemPadding(
-                                16, index, items.length),
-                            response: recentCards![index],
+                    : Column(
+                        children: [
+                          TitleDivider(
+                              title: "دوره‌های اخیرا دیده شده", btn: () {}),
+                          HorizontalListView(
+                            placeholder: (index) => RecentCourseCardPlaceholder(
+                              padding:
+                                  DesignConfig.horizontalListViwItemPadding(
+                                      16, index, items.length),
+                            ),
+                            height: 190,
+                            width: MediaQuery.sizeOf(context).width / 1.1,
+                            item: (index) => InkWell(
+                              onTap: () {
+                                navigatorKey.currentState!.pushNamed(
+                                    RoutePaths.courseMain,
+                                    arguments: CourseMainArgs(
+                                        courseId: recentCards![index].id));
+                              },
+                              child: RecentCourseCard(
+                                index: index,
+                                padding:
+                                    DesignConfig.horizontalListViwItemPadding(
+                                        16, index, items.length),
+                                response: recentCards![index],
+                              ),
+                            ),
+                            items: recentCards,
                           ),
-                        ),
-                        items: recentCards,
+                        ],
                       );
               },
             ),
@@ -105,12 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 40,
             ),
-            TitleDivider(
-                title: "جدیدترین دوره ها",
-                btn: () {
-                  navigatorKey.currentState!.pushNamed(RoutePaths.category,
-                      arguments: CategoryArgs(categoriesId: [1, 2, 3]));
-                }),
+
             BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
                 if (state is CategoryLoadingState) {
@@ -120,22 +126,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 return newsCards != null && newsCards!.isEmpty
                     ? SizedBox()
-                    : HorizontalListView(
-                        height: 500,
-                        placeholder: (index) => const NewCourseCardPlaceholder(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
-                          type: CardType.normal,
-                        ),
-                        item: (index) => NewCourseCard(
-                          type: CardType.normal,
-                          index: index,
-                          padding: DesignConfig.horizontalListViwItemPadding(
-                              16, index, items.length),
-                          response: newsCards![index],
-                        ),
-                        items: newsCards,
-                        width: MediaQuery.sizeOf(context).width / 1.2,
+                    : Column(
+                        children: [
+                          TitleDivider(
+                              title: "جدیدترین دوره ها",
+                              btn: () {
+                                navigatorKey.currentState!.pushNamed(
+                                    RoutePaths.category,
+                                    arguments:
+                                        CategoryArgs(categoriesId: [1, 2, 3]));
+                              }),
+                          HorizontalListView(
+                            height: 420,
+                            placeholder: (index) =>
+                                const NewCourseCardPlaceholder(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              type: CardType.normal,
+                            ),
+                            item: (index) => NewCourseCard(
+                              index: index,
+                              padding:
+                                  DesignConfig.horizontalListViwItemPadding(
+                                      16, index, items.length),
+                              response: newsCards![index],
+                            ),
+                            items: newsCards,
+                            width: MediaQuery.sizeOf(context).width / 1.2,
+                          ),
+                        ],
                       );
               },
             ),

@@ -12,12 +12,26 @@ import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/bloc/for_you/for_you_bloc.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../widgets/button/custom_primary_button.dart';
+import '../../../widgets/loading/three_bounce_loading.dart';
 
-class ForYouScreen extends StatelessWidget {
+class ForYouScreen extends StatefulWidget {
   const ForYouScreen({super.key});
+
+  @override
+  State<ForYouScreen> createState() => _ForYouScreenState();
+}
+
+class _ForYouScreenState extends State<ForYouScreen> {
+  @override
+  void initState() {
+    context.read<ForYouBloc>().add(GetAllForYou());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +40,7 @@ class ForYouScreen extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: backgroundColor100,
               borderRadius: DesignConfig.highBorderRadius,
             ),
@@ -36,12 +50,14 @@ class ForYouScreen extends StatelessWidget {
               children: [
                 CustomPrimaryButton(
                   fill: true,
+                  color: secondaryColor,
+                  onClick: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Assets.icon.boldNote
                           .svg(width: 24, height: 24, color: Colors.white),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       PrimaryText(
@@ -50,10 +66,8 @@ class ForYouScreen extends StatelessWidget {
                           color: Colors.white)
                     ],
                   ),
-                  color: secondaryColor,
-                  onClick: () {},
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 PrimaryText(
@@ -64,77 +78,100 @@ class ForYouScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: VerticalListView(
-              item: (context,index) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 500,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: index == 0 ? 4 : 0,
-                            bottom: index == 3 ? 200 : 0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 32,
-                              height: 32,
-                              padding: EdgeInsets.only(top: 4),
-                              decoration: BoxDecoration(
-                                  color: index == 0
-                                      ? primaryColor
-                                      : backgroundColor100,
-                                  border: index == 1
-                                      ? Border.all(
-                                          width: 1, color: primaryColor)
-                                      : null,
-                                  shape: BoxShape.circle),
-                              child: Center(
-                                  child: PrimaryText(
-                                      text: "${index + 1}",
-                                      style: mThemeData.textTheme.headerBold,
-                                      color: index == 0
-                                          ? Colors.white
-                                          : index == 1
-                                              ? primaryColor
-                                              : grayColor600)),
-                            ),
-                            Expanded(
-                              child: VerticalDashedLine(
-                                active: index == 0 ? primaryColor : null,
-                                dashed: index != 0,
-                                dashSize: 8,
-                                width: 2,
+          BlocBuilder<ForYouBloc, ForYouState>(
+            builder: (context, state) {
+              if (state is ForYouSuccess) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: VerticalListView(
+                    item: (context, index) {
+                      if (state.response[index].status == "not learned") {
+                        state.response[index].canStart = true;
+                        if (index != 0) {
+                          if (state.response[index - 1].status ==
+                              "not learned") {
+                            state.response[index].canStart = false;
+                          }
+                        }
+                      }
+
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 420,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: index == 0 ? 0 : 0,
+                                  bottom: index == state.response.length - 1
+                                      ? 200
+                                      : 0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    width: 32,
+                                    height: 32,
+                                    padding: EdgeInsets.only(top: 4),
+                                    decoration: BoxDecoration(
+                                        color: state.response[index].status == "learned"
+                                            ? primaryColor
+                                            : backgroundColor100,
+                                        border: state.response[index].status == "learning"
+                                            ? Border.all(
+                                                width: 1, color: primaryColor)
+                                            : null,
+                                        shape: BoxShape.circle),
+                                    child: Center(
+                                        child: PrimaryText(
+                                            text: "${index + 1}",
+                                            style:
+                                                mThemeData.textTheme.headerBold,
+                                            color: state.response[index].status == "learning"
+                                                ? Colors.white
+                                                : state.response[index].status == "learned"
+                                                    ? primaryColor
+                                                    : grayColor600)),
+                                  ),
+                                  Expanded(
+                                    child: VerticalDashedLine(
+                                      active: state.response[index].status == "learned"
+                                          ? primaryColor
+                                          : null,
+                                      dashed: state.response[index].status == "learned",
+                                      dashSize: 8,
+                                      width: 2,
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    // Expanded(
-                    //   child: SizedBox(
-                    //       height: 480,
-                    //       child: NewCourseCard(
-                    //           index: index, type: CardType.onLearning, response: NewCourseCardModel(),)),
-                    // )
-                  ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            child: NewCourseCard(
+                              index: index,
+                              response: state.response[index],
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                    items: state.response,
+                  ),
                 );
-              },
-              items: [1, 2, 3, 4],
-            ),
+              } else {
+                return ThreeBounceLoading();
+              }
+            },
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           )
         ],

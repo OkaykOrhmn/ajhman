@@ -1,8 +1,10 @@
+import 'package:ajhman/core/cubit/home/selected_index_cubit.dart';
 import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
 import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
+import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/data/args/course_main_args.dart';
 import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -12,6 +14,8 @@ import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 import '../../../core/enum/course_types.dart';
 import '../../../gen/assets.gen.dart';
@@ -23,16 +27,11 @@ import '../text/primary_text.dart';
 
 class NewCourseCard extends StatefulWidget {
   final int index;
-  final CardType type;
   final EdgeInsetsGeometry? padding;
   final NewCourseCardModel response;
 
   const NewCourseCard(
-      {super.key,
-      required this.index,
-      this.padding,
-      required this.type,
-      required this.response});
+      {super.key, required this.index, this.padding, required this.response});
 
   @override
   State<NewCourseCard> createState() => _RecentCurseCardState();
@@ -82,8 +81,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   }
 
   Widget _footer() {
-    switch (widget.type) {
-      case CardType.onLearning:
+    switch (response.status.toString()) {
+      case "learning":
         final p = getProgressCard(response.progress.toString());
         return Column(
           children: [
@@ -111,23 +110,29 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                         color: grayColor900),
                   ],
                 ),
-                PrimaryButton(title: "دریافت گواهینامه")
+                PrimaryButton(
+                    title: "ادامه یادگیری",
+                    onClick: () {
+                      navigatorKey.currentState!.pushNamed(
+                          RoutePaths.courseMain,
+                          arguments: CourseMainArgs(courseId: response.id));
+                    })
               ],
             )
           ],
         );
 
-      case CardType.normal:
+      case "not learned":
         return PrimaryButton(
           fill: true,
-          title: "ورود به جلسه",
-          onClick: () {
+          title: "ثبت‌نام",
+          onClick: response.canStart != null && response.canStart!? () {
             navigatorKey.currentState!.pushNamed(RoutePaths.courseMain,
                 arguments: CourseMainArgs(courseId: response.id!));
-          },
+          }: null,
         );
 
-      case CardType.completed:
+      case "learned":
         return Column(
           children: [
             const Padding(
@@ -152,11 +157,21 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                         color: primaryColor),
                   ],
                 ),
-                PrimaryButton(title: "دریافت گواهینامه")
+                PrimaryButton(
+                  title: "دریافت گواهینامه",
+                  onClick: () {
+                    context
+                        .read<SelectedIndexCubit>()
+                        .changeSelectedIndex(1, "گنجینه من");
+                  },
+                )
               ],
             )
           ],
         );
+
+      default:
+        return const SizedBox();
     }
   }
 
@@ -238,7 +253,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _bookMark(),
-                _rateBar(rate),
+                // _rateBar(rate),
               ],
             )),
         Positioned(
@@ -249,17 +264,49 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                   color: Colors.white.withOpacity(0.5),
                   boxShadow: DesignConfig.lowShadow,
                   borderRadius: DesignConfig.highBorderRadius),
-              padding: EdgeInsets.symmetric(horizontal: 12,vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SvgGenImage(courseTypes.icon)
                       .svg(color: secondaryColor, width: 14, height: 14),
-                  SizedBox(width: 8,),
-                  PrimaryText(text: courseTypes.title, style: mThemeData.textTheme.searchHint, color: secondaryColor)
+                  SizedBox(
+                    width: 8,
+                  ),
+                  PrimaryText(
+                      text: courseTypes.title,
+                      style: mThemeData.textTheme.searchHint,
+                      color: secondaryColor)
                 ],
               ),
-            ))
+            )),
+        widget.response.expiresAt == null
+            ? const SizedBox()
+            : Positioned(
+                bottom: 12,
+                left: 12,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      boxShadow: DesignConfig.lowShadow,
+                      borderRadius: DesignConfig.highBorderRadius),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Assets.icon.outline.calendar
+                          .svg(color: secondaryColor, width: 14, height: 14),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      PrimaryText(
+                          text:
+                              "مهلت تا ${getIsoTimeMonthAndDay(response.expiresAt.toString())}",
+                          style: mThemeData.textTheme.searchHint,
+                          color: secondaryColor)
+                    ],
+                  ),
+                )),
       ],
     );
   }
@@ -309,8 +356,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
               }
             },
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.5),
                 shape: BoxShape.circle,
               ),
               width: 28,

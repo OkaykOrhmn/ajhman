@@ -1,5 +1,6 @@
 import 'package:ajhman/data/model/answer_request_model.dart';
 import 'package:ajhman/main.dart';
+import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/button/loading_btn.dart';
@@ -43,7 +44,7 @@ class DialogHandler {
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Container(
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
+                        shape: BoxShape.circle, color: errorBackground),
                     padding: EdgeInsets.all(6),
                     child: Assets.icon.bold.closeCircle.svg()),
               ),
@@ -60,6 +61,55 @@ class DialogHandler {
                   child: PrimaryButton(
                     title: btnTitle,
                     onClick: onTap,
+                  ))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Future<void> showRegCourseDialog(
+      String title, String btnTitle) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: mContext,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.white,
+        insetPadding: const EdgeInsets.all(16),
+        shape: const RoundedRectangleBorder(
+            borderRadius: DesignConfig.highBorderRadius),
+        child: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Container(
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: successBackground),
+                    padding: EdgeInsets.all(6),
+                    child: Container(
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: successMain),
+                            padding: EdgeInsets.all(6),
+                        child: Icon(CupertinoIcons.checkmark_alt,color: Colors.white,size: 46,))),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: PrimaryText(
+                    text: title,
+                    style: themeData.textTheme.dialogTitle,
+                    color: Colors.black),
+              ),
+              Container(
+                  width: MediaQuery.sizeOf(context).width / 2,
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: PrimaryButton(
+                    title: btnTitle,
+                    onClick: ()=> pop(),
                   ))
             ],
           ),
@@ -178,6 +228,7 @@ class DialogHandler {
                                 try {
                                   AnswerResultModel response =
                                       await examRepository.postExam(4, answers);
+                                  pop();
                                   navigatorKey.currentState!
                                       .pushReplacementNamed(
                                           RoutePaths.examResult,
@@ -206,6 +257,8 @@ class DialogHandler {
           );
         });
   }
+
+
 
   static void pop() {
     Navigator.of(mContext).pop();

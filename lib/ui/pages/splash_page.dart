@@ -15,7 +15,9 @@ import '../../data/model/error_response_model.dart';
 import '../../data/model/profile_response_model.dart';
 import '../../data/shared_preferences/auth_token.dart';
 import '../../data/shared_preferences/profile_data.dart';
+import '../../gen/assets.gen.dart';
 import '../widgets/dialogs/dialog_handler.dart';
+import '../widgets/loading/three_bounce_loading.dart';
 import 'home/home_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -55,7 +57,14 @@ class _SplashPageState extends State<SplashPage> {
                   return const AuthPageStarted();
                 case StateStatus.loading:
                 default:
-                  return const Center(child: CircularProgressIndicator());
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(height: 16,),
+                      Assets.icon.main.lIcon.svg(),
+                      ThreeBounceLoading(),
+                    ],
+                  );
               }
             }, listener: (context, state) {
               if (state.status == StateStatus.loading) {}

@@ -5,10 +5,13 @@ import 'package:ajhman/gen/assets.gen.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
+import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text_field/search_text_field.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 
@@ -36,15 +39,12 @@ class _SearchPageState extends State<SearchPage> {
     CourseTypes.image,
     CourseTypes.any
   ];
+  late CourseTypes? courseTypes = null;
 
-  final btns = [];
   final TextEditingController _search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    for (var element in types) {
-      btns.add(element.title);
-    }
     return Scaffold(
       appBar: ReversibleAppBar(title: "جستجو"),
       body: SingleChildScrollView(
@@ -55,7 +55,18 @@ class _SearchPageState extends State<SearchPage> {
                 textEditingController: _search,
                 hint: "دنبال چی می گردی؟",
                 onChange: (val) {
-                  context.read<SearchCubit>().search(CourseTypes.video, val);
+                  if (val.isNotEmpty) {
+                    EasyDebounce.debounce(
+                        'my-debouncer',
+                        // <-- An ID for this particular debouncer
+                        Duration(seconds: 1), // <-- The debounce duration
+                        () {
+                      context
+                          .read<SearchCubit>()
+                          .search(courseTypes?.type, val);
+                    } // <-- The target method
+                        );
+                  }
                 }),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -95,28 +106,36 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     );
                   },
-                  onSelected: (_, index, isSelected) {},
+                  onSelected: (_, index, isSelected) {
+                    courseTypes = types[index];
+                  },
                   buttons: types,
                 ),
               ),
             ),
-            BlocBuilder<SearchCubit, List<NewCourseCardModel>>(
+            BlocBuilder<SearchCubit, List<NewCourseCardModel>?>(
                 builder: (context, state) {
-              return VerticalListView(
-                placeholder: const NewCourseCardPlaceholder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  type: CardType.normal,
-                ),
-                item: (context, index) => NewCourseCard(
-                  type: CardType.normal,
-                  index: index,
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16)
-                      .copyWith(top: index == 0 ? 0 : 8),
-                  response: state[index],
-                ),
-                items: state.isEmpty ? [] : state,
-              );
+              return state != null && state.isEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.sizeOf(context).height / 3),
+                      child: const EmptyScreen(),
+                    )
+                  : VerticalListView(
+                      placeholder: const NewCourseCardPlaceholder(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        type: CardType.normal,
+                      ),
+                      item: (context, index) => NewCourseCard(
+                        index: index,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 16)
+                                .copyWith(top: index == 0 ? 0 : 8),
+                        response: state![index],
+                      ),
+                      items: state == null ? [] : state,
+                    );
             })
           ],
         ),

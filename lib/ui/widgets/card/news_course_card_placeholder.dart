@@ -26,16 +26,13 @@ class NewCourseCardPlaceholder extends StatefulWidget {
   final CardType type;
   final EdgeInsetsGeometry? padding;
 
-  const NewCourseCardPlaceholder({super.key,
-    this.padding,
-    required this.type});
+  const NewCourseCardPlaceholder({super.key, this.padding, required this.type});
 
   @override
   State<NewCourseCardPlaceholder> createState() => _RecentCurseCardState();
 }
 
 class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
-
   @override
   void initState() {
     super.initState();
@@ -56,8 +53,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DefaultPlaceHolder(child: _image("", "3.4"))
-                ,
+                DefaultPlaceHolder(child: _image("", "3.4")),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
@@ -93,10 +89,9 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                 Row(
                   children: [
                     SizedBox(
-                        width: MediaQuery
-                            .sizeOf(context)
-                            .width / 5,
-                        child: DefaultPlaceHolder(child: LinearProgress(value: 0.8, minHeight: 8))),
+                        width: MediaQuery.sizeOf(context).width / 5,
+                        child: DefaultPlaceHolder(
+                            child: LinearProgress(value: 0.8, minHeight: 8))),
                     SizedBox(
                       width: 8,
                     ),
@@ -108,7 +103,8 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                     ),
                   ],
                 ),
-                DefaultPlaceHolder(child: PrimaryButton(title: "دریافت گواهینامه"))
+                DefaultPlaceHolder(
+                    child: PrimaryButton(title: "دریافت گواهینامه"))
               ],
             )
           ],
@@ -119,8 +115,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
           child: PrimaryButton(
             fill: true,
             title: "ورود به جلسه",
-            onClick: () {
-            },
+            onClick: () {},
           ),
         );
 
@@ -153,11 +148,15 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                     ),
                   ],
                 ),
-                DefaultPlaceHolder(child: PrimaryButton(title: "دریافت گواهینامه"))
+                DefaultPlaceHolder(
+                    child: PrimaryButton(title: "دریافت گواهینامه"))
               ],
             )
           ],
         );
+      case CardType.notLearned:
+        return const DefaultPlaceHolder(
+            child: PrimaryButton(title: "دریافت گواهینامه"));
     }
   }
 
@@ -187,7 +186,8 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                 child: DefaultPlaceHolder(
                   child: Expanded(
                     child: IconInfo(
-                        icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
+                        icon: Assets.icon.outline.microphone,
+                        desc: "محتوای صوتی"),
                   ),
                 ),
               ),
@@ -217,37 +217,8 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                 child: DefaultPlaceHolder(
                   child: Expanded(
                     child: IconInfo(
-                        icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: DefaultPlaceHolder(
-                  child: Expanded(
-                    child: IconInfo(
-                        icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: DefaultPlaceHolder(
-                  child: Expanded(
-                    child: IconInfo(
-                        icon: Assets.icon.outline.microphone, desc: "محتوای صوتی"),
+                        icon: Assets.icon.outline.microphone,
+                        desc: "محتوای صوتی"),
                   ),
                 ),
               ),
@@ -326,39 +297,39 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
     );
   }
 
-  // Widget _bookMark() {
-  //   // return BlocProvider(
-  //   //   create: (context) => MarkCubit(response.marked!),
-  //   //   child: BlocBuilder<MarkCubit, MarkState>(
-  //   //       builder: (context, state) {
-  //           // response.marked = state.mark;
-  //           return InkWell(
-  //               onTap: () {
-  //                 // final event = context.read<MarkCubit>();
-  //                 // if (state.mark) {
-  //                 //   event.deleteMark(response.id!);
-  //                 // } else {
-  //                 //   event.postMark(response.id!);
-  //                 // }
-  //               },
-  //               child: Container(
-  //                 decoration: const BoxDecoration(
-  //                   color: Colors.white,
-  //                   shape: BoxShape.circle,
-  //                 ),
-  //                 width: 28,
-  //                 height: 28,
-  //                 child: Center(
-  //                   child:
-  //                   // state.mark
-  //                   //     ? Assets.icon.boldArchive
-  //                   //     .svg(width: 18, height: 18, color: primaryColor)
-  //                   //     :
-  //                   Assets.icon.outlineArchive
-  //                       .svg(width: 18, height: 18, color: primaryColor),
-  //                 ),
-  //               ));
-  //         // }),
-  //   // );
-  // }
+// Widget _bookMark() {
+//   // return BlocProvider(
+//   //   create: (context) => MarkCubit(response.marked!),
+//   //   child: BlocBuilder<MarkCubit, MarkState>(
+//   //       builder: (context, state) {
+//           // response.marked = state.mark;
+//           return InkWell(
+//               onTap: () {
+//                 // final event = context.read<MarkCubit>();
+//                 // if (state.mark) {
+//                 //   event.deleteMark(response.id!);
+//                 // } else {
+//                 //   event.postMark(response.id!);
+//                 // }
+//               },
+//               child: Container(
+//                 decoration: const BoxDecoration(
+//                   color: Colors.white,
+//                   shape: BoxShape.circle,
+//                 ),
+//                 width: 28,
+//                 height: 28,
+//                 child: Center(
+//                   child:
+//                   // state.mark
+//                   //     ? Assets.icon.boldArchive
+//                   //     .svg(width: 18, height: 18, color: primaryColor)
+//                   //     :
+//                   Assets.icon.outlineArchive
+//                       .svg(width: 18, height: 18, color: primaryColor),
+//                 ),
+//               ));
+//         // }),
+//   // );
+// }
 }

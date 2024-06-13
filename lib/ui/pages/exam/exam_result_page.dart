@@ -142,6 +142,9 @@ class _ExamResultPageState extends State<ExamResultPage> {
                     OutlinedPrimaryButton(
                       title: "بازگشت به خانه",
                       fill: true,
+                      onClick: (){
+                        navigatorKey.currentState!.pop();
+                      },
                     ),
                   ],
                 ),

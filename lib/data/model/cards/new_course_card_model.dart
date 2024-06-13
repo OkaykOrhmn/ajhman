@@ -10,6 +10,9 @@ class NewCourseCardModel {
   int? score;
   bool? marked;
   String? progress;
+  String? status;
+  String? expiresAt;
+  bool? canStart;
 
   NewCourseCardModel(
       {this.id,
@@ -23,6 +26,9 @@ class NewCourseCardModel {
         this.users,
         this.marked,
         this.progress,
+        this.status,
+        this.expiresAt,
+        this.canStart,
       });
 
   NewCourseCardModel.fromJson(Map<String, dynamic> json) {
@@ -39,6 +45,8 @@ class NewCourseCardModel {
     score = json['score'];
     marked = json['marked'];
     progress = json['progress'];
+    status = json['status'];
+    expiresAt = json['expiresAt'];
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +64,8 @@ class NewCourseCardModel {
     data['score'] = this.score;
     data['marked'] = this.marked;
     data['progress'] = this.progress;
+    data['status'] = this.status;
+    data['expiresAt'] = this.expiresAt;
     return data;
   }
 }

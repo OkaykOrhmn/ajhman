@@ -12,5 +12,6 @@ class RoutePaths{
   static const String exam = '/exam';
   static const String examResult = '/exam-result';
   static const String search = '/search';
+  static const String summery = '/summery';
 
 }

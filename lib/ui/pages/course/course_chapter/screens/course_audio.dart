@@ -22,6 +22,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../../core/cubit/audio/audio_player_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
+import '../../../../widgets/loading/three_bounce_loading.dart';
 
 class CourseAudio extends StatefulWidget {
   const CourseAudio({super.key});
@@ -211,9 +212,7 @@ class _CourseAudioState extends State<CourseAudio> {
                     ? Positioned.fill(
                         child: Container(
                         color: Colors.white.withOpacity(0.5),
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                        child: ThreeBounceLoading(),
                       ))
                     : SizedBox(),
               ],

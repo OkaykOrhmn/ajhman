@@ -7,13 +7,13 @@ import 'package:meta/meta.dart';
 
 part 'search_state.dart';
 
-class SearchCubit extends Cubit<List<NewCourseCardModel>> {
-  SearchCubit() : super([]);
+class SearchCubit extends Cubit<List<NewCourseCardModel>?> {
+  SearchCubit() : super(null);
 
-  void search(CourseTypes type, String search) async {
+  void search(String? type, String search) async {
     try {
       List<NewCourseCardModel> response =
-          await courseRepository.getSearch(type.type,search);
+          await courseRepository.getSearch(type,search);
 
       emit(response);
     } on DioError catch (e) {

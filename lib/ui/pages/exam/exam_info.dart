@@ -23,7 +23,8 @@ import 'package:pinput/pinput.dart';
 import '../../../gen/assets.gen.dart';
 
 class ExamInfo extends StatefulWidget {
-  const ExamInfo({super.key});
+  final int courseId;
+  const ExamInfo({super.key, required this.courseId});
 
   @override
   State<ExamInfo> createState() => _ExamInfoState();
@@ -94,7 +95,7 @@ class _ExamInfoState extends State<ExamInfo> {
                           case 1:
                             try {
                               ExamResponseModel response =
-                              await examRepository.getExam(4);
+                              await examRepository.getExam(widget.courseId);
                               final args = ExamArgs(
                                   model: response, comment: _comment.text);
                               navigatorKey.currentState!.pushReplacementNamed(

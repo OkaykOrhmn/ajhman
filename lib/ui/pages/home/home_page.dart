@@ -84,22 +84,22 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           BottomNavigationBtn(
                               index: 0,
-                              title: "Home",
+                              title: "خانه",
                               selectedIcon: Assets.icon.bold.home,
                               unselectedIcon: Assets.icon.outline.home),
                           BottomNavigationBtn(
                               index: 1,
-                              title: "MyT",
+                              title: "گنجینه من",
                               selectedIcon: Assets.icon.bold.ranking,
                               unselectedIcon: Assets.icon.outline.ranking),
                           BottomNavigationBtn(
                               index: 2,
-                              title: "Learn",
+                              title: "یادگیری",
                               selectedIcon: Assets.icon.bold.documentText,
                               unselectedIcon: Assets.icon.outline.documentText),
                           BottomNavigationBtn(
                               index: 3,
-                              title: "For U",
+                              title: "برای تو",
                               selectedIcon: Assets.icon.bold.lamp,
                               unselectedIcon: Assets.icon.outline.lamp)
                         ],

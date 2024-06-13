@@ -38,6 +38,11 @@ class _RoadMapPageState extends State<RoadMapPage> {
   List<String> items = [];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -92,7 +97,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                     ),
                   ),
                   VerticalListView(
-                      items: [1, 2, 3],
+                      items: widget.response.chapters,
                       item: (context, index) {
                         return Road(
                           index: index + 1,
@@ -102,7 +107,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                 ],
               ),
               VerticalListView(
-                  items: [1, 2, 3],
+                  items: widget.response.chapters,
                   item: (context, index) {
                     RoadmapView view = getRoadMapContainer(true, null);
                     return Column(
@@ -130,7 +135,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       PrimaryText(
-                                        text: "فصل اول",
+                                        text: widget.response.chapters![index].name.toString(),
                                         style: mThemeData.textTheme.titleBold,
                                         color: view.color,
                                         textAlign: TextAlign.start,

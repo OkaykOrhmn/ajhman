@@ -3,15 +3,23 @@ import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:ajhman/data/repository/course_repository.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
+import 'package:ajhman/ui/widgets/button/primary_button.dart';
+import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_btn/loading_btn.dart';
 
+import '../../../data/args/exam_args.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../../widgets/animation/animated_visibility.dart';
+import '../../widgets/button/loading_btn.dart';
 import '../../widgets/button/outlined_primary_button.dart';
 import '../../widgets/image/primary_image_network.dart';
 import '../../widgets/image/profile_image_network.dart';
@@ -20,22 +28,25 @@ import '../../widgets/text/icon_info.dart';
 import '../../widgets/text/primary_text.dart';
 import '../../widgets/text/title_divider.dart';
 
-class CourseInfo extends StatefulWidget {
-  const CourseInfo({super.key, required this.response});
+class CourseInfoPage extends StatefulWidget {
+  const CourseInfoPage({super.key, required this.response});
 
   final CourseMainResponseModel response;
 
   @override
-  State<CourseInfo> createState() => _CourseInfoState();
+  State<CourseInfoPage> createState() => _CourseInfoPageState();
 }
 
-class _CourseInfoState extends State<CourseInfo> {
+class _CourseInfoPageState extends State<CourseInfoPage> {
   late CourseMainResponseModel data;
+
+  bool isShowLast = false;
 
   @override
   Widget build(BuildContext context) {
     data = widget.response;
     return Scaffold(
+      appBar: const ReversibleAppBar(title: "محتوای دوره"),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
@@ -54,6 +65,28 @@ class _CourseInfoState extends State<CourseInfo> {
             // )),
             // _pointsPlatform(),
             data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
+            data.registered != null && data.registered!
+                ? const SizedBox()
+                : PrimaryLoadingButton(
+                    title: 'ثبت‌نام',
+                    disable: false,
+                    onTap: (Function startLoading, Function stopLoading,
+                        ButtonState btnState) async {
+                      if (btnState == ButtonState.idle) {
+                        startLoading();
+                        try {
+                          await courseRepository.getRegCourse(data.id!);
+                          setState(() {
+                            widget.response.registered = true;
+                          });
+                          DialogHandler.showRegCourseDialog(
+                              "دوره “فنون مذاکره” با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
+                              "متوجه شدم");
+                        } on DioError catch (e) {}
+                      }
+
+                      stopLoading();
+                    }),
           ],
         ),
       )),
@@ -216,8 +249,7 @@ class _CourseInfoState extends State<CourseInfo> {
                       const SizedBox(
                         height: 16,
                       ),
-                      HighlightListView(
-                          items: data.highlight!)
+                      HighlightListView(items: data.highlight!)
                     ],
                   )
                 : SizedBox()
@@ -374,6 +406,7 @@ class _CourseInfoState extends State<CourseInfo> {
                 return _chapterLayout(index);
               }),
         ),
+        _chapterLastLayout()
       ],
     );
   }
@@ -410,7 +443,7 @@ class _CourseInfoState extends State<CourseInfo> {
                 Row(
                   children: [
                     PrimaryText(
-                        text: "فصل ${getChapterNumber(index, data.chapters!)}",
+                        text: "فصل ${getChapterNumber(index)}",
                         style: mThemeData.textTheme.dialogTitle,
                         color: primaryColor),
                     SizedBox(
@@ -521,6 +554,134 @@ class _CourseInfoState extends State<CourseInfo> {
     );
   }
 
+  Container _chapterLastLayout() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: DesignConfig.lowShadow,
+          borderRadius: DesignConfig.highBorderRadius),
+      child: Column(
+        children: [
+          InkWell(
+            borderRadius: DesignConfig.highBorderRadius,
+            onTap: () {
+              setState(() {
+                isShowLast = !isShowLast;
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    PrimaryText(
+                        text: "فصل آخر",
+                        style: mThemeData.textTheme.dialogTitle,
+                        color: primaryColor),
+                    SizedBox(
+                      width: 8,
+                    ),
+                  ],
+                ),
+                isShowLast
+                    ? Assets.icon.outline.arrowUp.svg(color: primaryColor)
+                    : Assets.icon.outline.arrowDown.svg(color: primaryColor)
+              ],
+            ),
+          ),
+          AnimatedVisibility(
+              isVisible: isShowLast,
+              duration: DesignConfig.lowAnimationDuration,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  PrimaryText(
+                      text: "جمع‌بندی",
+                      style: mThemeData.textTheme.title,
+                      color: grayColor800),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  /* Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                            color: backgroundColor200,
+                            borderRadius: DesignConfig.highBorderRadius),
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Assets.icon.outline.documentCopy
+                                .svg(color: secondaryColor),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            PrimaryText(
+                                text: "${chapter.subchapters!.length} زیر فصل",
+                                style: mThemeData.textTheme.searchHint,
+                                color: secondaryColor)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                            color: backgroundColor200,
+                            borderRadius: DesignConfig.highBorderRadius),
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Assets.icon.outline.clock
+                                .svg(color: secondaryColor),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            PrimaryText(
+                                text: "${chapter.time} ساعت",
+                                style: mThemeData.textTheme.searchHint,
+                                color: secondaryColor)
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                            color: backgroundColor200,
+                            borderRadius: DesignConfig.highBorderRadius),
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Assets.icon.outlineMedal.svg(color: secondaryColor),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            PrimaryText(
+                                text: "${chapter.score} امتیاز",
+                                style: mThemeData.textTheme.searchHint,
+                                color: secondaryColor)
+                          ],
+                        ),
+                      ),
+                    ],
+                  )*/
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _subchapterLayoutExam(0, Assets.icon.outline.video,
+                      Subchapters(name: "جمع‌بندی دوره")),
+                  _subchapterLayoutExam(1, Assets.icon.outline.exam,
+                      Subchapters(name: "آزمون پایانی دوره")),
+                ],
+              ))
+        ],
+      ),
+    );
+  }
+
   SizedBox _subchapters(Chapters chapter) {
     return SizedBox(
         width: MediaQuery.sizeOf(context).width,
@@ -537,18 +698,17 @@ class _CourseInfoState extends State<CourseInfo> {
     final subchapter = chapter.subchapters![index];
     CourseTypes type = getType(subchapter.type!);
     return InkWell(
-      onTap: () {
-        List<int> result = [];
-        for (var element in chapter.subchapters!) {
-          result.add(element.id!);
-        }
-        Navigator.of(context).pushNamed(RoutePaths.course,
-            arguments: CourseArgs(
-                chapter.id,
-                chapter.name,
-                index,
-                result));
-      },
+      onTap: data.registered!
+          ? () {
+              List<int> result = [];
+              for (var element in chapter.subchapters!) {
+                result.add(element.id!);
+              }
+              Navigator.of(context).pushNamed(RoutePaths.course,
+                  arguments:
+                      CourseArgs(chapter.id, chapter.name, index, result));
+            }
+          : null,
       child: Center(
         child: Container(
           width: MediaQuery.sizeOf(context).width,
@@ -573,8 +733,60 @@ class _CourseInfoState extends State<CourseInfo> {
                       color: grayColor900)
                 ],
               ),
-              Assets.icon.outline.arrowLeft
-                  .svg(color: primaryColor, width: 18, height: 18)
+              data.registered!
+                  ? Assets.icon.outline.arrowLeft
+                      .svg(color: primaryColor, width: 18, height: 18)
+                  : Assets.icon.outline.lock
+                      .svg(color: grayColor700, width: 18, height: 18)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _subchapterLayoutExam(
+      int index, SvgGenImage icon, Subchapters subchapter) {
+    return InkWell(
+      onTap: data.registered!
+          ? () {
+              String r;
+              if (index == 0) {
+                r = RoutePaths.summery;
+              } else {
+                r = RoutePaths.examInfo;
+              }
+              Navigator.of(context).pushNamed(r, arguments: data.id!);
+            }
+          : null,
+      child: Center(
+        child: Container(
+          width: MediaQuery.sizeOf(context).width,
+          padding: const EdgeInsets.all(18),
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          decoration: BoxDecoration(
+              borderRadius: DesignConfig.highBorderRadius,
+              color: primaryColor50),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  icon.svg(color: successMain, width: 16, height: 16),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  PrimaryText(
+                      text: subchapter.name.toString(),
+                      style: mThemeData.textTheme.searchHint,
+                      color: grayColor900)
+                ],
+              ),
+              data.registered!
+                  ? Assets.icon.outline.arrowLeft
+                      .svg(color: primaryColor, width: 18, height: 18)
+                  : Assets.icon.outline.lock
+                      .svg(color: grayColor700, width: 18, height: 18)
             ],
           ),
         ),

@@ -10,16 +10,17 @@ import '../../theme/widget/design_config.dart';
 class PrimaryImageNetwork extends StatelessWidget {
   final String src;
   final double aspectRatio;
+  final BorderRadius radius;
 
   const PrimaryImageNetwork(
-      {super.key, required this.src, required this.aspectRatio});
+      {super.key, required this.src, required this.aspectRatio, this.radius = DesignConfig.highBorderRadius});
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: aspectRatio,
       child: ClipRRect(
-        borderRadius: DesignConfig.highBorderRadius,
+        borderRadius: radius,
         child: Stack(
           children: [
             Positioned.fill(
@@ -32,9 +33,11 @@ class PrimaryImageNetwork extends StatelessWidget {
                     child: Container(
                       color: Colors.white,
                     )),
-                errorWidget: (context, url, error) => Center(
+                errorWidget: (context, url, error) { 
+                  print("errr--------------------------------${error}");
+                  return Center(
                   child: Assets.image.moon.moon.image(),
-                ),
+                );},
                 fit: BoxFit.cover,
               ),
             ),

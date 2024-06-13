@@ -139,7 +139,6 @@ class _CategoryPageState extends State<CategoryPage> {
                                 horizontal: 16, vertical: 12),
                             child: NewCourseCard(
                               index: index,
-                              type: CardType.normal,
                               response: cards![index],
                             ),
                           ),

@@ -1,12 +1,15 @@
 import 'package:ajhman/core/bloc/category/category_bloc.dart';
 import 'package:ajhman/core/bloc/chapter/chapter_bloc.dart';
 import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
+import 'package:ajhman/core/bloc/for_you/for_you_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
 import 'package:ajhman/core/bloc/roadmap/roadmap_bloc.dart';
+import 'package:ajhman/core/bloc/treasure/treasure_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/cubit/search/search_cubit.dart';
+import 'package:ajhman/core/cubit/summery/summery_cubit.dart';
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 
@@ -126,6 +129,18 @@ void main() {
         return bloc;
       },
     ),
+    BlocProvider<ForYouBloc>(
+      create: (buildContext) {
+        final bloc = ForYouBloc();
+        return bloc;
+      },
+    ),
+    BlocProvider<TreasureBloc>(
+      create: (buildContext) {
+        final bloc = TreasureBloc();
+        return bloc;
+      },
+    ),
     BlocProvider(
       create: (context) => SelectedIndexCubit(),
     ),
@@ -146,6 +161,10 @@ void main() {
     ),
     BlocProvider(
       create: (context) => SearchCubit(),
+    ),
+
+    BlocProvider(
+      create: (context) => SummeryCubit(),
     ),
   ], child: const MyApp()));
 }
@@ -191,7 +210,7 @@ class _MyAppState extends State<MyApp> {
                 // Add more supported locales based on your application's target audience
               ],
               theme: themeData,
-              initialRoute: RoutePaths.search,
+              initialRoute: RoutePaths.splash,
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );

@@ -7,6 +7,7 @@ import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/roadmap_view.dart';
 import 'package:intl/intl.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 import '../../gen/assets.gen.dart';
 import '../enum/course_types.dart';
@@ -31,7 +32,7 @@ String getTypeImage(int? level) => Levels.values[level!].value;
 
 String getImageUrl(String? image) => ApiEndPoints.baseURL + image.toString();
 
-String getChapterNumber(int index, List<Chapters?> chapters) {
+String getChapterNumber(int index) {
   final list = [
     "اول",
     "دوم",
@@ -44,13 +45,8 @@ String getChapterNumber(int index, List<Chapters?> chapters) {
     "نهم",
     "دهم",
   ];
-  String result = "";
-  if (index == chapters.length - 1 && chapters.length > 1) {
-    result = "آخر";
-  } else if (index <= list.length) {
-    result = list[index];
-  }
-  return result;
+
+  return list[index];
 }
 
 double daysBetween(DateTime from, DateTime to) {
@@ -134,9 +130,8 @@ String getFormatDuration(int totalSeconds) {
   return '$minutesString:$secondsString';
 }
 
-
 String getAlphIndex(int index) {
-  switch(index){
+  switch (index) {
     case 0:
       return "الف) ";
     case 1:
@@ -148,7 +143,15 @@ String getAlphIndex(int index) {
 
     default:
       return '';
-
   }
 }
 
+String getIsoTimeMonthAndDay(String string) {
+  try {
+    DateTime now = DateTime.parse(string);
+    Jalali j = Jalali(now.year, now.month, now.day);
+    return "${j.day} ${j.formatter.mN}";
+  } catch (e) {
+    return "";
+  }
+}

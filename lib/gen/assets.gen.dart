@@ -109,6 +109,10 @@ class $AssetsImageGen {
   AssetGenImage get calendaFrame =>
       const AssetGenImage('assets/image/calenda_frame.png');
 
+  /// File path: assets/image/empty-message-frame.svg
+  SvgGenImage get emptyMessageFrame =>
+      const SvgGenImage('assets/image/empty-message-frame.svg');
+
   /// File path: assets/image/fail-exam.svg
   SvgGenImage get failExam => const SvgGenImage('assets/image/fail-exam.svg');
 
@@ -127,8 +131,16 @@ class $AssetsImageGen {
       const AssetGenImage('assets/image/timer_frame.png');
 
   /// List of all assets
-  List<dynamic> get values =>
-      [flag, gang, calendaFrame, failExam, finishExam, successExam, timerFrame];
+  List<dynamic> get values => [
+        flag,
+        gang,
+        calendaFrame,
+        emptyMessageFrame,
+        failExam,
+        finishExam,
+        successExam,
+        timerFrame
+      ];
 }
 
 class $AssetsShapeGen {
@@ -452,6 +464,9 @@ class $AssetsIconOutlineGen {
   /// File path: assets/icon/outline/link.svg
   SvgGenImage get link => const SvgGenImage('assets/icon/outline/link.svg');
 
+  /// File path: assets/icon/outline/lock.svg
+  SvgGenImage get lock => const SvgGenImage('assets/icon/outline/lock.svg');
+
   /// File path: assets/icon/outline/login.svg
   SvgGenImage get login => const SvgGenImage('assets/icon/outline/login.svg');
 
@@ -619,6 +634,7 @@ class $AssetsIconOutlineGen {
         lamp,
         like,
         link,
+        lock,
         login,
         logout,
         maximize3,
