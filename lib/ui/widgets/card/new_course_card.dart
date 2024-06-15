@@ -49,33 +49,40 @@ class _RecentCurseCardState extends State<NewCourseCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding ?? EdgeInsets.zero,
-      child: Center(
-        child: Container(
-            decoration: BoxDecoration(
-                borderRadius: DesignConfig.highBorderRadius,
-                boxShadow: DesignConfig.defaultShadow,
-                color: Colors.white),
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _image(getImageUrl(response.image.toString()), "3.4"),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _title(),
-                      _infoes(),
-                      _footer(),
-                    ],
-                  ),
-                )
-              ],
-            )),
+    return InkWell(
+      onTap: (){
+        navigatorKey.currentState!.pushNamed(
+            RoutePaths.courseMain,
+            arguments: CourseMainArgs(courseId: response.id));
+      },
+      child: Padding(
+        padding: widget.padding ?? EdgeInsets.zero,
+        child: Center(
+          child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: DesignConfig.highBorderRadius,
+                  boxShadow: DesignConfig.defaultShadow,
+                  color: Colors.white),
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _image(getImageUrl(response.image.toString()), "3.4"),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _title(),
+                        _infoes(),
+                        _footer(),
+                      ],
+                    ),
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }
@@ -123,13 +130,27 @@ class _RecentCurseCardState extends State<NewCourseCard> {
         );
 
       case "not learned":
-        return PrimaryButton(
-          fill: true,
-          title: "ثبت‌نام",
-          onClick: response.canStart != null && response.canStart!? () {
-            navigatorKey.currentState!.pushNamed(RoutePaths.courseMain,
-                arguments: CourseMainArgs(courseId: response.id!));
-          }: null,
+        return Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Divider(
+                height: 1,
+                color: backgroundColor600,
+              ),
+            ),
+            PrimaryButton(
+              fill: true,
+              title: response.registered! ? "ورود" : "ثبت‌نام",
+              onClick: response.canStart != null && response.canStart!
+                  ? () {
+                      navigatorKey.currentState!.pushNamed(
+                          RoutePaths.courseMain,
+                          arguments: CourseMainArgs(courseId: response.id!));
+                    }
+                  : null,
+            ),
+          ],
         );
 
       case "learned":

@@ -65,6 +65,8 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
                   });
                 },
                 maxLines: 1,
+
+                autofocus: true,
                 decoration: InputDecoration(
                     suffixIcon: widget.textEditingController.text.isNotEmpty
                         ? InkWell(

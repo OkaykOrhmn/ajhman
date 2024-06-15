@@ -2,6 +2,7 @@ class ProfileResponseModel {
   String? id;
   String? name;
   String? mobileNumber;
+  String? image;
 
   ProfileResponseModel({this.id, this.name, this.mobileNumber});
 
@@ -9,6 +10,7 @@ class ProfileResponseModel {
     id = json['id'];
     name = json['name'];
     mobileNumber = json['mobileNumber'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -16,6 +18,7 @@ class ProfileResponseModel {
     data['id'] = this.id;
     data['name'] = this.name;
     data['mobileNumber'] = this.mobileNumber;
+    data['image'] = this.image;
     return data;
   }
 }

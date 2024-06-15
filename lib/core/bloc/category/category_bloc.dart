@@ -15,6 +15,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         emit(CategoryLoadingState());
         try {
           List<NewCourseCardModel> response = await categoriesRepository.getCards(event.categories,event.tag);
+          for (var element in response) {
+            element.canStart = true;
+          }
           emit(CategorySuccessState(newsCards: response));
         } on DioError catch (e) {
           emit(CategoryFailState());

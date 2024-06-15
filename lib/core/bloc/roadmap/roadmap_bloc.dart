@@ -18,6 +18,7 @@ class RoadmapBloc extends Bloc<RoadmapEvent, RoadmapState> {
     on<RoadmapEvent>((event, emit) async{
 
       if (event is GetRoadMap) {
+        emit(const RoadmapState());
         var result = state;
         try {
           RoadmapModel response = await courseRepository.getRoadmap(event.courseId);

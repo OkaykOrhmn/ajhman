@@ -21,4 +21,9 @@ class SearchCubit extends Cubit<List<NewCourseCardModel>?> {
     }
 
   }
+
+  void clear() async {
+      emit([]);
+
+  }
 }

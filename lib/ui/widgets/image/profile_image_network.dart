@@ -9,11 +9,11 @@ import '../../theme/widget/design_config.dart';
 
 class ProfileImageNetwork extends StatelessWidget {
   final String src;
-  final double? width;
-  final double? height;
+  final double width;
+  final double height;
 
   const ProfileImageNetwork(
-      {super.key, required this.src, this.width, this.height});
+      {super.key, required this.src,required this.width,required this.height});
 
   @override
   Widget build(BuildContext context) {

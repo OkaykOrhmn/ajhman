@@ -5,6 +5,7 @@ import 'package:ajhman/data/model/auth/auth_user_otp_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
 import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/data/model/my_treasure_model.dart';
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/model/roadmap_model.dart';
@@ -109,9 +110,21 @@ class CourseRepository implements Course {
   Future<Response> getRegCourse(int id) async{
     try {
 
-      Response response = await dioHelper.getRequest(
-          '${ApiEndPoints.mainCourse}/$id${ApiEndPoints.register}', null);
+      Response response = await dioHelper.postRequest(
+          '${ApiEndPoints.mainCourse}/$id${ApiEndPoints.register}', null,null);
       return response;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LeaderboardModel> getLeaderboard(int id) async{
+    try {
+
+      Response response = await dioHelper.getRequest(
+          '${ApiEndPoints.mainCourse}/$id${ApiEndPoints.leaderboard}', null);
+      return LeaderboardModel.fromJson(response.data);
     } catch (ex) {
       rethrow;
     }
@@ -128,4 +141,5 @@ abstract class Course {
   Future<MyTreasureModel> getTreasure();
   Future<SummaryModel> getSummery(int id);
   Future<Response> getRegCourse(int id);
+  Future<LeaderboardModel> getLeaderboard(int id);
 }

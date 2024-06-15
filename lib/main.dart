@@ -4,9 +4,11 @@ import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/bloc/for_you/for_you_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
 import 'package:ajhman/core/bloc/roadmap/roadmap_bloc.dart';
+import 'package:ajhman/core/bloc/search/search_bloc.dart';
 import 'package:ajhman/core/bloc/treasure/treasure_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
+import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/cubit/search/search_cubit.dart';
 import 'package:ajhman/core/cubit/summery/summery_cubit.dart';
@@ -141,6 +143,12 @@ void main() {
         return bloc;
       },
     ),
+    BlocProvider<SearchBloc>(
+      create: (buildContext) {
+        final bloc = SearchBloc();
+        return bloc;
+      },
+    ),
     BlocProvider(
       create: (context) => SelectedIndexCubit(),
     ),
@@ -159,12 +167,12 @@ void main() {
     BlocProvider(
       create: (context) => AnswerCubit(),
     ),
-    BlocProvider(
-      create: (context) => SearchCubit(),
-    ),
 
     BlocProvider(
       create: (context) => SummeryCubit(),
+    ),
+    BlocProvider(
+      create: (context) => NewsCourseHomeCubit(),
     ),
   ], child: const MyApp()));
 }

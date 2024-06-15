@@ -8,3 +8,9 @@ class GetCourseMainInfo extends CourseMainEvent{
   GetCourseMainInfo({required this.courseId});
 }
 
+class GetRoadMap extends CourseMainEvent{
+  final int courseId;
+
+  GetRoadMap({required this.courseId});
+}
+

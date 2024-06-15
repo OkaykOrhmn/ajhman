@@ -19,6 +19,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 
+import '../../../core/cubit/home/news_course_home_cubit.dart';
 import '../../../core/enum/tags.dart';
 import '../../../data/model/t_buttons.dart';
 
@@ -98,9 +99,8 @@ class _CategoryPageState extends State<CategoryPage> {
                           t = Tags.international;
                           break;
                       }
-                      context
-                          .read<CategoryBloc>()
-                          .add(GetAllCategoryCards(categories: [2, 3], tag: t));
+                      context.read<CategoryBloc>().add(
+                          GetAllCategoryCards(categories: [2, 3], tag: t));
                     },
                     buttons: const [
                       "تازه‌ترین‌ها",

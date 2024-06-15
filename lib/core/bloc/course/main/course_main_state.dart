@@ -1,18 +1,19 @@
 part of 'course_main_bloc.dart';
 
 @immutable
-class CourseMainState extends Equatable {
-  final StateStatus status;
-  final String type;
-  final CourseMainResponseModel? data;
+class CourseMainState  {}
 
-  const CourseMainState({this.status = StateStatus.init, this.type = '', this.data});
+class CourseMainInitial extends CourseMainState{}
+class CourseMainLoading extends CourseMainState{}
+class CourseRoadmapEmpty extends CourseMainState{}
+class CourseRoadmapSuccess extends CourseMainState{
+  final RoadmapModel response;
 
-  CourseMainState copyWith(
-      {required StateStatus status,required String type, dynamic data}) {
-    return CourseMainState(status: status , type: type, data: data ?? this.data);
-  }
-
-  @override
-  List<Object> get props => [status, type];
+  CourseRoadmapSuccess({required this.response});
 }
+class CourseMainSuccess extends CourseMainState{
+  final CourseMainResponseModel response;
+
+  CourseMainSuccess({required this.response});
+}
+class CourseMainFail extends CourseMainState{}

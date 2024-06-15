@@ -1,4 +1,5 @@
 import 'package:ajhman/core/bloc/category/category_bloc.dart';
+import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/args/category_args.dart';
@@ -29,6 +30,8 @@ import '../../../../core/bloc/learning/leaning_bloc.dart';
 import '../../../../core/enum/tags.dart';
 import '../../../../data/api/api_end_points.dart';
 import '../../../../data/args/course_main_args.dart';
+import '../../../../data/repository/categories_repository.dart';
+import '../../../../data/repository/learning_repository.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../widgets/card/news_course_card_placeholder.dart';
 import '../../../widgets/carousel/carousel_banners.dart';
@@ -49,13 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    context.read<LeaningBloc>().add(GetCards(path: ApiEndPoints.learning));
-
-    context
-        .read<CategoryBloc>()
-        .add(GetAllCategoryCards(categories: [1, 2, 3], tag: Tags.none));
+    context.read<NewsCourseHomeCubit>().getNews();
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
             // const TitleDivider(title: "آنلاین‌شو"),
             // const OnlineCard(),
 
-            BlocBuilder<LeaningBloc, LeaningState>(
+            FutureBuilder(
+              future: learningRepository.getCards(ApiEndPoints.learning),
               builder: (context, state) {
-                if (state is LeaningLoading) {
-                  recentCards = null;
-                } else if (state is LeaningSuccess) {
-                  recentCards = state.response;
-                }
+                recentCards = state.data;
                 return recentCards != null && recentCards!.isEmpty
                     ? SizedBox()
                     : Column(
@@ -117,13 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 40,
             ),
 
-            BlocBuilder<CategoryBloc, CategoryState>(
+            BlocBuilder<NewsCourseHomeCubit, List<NewCourseCardModel>?>(
               builder: (context, state) {
-                if (state is CategoryLoadingState) {
-                  newsCards = null;
-                } else if (state is CategorySuccessState) {
-                  newsCards = state.newsCards;
-                }
+                newsCards = state;
                 return newsCards != null && newsCards!.isEmpty
                     ? SizedBox()
                     : Column(
@@ -137,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CategoryArgs(categoriesId: [1, 2, 3]));
                               }),
                           HorizontalListView(
-                            height: 420,
+                            height: 450,
                             placeholder: (index) =>
                                 const NewCourseCardPlaceholder(
                               padding: EdgeInsets.symmetric(
@@ -194,7 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
       child: InkWell(
         borderRadius: DesignConfig.highBorderRadius,
-        onTap: () {},
+        onTap: () {
+          navigatorKey.currentState!.pushNamed(RoutePaths.search);
+        },
         child: Container(
           decoration: BoxDecoration(
             color: backgroundColor100,

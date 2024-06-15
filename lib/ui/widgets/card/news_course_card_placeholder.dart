@@ -60,7 +60,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _title(),
-                      _infoes(),
+                      // _infoes(),
                       _footer(),
                     ],
                   ),

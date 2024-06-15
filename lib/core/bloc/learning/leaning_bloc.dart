@@ -16,11 +16,18 @@ class LeaningBloc extends Bloc<LeaningEvent, LeaningState> {
         try {
           List<NewCourseCardModel> response =
               await learningRepository.getCards(event.path);
+          if(response.isEmpty){
+            emit(LeaningEmpty());
+          }else{
+            emit(LeaningSuccess(response: response));
+          }
 
-          emit(LeaningSuccess(response: response));
         } on DioError catch (e) {
           emit(LeaningFail());
         }
+      }
+      if (event is ClearCards) {
+        emit(LeaningLoading());
       }
     });
   }

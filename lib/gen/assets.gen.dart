@@ -47,6 +47,15 @@ class $AssetsIconGen {
 
   $AssetsIconMainGen get main => const $AssetsIconMainGen();
 
+  /// File path: assets/icon/medal1.png
+  AssetGenImage get medal1 => const AssetGenImage('assets/icon/medal1.png');
+
+  /// File path: assets/icon/medal2.png
+  AssetGenImage get medal2 => const AssetGenImage('assets/icon/medal2.png');
+
+  /// File path: assets/icon/medal3.png
+  AssetGenImage get medal3 => const AssetGenImage('assets/icon/medal3.png');
+
   /// File path: assets/icon/notification.svg
   SvgGenImage get notification =>
       const SvgGenImage('assets/icon/notification.svg');
@@ -81,11 +90,14 @@ class $AssetsIconGen {
   $AssetsIconVuesaxGen get vuesax => const $AssetsIconVuesaxGen();
 
   /// List of all assets
-  List<SvgGenImage> get values => [
+  List<dynamic> get values => [
         boldTickCircle,
         boldArchive,
         boldMedal,
         boldNote,
+        medal1,
+        medal2,
+        medal3,
         notification,
         outlineTickCircle,
         outlineArchive,

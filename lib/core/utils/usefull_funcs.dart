@@ -44,6 +44,24 @@ String getChapterNumber(int index) {
     "هشتم",
     "نهم",
     "دهم",
+    "یازدهم",
+    "دوازدهم",
+    "سیزدهم",
+    "چهاردهم",
+    "پانزدهم",
+    "شانزدهم",
+    "نوزدهم",
+    "بیستم",
+    "بیست ویکم",
+    "بیست ودوم",
+    "بیست وسوم",
+    "بیست وچهارم",
+    "بیست وپنجم",
+    "بیست وششم",
+    "بیست وهفتم",
+    "بیست وهشتم",
+    "بیست ونهم",
+    "سیم",
   ];
 
   return list[index];
@@ -151,6 +169,16 @@ String getIsoTimeMonthAndDay(String string) {
     DateTime now = DateTime.parse(string);
     Jalali j = Jalali(now.year, now.month, now.day);
     return "${j.day} ${j.formatter.mN}";
+  } catch (e) {
+    return "";
+  }
+}
+
+String getIsoTimeDate(String string) {
+  try {
+    DateTime now = DateTime.parse(string);
+    Jalali j = Jalali(now.year, now.month, now.day);
+    return "${j.day} ${j.formatter.mN} ${j.year}";
   } catch (e) {
     return "";
   }

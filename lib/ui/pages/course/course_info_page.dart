@@ -3,17 +3,23 @@ import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
+import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_btn/loading_btn.dart';
 
+import '../../../core/cubit/home/news_course_home_cubit.dart';
 import '../../../data/args/exam_args.dart';
+import '../../../data/shared_preferences/profile_data.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
 import '../../theme/color/colors.dart';
@@ -46,7 +52,6 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   Widget build(BuildContext context) {
     data = widget.response;
     return Scaffold(
-      appBar: const ReversibleAppBar(title: "محتوای دوره"),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
@@ -63,30 +68,34 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             //       child: const OutlinedPrimaryButton(
             //           title: "رفتن به نوشته و نشان شده‌ها")),
             // )),
-            // _pointsPlatform(),
+            _pointsPlatform(),
             data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
             data.registered != null && data.registered!
                 ? const SizedBox()
-                : PrimaryLoadingButton(
-                    title: 'ثبت‌نام',
-                    disable: false,
-                    onTap: (Function startLoading, Function stopLoading,
-                        ButtonState btnState) async {
-                      if (btnState == ButtonState.idle) {
-                        startLoading();
-                        try {
-                          await courseRepository.getRegCourse(data.id!);
-                          setState(() {
-                            widget.response.registered = true;
-                          });
-                          DialogHandler.showRegCourseDialog(
-                              "دوره “فنون مذاکره” با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
-                              "متوجه شدم");
-                        } on DioError catch (e) {}
-                      }
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: PrimaryLoadingButton(
+                        title: 'ثبت‌نام',
+                        disable: false,
+                        onTap: (Function startLoading, Function stopLoading,
+                            ButtonState btnState) async {
+                          if (btnState == ButtonState.idle) {
+                            startLoading();
+                            try {
+                              await courseRepository.getRegCourse(data.id!);
+                              setState(() {
+                                widget.response.registered = true;
+                              });
+                              DialogHandler.showRegCourseDialog(
+                                  "دوره “فنون مذاکره” با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
+                                  "متوجه شدم");
+                              context.read<NewsCourseHomeCubit>().getNews();
+                            } on DioError catch (e) {}
+                          }
 
-                      stopLoading();
-                    }),
+                          stopLoading();
+                        }),
+                  ),
           ],
         ),
       )),
@@ -273,11 +282,16 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const ProfileImageNetwork(
-                    width: 64,
-                    height: 64,
-                    src:
-                        "https://s3-alpha-sig.figma.com/img/6979/d837/b8c3d365a834f21f938e34ba7b745063?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=K5k8b9iabWknGQvO~8wp0LRu~RGy9OZ2VdUcVft8gfvP9Hh0qfeRPKnzO-88UhmPSqGvsGOVXBU55tiIDZDBuAoEOUcd4RH9MJKhew9grmawB3a0uivmEKHZhhH46-hQfBUd-nbWkcu7GJY83hfpVubdYPpmlCpG7w87j01acFOCfcJvuAcprbyHxELs5NuJ4TRsgRRc1sOBx5yr08PI2xWZ3nlgw2z1KAeFACXAhTqizMFE7Qfv39MQoQM0~TvskHP2vZLUMNNowHRqDHrwPbXi75NS4cz6LYvAPPv1~uEa~mLEJn0M~k1KsFXhSE73zlSp8fbO~eA25n6EVLTI-g__"),
+                 FutureBuilder(
+                     future: getProfile(),
+                     builder: (context,snapshot) {
+                     return ProfileImageNetwork(
+                        width: 64,
+                        height: 64,
+                        src:
+                        getImageUrl(snapshot.data!.image));
+                   }
+                 ),
                 Expanded(
                   child: Padding(
                     padding:
@@ -289,89 +303,90 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             PrimaryText(
-                                text: "جایگاه شما در میان شرکت کنندگان",
+                                text: "نمره‌ی شما",
                                 style: mThemeData.textTheme.titleBold,
                                 color: grayColor800),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: PrimaryText(
-                                      text: "25",
-                                      style: mThemeData.textTheme.rate,
-                                      color: successMain),
-                                ),
-                                Assets.icon.outline.arrowUp1.svg(
-                                    color: successMain, width: 18, height: 18)
-                              ],
-                            )
+                            // Row(
+                            //   crossAxisAlignment: CrossAxisAlignment.center,
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Padding(
+                            //       padding: const EdgeInsets.only(top: 4),
+                            //       child: PrimaryText(
+                            //           text: "25",
+                            //           style: mThemeData.textTheme.rate,
+                            //           color: successMain),
+                            //     ),
+                            //     Assets.icon.outline.arrowUp1.svg(
+                            //         color: successMain, width: 18, height: 18)
+                            //   ],
+                            // )
                           ],
                         ),
                         SizedBox(
-                          height: 16,
+                          height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Assets.icon.outline.star.svg(
-                                    color: grayColor800, width: 14, height: 14),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 4.0, right: 4),
-                                  child: PrimaryText(
-                                      text: '۱۵۴',
-                                      style: mThemeData.textTheme.searchHint,
-                                      color: grayColor800),
-                                )
-                              ],
-                            ),
-                            Container(
-                              width: 1,
-                              height: 12,
-                              color: primaryColor,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Assets.icon.outline.timer.svg(
-                                    color: grayColor800, width: 14, height: 14),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 4.0, right: 4),
-                                  child: PrimaryText(
-                                      text: '۲ دوره آموزشی',
-                                      style: mThemeData.textTheme.searchHint,
-                                      color: grayColor800),
-                                )
-                              ],
-                            ),
-                            Container(
-                              width: 1,
-                              height: 12,
-                              color: primaryColor,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Assets.icon.outline.note2.svg(
-                                    color: grayColor800, width: 14, height: 14),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 4.0, right: 4),
-                                  child: PrimaryText(
-                                      text: 'بدون گواهی نامه',
-                                      style: mThemeData.textTheme.searchHint,
-                                      color: grayColor800),
-                                )
-                              ],
-                            ),
-                          ],
-                        )
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Row(
+                        //       crossAxisAlignment: CrossAxisAlignment.center,
+                        //       children: [
+                        //         Assets.icon.outline.star.svg(
+                        //             color: grayColor800, width: 14, height: 14),
+                        //         Padding(
+                        //           padding:
+                        //               const EdgeInsets.only(top: 4.0, right: 4),
+                        //           child: PrimaryText(
+                        //               text: '۱۵۴',
+                        //               style: mThemeData.textTheme.searchHint,
+                        //               color: grayColor800),
+                        //         )
+                        //       ],
+                        //     ),
+                        //     Container(
+                        //       width: 1,
+                        //       height: 12,
+                        //       color: primaryColor,
+                        //     ),
+                        //     Row(
+                        //       crossAxisAlignment: CrossAxisAlignment.center,
+                        //       children: [
+                        //         Assets.icon.outline.timer.svg(
+                        //             color: grayColor800, width: 14, height: 14),
+                        //         Padding(
+                        //           padding:
+                        //               const EdgeInsets.only(top: 4.0, right: 4),
+                        //           child: PrimaryText(
+                        //               text: '۲ دوره آموزشی',
+                        //               style: mThemeData.textTheme.searchHint,
+                        //               color: grayColor800),
+                        //         )
+                        //       ],
+                        //     ),
+                        //     Container(
+                        //       width: 1,
+                        //       height: 12,
+                        //       color: primaryColor,
+                        //     ),
+                        //     Row(
+                        //       crossAxisAlignment: CrossAxisAlignment.center,
+                        //       children: [
+                        //         Assets.icon.outline.note2.svg(
+                        //             color: grayColor800, width: 14, height: 14),
+                        //         Padding(
+                        //           padding:
+                        //               const EdgeInsets.only(top: 4.0, right: 4),
+                        //           child: PrimaryText(
+                        //               text: 'بدون گواهی نامه',
+                        //               style: mThemeData.textTheme.searchHint,
+                        //               color: grayColor800),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                        _resultExam(80)
                       ],
                     ),
                   ),
@@ -383,12 +398,56 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             ),
             Center(
                 child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: OutlinedPrimaryButton(
-                        title: "رفتن به لیدر سکوی امتیازات"))),
+              width: MediaQuery.sizeOf(context).width,
+              child: OutlinePrimaryLoadingButton(
+                title: "رفتن به لیدر سکوی امتیازات",
+                onTap: (Function startLoading, Function stopLoading,
+                    ButtonState btnState) async {
+                  if (btnState == ButtonState.idle) {
+                    startLoading();
+                    try {
+                      LeaderboardModel response =
+                          await courseRepository.getLeaderboard(4);
+                      if (response.user != null && response.users != null) {
+                        navigatorKey.currentState!.pushNamed(
+                            RoutePaths.leaderboard,
+                            arguments: response);
+                      }
+                    } on DioError catch (e) {}
+
+                    stopLoading();
+                  }
+                },
+                disable: false,
+              ),
+            )),
           ],
         ),
       ),
+    );
+  }
+
+  Row _resultExam(int score) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        PrimaryText(
+            text: "نمره کسب شده: ${score}",
+            style: mThemeData.textTheme.title,
+            color: score>60 ? successFont : errorFont),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+              color: successBackground,
+              borderRadius: DesignConfig.highBorderRadius),
+          child: Center(
+            child: PrimaryText(
+                text: "${score>60 ? "پذیرفته" : "رد"} شده در آزمون",
+                style: mThemeData.textTheme.title,
+                color: score>60 ? successMain : errorMain),
+          ),
+        )
+      ],
     );
   }
 
@@ -682,7 +741,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     );
   }
 
-  SizedBox _subchapters(Chapters chapter) {
+  SizedBox _subchapters(courseMainChapters chapter) {
     return SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: ListView.builder(
@@ -694,7 +753,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             }));
   }
 
-  Widget _subchapterLayout(int index, Chapters chapter) {
+  Widget _subchapterLayout(int index, courseMainChapters chapter) {
     final subchapter = chapter.subchapters![index];
     CourseTypes type = getType(subchapter.type!);
     return InkWell(

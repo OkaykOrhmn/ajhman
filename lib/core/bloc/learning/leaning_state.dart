@@ -12,3 +12,4 @@ final class LeaningSuccess extends LeaningState {
 
 }
 final class LeaningFail extends LeaningState {}
+final class LeaningEmpty extends LeaningState {}

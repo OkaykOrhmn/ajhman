@@ -31,6 +31,7 @@ class _LearningScreenState extends State<LearningScreen>
   void initState() {
     super.initState();
     _controller = TabController(length: 3, vsync: this);
+    context.read<LeaningBloc>().add(ClearCards());
     context.read<LeaningBloc>().add(GetCards(path: ApiEndPoints.learned));
 
     _controller.addListener(() {
@@ -47,6 +48,7 @@ class _LearningScreenState extends State<LearningScreen>
           path = ApiEndPoints.marked;
           break;
       }
+      context.read<LeaningBloc>().add(ClearCards());
       context.read<LeaningBloc>().add(GetCards(path: path));
     });
   }

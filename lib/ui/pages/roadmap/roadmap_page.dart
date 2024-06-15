@@ -6,6 +6,8 @@ import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/widgets/button/loading_btn.dart';
+import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
@@ -135,7 +137,9 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       PrimaryText(
-                                        text: widget.response.chapters![index].name.toString(),
+                                        text: widget
+                                            .response.chapters![index].name
+                                            .toString(),
                                         style: mThemeData.textTheme.titleBold,
                                         color: view.color,
                                         textAlign: TextAlign.start,
@@ -195,8 +199,8 @@ class _RoadMapPageState extends State<RoadMapPage> {
             children: [
               Road(
                 index: 4 % 2 == 0 ? 2 : 1,
-                length: 1,
-                height: 60,
+                length: null,
+                height: 80,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -213,48 +217,23 @@ class _RoadMapPageState extends State<RoadMapPage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16),
-            child: BlocConsumer<CourseMainBloc, CourseMainState>(
-              listener: (context,state){
-                if(state.status == StateStatus.success){
-                  CourseMainResponseModel model = state.data!;
-                  for (var element in model.chapters!) {
-                    element.isOpen ??= false;
-                  }
-                  navigatorKey.currentState!.popAndPushNamed(RoutePaths.courseInfo,
-                      arguments: model);
-                }
-                if(state.status == StateStatus.fail){
-
+            child: OutlinePrimaryLoadingButton(
+              title: "رفتن به صفحه دوره",
+              onTap: (Function startLoading, Function stopLoading,
+                  ButtonState btnState) async {
+                if (btnState == ButtonState.idle) {
+                  startLoading();
+                  context
+                      .read<CourseMainBloc>()
+                      .add(GetCourseMainInfo(courseId: widget.courseId));
+                  await context.read<CourseMainBloc>().stream.firstWhere(
+                      (state) =>
+                          state is CourseMainSuccess ||
+                          state is CourseMainFail);
+                  stopLoading();
                 }
               },
-              builder: (context, state) {
-                return Stack(
-                  children: [
-                    OutlinedPrimaryButton(
-                      title: state.status == StateStatus.loading
-                          ? ''
-                          : "رفتن به صفحه دوره",
-                      onClick: () {
-                        context
-                            .read<CourseMainBloc>()
-                            .add(GetCourseMainInfo(courseId: widget.courseId));
-                      },
-                      fill: true,
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: state.status == StateStatus.loading
-                            ? const SpinKitThreeBounce(
-                                color: primaryColor,
-                                size: 36,
-                              )
-                            : SizedBox(),
-                      ),
-                    )
-                  ],
-                );
-              },
+              disable: false,
             ),
           )
         ],

@@ -8,3 +8,7 @@ class GetCards extends LeaningEvent{
   GetCards({required this.path});
 
 }
+
+class ClearCards extends LeaningEvent{
+
+}

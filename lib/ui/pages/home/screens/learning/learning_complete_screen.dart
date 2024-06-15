@@ -48,9 +48,11 @@ class _LearningCompleteScreenState extends State<LearningCompleteScreen> {
           ),
           BlocBuilder<LeaningBloc, LeaningState>(
             builder: (context, state) {
-              List<NewCourseCardModel> items = [];
+              List<NewCourseCardModel>? items;
               if (state is LeaningSuccess) {
                 items = state.response;
+              }else if(state is LeaningEmpty){
+                items = [];
               }
               return VerticalListView(
                 placeholder: const NewCourseCardPlaceholder(
@@ -63,10 +65,10 @@ class _LearningCompleteScreenState extends State<LearningCompleteScreen> {
                     index: index,
                     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16)
                         .copyWith(top: index == 0 ? 0 : 8),
-                    response: items[index],
+                    response: items![index],
                   );
                 },
-                items: items.isEmpty ? null : items,
+                items: items,
               );
             },
           ),

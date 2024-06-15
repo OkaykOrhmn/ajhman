@@ -128,26 +128,26 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
               const SizedBox(
                 height: 16,
               ),
-              TextButton(
-                  style: AppButtonsStyle.linkPrimaryTextButton,
-                  onPressed: () {
-                    setState(() {
-                      context
-                          .read<AuthScreensBloc>()
-                          .add(AuthNavigatePasswordEvent());
-                    });
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Assets.icon.outline.login
-                          .svg(color: primaryColor, width: 16),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(ChangeLocale(context).appLocal!.loginWithPassword),
-                    ],
-                  ))
+              // TextButton(
+              //     style: AppButtonsStyle.linkPrimaryTextButton,
+              //     onPressed: () {
+              //       setState(() {
+              //         context
+              //             .read<AuthScreensBloc>()
+              //             .add(AuthNavigatePasswordEvent());
+              //       });
+              //     },
+              //     child: Row(
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         Assets.icon.outline.login
+              //             .svg(color: primaryColor, width: 16),
+              //         const SizedBox(
+              //           width: 8,
+              //         ),
+              //         Text(ChangeLocale(context).appLocal!.loginWithPassword),
+              //       ],
+              //     ))
             ],
           );
   }

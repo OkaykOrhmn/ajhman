@@ -8,6 +8,7 @@ import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
 import 'package:ajhman/ui/widgets/divider/vertical_dashed_line.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
+import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -86,85 +87,105 @@ class _ForYouScreenState extends State<ForYouScreen> {
               if (state is ForYouSuccess) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: VerticalListView(
-                    item: (context, index) {
-                      if (state.response[index].status == "not learned") {
-                        state.response[index].canStart = true;
-                        if (index != 0) {
-                          if (state.response[index - 1].status ==
-                              "not learned") {
-                            state.response[index].canStart = false;
-                          }
-                        }
-                      }
+                  child: state.response.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: EmptyScreen(),
+                        )
+                      : VerticalListView(
+                          item: (context, index) {
+                            if (state.response[index].status == "not learned") {
+                              state.response[index].canStart = true;
+                              if (index != 0) {
+                                if (state.response[index - 1].status ==
+                                    "not learned") {
+                                  state.response[index].canStart = false;
+                                }
+                              }
+                            }
 
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 420,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: index == 0 ? 0 : 0,
-                                  bottom: index == state.response.length - 1
-                                      ? 200
-                                      : 0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: 32,
-                                    height: 32,
-                                    padding: EdgeInsets.only(top: 4),
-                                    decoration: BoxDecoration(
-                                        color: state.response[index].status == "learned"
-                                            ? primaryColor
-                                            : backgroundColor100,
-                                        border: state.response[index].status == "learning"
-                                            ? Border.all(
-                                                width: 1, color: primaryColor)
-                                            : null,
-                                        shape: BoxShape.circle),
-                                    child: Center(
-                                        child: PrimaryText(
-                                            text: "${index + 1}",
-                                            style:
-                                                mThemeData.textTheme.headerBold,
-                                            color: state.response[index].status == "learning"
-                                                ? Colors.white
-                                                : state.response[index].status == "learned"
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 420,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: index == 0 ? 0 : 0,
+                                        bottom:
+                                            index == state.response.length - 1
+                                                ? 200
+                                                : 0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Container(
+                                          width: 32,
+                                          height: 32,
+                                          padding: EdgeInsets.only(top: 4),
+                                          decoration: BoxDecoration(
+                                              color: state.response[index]
+                                                          .status ==
+                                                      "learned"
+                                                  ? primaryColor
+                                                  : backgroundColor100,
+                                              border: state.response[index]
+                                                          .status ==
+                                                      "learning"
+                                                  ? Border.all(
+                                                      width: 1,
+                                                      color: primaryColor)
+                                                  : null,
+                                              shape: BoxShape.circle),
+                                          child: Center(
+                                              child: PrimaryText(
+                                                  text: "${index + 1}",
+                                                  style: mThemeData
+                                                      .textTheme.headerBold,
+                                                  color: state.response[index]
+                                                              .status ==
+                                                          "learning"
+                                                      ? Colors.white
+                                                      : state.response[index]
+                                                                  .status ==
+                                                              "learned"
+                                                          ? primaryColor
+                                                          : grayColor600)),
+                                        ),
+                                        Expanded(
+                                          child: VerticalDashedLine(
+                                            active:
+                                                state.response[index].status ==
+                                                        "learned"
                                                     ? primaryColor
-                                                    : grayColor600)),
-                                  ),
-                                  Expanded(
-                                    child: VerticalDashedLine(
-                                      active: state.response[index].status == "learned"
-                                          ? primaryColor
-                                          : null,
-                                      dashed: state.response[index].status == "learned",
-                                      dashSize: 8,
-                                      width: 2,
+                                                    : null,
+                                            dashed:
+                                                state.response[index].status ==
+                                                    "learned",
+                                            dashSize: 8,
+                                            width: 2,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            child: NewCourseCard(
-                              index: index,
-                              response: state.response[index],
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                    items: state.response,
-                  ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Expanded(
+                                  child: NewCourseCard(
+                                    index: index,
+                                    response: state.response[index],
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                          items: state.response,
+                        ),
                 );
               } else {
                 return ThreeBounceLoading();

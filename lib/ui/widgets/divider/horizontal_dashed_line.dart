@@ -10,13 +10,12 @@ class HorizontalDashedLine extends StatelessWidget {
       this.dashSize = 10.0,
       required this.dashed});
   final double height;
-  final bool active;
+  final Color? active;
   final double dashSize;
   final bool dashed;
 
   @override
   Widget build(BuildContext context) {
-    final Color color = active ? primaryColor : silverColor;
 
     return dashed
         ? LayoutBuilder(
@@ -34,7 +33,7 @@ class HorizontalDashedLine extends StatelessWidget {
                     height: dashHeight,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                          color: color,
+                          color: active?? backgroundColor,
                           borderRadius: BorderRadius.circular(360)),
                     ),
                   );
@@ -44,7 +43,7 @@ class HorizontalDashedLine extends StatelessWidget {
           )
         : Divider(
             thickness: height,
-            color: color,
+      color: active?? backgroundColor,
           );
   }
 }

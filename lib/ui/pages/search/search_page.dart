@@ -1,10 +1,11 @@
-import 'package:ajhman/core/cubit/search/search_cubit.dart';
+import 'package:ajhman/core/bloc/search/search_bloc.dart';
 import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/gen/assets.gen.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
+import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text_field/search_text_field.dart';
@@ -31,7 +32,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final GroupButtonController _radioController = GroupButtonController();
-
+  bool loading = false;
   final types = [
     CourseTypes.audio,
     CourseTypes.video,
@@ -42,6 +43,11 @@ class _SearchPageState extends State<SearchPage> {
   late CourseTypes? courseTypes = null;
 
   final TextEditingController _search = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,18 +61,21 @@ class _SearchPageState extends State<SearchPage> {
                 textEditingController: _search,
                 hint: "دنبال چی می گردی؟",
                 onChange: (val) {
-                  if (val.isNotEmpty) {
-                    EasyDebounce.debounce(
-                        'my-debouncer',
-                        // <-- An ID for this particular debouncer
-                        Duration(seconds: 1), // <-- The debounce duration
-                        () {
-                      context
-                          .read<SearchCubit>()
-                          .search(courseTypes?.type, val);
-                    } // <-- The target method
-                        );
-                  }
+                  context.read<SearchBloc>().add(TypingSearch());
+
+                  EasyDebounce.debounce(
+                      'my-debouncer',
+                      // <-- An ID for this particular debouncer
+                      Duration(seconds: 1), // <-- The debounce duration
+                      () {
+                    if (val.isNotEmpty) {
+                      context.read<SearchBloc>().add(
+                          GetAllSearch(type: courseTypes?.type, search: val));
+                    } else {
+                      context.read<SearchBloc>().add(ClearAllSearch());
+                    }
+                  } // <-- The target method
+                      );
                 }),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -113,29 +122,37 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
             ),
-            BlocBuilder<SearchCubit, List<NewCourseCardModel>?>(
-                builder: (context, state) {
-              return state != null && state.isEmpty
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.sizeOf(context).height / 3),
-                      child: const EmptyScreen(),
-                    )
-                  : VerticalListView(
-                      placeholder: const NewCourseCardPlaceholder(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                        type: CardType.normal,
-                      ),
-                      item: (context, index) => NewCourseCard(
-                        index: index,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16)
-                                .copyWith(top: index == 0 ? 0 : 8),
-                        response: state![index],
-                      ),
-                      items: state == null ? [] : state,
-                    );
+            BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
+              if (state is SearchSuccess) {
+                return VerticalListView(
+                  placeholder: const NewCourseCardPlaceholder(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    type: CardType.normal,
+                  ),
+                  item: (context, index) => NewCourseCard(
+                    index: index,
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16)
+                        .copyWith(top: index == 0 ? 0 : 8),
+                    response: state.response[index],
+                  ),
+                  items: state.response,
+                );
+              } else if (state is SearchEmpty) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.sizeOf(context).height / 3),
+                  child: const EmptyScreen(),
+                );
+              } else if (state is SearchLoading) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.sizeOf(context).height / 3),
+                  child: const ThreeBounceLoading(),
+                );
+              } else {
+                return SizedBox();
+              }
             })
           ],
         ),

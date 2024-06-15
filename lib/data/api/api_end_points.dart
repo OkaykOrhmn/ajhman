@@ -20,5 +20,6 @@ class ApiEndPoints {
   static String roadmap = '/roadmap';
   static String  question = '/question';
   static String  exam = '/exam';
+  static String  leaderboard = '/leaderboard';
 
 }

@@ -7,7 +7,7 @@ class CourseMainResponseModel {
   String? image;
   List<String>? highlight;
   String? description;
-  List<Chapters>? chapters;
+  List<courseMainChapters>? chapters;
   Category? category;
   bool? registered;
 
@@ -36,9 +36,9 @@ class CourseMainResponseModel {
     description = json['description'];
     registered = json['registered'];
     if (json['Chapters'] != null) {
-      chapters = <Chapters>[];
+      chapters = <courseMainChapters>[];
       json['Chapters'].forEach((v) {
-        chapters!.add(new Chapters.fromJson(v));
+        chapters!.add(new courseMainChapters.fromJson(v));
       });
     }
     category = json['Category'] != null
@@ -67,17 +67,17 @@ class CourseMainResponseModel {
   }
 }
 
-class Chapters {
+class courseMainChapters {
   int? id;
   String? name;
   int? score;
   int? time;
   List<Subchapters>? subchapters;
-  bool? isOpen;
+  bool? isOpen = false;
 
-  Chapters({this.id, this.name, this.score, this.subchapters, this.isOpen});
+  courseMainChapters({this.id, this.name, this.score, this.subchapters});
 
-  Chapters.fromJson(Map<String, dynamic> json) {
+  courseMainChapters.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     score = json['score'];
