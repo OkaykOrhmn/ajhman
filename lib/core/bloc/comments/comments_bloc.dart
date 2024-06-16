@@ -5,6 +5,7 @@ import 'package:ajhman/data/model/add_comment_response_model.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
 import 'package:ajhman/data/repository/comments_repository.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
+import 'package:ajhman/main.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -17,120 +18,65 @@ part 'comments_event.dart';
 part 'comments_state.dart';
 
 class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
-  CommentsBloc() : super(const CommentsState()) {
+  CommentsBloc() : super(CommentInitial()) {
     on<CommentsEvent>((event, emit) async {
-      var result = state;
-
       if (event is GetComments) {
+        emit(CommentLoading());
+
         try {
           List<CommentsResponseModel> response = await commentsRepository
-              .getComments(event.chapter, event.subChapter);
-          result = CommentsState(
-              status: CommentStatus.success,
-              type: ApiEndPoints.comment,
-              data: response);
-          emit(result);
+              .getComments(event.chapterId, event.subChapterId);
+
+          if (response.isEmpty) {
+            emit(CommentEmpty());
+          } else {
+            emit(CommentSuccess(response: response));
+          }
         } on DioError catch (e) {
-          result = CommentsState(
-              status: CommentStatus.fail,
-              type: ApiEndPoints.comment,
-              data: e.response!.data);
-          emit(result);
+          emit(CommentFail());
         }
       }
-      if (event is ChangeFeedComment) {
-        List<CommentsResponseModel> responseModel = state.data;
-        void _change(dynamic element) {
-          if (element.id == event.comment.id) {
-            element.userFeedback = event.comment.userFeedback;
-            element.dislikes = event.comment.dislikes;
-            element.likes = event.comment.likes;
-          }
-        }
 
-        emit(result.copyWith(
-            status: CommentStatus.changeStatus,
-            type: '',
-            data: responseModel,
-            commentId: event.comment.id));
-
-        late bool success;
-
+      if (event is PostComments) {
         try {
-          final response = await commentsRepository.putFeed(event.chapter,
-              event.subChapter, event.comment.id!, event.comment.userFeedback);
-          if (response.statusCode! >= 200 && response.statusCode! <= 300) {
-            success = true;
-          } else {
-            success = false;
-          }
+          CommentsResponseModel response = await commentsRepository.addComment(
+              event.chapterId, event.subChapterId, event.request);
+          response.likes = 0;
+          response.dislikes = 0;
+          response.userFeedback = null;
+          response.userFeedback = null;
+          response.user = User(id: profile.id,name: profile.name,image: profile.image);
+          event.data.insert(0, response);
+          emit(CommentSuccess(response: event.data));
         } on DioError catch (e) {
-          success = false;
+          emit(CommentAddFail(response: event.data));
         }
+      }
 
-        if (success) {
-          responseModel.forEach((element) {
-            if (event.commentType == CommentType.reply) {
-              element.replies!.forEach((element) {
-                _change(element);
-              });
-            } else {
-              _change(element);
+      if (event is ChangeComment) {
+        try {
+
+           await commentsRepository.putFeed(
+              event.chapterId, event.subChapterId, event.comment.id!,event.comment.userFeedback);
+
+          for (var element in event.data) {
+            if(element.id == event.comment.id){
+              element = event.comment;
+              break;
             }
-          });
-        }
+            if(element.replies != null){
+              for (var element in element.replies!) {
+                if(element.id == event.comment.id){
+                  element = event.comment;
+                  break;
 
-        emit(result.copyWith(
-            status: CommentStatus.success,
-            type: '',
-            data: responseModel,
-            commentId: event.comment.id));
-      }
-      if (event is AddComment) {
-        List<CommentsResponseModel> responseModel = state.data;
-        emit(result.copyWith(
-            status: CommentStatus.addComment, type: '', data: responseModel));
-
-        try {
-          AddCommentResponseModel response = await commentsRepository
-              .addComment(event.chapter, event.subChapter, event.comment);
-          final profile = await getProfile();
-          if (response.commentId == null) {
-            responseModel.insert(
-                0,
-                CommentsResponseModel(
-                    id: response.id,
-                    text: response.text,
-                    createdAt: response.createdAt,
-                    dislikes: 0,
-                    likes: 0,
-                    replies: [],
-                    resource: response.resource,
-                    user: User(id: response.userId, name: profile.name),
-                    userFeedback: null));
-          } else {
-            responseModel.forEach((element) {
-              if (element.id == response.commentId) {
-                element.replies!.add(Replies(
-                    id: response.id,
-                    userFeedback: null,
-                    user: User(id: response.userId, name: profile.name),
-                    resource: response.resource,
-                    likes: 0,
-                    dislikes: 0,
-                    createdAt: response.createdAt,
-                    text: response.text,
-                    replyUser: User(
-                        id: response.replyUser!.id,
-                        name: response.replyUser!.name)));
+                }
               }
-            });
+            }
           }
-          emit(result.copyWith(
-              status: CommentStatus.success, type: '', data: responseModel));
+          emit(CommentSuccess(response: event.data));
         } on DioError catch (e) {
-          emit(result.copyWith(
-              status: CommentStatus.success, type: '', data: responseModel));
+          emit(CommentChangeFail(response: event.data));
         }
       }
     });

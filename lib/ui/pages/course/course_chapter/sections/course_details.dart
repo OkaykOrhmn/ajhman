@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../widgets/listview/highlight_listview.dart';
 
@@ -25,7 +26,7 @@ class _CourseDetailsState extends State<CourseDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final data = context.read<ChapterBloc>().state.data!;
+    final data = context.read<SubChapterCubit>().state!.chapterModel;
 
     return Column(
       children: [

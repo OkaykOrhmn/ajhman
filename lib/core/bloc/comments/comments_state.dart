@@ -1,30 +1,49 @@
 part of 'comments_bloc.dart';
 
 @immutable
-enum CommentStatus { init, loading, changeStatus, success, fail, loaded,addComment }
-
-class CommentsState extends Equatable {
-  final CommentStatus status;
-  final String type;
-  final dynamic data;
-  final int? commentId;
-
-  const CommentsState({
-    this.status = CommentStatus.loading,
-    this.type = '',
-    this.data,
-    this.commentId,
-  });
-
-  CommentsState copyWith(
-      {CommentStatus? status, String? type, dynamic data, int? commentId}) {
-    return CommentsState(
-        status: status ?? this.status,
-        type: type ?? this.type,
-        data: data ?? this.data,
-        commentId: commentId ?? this.commentId);
-  }
-
-  @override
-  List<Object> get props => [status, type];
+enum CommentStatus {
+  init,
+  loading,
+  changeStatus,
+  success,
+  fail,
+  loaded,
+  addComment
 }
+
+class CommentsState {}
+
+class CommentInitial extends CommentsState {}
+
+class CommentLoading extends CommentsState {}
+
+class CommentEmpty extends CommentsState {}
+
+class CommentChange extends CommentsState {
+  final List<CommentsResponseModel> response;
+
+  CommentChange({required this.response});
+
+}
+class CommentChangeFail extends CommentsState {
+  final List<CommentsResponseModel> response;
+
+  CommentChangeFail({required this.response});
+
+}
+
+class CommentAdd extends CommentsState {}
+
+class CommentAddFail extends CommentsState {
+  final List<CommentsResponseModel> response;
+
+  CommentAddFail({required this.response});
+}
+
+class CommentSuccess extends CommentsState {
+  final List<CommentsResponseModel> response;
+
+  CommentSuccess({required this.response});
+}
+
+class CommentFail extends CommentsState {}

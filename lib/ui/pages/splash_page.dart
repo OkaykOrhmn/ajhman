@@ -3,6 +3,7 @@ import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
+import 'package:ajhman/ui/widgets/states/no_connectivity_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,38 +49,42 @@ class _SplashPageState extends State<SplashPage> {
           future: getToken(),
           builder: (context, snapshot) {
             print(snapshot.data);
-            return BlocConsumer<ProfileBloc, ProfileState>(
+            if (snapshot.hasData) {
+              token = snapshot.data!;
+            }
+            return BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
-              switch (state.status) {
-                case StateStatus.success:
-                  return const HomePage();
-                case StateStatus.fail:
-                  return const AuthPageStarted();
-                case StateStatus.loading:
-                default:
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(height: 16,),
-                      Assets.icon.main.lIcon.svg(),
-                      ThreeBounceLoading(),
-                    ],
+              if (state is ProfileSuccess) {
+                setProfile(state.response);
+                profile = state.response;
+                return const HomePage();
+              } else if (state is ProfileFail) {
+                if (state.error == "connection") {
+                  return NoConnectivityScreen(
+                    click: () {
+                      context.read<ProfileBloc>().add(GetProfileInfo());
+                    },
                   );
-              }
-            }, listener: (context, state) {
-              if (state.status == StateStatus.loading) {}
-              if (state.status == StateStatus.success) {
-                setProfile(state.data);
-              } else if (state.status == StateStatus.fail) {
-                var data = ErrorResponseModel.fromJson(state.data);
-                if (snapshot.hasData) {
-                  if (snapshot.data!.isNotEmpty) {
-                    DialogHandler.showErrorDialog(
-                        data.message!.message.toString(),
-                        "صفحه ورورد",
-                        () => _tryAgain());
+                } else {
+                  if (snapshot.hasData) {
+                    if (snapshot.data!.isNotEmpty) {
+                      DialogHandler.showErrorDialog(
+                          state.error, "صفحه ورورد", () => _tryAgain());
+                    }
                   }
                 }
+                return const AuthPageStarted();
+              } else {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Assets.icon.main.lIcon.svg(),
+                    ThreeBounceLoading(),
+                  ],
+                );
               }
             });
           }),

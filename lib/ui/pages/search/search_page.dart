@@ -116,7 +116,19 @@ class _SearchPageState extends State<SearchPage> {
                     );
                   },
                   onSelected: (_, index, isSelected) {
-                    courseTypes = types[index];
+                    setState(() {
+                      if (isSelected) {
+                        courseTypes = types[index];
+                      } else {
+                        courseTypes = null;
+
+                      }
+                      if(_search.text.isNotEmpty){
+                        context.read<SearchBloc>().add(GetAllSearch(
+                            type: courseTypes?.type, search: _search.text));
+                      }
+
+                    });
                   },
                   buttons: types,
                 ),

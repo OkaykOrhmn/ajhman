@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../main.dart';
 import '../../../../theme/color/colors.dart';
 import '../../../../widgets/listview/highlight_listview.dart';
@@ -31,7 +32,7 @@ class _CourseTextState extends State<CourseText> {
 
   @override
   Widget build(BuildContext context) {
-    data = context.read<ChapterBloc>().state.data!;
+    final data = context.read<SubChapterCubit>().state!.chapterModel;
     return SizedBox();
   }
 }

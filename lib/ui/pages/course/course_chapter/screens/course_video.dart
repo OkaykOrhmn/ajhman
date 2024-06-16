@@ -18,6 +18,7 @@ import 'package:video_player/video_player.dart';
 import 'package:appinio_video_player/src/fullscreen_video_player.dart';
 
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../core/cubit/video/video_player_cubit.dart';
 import '../../../../../core/services/video_handler.dart';
 import '../../../../../data/model/chapter_model.dart';
@@ -45,7 +46,7 @@ class _CourseVideoState extends State<CourseVideo> {
   @override
   void initState() {
     super.initState();
-    data = context.read<ChapterBloc>().state.data!;
+    final data = context.read<SubChapterCubit>().state!.chapterModel;
     video = data.media![0];
 
     videoHandler =

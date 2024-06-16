@@ -1,40 +1,12 @@
 import 'package:ajhman/core/enum/course_types.dart';
 
+import '../model/chapter_model.dart';
+import '../model/course_main_response_model.dart';
+
 class CourseArgs {
-  int? chapterId;
-  String? chapterTitle;
-  int? subChapterId;
-  List<int>? ids;
+  final CourseMainResponseModel courseData;
+  final ChapterModel chapterModel;
+  final int chapterId;
 
-  CourseArgs(this.chapterId, this.chapterTitle, this.subChapterId, this.ids);
-
-  CourseArgs copyWith({
-    int? chapterId,
-    String? chapterTitle,
-    int? subChapterId,
-    List<int>? ids,
-  }) {
-    return CourseArgs(
-      chapterId ?? this.chapterId,
-      chapterTitle ?? this.chapterTitle,
-      subChapterId ?? this.subChapterId,
-      ids ?? this.ids,
-    );
-  }
-
-  CourseArgs.fromJson(Map<String, dynamic> json) {
-    chapterId = json['courseId'];
-    chapterTitle = json['chapterTitle'];
-    subChapterId = json['subChapterId'];
-    ids = json['ids'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['chapterId'] = this.chapterId;
-    data['chapterTitle'] = this.chapterTitle;
-    data['subChapterId'] = this.subChapterId;
-    data['ids'] = this.ids;
-    return data;
-  }
+  CourseArgs( {required this.chapterId,required this.courseData, required this.chapterModel});
 }

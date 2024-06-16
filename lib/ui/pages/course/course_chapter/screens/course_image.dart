@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 
 class CourseImage extends StatelessWidget{
   const CourseImage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final data = context.read<ChapterBloc>().state.data!;
+   final data = context.read<SubChapterCubit>().state!.chapterModel;
 
     return CarouseCourseImage(items: data.media!);
   }

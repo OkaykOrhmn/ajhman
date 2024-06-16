@@ -1,3 +1,4 @@
+import 'package:ajhman/core/cubit/subchapter/sub_chapter_cubit.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -21,7 +22,7 @@ class CourseHeader extends StatefulWidget {
 class _CourseHeaderState extends State<CourseHeader> {
   @override
   Widget build(BuildContext context) {
-    final data = context.read<ChapterBloc>().state.data!;
+    final data = context.read<SubChapterCubit>().state!.chapterModel;
     return Column(
       children: [
         Container(

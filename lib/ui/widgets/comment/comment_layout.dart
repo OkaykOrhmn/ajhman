@@ -1,3 +1,4 @@
+import 'package:ajhman/core/cubit/comment/feed_comment_cubit.dart';
 import 'package:ajhman/core/enum/comment.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
@@ -32,62 +33,159 @@ class CommentLayout extends StatefulWidget {
 class _CommentLayoutState extends State<CommentLayout> {
   late int index;
   late CommentsResponseModel data;
-  late ProfileResponseModel profile = ProfileResponseModel();
-
-  void _clickFeed(CommentsResponseModel comment) {
-    context.read<CommentsBloc>().add(ChangeFeedComment(
-        comment: comment,
-        chapter: 1,
-        subChapter: 1,
-        commentType: CommentType.normal));
-  }
 
   @override
   Widget build(BuildContext context) {
     index = widget.index;
     data = widget.data;
-
-
-
-
-          return Column(
+    return Column(
+      children: [
+        Container(
+          width: MediaQuery.sizeOf(context).width,
+          margin: const EdgeInsets.symmetric(vertical: 8)
+              .copyWith(right: data.replyUser != null ? 32 : 0),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              color:
+                  profile.id == data.user!.id ? primaryColor50 : Colors.white,
+              borderRadius: DesignConfig.highBorderRadius,
+              boxShadow: DesignConfig.lowShadow),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: MediaQuery.sizeOf(context).width,
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    color: profile.id == data.user!.id
-                        ? primaryColor50
-                        : Colors.white,
-                    borderRadius: DesignConfig.highBorderRadius,
-                    boxShadow: DesignConfig.lowShadow),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _profile(),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    _commentInfoes(),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    _commentButtons()
-                  ],
-                ),
+              _profile(),
+              const SizedBox(
+                height: 16,
               ),
+              _commentInfoes(),
+              const SizedBox(
+                height: 16,
+              ),
+              BlocBuilder<FeedCommentCubit, FeedCommentState>(
+                builder: (context, state) {
+                  if (state is FeedCommentInitial ||
+                      state is FeedCommentSuccess ||
+                      state is FeedCommentFail) {
+                    return Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            if (data.userFeedback != null &&
+                                data.userFeedback!) {
+                              context
+                                  .read<FeedCommentCubit>()
+                                  .changeFeed(null, data);
+                            } else {
+                              context
+                                  .read<FeedCommentCubit>()
+                                  .changeFeed(true, data);
+                            }
+                          },
+                          child: _commentButton(data.likes.toString(),
+                              CommentBtnType.like, data.userFeedback),
+                        ),
+                        Container(
+                            height: 12,
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: VerticalDivider(
+                              width: 1,
+                              color: secondaryColor,
+                            )),
+                        InkWell(
+                          onTap: () {
+                            if (data.userFeedback != null &&
+                                !data.userFeedback!) {
+                              context
+                                  .read<FeedCommentCubit>()
+                                  .changeFeed(null, data);
+                            } else {
+                              context
+                                  .read<FeedCommentCubit>()
+                                  .changeFeed(false, data);
+                            }
+                          },
+                          child: _commentButton(data.dislikes.toString(),
+                              CommentBtnType.disLike, data.userFeedback != null ? !data.userFeedback! : null,),
+                        ),
+                        Container(
+                            height: 12,
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: VerticalDivider(
+                              width: 1,
+                              color: secondaryColor,
+                            )),
+                        _commentButton(
+                            data.replies != null && data.replies!.isNotEmpty
+                                ? data.replies!.length.toString()
+                                : '',
+                            CommentBtnType.reply,
+                            false),
+                      ],
+                    );
+                  } else {
+                    return _loadingFeedBack();
+                  }
+                },
+              )
             ],
-          );
+          ),
+        ),
+      ],
+    );
+  }
 
+  Row _loadingFeedBack() {
+    return Row(
+      children: [
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: _commentButton(
+              data.likes.toString(), CommentBtnType.like, data.userFeedback),
+        ),
+        Container(
+            height: 12,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: VerticalDivider(
+              width: 1,
+              color: secondaryColor,
+            )),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: _commentButton(data.dislikes.toString(),
+              CommentBtnType.disLike, data.userFeedback),
+        ),
+        Container(
+            height: 12,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: VerticalDivider(
+              width: 1,
+              color: secondaryColor,
+            )),
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: _commentButton(
+              data.replies != null && data.replies!.isNotEmpty
+                  ? data.replies!.length.toString()
+                  : '',
+              CommentBtnType.reply,
+              false),
+        ),
+      ],
+    );
   }
 
   Row _profile() {
     return Row(
       children: [
         ProfileImageNetwork(
-            src:
-                "https://s3-alpha-sig.figma.com/img/6979/d837/b8c3d365a834f21f938e34ba7b745063?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=K5k8b9iabWknGQvO~8wp0LRu~RGy9OZ2VdUcVft8gfvP9Hh0qfeRPKnzO-88UhmPSqGvsGOVXBU55tiIDZDBuAoEOUcd4RH9MJKhew9grmawB3a0uivmEKHZhhH46-hQfBUd-nbWkcu7GJY83hfpVubdYPpmlCpG7w87j01acFOCfcJvuAcprbyHxELs5NuJ4TRsgRRc1sOBx5yr08PI2xWZ3nlgw2z1KAeFACXAhTqizMFE7Qfv39MQoQM0~TvskHP2vZLUMNNowHRqDHrwPbXi75NS4cz6LYvAPPv1~uEa~mLEJn0M~k1KsFXhSE73zlSp8fbO~eA25n6EVLTI-g__", width: 48, height: 48,),
+          src:
+              "https://s3-alpha-sig.figma.com/img/6979/d837/b8c3d365a834f21f938e34ba7b745063?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=K5k8b9iabWknGQvO~8wp0LRu~RGy9OZ2VdUcVft8gfvP9Hh0qfeRPKnzO-88UhmPSqGvsGOVXBU55tiIDZDBuAoEOUcd4RH9MJKhew9grmawB3a0uivmEKHZhhH46-hQfBUd-nbWkcu7GJY83hfpVubdYPpmlCpG7w87j01acFOCfcJvuAcprbyHxELs5NuJ4TRsgRRc1sOBx5yr08PI2xWZ3nlgw2z1KAeFACXAhTqizMFE7Qfv39MQoQM0~TvskHP2vZLUMNNowHRqDHrwPbXi75NS4cz6LYvAPPv1~uEa~mLEJn0M~k1KsFXhSE73zlSp8fbO~eA25n6EVLTI-g__",
+          width: 48,
+          height: 48,
+        ),
         const SizedBox(
           width: 8,
         ),
@@ -119,98 +217,7 @@ class _CommentLayoutState extends State<CommentLayout> {
     );
   }
 
-  Widget _commentButtons() {
-    final state = context.watch<CommentsBloc>().state;
-    return Row(
-      children: [
-        InkWell(
-            onTap: state.status == CommentStatus.loading || state.status == CommentStatus.changeStatus? null: () {
-              bool? feed = data.userFeedback;
-              int countLike = data.likes!;
-              int countDisLike = data.dislikes!;
-
-              if (feed == null) {
-                countLike += 1;
-                feed = true;
-              } else if (feed == true) {
-                countLike -= 1;
-                feed = null;
-              } else if (feed == false) {
-                countLike += 1;
-                countDisLike -= 1;
-                feed = true;
-              }
-              data.userFeedback = feed;
-              data.likes = countLike;
-              data.dislikes = countDisLike;
-
-              _clickFeed(data);
-            },
-            child: _commentButton(data.likes.toString(), CommentBtnType.like,
-                data.userFeedback, data.id!)),
-        const SizedBox(
-          width: 12,
-        ),
-        Container(
-          height: 12,
-          width: 1,
-          color: secondaryColor,
-        ),
-        const SizedBox(
-          width: 12,
-        ),
-        InkWell(
-          onTap: state.status == CommentStatus.loading || state.status == CommentStatus.changeStatus? null: () {
-            bool? feed = data.userFeedback;
-            int countLike = data.likes!;
-            int countDisLike = data.dislikes!;
-
-            if (feed == null) {
-              countDisLike += 1;
-              feed = false;
-            } else if (feed == true) {
-              countLike -= 1;
-              countDisLike += 1;
-              feed = false;
-            } else if (feed == false) {
-              countDisLike -= 1;
-
-              feed = false;
-            }
-            data.userFeedback = feed;
-            data.likes = countLike;
-            data.dislikes = countDisLike;
-
-            _clickFeed(data);
-          },
-          child: _commentButton(
-              data.dislikes.toString(),
-              CommentBtnType.disLike,
-              data.userFeedback != null ? !data.userFeedback! : null,
-              data.id!),
-        ),
-        const SizedBox(
-          width: 12,
-        ),
-        Container(
-          height: 12,
-          width: 1,
-          color: secondaryColor,
-        ),
-        const SizedBox(
-          width: 12,
-        ),
-        _commentButton(
-            data.replies!.isEmpty ? '' : data.replies!.length.toString(),
-            CommentBtnType.reply,
-            null,
-            data.id!),
-      ],
-    );
-  }
-
-  Widget _commentButton(
-      String number, CommentBtnType type, bool? active, int id) {
+  Widget _commentButton(String number, CommentBtnType type, bool? active) {
     String src = type.icon;
     Color color = grayColor400;
     if (active != null && active) {
@@ -220,47 +227,38 @@ class _CommentLayoutState extends State<CommentLayout> {
 
     return Row(
       children: [
-        _getSvgCommentBtn(src, color, id),
-        const SizedBox(
-          width: 8,
-        ),
-        PrimaryText(
-            text: number,
-            style: mThemeData.textTheme.title,
-            color: grayColor800)
+        SvgGenImage(src).svg(color: color, width: 16, height: 16),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
+          child: PrimaryText(
+              text: number,
+              style: mThemeData.textTheme.title,
+              color: grayColor800),
+        )
       ],
     );
-  }
-
-  Widget _getSvgCommentBtn(String src, Color color, int id) {
-    final state = context.watch<CommentsBloc>().state;
-    if (state.commentId == data.id) {
-      switch (state.status) {
-        case CommentStatus.success:
-          return SvgGenImage(src).svg(color: color, width: 16, height: 16);
-
-        case CommentStatus.changeStatus:
-        case CommentStatus.loading:
-        default:
-          return Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[100]!,
-              child: SvgGenImage(src).svg(color: color, width: 16, height: 16));
-      }
-    } else {
-      return SvgGenImage(src).svg(color: color, width: 16, height: 16);
-    }
   }
 
   Column _commentInfoes() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PrimaryText(
-            text: data.text.toString(),
-            style: mThemeData.textTheme.title,
-            textAlign: TextAlign.justify,
-            color: grayColor800),
+        Row(
+          children: [
+            data.replyUser != null
+                ? PrimaryText(
+                    text: "${data.replyUser!.name} ",
+                    style: mThemeData.textTheme.titleBold,
+                    textAlign: TextAlign.justify,
+                    color: primaryColor)
+                : const SizedBox(),
+            PrimaryText(
+                text: data.text.toString(),
+                style: mThemeData.textTheme.title,
+                textAlign: TextAlign.justify,
+                color: grayColor800),
+          ],
+        ),
         const SizedBox(
           height: 16,
         ),
@@ -287,3 +285,93 @@ class _CommentLayoutState extends State<CommentLayout> {
     );
   }
 }
+
+/*Widget _commentButtons() {
+  final state = context.watch<CommentsBloc>().state;
+  return Row(
+    children: [
+      InkWell(
+          onTap: state.status == CommentStatus.loading || state.status == CommentStatus.changeStatus? null: () {
+            bool? feed = data.userFeedback;
+            int countLike = data.likes!;
+            int countDisLike = data.dislikes!;
+
+            if (feed == null) {
+              countLike += 1;
+              feed = true;
+            } else if (feed == true) {
+              countLike -= 1;
+              feed = null;
+            } else if (feed == false) {
+              countLike += 1;
+              countDisLike -= 1;
+              feed = true;
+            }
+            data.userFeedback = feed;
+            data.likes = countLike;
+            data.dislikes = countDisLike;
+
+            _clickFeed(data);
+          },
+          child: _commentButton(data.likes.toString(), CommentBtnType.like,
+              data.userFeedback, data.id!)),
+      const SizedBox(
+        width: 12,
+      ),
+      Container(
+        height: 12,
+        width: 1,
+        color: secondaryColor,
+      ),
+      const SizedBox(
+        width: 12,
+      ),
+      InkWell(
+        onTap: state.status == CommentStatus.loading || state.status == CommentStatus.changeStatus? null: () {
+          bool? feed = data.userFeedback;
+          int countLike = data.likes!;
+          int countDisLike = data.dislikes!;
+
+          if (feed == null) {
+            countDisLike += 1;
+            feed = false;
+          } else if (feed == true) {
+            countLike -= 1;
+            countDisLike += 1;
+            feed = false;
+          } else if (feed == false) {
+            countDisLike -= 1;
+
+            feed = false;
+          }
+          data.userFeedback = feed;
+          data.likes = countLike;
+          data.dislikes = countDisLike;
+
+          _clickFeed(data);
+        },
+        child: _commentButton(
+            data.dislikes.toString(),
+            CommentBtnType.disLike,
+            data.userFeedback != null ? !data.userFeedback! : null,
+            data.id!),
+      ),
+      const SizedBox(
+        width: 12,
+      ),
+      Container(
+        height: 12,
+        width: 1,
+        color: secondaryColor,
+      ),
+      const SizedBox(
+        width: 12,
+      ),
+      _commentButton(
+          data.replies!.isEmpty ? '' : data.replies!.length.toString(),
+          CommentBtnType.reply,
+          null,
+          data.id!),
+    ],
+  );
+}*/

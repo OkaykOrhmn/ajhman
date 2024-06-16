@@ -14,13 +14,18 @@ import 'package:ajhman/core/cubit/search/search_cubit.dart';
 import 'package:ajhman/core/cubit/summery/summery_cubit.dart';
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/data/model/profile_response_model.dart';
+import 'package:ajhman/data/shared_preferences/auth_token.dart';
 
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
+import 'package:ajhman/ui/widgets/states/no_connectivity_screen.dart';
+import 'package:connectivity_bloc/connectivity_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/bloc/auth/auth_screen_bloc.dart';
 import 'core/bloc/course/main/course_main_bloc.dart';
@@ -39,6 +44,8 @@ import 'core/utils/timer/ticker.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final BuildContext mContext = navigatorKey.currentContext!;
 final ThemeData mThemeData = Theme.of(mContext);
+String token = '';
+ProfileResponseModel profile = ProfileResponseModel();
 
 void main() {
   runApp(MultiBlocProvider(providers: [
@@ -52,6 +59,12 @@ void main() {
     BlocProvider<LanguageBloc>(
       create: (buildContext) {
         final bloc = LanguageBloc();
+        return bloc;
+      },
+    ),
+    BlocProvider<ConnectivityBloc>(
+      create: (buildContext) {
+        final bloc = ConnectivityBloc();
         return bloc;
       },
     ),
@@ -117,14 +130,12 @@ void main() {
         return bloc;
       },
     ),
-
     BlocProvider<RoadmapBloc>(
       create: (buildContext) {
         final bloc = RoadmapBloc();
         return bloc;
       },
     ),
-
     BlocProvider<LeaningBloc>(
       create: (buildContext) {
         final bloc = LeaningBloc();
@@ -167,7 +178,6 @@ void main() {
     BlocProvider(
       create: (context) => AnswerCubit(),
     ),
-
     BlocProvider(
       create: (context) => SummeryCubit(),
     ),
@@ -186,41 +196,47 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     ChangeLocale changeLocale = ChangeLocale(context);
     return BlocBuilder<ThemeBloc, ThemeData>(
       builder: (context, state) {
         ThemeData themeData = state;
         return BlocBuilder<LanguageBloc, LanguageState>(
-          builder: (context, state) {
-            return MaterialApp(
-              navigatorKey: navigatorKey,
-              title: 'Flutter Demo',
-              debugShowCheckedModeBanner: false,
-              locale: state.selectedLanguage.value,
-              // Set the locale you want the app to display messages
-              localizationsDelegates: const [
-                AppLocalizations.delegate, // Add this line
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: const [
-                Locale('en'),
-                // English
-                Locale('fa'),
-                // farsi
-                // Add more supported locales based on your application's target audience
-              ],
-              theme: themeData,
-              initialRoute: RoutePaths.splash,
-              onGenerateRoute: (settings) =>
-                  RouteGenerator.destination(settings),
+          builder: (context, lang) {
+            return BlocBuilder<ConnectivityBloc, ConnectivityState>(
+              builder: (context, state) {
+                if (state is ConnectivitySuccessState ||
+                    state is ConnectivityInitialState) {
+                  return MaterialApp(
+                    navigatorKey: navigatorKey,
+                    title: 'Flutter Demo',
+                    debugShowCheckedModeBanner: false,
+                    locale: lang.selectedLanguage.value,
+                    // Set the locale you want the app to display messages
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate, // Add this line
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: const [
+                      Locale('en'),
+                      // English
+                      Locale('fa'),
+                      // farsi
+                      // Add more supported locales based on your application's target audience
+                    ],
+                    theme: themeData,
+                    initialRoute: RoutePaths.splash,
+                    onGenerateRoute: (settings) =>
+                        RouteGenerator.destination(settings),
+                  );
+                } else if (state is ConnectivityFailureState) {
+                  return const NoConnectivityScreen();
+                } else {
+                  return SizedBox();
+                }
+              },
             );
           },
         );

@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
+import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../data/model/questions_model.dart';
 
 class CourseRating extends StatefulWidget {
@@ -49,7 +50,7 @@ class _CourseRatingState extends State<CourseRating> {
 
   @override
   Widget build(BuildContext context) {
-    final data = context.read<ChapterBloc>().state.data!;
+    final data = context.read<SubChapterCubit>().state!.chapterModel;
 
     return BlocProvider<QuestionsBloc>(
       create: (buildContext) {

@@ -3,28 +3,36 @@ part of 'comments_bloc.dart';
 @immutable
 sealed class CommentsEvent {}
 
-class GetComments extends CommentsEvent {
-  final int chapter;
-  final int subChapter;
+class GetComments extends CommentsEvent{
+  final int chapterId;
+  final int subChapterId;
 
-  GetComments({required this.chapter, required this.subChapter});
+  GetComments({required this.chapterId, required this.subChapterId});
 }
 
-class ChangeFeedComment extends CommentsEvent {
-  final int chapter;
-  final int subChapter;
-  final dynamic comment;
-  final CommentType commentType;
+class PostComments extends CommentsEvent{
+  final int chapterId;
+  final int subChapterId;
+  final AddCommentRequestModel request;
+  final List<CommentsResponseModel> data;
 
-  ChangeFeedComment({required this.chapter, required this.subChapter, required this.comment,required this.commentType});
-
+  PostComments({required this.chapterId, required this.subChapterId, required this.request, required this.data});
 
 
 }
-class AddComment extends CommentsEvent{
-  final int chapter;
-  final int subChapter;
-  final AddCommentRequestModel comment;
 
-  AddComment({required this.chapter, required this.subChapter, required this.comment});
+class ChangeComment extends CommentsEvent{
+  final int chapterId;
+  final int subChapterId;
+  final List<CommentsResponseModel> data;
+  final CommentsResponseModel comment;
+
+  ChangeComment({required this.chapterId, required this.subChapterId, required this.data, required this.comment});
+
+
+
+
+
+
+
 }

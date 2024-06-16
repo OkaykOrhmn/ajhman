@@ -15,20 +15,20 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(const ProfileState()) {
+  ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) async {
       if (event is GetProfileInfo) {
-        var result = state;
-        var type = ApiEndPoints.profile;
+        emit(ProfileLoading());
         try {
           ProfileResponseModel response = await profileRepository.getProfile();
-          result = ProfileState(
-              status: StateStatus.success, type: type, data: response);
-          emit(result);
+          emit(ProfileSuccess(response: response));
         } on DioError catch (e) {
-          result = ProfileState(
-              status: StateStatus.fail, type: type, data: e.response!.data);
-          emit(result);
+          String error = 'normal';
+          if (e.type == DioExceptionType.connectionError ||
+              e.type == DioExceptionType.connectionTimeout) {
+            error = 'connection';
+          }
+          emit(ProfileFail(error: error));
         }
       }
     });

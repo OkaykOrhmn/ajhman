@@ -21,6 +21,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../../core/cubit/audio/audio_player_cubit.dart';
+import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../widgets/loading/three_bounce_loading.dart';
 
@@ -44,7 +45,7 @@ class _CourseAudioState extends State<CourseAudio> {
 
   @override
   void initState() {
-    data = context.read<ChapterBloc>().state.data!;
+     data = context.read<SubChapterCubit>().state!.chapterModel;
     for (var element in data.media!) {
       if (element.type == CourseTypes.image.type) {
         banner = element;

@@ -27,19 +27,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   Future<bool> _onWillPop() async {
     var read = context.read<SelectedIndexCubit>();
-    if(read.state.index == 0){
+    if (read.state.index == 0) {
       DialogHandler.showExitBottomSheet();
-
-    }else{
+    } else {
       read.changeSelectedIndex(0, "خانه");
-
     }
 
     return false;
+  }
 
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                           //this is why click effect Inkwell not work
                           color: Colors.white,
                           boxShadow: DesignConfig.mediumShadow,

@@ -17,6 +17,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_btn/loading_btn.dart';
 
+import '../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../core/cubit/home/news_course_home_cubit.dart';
 import '../../../data/args/exam_args.dart';
 import '../../../data/shared_preferences/profile_data.dart';
@@ -54,51 +55,51 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _header(),
-            _information(),
-            // Center(
-            //     child: Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16),
-            //   child: SizedBox(
-            //       width: MediaQuery.sizeOf(context).width,
-            //       child: const OutlinedPrimaryButton(
-            //           title: "رفتن به نوشته و نشان شده‌ها")),
-            // )),
-            _pointsPlatform(),
-            data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
-            data.registered != null && data.registered!
-                ? const SizedBox()
-                : Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: PrimaryLoadingButton(
-                        title: 'ثبت‌نام',
-                        disable: false,
-                        onTap: (Function startLoading, Function stopLoading,
-                            ButtonState btnState) async {
-                          if (btnState == ButtonState.idle) {
-                            startLoading();
-                            try {
-                              await courseRepository.getRegCourse(data.id!);
-                              setState(() {
-                                widget.response.registered = true;
-                              });
-                              DialogHandler.showRegCourseDialog(
-                                  "دوره “فنون مذاکره” با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
-                                  "متوجه شدم");
-                              context.read<NewsCourseHomeCubit>().getNews();
-                            } on DioError catch (e) {}
-                          }
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _header(),
+                _information(),
+                // Center(
+                //     child: Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                //   child: SizedBox(
+                //       width: MediaQuery.sizeOf(context).width,
+                //       child: const OutlinedPrimaryButton(
+                //           title: "رفتن به نوشته و نشان شده‌ها")),
+                // )),
+                _pointsPlatform(),
+                data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
+                data.registered != null && data.registered!
+                    ? const SizedBox()
+                    : Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: PrimaryLoadingButton(
+                      title: 'ثبت‌نام',
+                      disable: false,
+                      onTap: (Function startLoading, Function stopLoading,
+                          ButtonState btnState) async {
+                        if (btnState == ButtonState.idle) {
+                          startLoading();
+                          try {
+                            await courseRepository.getRegCourse(data.id!);
+                            setState(() {
+                              widget.response.registered = true;
+                            });
+                            DialogHandler.showRegCourseDialog(
+                                "دوره “فنون مذاکره” با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
+                                "متوجه شدم");
+                            context.read<NewsCourseHomeCubit>().getNews();
+                          } on DioError catch (e) {}
+                        }
 
-                          stopLoading();
-                        }),
-                  ),
-          ],
-        ),
-      )),
+                        stopLoading();
+                      }),
+                ),
+              ],
+            ),
+          )),
     );
   }
 
@@ -116,7 +117,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               color: primaryColor,
             ),
             child: PrimaryImageNetwork(
-                // src: "https://s3-alpha-sig.figma.com/img/3f9b/aad8/77bb617140ad8559927012205237ce01?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Snv8nK5EGr8NvHp4mj0wsxxtBVycYzhqCGZD5Ax8j-JT6ZpmEJ-nG5zNsHin6KSTaKka-av0R4QQ--XoX5zxdiQjTtKC32faE5sXtNnYIRBa3C12y-yq2q3WZ9RlmgRveutvI96Ag4Au9bLtXoa0ZYCrdXs1S2NArDN0FUfxDEuLwuYN7H9mSxLbNfH783YRuCESs9qzjb1u4tG4RSN9J96qSQmKfjvpfRvyqE2nzUDBV3hOPUhtIzRHFUHsjpFJ42ZRHtRLbCDn1xpeHEvPP4Skz5m8BHz-vWSW09Y-37~P-~YRgVL6DsqfCaGnzv7HxLw3jKrz9uFDtovhobMdEQ__",
+              // src: "https://s3-alpha-sig.figma.com/img/3f9b/aad8/77bb617140ad8559927012205237ce01?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Snv8nK5EGr8NvHp4mj0wsxxtBVycYzhqCGZD5Ax8j-JT6ZpmEJ-nG5zNsHin6KSTaKka-av0R4QQ--XoX5zxdiQjTtKC32faE5sXtNnYIRBa3C12y-yq2q3WZ9RlmgRveutvI96Ag4Au9bLtXoa0ZYCrdXs1S2NArDN0FUfxDEuLwuYN7H9mSxLbNfH783YRuCESs9qzjb1u4tG4RSN9J96qSQmKfjvpfRvyqE2nzUDBV3hOPUhtIzRHFUHsjpFJ42ZRHtRLbCDn1xpeHEvPP4Skz5m8BHz-vWSW09Y-37~P-~YRgVL6DsqfCaGnzv7HxLw3jKrz9uFDtovhobMdEQ__",
                 src: getImageUrl(data.image),
                 aspectRatio: 16 / 9),
           ),
@@ -247,20 +248,20 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             ),
             data.highlight!.isNotEmpty
                 ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PrimaryText(
-                        text: "آنچه در این دوره می‌آموزیم",
-                        style: mThemeData.textTheme.dialogTitle,
-                        color: primaryColor900,
-                        textAlign: TextAlign.start,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      HighlightListView(items: data.highlight!)
-                    ],
-                  )
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PrimaryText(
+                  text: "آنچه در این دوره می‌آموزیم",
+                  style: mThemeData.textTheme.dialogTitle,
+                  color: primaryColor900,
+                  textAlign: TextAlign.start,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                HighlightListView(items: data.highlight!)
+              ],
+            )
                 : SizedBox()
           ],
         ),
@@ -282,113 +283,40 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 FutureBuilder(
-                     future: getProfile(),
-                     builder: (context,snapshot) {
-                     return ProfileImageNetwork(
-                        width: 64,
-                        height: 64,
-                        src:
-                        getImageUrl(snapshot.data!.image));
-                   }
-                 ),
+                ProfileImageNetwork(
+                    width: 64, height: 64, src: getImageUrl(profile.image)),
                 Expanded(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.all(4).copyWith(right: 8, left: 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PrimaryText(
-                                text: "نمره‌ی شما",
-                                style: mThemeData.textTheme.titleBold,
-                                color: grayColor800),
-                            // Row(
-                            //   crossAxisAlignment: CrossAxisAlignment.center,
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Padding(
-                            //       padding: const EdgeInsets.only(top: 4),
-                            //       child: PrimaryText(
-                            //           text: "25",
-                            //           style: mThemeData.textTheme.rate,
-                            //           color: successMain),
-                            //     ),
-                            //     Assets.icon.outline.arrowUp1.svg(
-                            //         color: successMain, width: 18, height: 18)
-                            //   ],
-                            // )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Row(
-                        //       crossAxisAlignment: CrossAxisAlignment.center,
-                        //       children: [
-                        //         Assets.icon.outline.star.svg(
-                        //             color: grayColor800, width: 14, height: 14),
-                        //         Padding(
-                        //           padding:
-                        //               const EdgeInsets.only(top: 4.0, right: 4),
-                        //           child: PrimaryText(
-                        //               text: '۱۵۴',
-                        //               style: mThemeData.textTheme.searchHint,
-                        //               color: grayColor800),
-                        //         )
-                        //       ],
-                        //     ),
-                        //     Container(
-                        //       width: 1,
-                        //       height: 12,
-                        //       color: primaryColor,
-                        //     ),
-                        //     Row(
-                        //       crossAxisAlignment: CrossAxisAlignment.center,
-                        //       children: [
-                        //         Assets.icon.outline.timer.svg(
-                        //             color: grayColor800, width: 14, height: 14),
-                        //         Padding(
-                        //           padding:
-                        //               const EdgeInsets.only(top: 4.0, right: 4),
-                        //           child: PrimaryText(
-                        //               text: '۲ دوره آموزشی',
-                        //               style: mThemeData.textTheme.searchHint,
-                        //               color: grayColor800),
-                        //         )
-                        //       ],
-                        //     ),
-                        //     Container(
-                        //       width: 1,
-                        //       height: 12,
-                        //       color: primaryColor,
-                        //     ),
-                        //     Row(
-                        //       crossAxisAlignment: CrossAxisAlignment.center,
-                        //       children: [
-                        //         Assets.icon.outline.note2.svg(
-                        //             color: grayColor800, width: 14, height: 14),
-                        //         Padding(
-                        //           padding:
-                        //               const EdgeInsets.only(top: 4.0, right: 4),
-                        //           child: PrimaryText(
-                        //               text: 'بدون گواهی نامه',
-                        //               style: mThemeData.textTheme.searchHint,
-                        //               color: grayColor800),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
-                        _resultExam(80)
-                      ],
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PrimaryText(
+                              text: "نمره‌ی شما",
+                              style: mThemeData.textTheme.titleBold,
+                              color: grayColor800),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                                color: successBackground,
+                                borderRadius: DesignConfig.highBorderRadius),
+                            child: Center(
+                              child: PrimaryText(
+                                  text:
+                                  "${80 > 60 ? "پذیرفته" : "رد"} شده در آزمون",
+                                  style: mThemeData.textTheme.title,
+                                  color: 80 > 60 ? successMain : errorMain),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      _resultExam(80)
+                    ],
                   ),
                 )
               ],
@@ -398,29 +326,31 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             ),
             Center(
                 child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: OutlinePrimaryLoadingButton(
-                title: "رفتن به لیدر سکوی امتیازات",
-                onTap: (Function startLoading, Function stopLoading,
-                    ButtonState btnState) async {
-                  if (btnState == ButtonState.idle) {
-                    startLoading();
-                    try {
-                      LeaderboardModel response =
+                  width: MediaQuery
+                      .sizeOf(context)
+                      .width,
+                  child: OutlinePrimaryLoadingButton(
+                    title: "رفتن به سکوی امتیازات",
+                    onTap: (Function startLoading, Function stopLoading,
+                        ButtonState btnState) async {
+                      if (btnState == ButtonState.idle) {
+                        startLoading();
+                        try {
+                          LeaderboardModel response =
                           await courseRepository.getLeaderboard(4);
-                      if (response.user != null && response.users != null) {
-                        navigatorKey.currentState!.pushNamed(
-                            RoutePaths.leaderboard,
-                            arguments: response);
-                      }
-                    } on DioError catch (e) {}
+                          if (response.user != null && response.users != null) {
+                            navigatorKey.currentState!.pushNamed(
+                                RoutePaths.leaderboard,
+                                arguments: response);
+                          }
+                        } on DioError catch (e) {}
 
-                    stopLoading();
-                  }
-                },
-                disable: false,
-              ),
-            )),
+                        stopLoading();
+                      }
+                    },
+                    disable: false,
+                  ),
+                )),
           ],
         ),
       ),
@@ -429,24 +359,12 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
 
   Row _resultExam(int score) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         PrimaryText(
             text: "نمره کسب شده: ${score}",
             style: mThemeData.textTheme.title,
-            color: score>60 ? successFont : errorFont),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-              color: successBackground,
-              borderRadius: DesignConfig.highBorderRadius),
-          child: Center(
-            child: PrimaryText(
-                text: "${score>60 ? "پذیرفته" : "رد"} شده در آزمون",
-                style: mThemeData.textTheme.title,
-                color: score>60 ? successMain : errorMain),
-          ),
-        )
+            color: score > 60 ? successFont : errorFont),
       ],
     );
   }
@@ -456,7 +374,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
       children: [
         const TitleDivider(title: "سرفصل‌ها"),
         SizedBox(
-          width: MediaQuery.sizeOf(context).width,
+          width: MediaQuery
+              .sizeOf(context)
+              .width,
           child: ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -510,13 +430,13 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     ),
                     completed
                         ? PrimaryText(
-                            text: "(گذرانده)",
-                            style: mThemeData.textTheme.titleBold,
-                            color: successMain)
+                        text: "(گذرانده)",
+                        style: mThemeData.textTheme.titleBold,
+                        color: successMain)
                         : PrimaryText(
-                            text: "(در حال یادگیری)",
-                            style: mThemeData.textTheme.titleBold,
-                            color: warningMain),
+                        text: "(در حال یادگیری)",
+                        style: mThemeData.textTheme.titleBold,
+                        color: warningMain),
                   ],
                 ),
                 isShow
@@ -743,7 +663,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
 
   SizedBox _subchapters(courseMainChapters chapter) {
     return SizedBox(
-        width: MediaQuery.sizeOf(context).width,
+        width: MediaQuery
+            .sizeOf(context)
+            .width,
         child: ListView.builder(
             itemCount: chapter.subchapters!.length,
             shrinkWrap: true,
@@ -758,19 +680,28 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     CourseTypes type = getType(subchapter.type!);
     return InkWell(
       onTap: data.registered!
-          ? () {
-              List<int> result = [];
-              for (var element in chapter.subchapters!) {
-                result.add(element.id!);
-              }
-              Navigator.of(context).pushNamed(RoutePaths.course,
-                  arguments:
-                      CourseArgs(chapter.id, chapter.name, index, result));
-            }
+          ? () async {
+        context.read<ChapterBloc>().add(GetInfoChapter(
+            chapterId: chapter.id!, subChapterId: subchapter.id!));
+        context
+            .read<ChapterBloc>()
+            .stream
+            .firstWhere((element) => element is ChapterSuccess)
+            .then((value) {
+          final state = value as ChapterSuccess;
+          Navigator.of(context)
+              .pushNamed(RoutePaths.course, arguments: CourseArgs(
+              courseData: widget.response, chapterModel:state.response, chapterId: chapter.id!));
+        });
+
+
+      }
           : null,
       child: Center(
         child: Container(
-          width: MediaQuery.sizeOf(context).width,
+          width: MediaQuery
+              .sizeOf(context)
+              .width,
           padding: const EdgeInsets.all(18),
           margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
@@ -794,9 +725,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               ),
               data.registered!
                   ? Assets.icon.outline.arrowLeft
-                      .svg(color: primaryColor, width: 18, height: 18)
+                  .svg(color: primaryColor, width: 18, height: 18)
                   : Assets.icon.outline.lock
-                      .svg(color: grayColor700, width: 18, height: 18)
+                  .svg(color: grayColor700, width: 18, height: 18)
             ],
           ),
         ),
@@ -804,23 +735,25 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     );
   }
 
-  Widget _subchapterLayoutExam(
-      int index, SvgGenImage icon, Subchapters subchapter) {
+  Widget _subchapterLayoutExam(int index, SvgGenImage icon,
+      Subchapters subchapter) {
     return InkWell(
       onTap: data.registered!
           ? () {
-              String r;
-              if (index == 0) {
-                r = RoutePaths.summery;
-              } else {
-                r = RoutePaths.examInfo;
-              }
-              Navigator.of(context).pushNamed(r, arguments: data.id!);
-            }
+        String r;
+        if (index == 0) {
+          r = RoutePaths.summery;
+        } else {
+          r = RoutePaths.examInfo;
+        }
+        Navigator.of(context).pushNamed(r, arguments: data.id!);
+      }
           : null,
       child: Center(
         child: Container(
-          width: MediaQuery.sizeOf(context).width,
+          width: MediaQuery
+              .sizeOf(context)
+              .width,
           padding: const EdgeInsets.all(18),
           margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
@@ -843,9 +776,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               ),
               data.registered!
                   ? Assets.icon.outline.arrowLeft
-                      .svg(color: primaryColor, width: 18, height: 18)
+                  .svg(color: primaryColor, width: 18, height: 18)
                   : Assets.icon.outline.lock
-                      .svg(color: grayColor700, width: 18, height: 18)
+                  .svg(color: grayColor700, width: 18, height: 18)
             ],
           ),
         ),

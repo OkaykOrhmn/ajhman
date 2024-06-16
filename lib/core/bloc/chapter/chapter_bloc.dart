@@ -13,17 +13,16 @@ part 'chapter_event.dart';
 part 'chapter_state.dart';
 
 class ChapterBloc extends Bloc<ChapterEvent, ChapterState> {
-  ChapterBloc() : super(const ChapterState()) {
+  ChapterBloc() : super(ChapterInitial()) {
     on<ChapterEvent>((event, emit) async {
       if (event is GetInfoChapter) {
-        emit(const ChapterState(status: ChapterStateStatus.loading));
+        emit(ChapterLoading());
         try {
           ChapterModel response = await chapterRepository.getChapter(
               event.chapterId, event.subChapterId);
-          emit(
-              ChapterState(status: ChapterStateStatus.success, data: response));
+          emit(ChapterSuccess(response: response));
         } on DioError catch (e) {
-          emit(const ChapterState(status: ChapterStateStatus.fail, data: null));
+          emit(ChapterFail());
         }
       }
     });

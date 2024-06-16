@@ -46,7 +46,7 @@ class CommentsRepository implements Comment {
   }
 
   @override
-  Future<AddCommentResponseModel> addComment(
+  Future<CommentsResponseModel> addComment(
       int chapter, int subchapter, Object? data) async {
     try {
       Response response = await dioHelper.postRequest(
@@ -54,7 +54,7 @@ class CommentsRepository implements Comment {
           data,
           null);
       final postMaps = response.data;
-      return AddCommentResponseModel.fromJson(postMaps);
+      return CommentsResponseModel.fromJson(postMaps);
     } catch (ex) {
       rethrow;
     }
@@ -67,6 +67,6 @@ abstract class Comment {
   Future<Response> putFeed(
       int chapter, int subchapter, int commentId, bool? feed);
 
-  Future<AddCommentResponseModel> addComment(
+  Future<CommentsResponseModel> addComment(
       int chapter, int subchapter, Object? data);
 }

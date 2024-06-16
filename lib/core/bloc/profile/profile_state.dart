@@ -1,18 +1,16 @@
 part of 'profile_bloc.dart';
 
 @immutable
-class ProfileState extends Equatable {
-  final StateStatus status;
-  final String type;
-  final dynamic data;
+class ProfileState {}
+class ProfileInitial extends ProfileState {}
+class ProfileLoading extends ProfileState {}
+class ProfileSuccess extends ProfileState {
+  final ProfileResponseModel response;
 
-  const ProfileState({this.status = StateStatus.loading, this.type = '', this.data});
+  ProfileSuccess({required this.response});
+}
+class ProfileFail extends ProfileState {
+  final String error;
 
-  ProfileState copyWith(
-      {required StateStatus status,required String type, dynamic data}) {
-    return ProfileState(status: status , type: type, data: data ?? this.data);
-  }
-
-  @override
-  List<Object> get props => [status, type];
+  ProfileFail({required this.error});
 }
