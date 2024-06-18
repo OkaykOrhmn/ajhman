@@ -82,6 +82,14 @@ class $AssetsIconGen {
   SvgGenImage get outlineNote =>
       const SvgGenImage('assets/icon/outline-note.svg');
 
+  /// File path: assets/icon/profile-placeholder-dark.svg
+  SvgGenImage get profilePlaceholderDark =>
+      const SvgGenImage('assets/icon/profile-placeholder-dark.svg');
+
+  /// File path: assets/icon/profile-placeholder.svg
+  SvgGenImage get profilePlaceholder =>
+      const SvgGenImage('assets/icon/profile-placeholder.svg');
+
   /// File path: assets/icon/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icon/profile.svg');
 
@@ -107,6 +115,8 @@ class $AssetsIconGen {
         outlineArchive,
         outlineMedal,
         outlineNote,
+        profilePlaceholderDark,
+        profilePlaceholder,
         profile,
         user
       ];

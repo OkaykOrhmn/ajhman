@@ -13,7 +13,10 @@ class ProfileImageNetwork extends StatelessWidget {
   final double height;
 
   const ProfileImageNetwork(
-      {super.key, required this.src,required this.width,required this.height});
+      {super.key,
+      required this.src,
+      required this.width,
+      required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +35,10 @@ class ProfileImageNetwork extends StatelessWidget {
                 child: Container(
                   color: Colors.white,
                 )),
-            errorWidget: (context, url, error) => Center(
-              child: Assets.image.moon.son.image(),
-            ),
+            errorWidget: (context, url, error) => Assets.icon.profilePlaceholder
+                .svg(
+                    width: width,
+                    height: height),
             fit: BoxFit.cover,
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,21 +11,22 @@ import '../../../gen/assets.gen.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../theme/text/text_styles.dart';
 
-class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget{
+class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+
   const PrimaryAppBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: mThemeData.primaryColor,
+      backgroundColor: Theme.of(context).primaryColor,
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
             onTap: () {
-              BlocProvider.of<ThemeBloc>(context).add(ThemeSwitchEvent());
+              navigatorKey.currentState!.pushNamed(RoutePaths.profile);
             },
             child: Assets.icon.profile.svg(color: Colors.white),
           ),

@@ -68,7 +68,7 @@ class _SplashPageState extends State<SplashPage> {
                 } else {
                   if (snapshot.hasData) {
                     if (snapshot.data!.isNotEmpty) {
-                      DialogHandler.showErrorDialog(
+                      DialogHandler(context).showErrorDialog(
                           state.error, "صفحه ورورد", () => _tryAgain());
                     }
                   }

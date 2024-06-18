@@ -29,7 +29,7 @@ class _CourseHeaderState extends State<CourseHeader> {
           margin: EdgeInsets.all(16),
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           decoration: BoxDecoration(
-              color: primaryColor, borderRadius: DesignConfig.highBorderRadius),
+              color: Theme.of(context).primaryColor, borderRadius: DesignConfig.highBorderRadius),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

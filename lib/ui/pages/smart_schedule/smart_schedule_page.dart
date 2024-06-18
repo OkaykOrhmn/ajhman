@@ -175,7 +175,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
               active: activeCalender),
           Expanded(
             child: HorizontalDashedLine(
-              active: activeCalender? primaryColor : null,
+              active: activeCalender? Theme.of(context).primaryColor : null,
               dashed: activeCalender,
               dashSize: 8,
               height: 2,
@@ -185,7 +185,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
               svgGenImage: Assets.icon.outline.timer, active: activeTime),
           Expanded(
             child: HorizontalDashedLine(
-              active: activeCalender? primaryColor : null,
+              active: activeCalender? Theme.of(context).primaryColor : null,
               dashed: activeTime,
               dashSize: 8,
               height: 2,

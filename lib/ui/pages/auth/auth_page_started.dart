@@ -1,3 +1,5 @@
+import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/auth/auth_page.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
@@ -32,10 +34,7 @@ class _AuthPageStartedState extends State<AuthPageStarted> {
             child: OutlinedPrimaryButton(
               title: ChangeLocale(context).appLocal!.continues,
               onClick: () {
-                Navigator.of(context)
-                    .push(CupertinoPageRoute(builder: (context) {
-                  return const AuthPage();
-                }));
+                navigatorKey.currentState!.pushNamed(RoutePaths.auth);
               },
             ),
           )

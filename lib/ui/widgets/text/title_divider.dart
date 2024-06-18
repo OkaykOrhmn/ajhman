@@ -38,10 +38,10 @@ class TitleDivider extends StatelessWidget {
                       PrimaryText(
                         text: "مشاهده همه",
                         style: mThemeData.textTheme.searchHint,
-                        color: primaryColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                       Assets.icon.outline.arrowLeft
-                          .svg(color: primaryColor, width: 16, height: 16)
+                          .svg(color: Theme.of(context).primaryColor, width: 16, height: 16)
                     ],
                   ),
                 )

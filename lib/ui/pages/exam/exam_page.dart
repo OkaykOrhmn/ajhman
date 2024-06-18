@@ -247,7 +247,7 @@ class _ExamPageState extends State<ExamPage>
                                               Radio<int>(
                                                 groupValue: _radioController
                                                     .selectedIndex,
-                                                activeColor: primaryColor,
+                                                activeColor: Theme.of(context).primaryColor,
                                                 value: _index,
                                                 onChanged: (val) {
                                                   _radioController
@@ -297,7 +297,7 @@ class _ExamPageState extends State<ExamPage>
                                                 answers: state
                                                     .answerRequestModel
                                                     .answers);
-                                        DialogHandler.showFinishExamBottomSheet(
+                                        DialogHandler(context).showFinishExamBottomSheet(
                                             result);
                                       } else {
                                         final index = state.index + 1;

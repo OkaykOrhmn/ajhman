@@ -88,13 +88,16 @@ class _CourseVideoState extends State<CourseVideo> {
 
   @override
   void dispose() {
-    if(loading){
+    print("hi");
+    if (videoHandler != null) {
       videoHandler.customVideoPlayerController.dispose();
       if (videoHandler
           .customVideoPlayerController.videoPlayerController.value.isPlaying) {
         videoHandler.customVideoPlayerController.videoPlayerController.pause();
-        videoHandler.customVideoPlayerController.videoPlayerController.dispose();
+        videoHandler.customVideoPlayerController.videoPlayerController
+            .dispose();
       }
+      context.read<VideoPlayerCubit>().reset();
     }
 
     super.dispose();

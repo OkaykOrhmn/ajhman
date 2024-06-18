@@ -31,7 +31,7 @@ class _ThreeBounceLoadingState extends State<ThreeBounceLoading>
   Widget build(BuildContext context) {
     return Center(
       child: SpinKitThreeBounce(
-        color: primaryColor,
+        color: Theme.of(context).primaryColor,
         size: 50.0,
         controller: _controller,
       ),

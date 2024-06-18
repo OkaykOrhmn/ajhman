@@ -33,7 +33,7 @@ class _AuthPageState extends State<AuthPage> {
   Widget body() {
     return Expanded(
       child: Container(
-        color: primaryColor,
+        color: Theme.of(context).primaryColor,
         child: Container(
           decoration: const BoxDecoration(
               color: Colors.white,
@@ -86,7 +86,7 @@ class _AuthPageState extends State<AuthPage> {
   Container header(BuildContext context) {
     return Container(
       height: MediaQuery.sizeOf(context).height / 3,
-      decoration: const BoxDecoration(color: primaryColor),
+      decoration:  BoxDecoration(color: Theme.of(context).primaryColor),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

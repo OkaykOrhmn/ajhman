@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/utils/timer/ticker.dart';
+import '../../../core/utils/timer/timer.dart';
 
 
 part 'timer_event.dart';
@@ -12,7 +12,7 @@ part 'timer_event.dart';
 part 'timer_state.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-  final Ticker _ticker;
+  final Timer _ticker;
   static const _duration = 10; // seconds
 
   /// counting down from 60
@@ -20,7 +20,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   /// to listen to the ticker stream
   StreamSubscription<int>? _tickerSubscription;
 
-  TimerBloc({required Ticker ticker})
+  TimerBloc({required Timer ticker})
       : _ticker = ticker,
 
   /// we have to specify the initial stage

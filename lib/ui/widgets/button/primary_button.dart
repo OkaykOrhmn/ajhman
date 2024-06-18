@@ -1,7 +1,8 @@
+import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/text/text_styles.dart';
-import '../../theme/widget/app_buttons_style.dart';
+import '../../theme/widget/design_config.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String title;
@@ -18,7 +19,10 @@ class PrimaryButton extends StatelessWidget {
       width: fill ? MediaQuery.sizeOf(context).width : null,
       height: height,
       child: ElevatedButton(
-          style: AppButtonsStyle.primaryButton,
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: secondaryColor,
+              shape: const RoundedRectangleBorder(borderRadius: DesignConfig.mediumBorderRadius)),
           onPressed: onClick,
           child: Text(
             title,

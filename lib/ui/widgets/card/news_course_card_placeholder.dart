@@ -42,31 +42,35 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.padding ?? EdgeInsets.zero,
-      child: Center(
-        child: Container(
-            decoration: BoxDecoration(
-                borderRadius: DesignConfig.highBorderRadius,
-                boxShadow: DesignConfig.defaultShadow,
-                color: Colors.white),
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DefaultPlaceHolder(child: _image("", "3.4")),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _title(),
-                      // _infoes(),
-                      _footer(),
-                    ],
-                  ),
-                )
-              ],
-            )),
+      child: Column(
+        children: [
+          Center(
+            child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: DesignConfig.highBorderRadius,
+                    boxShadow: DesignConfig.defaultShadow,
+                    color: Colors.white),
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DefaultPlaceHolder(child: _image("", "3.4")),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _title(),
+                          // _infoes(),
+                          _footer(),
+                        ],
+                      ),
+                    )
+                  ],
+                )),
+          ),
+        ],
       ),
     );
   }
@@ -144,7 +148,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                       child: PrimaryText(
                           text: "{response.score} امتیاز",
                           style: mThemeData.textTheme.navbarTitleBold,
-                          color: primaryColor),
+                          color: Theme.of(context).primaryColor),
                     ),
                   ],
                 ),

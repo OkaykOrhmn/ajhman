@@ -20,31 +20,31 @@ class VideoHandler{
   late CachedVideoPlayerController _videoPlayerController;
   late CustomVideoPlayerController _customVideoPlayerController;
   late CustomVideoPlayerWebController _customVideoPlayerWebController;
-  final CustomVideoPlayerSettings _customVideoPlayerSettings =
-  const CustomVideoPlayerSettings(
-    showSeekButtons: false,
-    playbackSpeedButtonAvailable: false,
-    showMuteButton: false,
-    showDurationPlayed: false,
-    showDurationRemaining: false,
-    showFullscreenButton: false,
-    showPlayButton: false,
-    controlBarPadding: EdgeInsets.only(bottom: 40),
-    settingsButtonAvailable: false,
-    seekDuration: Duration(seconds: 5),
-    customVideoPlayerProgressBarSettings: CustomVideoPlayerProgressBarSettings(
-        backgroundColor: primaryColor50,
-        bufferedColor: primaryColor100,
-        progressColor: primaryColor),
-    controlBarDecoration: BoxDecoration(
-      color: Colors.transparent,
-    ),
-  );
   late CustomVideoPlayerWebSettings _customVideoPlayerWebSettings ;
+  late CustomVideoPlayerSettings _customVideoPlayerSettings ;
 
 
 
   VideoHandler(BuildContext context ,String url, Function() whenInitialize){
+    _customVideoPlayerSettings = CustomVideoPlayerSettings(
+      showSeekButtons: false,
+      playbackSpeedButtonAvailable: false,
+      showMuteButton: false,
+      showDurationPlayed: false,
+      showDurationRemaining: false,
+      showFullscreenButton: false,
+      showPlayButton: false,
+      controlBarPadding: const EdgeInsets.only(bottom: 40),
+      settingsButtonAvailable: false,
+      seekDuration: const Duration(seconds: 5),
+      customVideoPlayerProgressBarSettings: CustomVideoPlayerProgressBarSettings(
+          backgroundColor: primaryColor50,
+          bufferedColor: primaryColor100,
+          progressColor: Theme.of(context).primaryColor),
+      controlBarDecoration: const BoxDecoration(
+        color: Colors.transparent,
+      ),
+    );
     _customVideoPlayerWebSettings =   CustomVideoPlayerWebSettings(
       src: url,
     );

@@ -18,10 +18,13 @@ import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
+import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/theme_helper.dart';
 import 'package:ajhman/ui/widgets/states/no_connectivity_screen.dart';
 import 'package:connectivity_bloc/connectivity_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,12 +42,15 @@ import 'core/cubit/timer/timer_cubit.dart';
 import 'core/routes/route_generator.dart';
 import 'core/utils/app_locale.dart';
 import 'core/utils/language/bloc/language_bloc.dart';
-import 'core/utils/timer/ticker.dart';
+import 'core/utils/timer/timer.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final BuildContext mContext = navigatorKey.currentContext!;
-final ThemeData mThemeData = Theme.of(mContext);
+ThemeData mThemeData = Theme.of(navigatorKey.currentContext!);
 String token = '';
+double fontSize = 1;
+bool isDarkTheme =
+    SchedulerBinding.instance.platformDispatcher.platformBrightness ==
+        Brightness.dark;
 ProfileResponseModel profile = ProfileResponseModel();
 
 void main() {
@@ -96,7 +102,7 @@ void main() {
     ),
     BlocProvider<TimerBloc>(
       create: (buildContext) {
-        final bloc = TimerBloc(ticker: const Ticker());
+        final bloc = TimerBloc(ticker: const Timer());
         return bloc;
       },
     ),
@@ -198,9 +204,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     ChangeLocale changeLocale = ChangeLocale(context);
-    return BlocBuilder<ThemeBloc, ThemeData>(
+    return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        ThemeData themeData = state;
+        ThemeData themeData = state.themeData;
+        if (navigatorKey.currentContext != null) {
+          context = navigatorKey.currentContext!;
+        }
         return BlocBuilder<LanguageBloc, LanguageState>(
           builder: (context, lang) {
             return BlocBuilder<ConnectivityBloc, ConnectivityState>(

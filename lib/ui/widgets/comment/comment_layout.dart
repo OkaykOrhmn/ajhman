@@ -250,7 +250,7 @@ class _CommentLayoutState extends State<CommentLayout> {
                     text: "${data.replyUser!.name} ",
                     style: mThemeData.textTheme.titleBold,
                     textAlign: TextAlign.justify,
-                    color: primaryColor)
+                    color: Theme.of(context).primaryColor)
                 : const SizedBox(),
             PrimaryText(
                 text: data.text.toString(),

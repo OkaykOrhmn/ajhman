@@ -35,6 +35,7 @@ class _HorizontalListViewState extends State<HorizontalListView> {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           itemCount: length,
+
           itemBuilder: (context, index) {
             return SizedBox(
               width: widget.width,

@@ -28,6 +28,7 @@ import '../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../core/bloc/comments/comments_bloc.dart';
 import '../../../../core/routes/route_paths.dart';
 import '../../../../data/args/course_args.dart';
+import '../../../../data/model/chapter_model.dart';
 import '../../../../data/model/course_main_response_model.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../widgets/loading/three_bounce_loading.dart';
@@ -49,15 +50,11 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   final ScrollController mainScrollController = ScrollController();
   Timer? timer;
   bool isOpen = false;
+  late BuildContext sContext;
 
   @override
   void initState() {
     courseArgs = widget.args;
-    for (var element in courseArgs.courseData.chapters!) {
-      if (element.id == courseArgs.chapterId) {
-        subChapters = element.subchapters!;
-      }
-    }
     context.read<CommentsBloc>().add(GetComments(
         chapterId: courseArgs.chapterId,
         subChapterId: courseArgs.chapterModel.id!));
@@ -84,14 +81,49 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   }
 
   @override
+  void dispose() {
+    if (timer != null) {
+      timer?.cancel();
+    }
+    super.dispose();
+  }
+
+  void _changeSubChapter(int id) {
+    sContext.read<ChapterBloc>().add(
+        GetInfoChapter(chapterId: widget.args.chapterId, subChapterId: id));
+    sContext
+        .read<ChapterBloc>()
+        .stream
+        .firstWhere((element) => element is ChapterSuccess)
+        .then((value) {
+      final state = value as ChapterSuccess;
+      mainScrollController
+          .jumpTo(mainScrollController.position.minScrollExtent);
+      sContext.read<SubChapterCubit>().setData(CourseArgs(
+          chapterId: widget.args.chapterId,
+          courseData: widget.args.courseData,
+          chapterModel: state.response));
+      sContext
+          .read<CommentsBloc>()
+          .add(GetComments(chapterId: courseArgs.chapterId, subChapterId: id));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const ReversibleAppBar(title: "محتوای دوره"),
       body: BlocProvider<SubChapterCubit>(
         create: (context) => SubChapterCubit(courseArgs),
         child: BlocBuilder<SubChapterCubit, CourseArgs>(
-          builder: (context, state) {
+          builder: (c, state) {
+            sContext = c;
             courseTypes = getType(state.chapterModel.type);
+            for (var element in courseArgs.courseData.chapters!) {
+              if (element.id == courseArgs.chapterId) {
+                subChapters = element.subchapters!;
+              }
+            }
 
             return SingleChildScrollView(
               controller: mainScrollController,
@@ -109,14 +141,17 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                     onTap: () {
                       setState(() {
                         isOpen = !isOpen;
-                        Future.delayed(const Duration(milliseconds: 400)).then(
-                            (value) => mainScrollController.jumpTo(
+                        timer = Timer.periodic(
+                            const Duration(milliseconds: 1),
+                            (Timer t) => mainScrollController.jumpTo(
                                 mainScrollController.position.maxScrollExtent));
+                        Future.delayed(const Duration(milliseconds: 400))
+                            .then((value) => timer?.cancel());
                       });
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: primaryColor,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.only(
                           topRight: DesignConfig.aHighBorderRadius,
                           topLeft: DesignConfig.aHighBorderRadius,
@@ -199,7 +234,9 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   Widget _subchapterLayout(int index, Subchapters subchapter) {
     CourseTypes type = getType(subchapter.type!);
     return InkWell(
-      onTap: null,
+      onTap: () {
+        _changeSubChapter(subchapter.id!);
+      },
       child: Center(
         child: Container(
           width: MediaQuery.sizeOf(context).width,
@@ -225,7 +262,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                 ],
               ),
               Assets.icon.outline.arrowLeft
-                  .svg(color: primaryColor, width: 18, height: 18)
+                  .svg(color: Theme.of(context).primaryColor, width: 18, height: 18)
             ],
           ),
         ),
@@ -234,66 +271,75 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   }
 
   Column _main() {
+    ChapterModel subchapter =
+        sContext.read<SubChapterCubit>().state.chapterModel;
     return Column(
       children: [
         _chapter(courseTypes),
-        // Padding(
-        //   padding:
-        //       const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 40),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       CustomPrimaryButton(
-        //         color: Colors.white,
-        //         elevation: 0,
-        //         onClick: () {
-        //           // if (widget.args.subChapterId != 0) {
-        //           // context.read<ChapterBloc>().add(GetInfoChapter(
-        //           //     chapterId: courseArgs.chapterId!,
-        //           //     subChapterId:
-        //           //         courseArgs.ids![courseArgs.subChapterId!] - 1));
-        //           // }
-        //         },
-        //         child: Row(
-        //           children: [
-        //             Assets.icon.outline.arrowRight
-        //                 .svg(color: primaryColor, width: 16, height: 16),
-        //             SizedBox(
-        //               width: 8,
-        //             ),
-        //             PrimaryText(
-        //                 text: "درس قبلی",
-        //                 style: mThemeData.textTheme.rate,
-        //                 color: primaryColor),
-        //           ],
-        //         ),
-        //       ),
-        //       CustomOutlinedPrimaryButton(
-        //           onClick: () {
-        //             // if (widget.args.subChapterId !=
-        //             //     widget.args.ids!.length ) {
-        //             // context.read<ChapterBloc>().add(GetInfoChapter(
-        //             //     chapterId: courseArgs.chapterId!,
-        //             //     subChapterId:
-        //             //     courseArgs.ids![courseArgs.subChapterId!] + 1));
-        //             // }
-        //           },
-        //           child: Row(
-        //             children: [
-        //               PrimaryText(
-        //                   text: "درس بعدی",
-        //                   style: mThemeData.textTheme.rate,
-        //                   color: primaryColor),
-        //               SizedBox(
-        //                 width: 8,
-        //               ),
-        //               Assets.icon.outline.arrowLeft1
-        //                   .svg(color: primaryColor, width: 16, height: 16)
-        //             ],
-        //           ))
-        //     ],
-        //   ),
-        // )
+        Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 40),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomOutlinedPrimaryButton(
+                  onClick: subchapter.id != subChapters.last.id
+                      ? () {
+                          int index = subchapter.id!;
+                          for (var element in subChapters) {
+                            if (element.id == subchapter.id) {
+                              index = subChapters.indexOf(element);
+                            }
+                          }
+                          final subchapterId = subChapters[index + 1].id!;
+                          _changeSubChapter(subchapterId);
+                        }
+                      : null,
+                  child: Row(
+                    children: [
+                      Assets.icon.outline.arrowRight
+                          .svg(color: Theme.of(context).primaryColor, width: 16, height: 16),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      PrimaryText(
+                          text: "درس بعدی",
+                          style: mThemeData.textTheme.rate,
+                          color: Theme.of(context).primaryColor),
+                    ],
+                  )),
+              CustomPrimaryButton(
+                color: Colors.white,
+                elevation: 0,
+                onClick: subchapter.id != subChapters.first.id
+                    ? () {
+                        int index = subchapter.id!;
+                        for (var element in subChapters) {
+                          if (element.id == subchapter.id) {
+                            index = subChapters.indexOf(element);
+                          }
+                        }
+                        final subchapterId = subChapters[index - 1].id!;
+                        _changeSubChapter(subchapterId);
+                      }
+                    : null,
+                child: Row(
+                  children: [
+                    PrimaryText(
+                        text: "درس قبلی",
+                        style: mThemeData.textTheme.rate,
+                        color: Theme.of(context).primaryColor),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Assets.icon.outline.arrowLeft1
+                        .svg(color: Theme.of(context).primaryColor, width: 16, height: 16),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

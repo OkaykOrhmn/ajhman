@@ -11,6 +11,15 @@ class VideoPlayerCubit extends Cubit<VideoPlayerModel> {
             showControls: false,
             speed: 1));
 
+  void reset() {
+    emit(VideoPlayerModel(
+        mute: true,
+        pause: true,
+        fullScreen: false,
+        showControls: false,
+        speed: 1));
+  }
+
   void changeMute() {
     emit(state.copyWith(mute: !state.mute));
   }

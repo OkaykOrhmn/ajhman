@@ -7,6 +7,9 @@ import 'package:meta/meta.dart';
 class AudioPlayerCubit extends Cubit<AudioPlayerModel> {
   AudioPlayerCubit() : super(AudioPlayerModel(volume: 1, pause: true, speed: 1));
 
+  void reset(){
+    emit(AudioPlayerModel(volume: 1, pause: true, speed: 1));
+  }
   void setVolume(double v) {
     emit(state.copyWith(volume: v));
   }

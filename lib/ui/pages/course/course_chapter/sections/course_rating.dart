@@ -150,7 +150,7 @@ class _CourseRatingState extends State<CourseRating> {
                                     decoration: BoxDecoration(
                                       borderRadius:
                                           DesignConfig.mediumBorderRadius,
-                                      color: primaryColor,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                     width: 2,
                                     height: 12,
@@ -183,7 +183,7 @@ class _CourseRatingState extends State<CourseRating> {
                                       Radio<int>(
                                         groupValue:
                                             _radioController.selectedIndex,
-                                        activeColor: primaryColor,
+                                        activeColor: Theme.of(context).primaryColor,
                                         value: _index,
                                         onChanged: (val) {
                                           _radioController.selectIndex(_index);

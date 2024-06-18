@@ -122,9 +122,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                       child: Center(
                           child: _showMore
                               ? Assets.icon.outline.arrowUp
-                                  .svg(width: 24, height: 24, color: primaryColor)
+                                  .svg(width: 24, height: 24, color: Theme.of(context).primaryColor)
                               : Assets.icon.outline.arrowDown
-                                  .svg(width: 24, height: 24, color: primaryColor)),
+                                  .svg(width: 24, height: 24, color: Theme.of(context).primaryColor)),
                     ),
                   ),
                 ))

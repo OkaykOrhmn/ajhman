@@ -72,13 +72,13 @@ class _CategoryPageState extends State<CategoryPage> {
                       direction: Axis.horizontal,
                       groupingType: GroupingType.row,
                       runSpacing: 4,
-                      selectedColor: primaryColor,
+                      selectedColor: Theme.of(context).primaryColor,
                       selectedTextStyle: mThemeData.textTheme.navbarTitle
                           .copyWith(color: Colors.white),
-                      unselectedBorderColor: primaryColor,
+                      unselectedBorderColor: Theme.of(context).primaryColor,
                       unselectedColor: Colors.white,
                       unselectedTextStyle: mThemeData.textTheme.navbarTitle
-                          .copyWith(color: primaryColor),
+                          .copyWith(color: Theme.of(context).primaryColor),
                       textAlign: TextAlign.center,
                       textPadding: EdgeInsets.symmetric(horizontal: 16),
                     ),

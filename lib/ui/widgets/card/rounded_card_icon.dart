@@ -13,12 +13,12 @@ class RoundedCardIcon extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: active ? primaryColor : Colors.white,
+        color: active ? Theme.of(context).primaryColor : Colors.white,
         borderRadius: BorderRadius.circular(360),
-        border: Border.all(color: primaryColor),
+        border: Border.all(color: Theme.of(context).primaryColor),
       ),
       padding: const EdgeInsets.all(12),
-      child: svgGenImage.svg(color: active ? Colors.white  : primaryColor),
+      child: svgGenImage.svg(color: active ? Colors.white  : Theme.of(context).primaryColor),
     );
   }
 }

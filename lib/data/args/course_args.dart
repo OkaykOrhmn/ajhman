@@ -5,7 +5,7 @@ import '../model/course_main_response_model.dart';
 
 class CourseArgs {
   final CourseMainResponseModel courseData;
-  final ChapterModel chapterModel;
+   ChapterModel chapterModel;
   final int chapterId;
 
   CourseArgs( {required this.chapterId,required this.courseData, required this.chapterModel});

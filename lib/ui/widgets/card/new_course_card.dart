@@ -175,7 +175,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                     PrimaryText(
                         text: "${response.score} امتیاز",
                         style: mThemeData.textTheme.navbarTitleBold,
-                        color: primaryColor),
+                        color: Theme.of(context).primaryColor),
                   ],
                 ),
                 PrimaryButton(
@@ -386,9 +386,9 @@ class _RecentCurseCardState extends State<NewCourseCard> {
               child: Center(
                 child: state.mark
                     ? Assets.icon.boldArchive
-                        .svg(width: 18, height: 18, color: primaryColor)
+                        .svg(width: 18, height: 18, color: Theme.of(context).primaryColor)
                     : Assets.icon.outlineArchive
-                        .svg(width: 18, height: 18, color: primaryColor),
+                        .svg(width: 18, height: 18, color: Theme.of(context).primaryColor),
               ),
             ));
       }),

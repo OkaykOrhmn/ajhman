@@ -27,8 +27,20 @@ class ProfileRepository implements ProfileInformation {
       rethrow;
     }
   }
+
+
+  @override
+  Future<Response> deleteProfile() async {
+    try {
+      Response response = await dioHelper.deleteRequest(ApiEndPoints.userProfile,null);
+      return response;
+    } catch (ex) {
+      rethrow;
+    }
+  }
 }
 
 abstract class ProfileInformation {
   Future<ProfileResponseModel> getProfile();
+  Future<Response> deleteProfile();
 }

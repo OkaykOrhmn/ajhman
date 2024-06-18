@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../theme/bloc/theme_bloc.dart';
 
 class PrimaryText extends StatelessWidget {
   final String text;
@@ -20,12 +23,11 @@ class PrimaryText extends StatelessWidget {
     return Text(
       text,
       style: style.copyWith(
-        color: color,
-      ),
+          color: color,
+          fontSize: style.fontSize! * context.read<ThemeBloc>().state.fontSize),
       textAlign: textAlign,
-      maxLines:
-          maxLines,
-      overflow: maxLines == null?TextOverflow.visible: TextOverflow.ellipsis,
+      maxLines: maxLines,
+      overflow: maxLines == null ? TextOverflow.visible : TextOverflow.ellipsis,
       softWrap: true,
     );
   }

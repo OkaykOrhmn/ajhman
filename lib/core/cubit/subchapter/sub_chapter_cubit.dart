@@ -9,4 +9,8 @@ class SubChapterCubit extends Cubit<CourseArgs> {
   CourseArgs getData(){
     return state;
   }
+
+  void setData(CourseArgs courseArgs){
+    emit(courseArgs);
+  }
 }

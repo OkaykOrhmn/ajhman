@@ -101,7 +101,7 @@ class _TimeScreenState extends State<TimeScreen> {
           padding: const EdgeInsets.all(24),
           child: Text(
             ChangeLocale(context).appLocal!.timeTitle,
-            style: AppTextStyles.body1,
+            style: body1,
             textAlign: TextAlign.center,
           ),
         ),
@@ -142,7 +142,7 @@ class _TimeScreenState extends State<TimeScreen> {
                       }
                       print("change");
                     },
-                    style: AppTextStyles.body1,
+                    style: body1,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
@@ -150,7 +150,7 @@ class _TimeScreenState extends State<TimeScreen> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: ChangeLocale(context).appLocal!.enterTime,
-                      hintStyle: AppTextStyles.body4,
+                      hintStyle: body4,
                     ),
                   ),
                 ),

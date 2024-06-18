@@ -52,7 +52,7 @@ class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
             ),
           )
               : null,
-          suffixIconColor: widget.error ? errorMain : primaryColor,
+          suffixIconColor: widget.error ? errorMain : Theme.of(context).primaryColor,
           errorText: widget.error
               ? ChangeLocale(context).appLocal!.textFieldEnterNumberError
               : null,
@@ -61,7 +61,7 @@ class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
           fillColor: backgroundColor200,
           hintStyle: AppTextStyles.primaryTextFieldHint,
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: primaryColor),
+            borderSide:  BorderSide(color: Theme.of(context).primaryColor),
             borderRadius:DesignConfig.mediumBorderRadius,
           ),
           enabledBorder: OutlineInputBorder(

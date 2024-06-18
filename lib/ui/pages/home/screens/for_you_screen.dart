@@ -129,14 +129,14 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                               color: state.response[index]
                                                           .status ==
                                                       "learned"
-                                                  ? primaryColor
+                                                  ? Theme.of(context).primaryColor
                                                   : backgroundColor100,
                                               border: state.response[index]
                                                           .status ==
                                                       "learning"
                                                   ? Border.all(
                                                       width: 1,
-                                                      color: primaryColor)
+                                                      color: Theme.of(context).primaryColor)
                                                   : null,
                                               shape: BoxShape.circle),
                                           child: Center(
@@ -151,7 +151,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                                       : state.response[index]
                                                                   .status ==
                                                               "learned"
-                                                          ? primaryColor
+                                                          ? Theme.of(context).primaryColor
                                                           : grayColor600)),
                                         ),
                                         Expanded(
@@ -159,7 +159,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                             active:
                                                 state.response[index].status ==
                                                         "learned"
-                                                    ? primaryColor
+                                                    ? Theme.of(context).primaryColor
                                                     : null,
                                             dashed:
                                                 state.response[index].status ==

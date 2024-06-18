@@ -29,12 +29,12 @@ class _ToggleButtonTimeState extends State<ToggleButtonTime> {
             color: widget.active ? Colors.white : backgroundColor100,
             borderRadius: DesignConfig.mediumBorderRadius,
             border: Border.all(
-                color: widget.active ? primaryColor : backgroundColor100)),
+                color: widget.active ? Theme.of(context).primaryColor : backgroundColor100)),
         child: Center(
           child: Text(
             widget.title,
-            style: AppTextStyles.headline3
-                .copyWith(color: widget.active ? primaryColor : grayColor900),
+            style: headline3
+                .copyWith(color: widget.active ? Theme.of(context).primaryColor : grayColor900),
           ),
         ),
       ),

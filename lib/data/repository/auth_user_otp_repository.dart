@@ -52,6 +52,7 @@ class AuthLoginUserRepository implements AuthRegisterUserOtp {
       rethrow;
     }
   }
+
 }
 
 abstract class AuthRegisterUserOtp {

@@ -33,6 +33,7 @@ import '../../../../data/args/course_main_args.dart';
 import '../../../../data/repository/categories_repository.dart';
 import '../../../../data/repository/learning_repository.dart';
 import '../../../../gen/assets.gen.dart';
+import '../../../theme/bloc/theme_bloc.dart';
 import '../../../widgets/card/news_course_card_placeholder.dart';
 import '../../../widgets/carousel/carousel_banners.dart';
 import '../../../widgets/states/place_holder/default_place_holder.dart';
@@ -55,8 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<NewsCourseHomeCubit>().getNews();
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CategoryArgs(categoriesId: [1, 2, 3]));
                               }),
                           HorizontalListView(
-                            height: 450,
+
                             placeholder: (index) =>
                                 const NewCourseCardPlaceholder(
                               padding: EdgeInsets.symmetric(
@@ -147,6 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             items: newsCards,
                             width: MediaQuery.sizeOf(context).width / 1.2,
+                            height: 480 ,
+
                           ),
                         ],
                       );
@@ -161,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Container _mainAppBar(BuildContext context) {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      decoration: BoxDecoration(color: mThemeData.colorScheme.appPrimary),
+      decoration: BoxDecoration(color: Theme.of(context).primaryColor),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -264,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                icon.svg(color: mThemeData.colorScheme.appPrimary),
+                icon.svg(color: Theme.of(context).primaryColor),
                 const SizedBox(
                   height: 8,
                 ),

@@ -65,7 +65,7 @@ class _TimerScreenState extends State<TimerScreen>
           padding: const EdgeInsets.all(24),
           child: Text(
             ChangeLocale(context).appLocal!.timerTitle,
-            style: AppTextStyles.body1,
+            style: body1,
             textAlign: TextAlign.center,
           ),
         ),
@@ -177,13 +177,13 @@ class _TimerScreenState extends State<TimerScreen>
                 ),
                 SfSliderTheme(
                   data: SfSliderThemeData(
-                    activeDividerColor: primaryColor,
-                    tooltipBackgroundColor: primaryColor,
-                    tooltipTextStyle: AppTextStyles.body6
+                    activeDividerColor: Theme.of(context).primaryColor,
+                    tooltipBackgroundColor: Theme.of(context).primaryColor,
+                    tooltipTextStyle: body6
                   ),
                   child: _inHour
                       ? SfSlider(
-                          activeColor: primaryColor,
+                          activeColor: Theme.of(context).primaryColor,
                           inactiveColor: grayColor50,
                           min: 0,
                           max: 24,
@@ -210,7 +210,7 @@ class _TimerScreenState extends State<TimerScreen>
                           },
                         )
                       : SfSlider(
-                          activeColor: primaryColor,
+                          activeColor: Theme.of(context).primaryColor,
                           inactiveColor: grayColor50,
                           dateFormat: DateFormat.H(),
                           min: 0,

@@ -15,6 +15,7 @@ import 'package:ajhman/ui/pages/exam/exam_page.dart';
 import 'package:ajhman/ui/pages/exam/exam_result_page.dart';
 import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:ajhman/ui/pages/points_platform/points_platform_page.dart';
+import 'package:ajhman/ui/pages/profile/profile_page.dart';
 import 'package:ajhman/ui/pages/search/search_page.dart';
 import 'package:ajhman/ui/pages/splash_page.dart';
 import 'package:ajhman/ui/pages/summery/summery_page.dart';
@@ -31,6 +32,8 @@ class RouteGenerator {
     switch (routeSettings.name.toString()) {
       case RoutePaths.splash:
         return _createRoute(const SplashPage());
+      case RoutePaths.profile:
+        return _createRoute(const ProfilePage());
       case RoutePaths.home:
         return _createRoute(const HomePage());
 

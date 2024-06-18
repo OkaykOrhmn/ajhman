@@ -64,8 +64,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           hintText: widget.hint,
           fillColor: backgroundColor200,
           hintStyle: AppTextStyles.primaryTextFieldHint,
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: primaryColor),
+          focusedBorder:  OutlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).primaryColor),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
           enabledBorder: OutlineInputBorder(

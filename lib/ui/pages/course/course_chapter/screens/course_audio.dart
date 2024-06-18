@@ -45,7 +45,7 @@ class _CourseAudioState extends State<CourseAudio> {
 
   @override
   void initState() {
-     data = context.read<SubChapterCubit>().state!.chapterModel;
+    data = context.read<SubChapterCubit>().state!.chapterModel;
     for (var element in data.media!) {
       if (element.type == CourseTypes.image.type) {
         banner = element;
@@ -93,6 +93,7 @@ class _CourseAudioState extends State<CourseAudio> {
       if (audioHandler.isPlaying) {
         audioHandler.stop();
       }
+      context.read<AudioPlayerCubit>().reset();
     }
 
     super.dispose();
@@ -103,7 +104,7 @@ class _CourseAudioState extends State<CourseAudio> {
     for (int i = 0; i <= size; i++) {
       final a = (position!.inMilliseconds * 100) / duration!.inMilliseconds;
       if (i <= a) {
-        bars[i].color = primaryColor;
+        bars[i].color = Theme.of(context).primaryColor;
       } else {
         bars[i].color = grayColor300;
       }
@@ -179,7 +180,7 @@ class _CourseAudioState extends State<CourseAudio> {
                                           duration!.inMilliseconds;
                                       for (int i = 0; i <= size; i++) {
                                         if (i <= a) {
-                                          bars[i].color = primaryColor;
+                                          bars[i].color = Theme.of(context).primaryColor;
                                         } else {
                                           bars[i].color = grayColor300;
                                         }

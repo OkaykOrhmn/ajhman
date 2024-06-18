@@ -3,13 +3,13 @@ import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/widgets/button/custom_outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/loading_btn.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -22,13 +22,16 @@ import '../../../data/repository/exam_repository.dart';
 import '../../../gen/assets.gen.dart';
 
 class DialogHandler {
-  static ThemeData themeData = Theme.of(mContext);
+  final BuildContext context;
 
-  static Future<void> showErrorDialog(
+  DialogHandler(this.context);
+
+  Future<void> showErrorDialog(
       String title, String btnTitle, Function()? onTap) async {
+    ThemeData themeData = Theme.of(context);
     await showDialog(
       barrierDismissible: false,
-      context: mContext,
+      context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.white,
         insetPadding: const EdgeInsets.all(16),
@@ -45,7 +48,7 @@ class DialogHandler {
                 child: Container(
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle, color: errorBackground),
-                    padding: EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(6),
                     child: Assets.icon.bold.closeCircle.svg()),
               ),
               Padding(
@@ -69,11 +72,11 @@ class DialogHandler {
     );
   }
 
-  static Future<void> showRegCourseDialog(
-      String title, String btnTitle) async {
+  Future<void> showRegCourseDialog(String title, String btnTitle) async {
+    ThemeData themeData = Theme.of(context);
     await showDialog(
       barrierDismissible: false,
-      context: mContext,
+      context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.white,
         insetPadding: const EdgeInsets.all(16),
@@ -90,12 +93,16 @@ class DialogHandler {
                 child: Container(
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle, color: successBackground),
-                    padding: EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(6),
                     child: Container(
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: successMain),
-                            padding: EdgeInsets.all(6),
-                        child: Icon(CupertinoIcons.checkmark_alt,color: Colors.white,size: 46,))),
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: successMain),
+                        padding: const EdgeInsets.all(6),
+                        child: const Icon(
+                          CupertinoIcons.checkmark_alt,
+                          color: Colors.white,
+                          size: 46,
+                        ))),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -109,7 +116,7 @@ class DialogHandler {
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: PrimaryButton(
                     title: btnTitle,
-                    onClick: ()=> pop(),
+                    onClick: () => pop(),
                   ))
             ],
           ),
@@ -118,9 +125,10 @@ class DialogHandler {
     );
   }
 
-  static Future<void> showExitBottomSheet() async {
+  Future<void> showExitBottomSheet() async {
+    ThemeData themeData = Theme.of(context);
     await showModalBottomSheet(
-        context: mContext,
+        context: context,
         useSafeArea: true,
         builder: (context) {
           return Stack(
@@ -130,13 +138,13 @@ class DialogHandler {
                   Container(
                     height: 5,
                     width: MediaQuery.sizeOf(context).width / 4,
-                    margin: EdgeInsets.symmetric(vertical: 16),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: const BoxDecoration(
                       color: Colors.black,
                       borderRadius: DesignConfig.highBorderRadius,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 32,
                   ),
                   PrimaryText(
@@ -153,7 +161,7 @@ class DialogHandler {
                     children: [
                       Container(
                           width: MediaQuery.sizeOf(context).width / 2,
-                          padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
+                          padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
                           child: PrimaryButton(
                             title: "بله",
                             onClick: () {
@@ -166,7 +174,7 @@ class DialogHandler {
                           )),
                       Container(
                           width: MediaQuery.sizeOf(context).width / 2,
-                          padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
+                          padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
                           child: OutlinedPrimaryButton(
                             title: "خیر",
                             onClick: () {
@@ -182,10 +190,144 @@ class DialogHandler {
         });
   }
 
-  static Future<void> showFinishExamBottomSheet(
-      AnswerRequestModel answers) async {
+  Future<void> showChoiceProfileSheet() async {
+    ThemeData themeData = Theme.of(context);
     await showModalBottomSheet(
-        context: mContext,
+        context: context,
+        useSafeArea: true,
+        backgroundColor: Colors.white,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 5,
+                width: MediaQuery.sizeOf(context).width / 4,
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: DesignConfig.highBorderRadius,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: DesignConfig.mediumBorderRadius,
+                        color: backgroundColor100,
+                      ),
+                      width: 100,
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Assets.icon.outline.profileCircle
+                              .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          PrimaryText(
+                              text: "آواتار",
+                              style: mThemeData.textTheme.title,
+                              color: grayColor900)
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: DesignConfig.mediumBorderRadius,
+                        color: backgroundColor100,
+                      ),
+                      width: 100,
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Assets.icon.outline.folder2
+                              .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          PrimaryText(
+                              text: "حافظه داخلی",
+                              style: mThemeData.textTheme.title,
+                              color: grayColor900)
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: DesignConfig.mediumBorderRadius,
+                        color: backgroundColor100,
+                      ),
+                      width: 100,
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Assets.icon.outline.camera
+                              .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          PrimaryText(
+                              text: "دوربین",
+                              style: mThemeData.textTheme.title,
+                              color: grayColor900)
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                      width: MediaQuery.sizeOf(context).width / 2,
+                      padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
+                      child: PrimaryButton(
+                        title: "بازگشت",
+                        onClick: () {
+                          pop();
+                        },
+                      )),
+                  Container(
+                      width: MediaQuery.sizeOf(context).width / 2,
+                      padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+                      child: CustomOutlinedPrimaryButton(
+                        color: errorMain,
+                        child: PrimaryText(
+                            text: "حذف عکس",
+                            style: AppTextStyles.outlinedPrimaryButtonText,
+                            color: errorMain),
+                        onClick: () {
+                          pop();
+                        },
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              )
+            ],
+          );
+        });
+  }
+
+  Future<void> showFinishExamBottomSheet(AnswerRequestModel answers) async {
+    ThemeData themeData = Theme.of(context);
+    await showModalBottomSheet(
+        context: context,
         useSafeArea: true,
         builder: (context) {
           return Stack(
@@ -196,12 +338,12 @@ class DialogHandler {
                     height: 5,
                     width: MediaQuery.sizeOf(context).width / 4,
                     margin: EdgeInsets.symmetric(vertical: 16),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.black,
                       borderRadius: DesignConfig.highBorderRadius,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 32,
                   ),
                   PrimaryText(
@@ -209,16 +351,16 @@ class DialogHandler {
                       style: themeData.textTheme.titleBold,
                       color: Colors.black),
                   Container(
-                    width: MediaQuery.sizeOf(context).width ,
+                    width: MediaQuery.sizeOf(context).width,
                     height: MediaQuery.sizeOf(context).width / 1.3,
-                    padding: EdgeInsets.fromLTRB(46, 32, 46, 32),
+                    padding: const EdgeInsets.fromLTRB(46, 32, 46, 32),
                     child: Assets.image.finishExam.svg(),
                   ),
                   Row(
                     children: [
                       Container(
                           width: MediaQuery.sizeOf(context).width / 2,
-                          padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
+                          padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
                           child: PrimaryLoadingButton(
                             title: "بله",
                             onTap: (Function startLoading, Function stopLoading,
@@ -258,9 +400,7 @@ class DialogHandler {
         });
   }
 
-
-
   static void pop() {
-    Navigator.of(mContext).pop();
+    navigatorKey.currentState!.pop();
   }
 }

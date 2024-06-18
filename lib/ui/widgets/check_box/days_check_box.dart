@@ -21,7 +21,7 @@ class _DaysCheckBoxState extends State<DaysCheckBox> {
         side: const BorderSide(
           color: grayColor700,
         ),
-        activeColor: primaryColor,
+        activeColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         value: widget.value,
         onChanged: (val) {

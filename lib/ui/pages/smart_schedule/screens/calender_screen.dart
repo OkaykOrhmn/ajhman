@@ -23,7 +23,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
               child: Text(
                 ChangeLocale(context).appLocal!.choiceDay,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.body1,
+                style: body1,
               )),
         ),
         const Padding(

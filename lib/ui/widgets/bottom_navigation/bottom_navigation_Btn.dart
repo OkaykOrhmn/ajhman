@@ -30,9 +30,9 @@ class BottomNavigationBtn extends StatelessWidget{
           children: [
             read.state.index == index
                 ? selectedIcon
-                .svg(color: mThemeData.colorScheme.appPrimary)
+                .svg(color: Theme.of(context).primaryColor)
                 : unselectedIcon
-                .svg(color: mThemeData.colorScheme.appPrimary),
+                .svg(color: Theme.of(context).primaryColor),
             const SizedBox(
               height: 6,
             ),
@@ -40,7 +40,7 @@ class BottomNavigationBtn extends StatelessWidget{
             Text(
               title!,
               style: mThemeData.textTheme.navbarTitle
-                  .copyWith(color: mThemeData.colorScheme.appOnSurface),
+                  .copyWith(color: grayColor),
             ):const SizedBox(),
             const SizedBox(
               height: 12,
@@ -50,7 +50,7 @@ class BottomNavigationBtn extends StatelessWidget{
               width: 28,
               height: 4,
               decoration: BoxDecoration(
-                  color: mThemeData.colorScheme.appPrimary,
+                  color: Theme.of(context).primaryColor,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(4),
                       topRight: Radius.circular(4))),

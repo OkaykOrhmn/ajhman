@@ -11,7 +11,6 @@ import '../../../../../core/utils/app_locale.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../theme/color/colors.dart';
 import '../../../../theme/text/text_styles.dart';
-import '../../../../theme/widget/app_buttons_style.dart';
 import '../../../../widgets/text_field/mobile_number_text_field.dart';
 
 class LoginOtpScreen extends StatefulWidget {
@@ -97,7 +96,7 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   ChangeLocale(context).appLocal!.pleaseEnterMobileNumber,
-                  style: AppTextStyles.body1,
+                  style: body1,
                 ),
               ),
               MobileNumberTextField(

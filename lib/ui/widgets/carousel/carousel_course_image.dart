@@ -144,10 +144,10 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
             child: SmoothPageIndicator(
                 controller: _buttonCarouselController.state!.pageController!,
                 count: widget.items.length,
-                effect: const ExpandingDotsEffect(
+                effect:  ExpandingDotsEffect(
                     dotWidth: 8,
                     dotHeight: 8,
-                    activeDotColor: primaryColor,
+                    activeDotColor: Theme.of(context).primaryColor,
                     dotColor: Colors.white)),
           );
         } else {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../theme/color/colors.dart';
 import '../../theme/text/text_styles.dart';
-import '../../theme/widget/app_buttons_style.dart';
 import '../../theme/widget/design_config.dart';
 
 class CustomPrimaryButton extends StatelessWidget {
@@ -28,8 +27,8 @@ class CustomPrimaryButton extends StatelessWidget {
       height: height,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              backgroundColor: color ?? primaryColor,
-              foregroundColor: color == null ? secondaryColor : primaryColor,
+              backgroundColor: color ?? Theme.of(context).primaryColor,
+              foregroundColor: color == null ? secondaryColor : Theme.of(context).primaryColor,
               elevation: elevation,
               shape: const RoundedRectangleBorder(
                   borderRadius: DesignConfig.mediumBorderRadius)),

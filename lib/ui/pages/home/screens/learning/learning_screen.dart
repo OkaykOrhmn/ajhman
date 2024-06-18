@@ -77,8 +77,8 @@ class _LearningScreenState extends State<LearningScreen>
   Container _tabBar() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 22, horizontal: 16),
-      decoration: const BoxDecoration(
-          color: primaryColor,
+      decoration:  BoxDecoration(
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.only(
               bottomLeft: DesignConfig.aHighBorderRadius,
               bottomRight: DesignConfig.aHighBorderRadius)),

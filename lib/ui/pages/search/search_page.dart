@@ -92,9 +92,9 @@ class _SearchPageState extends State<SearchPage> {
                   buttonIndexedBuilder: (selected, index, context) {
                     return Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: primaryColor, width: 1),
+                          border: Border.all(color: Theme.of(context).primaryColor, width: 1),
                           borderRadius: DesignConfig.veryHighBorderRadius,
-                          color: selected ? primaryColor : Colors.white),
+                          color: selected ? Theme.of(context).primaryColor : Colors.white),
                       padding:
                           EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                       margin: EdgeInsets.symmetric(horizontal: 8),
@@ -103,14 +103,14 @@ class _SearchPageState extends State<SearchPage> {
                           SvgGenImage(types[index].outlined).svg(
                               width: 16,
                               height: 16,
-                              color: selected ? Colors.white : primaryColor),
+                              color: selected ? Colors.white : Theme.of(context).primaryColor),
                           SizedBox(
                             width: 8,
                           ),
                           PrimaryText(
                               text: types[index].title,
                               style: mThemeData.textTheme.title,
-                              color: selected ? Colors.white : primaryColor)
+                              color: selected ? Colors.white : Theme.of(context).primaryColor)
                         ],
                       ),
                     );

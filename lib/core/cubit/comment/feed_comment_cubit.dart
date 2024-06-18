@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:ajhman/main.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -15,8 +16,9 @@ class FeedCommentCubit extends Cubit<FeedCommentState> {
   final List<CommentsResponseModel> list;
   final int chapterId;
   final int subChapterId;
+  final BuildContext context;
 
-  FeedCommentCubit(this.list, this.chapterId, this.subChapterId)
+  FeedCommentCubit(this.list, this.chapterId, this.subChapterId, this.context)
       : super(FeedCommentInitial());
 
   void changeFeed(bool? f, CommentsResponseModel data) {
@@ -46,9 +48,9 @@ class FeedCommentCubit extends Cubit<FeedCommentState> {
     }
 
     data.userFeedback = f;
-    mContext.read<CommentsBloc>().add(ChangeComment(
+    context.read<CommentsBloc>().add(ChangeComment(
         chapterId: 1, subChapterId: 1, data: list, comment: data));
-    mContext
+    context
         .read<CommentsBloc>()
         .stream
         .firstWhere((element) =>

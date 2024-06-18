@@ -1,4 +1,3 @@
-
 import 'package:ajhman/core/utils/extentions.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:ajhman/main.dart';
@@ -18,7 +17,6 @@ import '../../../../../data/model/auth/auth_user_otp_request.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../theme/color/colors.dart';
 import '../../../../theme/text/text_styles.dart';
-import '../../../../theme/widget/app_buttons_style.dart';
 import '../../../../theme/widget/pin_put_style.dart';
 import '../../../../widgets/button/primary_button.dart';
 import '../../../../widgets/loading/three_bounce_loading.dart';
@@ -84,11 +82,13 @@ class _PinScreenState extends State<PinScreen> {
                         "${ChangeLocale(context).appLocal!.otpSendToNumber} "
                         "${authState.phoneNumber} "
                         "${ChangeLocale(context).appLocal!.sent}",
-                        style: AppTextStyles.body1,
+                        style: body1,
                       ),
                     ),
                     TextButton(
-                        style: AppButtonsStyle.linkPrimaryTextButton,
+                        style: OutlinedButton.styleFrom(
+                            foregroundColor: Theme.of(context).primaryColor,
+                            textStyle: AppTextStyles.linkPrimaryTextButtonText),
                         onPressed: () async {
                           context.read<TimerBloc>().add(TimerReset());
                           await context
@@ -102,8 +102,9 @@ class _PinScreenState extends State<PinScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Assets.icon.outline.edit2
-                                .svg(color: primaryColor, width: 16),
+                            Assets.icon.outline.edit2.svg(
+                                color: Theme.of(context).primaryColor,
+                                width: 16),
                             const SizedBox(
                               width: 8,
                             ),
@@ -132,10 +133,54 @@ class _PinScreenState extends State<PinScreen> {
                                   state is PinErrorState ||
                                   state is PinSuccessState);
                         },
-                        defaultPinTheme: _error ? errorPinTheme : defaultPinTheme,
-                        focusedPinTheme: focusedPinTheme,
-                        submittedPinTheme:
-                            _error ? errorPinTheme : submittedPinTheme,
+                        defaultPinTheme: _error
+                            ? PinTheme(
+                                width: 56,
+                                height: 56,
+                                textStyle: AppTextStyles.pinPutTextStyle,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: errorMain),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              )
+                            : PinTheme(
+                                width: 56,
+                                height: 56,
+                                textStyle: AppTextStyles.pinPutTextStyle,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: backgroundColor600),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                        focusedPinTheme: PinTheme(
+                          width: 56,
+                          height: 56,
+                          textStyle: AppTextStyles.pinPutTextStyle,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        submittedPinTheme: _error
+                            ? PinTheme(
+                                width: 56,
+                                height: 56,
+                                textStyle: AppTextStyles.pinPutTextStyle,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: errorMain),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              )
+                            : PinTheme(
+                                width: 56,
+                                height: 56,
+                                textStyle: AppTextStyles.pinPutTextStyle,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: primaryColor),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
                         closeKeyboardWhenCompleted: true,
                         onChanged: (s) {
                           if (s.length < 6) {

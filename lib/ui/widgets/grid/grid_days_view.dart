@@ -71,7 +71,7 @@ class _GridDaysViewState extends State<GridDaysView> {
             color: Colors.white,
             borderRadius: DesignConfig.mediumBorderRadius,
             border: Border.all(
-                color: days[index].isSelected ? primaryColor : Colors.white)),
+                color: days[index].isSelected ? Theme.of(context).primaryColor : Colors.white)),
         child: Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
           child: Flex(
@@ -90,7 +90,7 @@ class _GridDaysViewState extends State<GridDaysView> {
                   flex: 3,
                   child: Text(
                     days[index].dayName,
-                    style: AppTextStyles.body4,
+                    style: body4,
                   )),
             ],
           ),

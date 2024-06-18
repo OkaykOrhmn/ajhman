@@ -36,9 +36,9 @@ class ExamCommentScreen extends StatelessWidget {
             hintText: 'متن خود را وارد کنید',
             counterStyle: mThemeData.textTheme.searchHint,
             hintStyle: mThemeData.textTheme.searchHint,
-            fillColor: primaryColor,
+            fillColor: Theme.of(context).primaryColor,
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: primaryColor,),
+              borderSide:  BorderSide(color: Theme.of(context).primaryColor,),
               borderRadius: DesignConfig.highBorderRadius,
             ),
             border: OutlineInputBorder(

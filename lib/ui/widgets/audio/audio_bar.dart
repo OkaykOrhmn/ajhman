@@ -120,9 +120,9 @@ class _AudioBarState extends State<AudioBar> {
                   },
                   child: state.pause
                       ? Assets.icon.outline.play
-                          .svg(width: 24, height: 24, color: primaryColor)
+                          .svg(width: 24, height: 24, color: Theme.of(context).primaryColor)
                       : Assets.icon.outline.pause
-                          .svg(width: 24, height: 24, color: primaryColor),
+                          .svg(width: 24, height: 24, color: Theme.of(context).primaryColor),
                 ),
               ],
             ),

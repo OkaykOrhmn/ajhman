@@ -38,11 +38,9 @@ class _CourseCommentsState extends State<CourseComments> {
   late CourseArgs response;
   List<CommentsResponseModel> comments = [];
 
-
   @override
   void initState() {
     response = context.read<SubChapterCubit>().getData();
-
     super.initState();
   }
 
@@ -78,17 +76,14 @@ class _CourseCommentsState extends State<CourseComments> {
   Widget _comments() {
     return BlocBuilder<CommentsBloc, CommentsState>(
       builder: (context, state) {
-
         List<CommentsResponseModel> comments = [];
 
-        if(state is CommentSuccess){
+        if (state is CommentSuccess) {
           comments = state.response;
-        }else if(state is CommentAddFail){
+        } else if (state is CommentAddFail) {
           comments = state.response;
-
-        }else if(state is CommentChangeFail){
+        } else if (state is CommentChangeFail) {
           comments = state.response;
-
         }
         if (state is CommentSuccess ||
             state is CommentAddFail ||
@@ -100,8 +95,11 @@ class _CourseCommentsState extends State<CourseComments> {
                     return Column(
                       children: [
                         BlocProvider<FeedCommentCubit>(
-                          create: (context) => FeedCommentCubit(comments,
-                              response.chapterId, response.chapterModel.id!),
+                          create: (context) => FeedCommentCubit(
+                              comments,
+                              response.chapterId,
+                              response.chapterModel.id!,
+                              context),
                           child: CommentLayout(
                               index: index, data: comments[index]),
                         ),
@@ -111,11 +109,11 @@ class _CourseCommentsState extends State<CourseComments> {
                               create: (context) => FeedCommentCubit(
                                   comments,
                                   response.chapterId,
-                                  response.chapterModel.id!),
+                                  response.chapterModel.id!,
+                                  context),
                               child: CommentLayout(
                                   index: index,
-                                  data:
-                                  comments[index].replies![indexR]),
+                                  data: comments[index].replies![indexR]),
                             );
                           },
                           items: comments[index].replies,

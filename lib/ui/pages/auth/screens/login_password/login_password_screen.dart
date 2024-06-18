@@ -8,7 +8,6 @@ import '../../../../../core/bloc/otp/otp_bloc.dart';
 import '../../../../../core/utils/app_locale.dart';
 import '../../../../../data/model/auth/auth_login_user_request.dart';
 import '../../../../theme/text/text_styles.dart';
-import '../../../../theme/widget/app_buttons_style.dart';
 import '../../../../widgets/button/loading_btn.dart';
 import '../../../../widgets/text_field/password_text_field.dart';
 import '../../../../widgets/text_field/primary_text_field.dart';
@@ -89,7 +88,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             ChangeLocale(context).appLocal!.username,
-            style: AppTextStyles.body1,
+            style: body1,
           ),
         ),
         PrimaryTextField(
@@ -116,7 +115,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             ChangeLocale(context).appLocal!.password,
-            style: AppTextStyles.body1,
+            style: body1,
           ),
         ),
         PasswordTextField(
@@ -139,7 +138,9 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           height: 16,
         ),
         TextButton(
-            style: AppButtonsStyle.linkPrimaryTextButton,
+            style: OutlinedButton.styleFrom(
+                foregroundColor: Theme.of(context).primaryColor,
+                textStyle: AppTextStyles.linkPrimaryTextButtonText),
             onPressed: () {
               setState(() {
                 context.read<AuthScreensBloc>().add(AuthNavigateOtpEvent());

@@ -26,11 +26,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late TabController tabController = TabController(length: 4, vsync: this);
+
   Future<bool> _onWillPop() async {
     var read = context.read<SelectedIndexCubit>();
     if (read.state.index == 0) {
-      DialogHandler.showExitBottomSheet();
+      DialogHandler(context).showExitBottomSheet();
     } else {
       read.changeSelectedIndex(0, "خانه");
     }
@@ -46,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var state = context.watch<SelectedIndexCubit>().state;
+    tabController.animateTo(state.index);
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -56,8 +59,9 @@ class _HomePageState extends State<HomePage> {
           body: Stack(
             children: [
               Positioned.fill(
-                child: IndexedStack(
-                  index: state.index,
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: tabController,
                   children: const [
                     HomeScreen(),
                     MyTreasureScreen(),

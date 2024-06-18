@@ -10,7 +10,7 @@ final defaultPinTheme = PinTheme(
   height: 56,
   textStyle: AppTextStyles.pinPutTextStyle,
   decoration: BoxDecoration(
-    border: Border.all(color: backgroundColor600),
+    border: Border.all(color: errorMain),
     borderRadius: BorderRadius.circular(8),
   ),
 );

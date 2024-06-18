@@ -14,18 +14,19 @@ class CircleProgress extends StatelessWidget {
   final double? width;
   final double? height;
   final String? text;
-  final Color color;
+  final Color? color;
 
-  const CircleProgress(
+   const CircleProgress(
       {super.key,
       required this.value,
       required this.strokeWidth,
       this.width,
       this.height,
-      this.color = primaryColor, this.text});
+      this.color, this.text});
 
   @override
   Widget build(BuildContext context) {
+    final c = color?? Theme.of(context).primaryColor;
     return SizedBox(
       width: width,
       height: height,
@@ -33,10 +34,10 @@ class CircleProgress extends StatelessWidget {
         children: [
           Positioned.fill(child: CircularProgressIndicator(
             value: value,
-            backgroundColor: color.withOpacity(0.2),
+            backgroundColor: c.withOpacity(0.2),
             // borderRadius: DesignConfig.highBorderRadius,
             strokeWidth: strokeWidth,
-            valueColor: AlwaysStoppedAnimation<Color>(color),
+            valueColor: AlwaysStoppedAnimation<Color>(c),
           )),
           Center(child: PrimaryText(text: text?? '', style: mThemeData.textTheme.searchHint, color: grayColor800),)
         ],

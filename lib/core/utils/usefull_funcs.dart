@@ -6,11 +6,17 @@ import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/roadmap_view.dart';
+import 'package:ajhman/ui/theme/theme_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
 import '../../gen/assets.gen.dart';
 import '../enum/course_types.dart';
+
+Future<Color> getPrimaryColor() async {
+  int hax = await getPrimaryColorTheme();
+  return Color(hax);
+}
 
 String getLevel(int? level) => Levels.values[level!].value;
 

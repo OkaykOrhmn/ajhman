@@ -16,7 +16,7 @@ class LittlePrimaryButton extends StatelessWidget {
         width: 32,
         height: 32,
         decoration: BoxDecoration(
-          color: primaryColor,
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(8),
 
         ),

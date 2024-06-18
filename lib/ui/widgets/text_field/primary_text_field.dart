@@ -19,14 +19,15 @@ class PrimaryTextField extends StatefulWidget {
       {super.key,
       required this.textEditingController,
       required this.hint,
-      required this.onChange,  this.error = false, this.errorHint = ""});
+      required this.onChange,
+      this.error = false,
+      this.errorHint = ""});
 
   @override
   State<PrimaryTextField> createState() => _PrimaryTextFieldState();
 }
 
 class _PrimaryTextFieldState extends State<PrimaryTextField> {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -54,16 +55,14 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
                   ),
                 )
               : null,
-          suffixIconColor: widget.error ? errorMain : primaryColor,
-          errorText: widget.error
-              ? widget.errorHint
-              : null,
+          suffixIconColor: widget.error ? errorMain : Theme.of(context).primaryColor,
+          errorText: widget.error ? widget.errorHint : null,
           filled: true,
           hintText: widget.hint,
           fillColor: backgroundColor200,
           hintStyle: AppTextStyles.primaryTextFieldHint,
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: primaryColor),
+            borderSide: BorderSide(color: Theme.of(context).primaryColor),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
           enabledBorder: OutlineInputBorder(

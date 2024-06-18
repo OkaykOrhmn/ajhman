@@ -31,6 +31,7 @@ import '../../widgets/button/outlined_primary_button.dart';
 import '../../widgets/image/primary_image_network.dart';
 import '../../widgets/image/profile_image_network.dart';
 import '../../widgets/listview/highlight_listview.dart';
+import '../../widgets/loading/three_bounce_loading.dart';
 import '../../widgets/text/icon_info.dart';
 import '../../widgets/text/primary_text.dart';
 import '../../widgets/text/title_divider.dart';
@@ -87,7 +88,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             setState(() {
                               widget.response.registered = true;
                             });
-                            DialogHandler.showRegCourseDialog(
+                            DialogHandler(context).showRegCourseDialog(
                                 "دوره “فنون مذاکره” با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
                                 "متوجه شدم");
                             context.read<NewsCourseHomeCubit>().getNews();
@@ -110,11 +111,11 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
           padding: const EdgeInsets.only(bottom: 60),
           child: Container(
             padding: const EdgeInsets.all(16).copyWith(bottom: 90),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration:  BoxDecoration(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: DesignConfig.aVeryHighBorderRadius,
                   bottomRight: DesignConfig.aVeryHighBorderRadius),
-              color: primaryColor,
+              color: Theme.of(context).primaryColor,
             ),
             child: PrimaryImageNetwork(
               // src: "https://s3-alpha-sig.figma.com/img/3f9b/aad8/77bb617140ad8559927012205237ce01?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Snv8nK5EGr8NvHp4mj0wsxxtBVycYzhqCGZD5Ax8j-JT6ZpmEJ-nG5zNsHin6KSTaKka-av0R4QQ--XoX5zxdiQjTtKC32faE5sXtNnYIRBa3C12y-yq2q3WZ9RlmgRveutvI96Ag4Au9bLtXoa0ZYCrdXs1S2NArDN0FUfxDEuLwuYN7H9mSxLbNfH783YRuCESs9qzjb1u4tG4RSN9J96qSQmKfjvpfRvyqE2nzUDBV3hOPUhtIzRHFUHsjpFJ42ZRHtRLbCDn1xpeHEvPP4Skz5m8BHz-vWSW09Y-37~P-~YRgVL6DsqfCaGnzv7HxLw3jKrz9uFDtovhobMdEQ__",
@@ -285,6 +286,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               children: [
                 ProfileImageNetwork(
                     width: 64, height: 64, src: getImageUrl(profile.image)),
+                SizedBox(width: 8,),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -382,7 +384,25 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: data.chapters!.length,
               itemBuilder: (context, index) {
-                return _chapterLayout(index);
+                return BlocBuilder<ChapterBloc, ChapterState>(
+                  builder: (context, state) {
+                    return Stack(
+                      children: [
+                        IgnorePointer(
+                            ignoring: state is ChapterLoading,
+                            child: _chapterLayout(index)),
+                        state is ChapterLoading && data.chapters![index].isOpen!
+                            ? Positioned.fill(
+                              child: Container(
+                              color: Colors.white.withOpacity(0.5),
+                              child: const ThreeBounceLoading()),
+                            )
+                            : const SizedBox()
+                      ],
+                    );
+                  },
+                )
+                 ;
               }),
         ),
         _chapterLastLayout()
@@ -424,7 +444,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     PrimaryText(
                         text: "فصل ${getChapterNumber(index)}",
                         style: mThemeData.textTheme.dialogTitle,
-                        color: primaryColor),
+                        color: Theme.of(context).primaryColor),
                     SizedBox(
                       width: 8,
                     ),
@@ -440,8 +460,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   ],
                 ),
                 isShow
-                    ? Assets.icon.outline.arrowUp.svg(color: primaryColor)
-                    : Assets.icon.outline.arrowDown.svg(color: primaryColor)
+                    ? Assets.icon.outline.arrowUp.svg(color: Theme.of(context).primaryColor)
+                    : Assets.icon.outline.arrowDown.svg(color: Theme.of(context).primaryColor)
               ],
             ),
           ),
@@ -558,15 +578,15 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     PrimaryText(
                         text: "فصل آخر",
                         style: mThemeData.textTheme.dialogTitle,
-                        color: primaryColor),
+                        color: Theme.of(context).primaryColor),
                     SizedBox(
                       width: 8,
                     ),
                   ],
                 ),
                 isShowLast
-                    ? Assets.icon.outline.arrowUp.svg(color: primaryColor)
-                    : Assets.icon.outline.arrowDown.svg(color: primaryColor)
+                    ? Assets.icon.outline.arrowUp.svg(color: Theme.of(context).primaryColor)
+                    : Assets.icon.outline.arrowDown.svg(color: Theme.of(context).primaryColor)
               ],
             ),
           ),
@@ -725,7 +745,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               ),
               data.registered!
                   ? Assets.icon.outline.arrowLeft
-                  .svg(color: primaryColor, width: 18, height: 18)
+                  .svg(color: Theme.of(context).primaryColor, width: 18, height: 18)
                   : Assets.icon.outline.lock
                   .svg(color: grayColor700, width: 18, height: 18)
             ],
@@ -776,7 +796,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               ),
               data.registered!
                   ? Assets.icon.outline.arrowLeft
-                  .svg(color: primaryColor, width: 18, height: 18)
+                  .svg(color: Theme.of(context).primaryColor, width: 18, height: 18)
                   : Assets.icon.outline.lock
                   .svg(color: grayColor700, width: 18, height: 18)
             ],

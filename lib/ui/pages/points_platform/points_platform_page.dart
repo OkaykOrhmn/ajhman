@@ -68,7 +68,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                               border: response.users![index].current!
                                   ? Border(
                                       right: BorderSide(
-                                          color: primaryColor, width: 4))
+                                          color: Theme.of(context).primaryColor, width: 4))
                                   : null,
                               boxShadow: DesignConfig.lowShadow),
                           padding: EdgeInsets.all(16),
@@ -364,7 +364,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                                 child: PrimaryText(
                                     text: "2",
                                     style: mThemeData.textTheme.titleBold,
-                                    color: primaryColor),
+                                    color: Theme.of(context).primaryColor),
                               ),
                             ),
                           ],
@@ -421,7 +421,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                                 child: PrimaryText(
                                     text: "1",
                                     style: mThemeData.textTheme.titleBold,
-                                    color: primaryColor),
+                                    color: Theme.of(context).primaryColor),
                               ),
                             ),
                           ],
@@ -478,7 +478,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                                 child: PrimaryText(
                                     text: "3",
                                     style: mThemeData.textTheme.titleBold,
-                                    color: primaryColor),
+                                    color: Theme.of(context).primaryColor),
                               ),
                             ),
                           ],

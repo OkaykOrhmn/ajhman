@@ -1,5 +1,7 @@
 class RoutePaths{
   static const String splash = '/';
+  static const String noConnection = '/no-connection';
+  static const String profile = '/profile';
   static const String home = '/home';
   static const String authStarted = '/auth-started';
   static const String auth = '/auth';

@@ -20,7 +20,7 @@ class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: mThemeData.primaryColor,
+      backgroundColor: Theme.of(context).primaryColor,
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

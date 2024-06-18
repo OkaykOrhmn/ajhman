@@ -48,16 +48,16 @@ class _outlinePrimaryLoadingButtonState extends State< OutlinePrimaryLoadingButt
       borderRadius: 14,
       animate: false,
       color: widget.disable ? backgroundColor : Colors.white,
-      borderSide: BorderSide(color: primaryColor,width: 1),
+      borderSide: BorderSide(color: Theme.of(context).primaryColor,width: 1),
       width: widget.width,
       elevation: widget.disable ? 0 : 2,
       roundLoadingShape: false,
-      disabledColor: primaryColor.withOpacity(0.1),
+      disabledColor: Theme.of(context).primaryColor.withOpacity(0.1),
       loader: Container(
         padding: const EdgeInsets.all(10),
         child: Center(
             child: SpinKitThreeBounce(
-              color: primaryColor,
+              color: Theme.of(context).primaryColor,
               size: 36,
               controller: animationController,
             )),
