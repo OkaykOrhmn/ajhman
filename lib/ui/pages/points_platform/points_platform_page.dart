@@ -62,7 +62,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                       child: Container(
                           decoration: BoxDecoration(
                               color: response.users![index].current!
-                                  ? primaryColor50
+                                  ? Theme.of(context).primaryColor50()
                                   : backgroundColor100,
                               borderRadius: DesignConfig.highBorderRadius,
                               border: response.users![index].current!
@@ -87,7 +87,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
       padding: EdgeInsets.all(16),
       margin: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: primaryColor50,
+        color: Theme.of(context).primaryColor50(),
         borderRadius: DesignConfig.highBorderRadius,
       ),
       child: Column(
@@ -114,11 +114,14 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                             text:
                                 "آزمون ${getChapterNumber(response.user!.examAnswer!.length - (index + 1))}",
                             style: mThemeData.textTheme.rate,
-                            color: primaryColor800),
-                        PrimaryText(
-                            text: getIsoTimeDate(exam.createdAt.toString()),
-                            style: mThemeData.textTheme.searchHint,
-                            color: grayColor700),
+                            color: Theme.of(context).primaryColor800()),
+                        
+                        Expanded(
+                          child: PrimaryText(
+                              text: getIsoTimeDate(exam.createdAt.toString()),
+                              style: mThemeData.textTheme.searchHint,
+                              color: grayColor700),
+                        ),
                         Container(
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.lowBorderRadius,
@@ -130,8 +133,9 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                               text: exam.score.toString(),
                               style: mThemeData.textTheme.rate,
                               color:
-                                  exam.score! > 60 ? successMain : errorMain),
+                              exam.score! > 60 ? successMain : errorMain),
                         )
+
                       ],
                     ),
                   );
@@ -156,7 +160,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
         PrimaryText(
             text: users.name.toString(),
             style: mThemeData.textTheme.title,
-            color: primaryColor900),
+            color: Theme.of(context).primaryColor900()),
         SizedBox(
           height: 36,
         ),
@@ -165,10 +169,14 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
           children: [
             Assets.icon.outlineMedal
                 .svg(width: 14, height: 14, color: secondaryColor),
-            PrimaryText(
-                text: "${users.score} امتیاز",
-                style: mThemeData.textTheme.searchHint,
-                color: grayColor700),
+            Expanded(
+              child: PrimaryText(
+                  text: "${users.score} امتیاز",
+                  maxLines: 1,
+                  textAlign: TextAlign.end,
+                  style: mThemeData.textTheme.navbarTitle,
+                  color: grayColor700),
+            ),
           ],
         ),
         SizedBox(
@@ -179,10 +187,14 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
           children: [
             Assets.icon.outline.exam
                 .svg(width: 14, height: 14, color: secondaryColor),
-            PrimaryText(
-                text: "${users.courses} دوره",
-                style: mThemeData.textTheme.searchHint,
-                color: grayColor700),
+            Expanded(
+              child: PrimaryText(
+                  text: "${users.courses} دوره",
+                  maxLines: 1,
+                  textAlign: TextAlign.end,
+                  style: mThemeData.textTheme.navbarTitle,
+                  color: grayColor700),
+            ),
           ],
         ),
         SizedBox(
@@ -193,10 +205,14 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
           children: [
             Assets.icon.outline.note2
                 .svg(width: 14, height: 14, color: secondaryColor),
-            PrimaryText(
-                text: "${users.licenses} گواهینامه",
-                style: mThemeData.textTheme.searchHint,
-                color: grayColor700),
+            Expanded(
+              child: PrimaryText(
+                  text: "${users.licenses} گواهینامه",
+                  maxLines: 1,
+                  textAlign: TextAlign.end,
+                  style: mThemeData.textTheme.navbarTitle,
+                  color: grayColor700),
+            ),
           ],
         ),
       ],
@@ -252,55 +268,53 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
           height: 16,
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-                child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Assets.icon.outlineMedal
-                    .svg(width: 14, height: 14, color: secondaryColor),
-                SizedBox(
-                  width: 8,
-                ),
-                PrimaryText(
-                    text: "${user.score} امتیاز",
-                    style: mThemeData.textTheme.searchHint,
-                    color: grayColor800)
-              ],
-            )),
-            Expanded(
-                child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Assets.icon.outline.exam
-                    .svg(width: 14, height: 14, color: secondaryColor),
-                SizedBox(
-                  width: 8,
-                ),
-                PrimaryText(
-                    text: "${user.courses} دوره",
-                    style: mThemeData.textTheme.searchHint,
-                    color: grayColor800)
-              ],
-            )),
-            Expanded(
-                child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Assets.icon.outline.note2
-                    .svg(width: 14, height: 14, color: secondaryColor),
-                SizedBox(
-                  width: 8,
-                ),
-                PrimaryText(
-                    text: "${user.licenses} گواهینامه",
-                    style: mThemeData.textTheme.searchHint,
-                    color: grayColor800)
-              ],
-            )),
+            Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+            Assets.icon.outlineMedal
+                .svg(width: 14, height: 14, color: secondaryColor),
+            SizedBox(
+              width: 8,
+            ),
+            PrimaryText(
+                text: "${user.score} امتیاز",
+                style: mThemeData.textTheme.searchHint,
+                color: grayColor800)
+                          ],
+                        ),
+            Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+            Assets.icon.outline.exam
+                .svg(width: 14, height: 14, color: secondaryColor),
+            SizedBox(
+              width: 8,
+            ),
+            PrimaryText(
+                text: "${user.courses} دوره",
+                style: mThemeData.textTheme.searchHint,
+                color: grayColor800)
+                          ],
+                        ),
+            Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+            Assets.icon.outline.note2
+                .svg(width: 14, height: 14, color: secondaryColor),
+            SizedBox(
+              width: 8,
+            ),
+            PrimaryText(
+                text: "${user.licenses} گواهینامه",
+                style: mThemeData.textTheme.searchHint,
+                color: grayColor800)
+                          ],
+                        ),
           ],
         ),
       ],
@@ -328,7 +342,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                       decoration: BoxDecoration(
                           color: backgroundColor100,
                           borderRadius: DesignConfig.highBorderRadius,
-                          boxShadow: DesignConfig.defaultShadow),
+                          boxShadow: DesignConfig.lowShadow),
                       padding: EdgeInsets.all(8),
                       child: Column(
                         children: [
@@ -345,12 +359,12 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: primaryColor50,
+                          color: Theme.of(context).primaryColor50(),
                           borderRadius: BorderRadius.only(
                               topLeft: DesignConfig.aHighBorderRadius,
                               topRight: DesignConfig.aHighBorderRadius)),
                       child: SizedBox(
-                        height: 60,
+                        height: 90,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -385,7 +399,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                       decoration: BoxDecoration(
                           color: backgroundColor100,
                           borderRadius: DesignConfig.highBorderRadius,
-                          boxShadow: DesignConfig.defaultShadow),
+                          boxShadow: DesignConfig.lowShadow),
                       padding: EdgeInsets.all(8),
                       child: Column(
                         children: [
@@ -402,12 +416,12 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: primaryColor50,
+                          color: Theme.of(context).primaryColor50(),
                           borderRadius: BorderRadius.only(
                               topLeft: DesignConfig.aHighBorderRadius,
                               topRight: DesignConfig.aHighBorderRadius)),
                       child: SizedBox(
-                        height: 90,
+                        height: 110,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -442,7 +456,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                       decoration: BoxDecoration(
                           color: backgroundColor100,
                           borderRadius: DesignConfig.highBorderRadius,
-                          boxShadow: DesignConfig.defaultShadow),
+                          boxShadow: DesignConfig.lowShadow),
                       padding: EdgeInsets.all(8),
                       child: Column(
                         children: [
@@ -459,12 +473,12 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: primaryColor50,
+                          color: Theme.of(context).primaryColor50(),
                           borderRadius: BorderRadius.only(
                               topLeft: DesignConfig.aHighBorderRadius,
                               topRight: DesignConfig.aHighBorderRadius)),
                       child: SizedBox(
-                        height: 30,
+                        height: 60,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -496,7 +510,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
           width: MediaQuery.sizeOf(context).width,
           margin: EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-              color: primaryColor800,
+              color: Theme.of(context).primaryColor800(),
               borderRadius: BorderRadius.only(
                   bottomRight: DesignConfig.aLowBorderRadius,
                   bottomLeft: DesignConfig.aLowBorderRadius)),

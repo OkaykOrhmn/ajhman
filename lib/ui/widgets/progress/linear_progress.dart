@@ -24,7 +24,7 @@ class LinearProgress extends StatelessWidget {
       backgroundColor: backgroundColor ?? backgroundColor600,
       borderRadius: DesignConfig.highBorderRadius,
       minHeight: minHeight,
-      valueColor: AlwaysStoppedAnimation<Color>(valueColor ?? primaryColor600),
+      valueColor: AlwaysStoppedAnimation<Color>(valueColor ?? Theme.of(context).primaryColor600()),
     );
   }
 }

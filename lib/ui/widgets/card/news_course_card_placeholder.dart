@@ -25,8 +25,9 @@ import '../text/primary_text.dart';
 class NewCourseCardPlaceholder extends StatefulWidget {
   final CardType type;
   final EdgeInsetsGeometry? padding;
-
-  const NewCourseCardPlaceholder({super.key, this.padding, required this.type});
+  final double? width;
+  final double? height;
+  const NewCourseCardPlaceholder({super.key, this.padding, required this.type, this.width, this.height});
 
   @override
   State<NewCourseCardPlaceholder> createState() => _RecentCurseCardState();
@@ -48,7 +49,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
             child: Container(
                 decoration: BoxDecoration(
                     borderRadius: DesignConfig.highBorderRadius,
-                    boxShadow: DesignConfig.defaultShadow,
+                    boxShadow: DesignConfig.lowShadow,
                     color: Colors.white),
                 padding: const EdgeInsets.all(8),
                 child: Column(

@@ -3,6 +3,7 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../main.dart';
 import '../../theme/color/colors.dart';
@@ -22,11 +23,14 @@ class IconInfo extends StatelessWidget {
         const SizedBox(
           width: 4,
         ),
-        PrimaryText(
-            text: desc,
-            style: mThemeData.textTheme.searchHint,
-            maxLines: 1,
-            color: grayColor600)
+        Expanded(
+          child: PrimaryText(
+              text: desc,
+              textAlign: TextAlign.start,
+              style: mThemeData.textTheme.searchHint,
+              maxLines: 1,
+              color: grayColor600),
+        )
       ],
     );
   }

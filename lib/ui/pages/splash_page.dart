@@ -1,6 +1,7 @@
 import 'package:ajhman/core/routes/route_generator.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
+import 'package:ajhman/ui/pages/auth/auth_page.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/states/no_connectivity_screen.dart';
@@ -38,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
   void _tryAgain() {
     setState(() {
       clearToken();
-      DialogHandler.pop();
+      Navigator.pop(context);
     });
   }
 
@@ -56,7 +57,6 @@ class _SplashPageState extends State<SplashPage> {
                 builder: (context, state) {
               if (state is ProfileSuccess) {
                 setProfile(state.response);
-                profile = state.response;
                 return const HomePage();
               } else if (state is ProfileFail) {
                 if (state.error == "connection") {
@@ -67,13 +67,13 @@ class _SplashPageState extends State<SplashPage> {
                   );
                 } else {
                   if (snapshot.hasData) {
-                    if (snapshot.data!.isNotEmpty) {
-                      DialogHandler(context).showErrorDialog(
-                          state.error, "صفحه ورورد", () => _tryAgain());
-                    }
+                    // if (snapshot.data!.isNotEmpty) {
+                    //   DialogHandler(context).showErrorDialog(
+                    //       state.error, "صفحه ورورد", () => _tryAgain());
+                    // }
                   }
                 }
-                return const AuthPageStarted();
+                return const AuthPage();
               } else {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

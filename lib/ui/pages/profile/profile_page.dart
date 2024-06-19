@@ -1,6 +1,11 @@
+import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
+import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
+import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/repository/profile_repository.dart';
+import 'package:ajhman/data/shared_preferences/auth_token.dart';
+import 'package:ajhman/data/shared_preferences/profile_data.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -8,17 +13,23 @@ import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:ajhman/ui/widgets/image/profile_image_network.dart';
+import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
+import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../core/cubit/home/selected_index_cubit.dart';
+import '../../../core/enum/dialogs_status.dart';
 import '../../../gen/assets.gen.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../theme/theme_helper.dart';
+import '../../widgets/snackbar/snackbar_handler.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -63,68 +74,128 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Row(
                         children: [
-                          InkWell(
-                            onTap: () {
-                              DialogHandler(context).showChoiceProfileSheet();
+                          BlocConsumer<ImagePickerCubit, ImagePickerState>(
+                            listener: (context, state)async{
+                              if(state is ImagePickerSuccess){
+                                await SnackBarHandler(context).show("عکس پروفایل با موفقیت تغییر کرد 😃", DialogStatus.success, true);
+
+                              }else if(state is ImagePickerError){
+                                await SnackBarHandler(context).show("خطا در تغییر عکس پروفایل!!", DialogStatus.error, true);
+
+                              }
                             },
-                            child: Stack(
-                              children: [
-                                SizedBox(
-                                    width: 72,
-                                    height: 72,
-                                    child: ProfileImageNetwork(
-                                        src: getImageUrl(profile.image),
-                                        width: 72,
-                                        height: 72)),
-                                Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Theme.of(context).primaryColor,
+                            builder: (context, state) {
+
+                              return Stack(
+                                children: [
+                                  SizedBox(
+                                      width: 72,
+                                      height: 72,
+                                      child: InkWell(
+                                        onTap: state is ImagePickerLoading
+                                            ? null
+                                            : () {
+                                                DialogHandler(context)
+                                                    .showChoiceProfileSheet();
+                                              },
+                                        child: FutureBuilder(
+                                            future: getProfile(),
+                                            builder: (context, snapshot) {
+                                              return ProfileImageNetwork(
+                                                  src: getImageUrl(
+                                                      snapshot.data!.image),
+                                                  width: 72,
+                                                  height: 72);
+                                            }),
+                                      )),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      padding: EdgeInsets.all(4),
+                                      child: Assets.icon.outline.add.svg(
+                                          width: 16,
+                                          height: 16,
+                                          color: Colors.white),
                                     ),
-                                    padding: EdgeInsets.all(4),
-                                    child: Assets.icon.outline.add.svg(
-                                        width: 16,
-                                        height: 16,
-                                        color: Colors.white),
                                   ),
-                                )
-                              ],
-                            ),
+                                  state is ImagePickerLoading
+                                      ? Positioned.fill(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.white.withOpacity(0.5),
+                                            ),
+                                            child: const ThreeBounceLoading(
+                                              size: 32,
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox()
+                                ],
+                              );
+                            },
                           ),
                           const SizedBox(
                             width: 16,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              PrimaryText(
-                                  text: profile.name.toString(),
-                                  style: mThemeData.textTheme.title,
-                                  color: grayColor900),
-                              Row(
-                                children: [
-                                  PrimaryText(
-                                      text: profile.mobileNumber.toString(),
-                                      style: mThemeData.textTheme.searchHint,
-                                      color: grayColor700),
-                                  Container(
-                                    height: 12,
-                                    width: 1,
-                                    color: Theme.of(context).primaryColor,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                  ),
-                                  PrimaryText(
-                                      text: "کارشناس ارشد",
-                                      style: mThemeData.textTheme.searchHint,
-                                      color: grayColor700),
-                                ],
-                              )
-                            ],
-                          ),
+                          FutureBuilder(
+                              future: getProfile(),
+                              builder: (context, snapshot) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    snapshot.hasData
+                                        ? PrimaryText(
+                                            text:
+                                                snapshot.data!.name.toString(),
+                                            style: mThemeData.textTheme.title,
+                                            color: grayColor900)
+                                        : DefaultPlaceHolder(
+                                            child: PrimaryText(
+                                                text: "اسم",
+                                                style:
+                                                    mThemeData.textTheme.title,
+                                                color: grayColor900),
+                                          ),
+                                    Row(
+                                      children: [
+                                        snapshot.hasData
+                                            ? PrimaryText(
+                                                text: snapshot
+                                                    .data!.mobileNumber
+                                                    .toString(),
+                                                style: mThemeData
+                                                    .textTheme.searchHint,
+                                                color: grayColor700)
+                                            : DefaultPlaceHolder(
+                                                child: PrimaryText(
+                                                    text: "موبایل",
+                                                    style: mThemeData
+                                                        .textTheme.searchHint,
+                                                    color: grayColor700),
+                                              ),
+                                        Container(
+                                          height: 12,
+                                          width: 1,
+                                          color: Theme.of(context).primaryColor,
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                        ),
+                                        PrimaryText(
+                                            text: "کارشناس ارشد",
+                                            style:
+                                                mThemeData.textTheme.searchHint,
+                                            color: grayColor700),
+                                      ],
+                                    )
+                                  ],
+                                );
+                              }),
                         ],
                       ),
                       // const SizedBox(
@@ -196,14 +267,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: InkWell(
                             onTap: () {
                               context.read<ThemeBloc>().add(
-                                  ThemePrimaryEvent(color: Color(0xff7C017F)));
+                                  ThemePrimaryEvent(color:purple));
                               setState(() {});
                             },
                             child: Container(
                               height: 52,
                               decoration: BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
-                                  color: Color(0xff7C017F)),
+                                  color: purple),
                             ),
                           )),
                           SizedBox(
@@ -213,14 +284,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: InkWell(
                             onTap: () {
                               context.read<ThemeBloc>().add(
-                                  ThemePrimaryEvent(color: Color(0xff01337F)));
+                                  ThemePrimaryEvent(color: blue));
                               setState(() {});
                             },
                             child: Container(
                               height: 52,
                               decoration: BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
-                                  color: Color(0xff01337F)),
+                                  color: blue),
                             ),
                           )),
                           SizedBox(
@@ -230,14 +301,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: InkWell(
                             onTap: () {
                               context.read<ThemeBloc>().add(
-                                  ThemePrimaryEvent(color: Color(0xffF9ACC0)));
+                                  ThemePrimaryEvent(color: pink));
                               setState(() {});
                             },
                             child: Container(
                               height: 52,
                               decoration: BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
-                                  color: Color(0xffF9ACC0)),
+                                  color: pink),
                             ),
                           )),
                           SizedBox(
@@ -299,7 +370,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: primaryColor300, width: 1),
+                                    color: Theme.of(context).primaryColor300(), width: 1),
                                 borderRadius: DesignConfig.lowBorderRadius),
                             padding: EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 18),
@@ -310,7 +381,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   text:
                                       "${(context.read<ThemeBloc>().state.fontSize * 10).round() + 4}",
                                   style: mThemeData.textTheme.title,
-                                  color: primaryColor900),
+                                  color: Theme.of(context).primaryColor900()),
                             ),
                           ),
                           SizedBox(
@@ -325,8 +396,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               .state
                                               .fontSize -
                                           0.5,
-
-                                      thumbColor: primaryColor700,
+                                      thumbColor: Theme.of(context).primaryColor700(),
                                       activeColor:
                                           Theme.of(context).primaryColor,
                                       inactiveColor: backgroundColor300,
@@ -375,8 +445,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         height: 8,
                       ),
-                      _rowBtn("برنامه‌ریز هوشمند", Assets.icon.outline.calendar,
-                          null),
+                      InkWell(
+                        onTap: () async {
+                          navigatorKey.currentState!
+                              .pushNamed(RoutePaths.smartSchedule);
+                        },
+                        child: _rowBtn("برنامه‌ریز هوشمند",
+                            Assets.icon.outline.calendar, null),
+                      ),
                     ],
                   ),
                 ),
@@ -424,12 +500,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 InkWell(
                   borderRadius: DesignConfig.highBorderRadius,
                   onTap: () async {
-                    // final response = await profileRepository.deleteProfile();
-                    // if (response.statusCode! >= 200 &&
-                    //     response.statusCode! < 400) {
-                    //   navigatorKey.currentState!.pushNamedAndRemoveUntil(
-                    //       RoutePaths.splash, (route) => true);
-                    // }
+                    await clearToken();
+                    await clearProfile();
+                    navigatorKey.currentState!
+                        .restorablePopAndPushNamed(RoutePaths.splash);
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),

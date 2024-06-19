@@ -59,19 +59,23 @@ class _CourseHeaderState extends State<CourseHeader> {
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
               color: backgroundColor100, borderRadius: DesignConfig.highBorderRadius),
-          child: Row(
-            children: [
-              CircleProgress(value: 0.8, strokeWidth: 6),
-              SizedBox(width: 16,),
-              PrimaryText(
-                  text: "شما ۶۷ درصد از دوره را مشاهده کرده‌اید ",
-                  style: mThemeData.textTheme.title,
-                  color: grayColor700),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            child: Row(
+              children: [
+                CircleProgress(value: 0.8, strokeWidth: 6),
+                SizedBox(width: 16,),
+                PrimaryText(
+                    text: "شما ۶۷ درصد از دوره را مشاهده کرده‌اید ",
+                    style: mThemeData.textTheme.title,
+                    color: grayColor700),
+              ],
+            ),
           ),
         ),
         SizedBox(height: 24,),
-        PrimaryText(text: data.name.toString(), style: mThemeData.textTheme.titleBold, color: primaryColor900),
+        PrimaryText(text: data.name.toString(), style: mThemeData.textTheme.titleBold, color: Theme.of(context).primaryColor900()),
         SizedBox(height: 40,),
 
 

@@ -58,23 +58,24 @@ class _ExamInfoState extends State<ExamInfo> {
       child: Scaffold(
           appBar: ReversibleAppBar(
               title: index == 0 ? "آزمون دوره" : "آنچه شما یاد گرفته‌اید"),
-          body: Container(
-            margin: const EdgeInsets.all(16),
-            child: Stack(
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
               children: [
-                IndexedStack(
-                  index: index,
-                  children: [
-                    ExamCommentScreen(
-                      comment: _comment,
-                    ),
-                    ExamInfoScreen(comment: _comment.text,),
-                  ],
+                Container(
+                  margin: const EdgeInsets.all(16),
+                  child: IndexedStack(
+                    index: index,
+                    children: [
+                      ExamCommentScreen(
+                        comment: _comment,
+                      ),
+                      ExamInfoScreen(comment: _comment.text,),
+                    ],
+                  ),
                 ),
-                Positioned(
-                  bottom: 38,
-                  left: 16,
-                  right: 16,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: PrimaryLoadingButton(
                     title: index == 0 ? 'تایید و ادامه' : "شروع آزمون",
                     disable: _comment.text.length < 5,

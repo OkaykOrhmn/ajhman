@@ -1,3 +1,7 @@
+import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
+import 'package:ajhman/data/model/planner_request_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +21,7 @@ class GridDaysView extends StatefulWidget {
 
 class _GridDaysViewState extends State<GridDaysView> {
   List<Days> days = [
-    Days("", true),
+    Days("", false),
     Days("", false),
     Days("", false),
     Days("", false),
@@ -59,11 +63,17 @@ class _GridDaysViewState extends State<GridDaysView> {
     );
   }
 
+  final planner = PlannerRequestModel(days: []);
+
   Widget DaysLayout(int index) {
     return InkWell(
       onTap: () {
         setState(() {
           days[index].isSelected = !days[index].isSelected;
+          if (days[index].isSelected) {
+            planner.days!.add(index + 1);
+          }
+          context.read<PlannerCubit>().setData(planner);
         });
       },
       child: Container(
@@ -71,7 +81,9 @@ class _GridDaysViewState extends State<GridDaysView> {
             color: Colors.white,
             borderRadius: DesignConfig.mediumBorderRadius,
             border: Border.all(
-                color: days[index].isSelected ? Theme.of(context).primaryColor : Colors.white)),
+                color: days[index].isSelected
+                    ? Theme.of(context).primaryColor
+                    : Colors.white)),
         child: Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
           child: Flex(

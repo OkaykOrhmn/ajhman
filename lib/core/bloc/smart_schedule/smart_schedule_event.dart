@@ -11,4 +11,9 @@ class SmartScheduleToTime extends SmartScheduleEvent {}
 
 class SmartScheduleToTimer extends SmartScheduleEvent {}
 
-class SmartScheduleToSuccess extends SmartScheduleEvent {}
+class PutPlanner extends SmartScheduleEvent {
+  final PlannerRequestModel plannerRequestModel;
+
+  PutPlanner({required this.plannerRequestModel});
+
+}

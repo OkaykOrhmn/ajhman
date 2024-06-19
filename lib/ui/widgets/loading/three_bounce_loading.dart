@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ThreeBounceLoading extends StatefulWidget {
-  const ThreeBounceLoading({super.key});
+  final double size;
+  const ThreeBounceLoading({super.key,  this.size = 50});
 
   @override
   State<ThreeBounceLoading> createState() => _ThreeBounceLoadingState();
@@ -32,7 +33,7 @@ class _ThreeBounceLoadingState extends State<ThreeBounceLoading>
     return Center(
       child: SpinKitThreeBounce(
         color: Theme.of(context).primaryColor,
-        size: 50.0,
+        size: widget.size,
         controller: _controller,
       ),
     );

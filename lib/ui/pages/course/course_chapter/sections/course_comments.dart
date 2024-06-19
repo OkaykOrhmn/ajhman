@@ -1,6 +1,7 @@
 import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/cubit/subchapter/sub_chapter_cubit.dart';
 import 'package:ajhman/core/enum/comment.dart';
+import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/add_comment_request_model.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
@@ -13,6 +14,7 @@ import 'package:ajhman/ui/widgets/comment/comment_layout.dart';
 import 'package:ajhman/ui/widgets/image/profile_image_network.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
+import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
@@ -25,6 +27,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/cubit/comment/feed_comment_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
+import '../../../../theme/bloc/theme_bloc.dart';
 import '../../../../widgets/button/loading_btn.dart';
 
 class CourseComments extends StatefulWidget {
@@ -49,7 +52,6 @@ class _CourseCommentsState extends State<CourseComments> {
 
   @override
   Widget build(BuildContext context) {
-    comments.clear();
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(16),
@@ -74,10 +76,20 @@ class _CourseCommentsState extends State<CourseComments> {
   }
 
   Widget _comments() {
-    return BlocBuilder<CommentsBloc, CommentsState>(
+    return BlocConsumer<CommentsBloc, CommentsState>(
+      listener: (context, state) async {
+        // if (state is CommentSuccess) {
+        //   await SnackBarHandler(context)
+        //       .show("دیدگاهتون ثبت شد 😃", DialogStatus.success, true);
+        // } else if (state is CommentAddFail) {
+        //   await SnackBarHandler(context)
+        //       .show("خطا در ثبت دیدگاه!!", DialogStatus.error, true);
+        // } else if (state is CommentChangeFail) {
+        //   await SnackBarHandler(context)
+        //       .show("خطا در ثبت نظر!!", DialogStatus.error, true);
+        // }
+      },
       builder: (context, state) {
-        List<CommentsResponseModel> comments = [];
-
         if (state is CommentSuccess) {
           comments = state.response;
         } else if (state is CommentAddFail) {
@@ -85,13 +97,18 @@ class _CourseCommentsState extends State<CourseComments> {
         } else if (state is CommentChangeFail) {
           comments = state.response;
         }
+        print("comments : ${comments}");
         if (state is CommentSuccess ||
             state is CommentAddFail ||
             state is CommentChangeFail) {
           return Column(
             children: [
-              VerticalListView(
-                  item: (context, index) {
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: comments.length,
+                  itemBuilder: (context, index) {
                     return Column(
                       children: [
                         BlocProvider<FeedCommentCubit>(
@@ -103,29 +120,28 @@ class _CourseCommentsState extends State<CourseComments> {
                           child: CommentLayout(
                               index: index, data: comments[index]),
                         ),
-                        VerticalListView(
-                          item: (contextR, indexR) {
-                            return BlocProvider<FeedCommentCubit>(
-                              create: (context) => FeedCommentCubit(
-                                  comments,
-                                  response.chapterId,
-                                  response.chapterModel.id!,
-                                  context),
-                              child: CommentLayout(
-                                  index: index,
-                                  data: comments[index].replies![indexR]),
-                            );
-                          },
-                          items: comments[index].replies,
-                          physics: const NeverScrollableScrollPhysics(),
-                        )
+                        comments[index].replies != null
+                            ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: comments[index].replies!.length,
+                                itemBuilder: (context, indexR) {
+                                  return BlocProvider<FeedCommentCubit>(
+                                    create: (context) => FeedCommentCubit(
+                                        comments,
+                                        response.chapterId,
+                                        response.chapterModel.id!,
+                                        context),
+                                    child: CommentLayout(
+                                        index: indexR,
+                                        data: comments[index].replies![indexR]),
+                                  );
+                                })
+                            : const SizedBox()
                       ],
                     );
-                  },
-                  width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height / 3,
-                  items: comments,
-                  physics: const NeverScrollableScrollPhysics()),
+                  })
             ],
           );
         } else if (state is CommentEmpty) {
@@ -191,9 +207,15 @@ class _CourseCommentsState extends State<CourseComments> {
                           state is CommentSuccess || state is CommentAddFail)
                       .then((value) {
                     if (value is CommentSuccess) {
+                      SnackBarHandler(context).show(
+                          "دیدگاهتون ثبت شد 😃", DialogStatus.success, true);
                       _text.clear();
                       _resource.clear();
                       FocusScope.of(context).unfocus();
+                    }
+                    if (value is CommentAddFail) {
+                      SnackBarHandler(context)
+                          .show("خطا در ثبت نظر!!", DialogStatus.error, true);
                     }
                   });
                   stopLoading();
@@ -209,19 +231,24 @@ class _CourseCommentsState extends State<CourseComments> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            PrimaryText(
-                text: title,
-                style: mThemeData.textTheme.title,
-                color: backgroundColor800),
-            important
-                ? PrimaryText(
-                    text: "*",
-                    style: mThemeData.textTheme.title,
-                    color: errorMain)
-                : SizedBox(),
-          ],
+        RichText(
+          text: TextSpan(
+            text: title,
+            style: mThemeData.textTheme.title.copyWith(
+                color: backgroundColor800,
+                fontSize: mThemeData.textTheme.title.fontSize! *
+                    context.read<ThemeBloc>().state.fontSize),
+            children: important
+                ? <TextSpan>[
+                    TextSpan(
+                        text: '*',
+                        style: mThemeData.textTheme.title.copyWith(
+                            color: errorMain,
+                            fontSize: mThemeData.textTheme.title.fontSize! *
+                                context.read<ThemeBloc>().state.fontSize)),
+                  ]
+                : null,
+          ),
         ),
         SizedBox(
           height: 8,

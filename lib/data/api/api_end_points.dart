@@ -22,5 +22,6 @@ class ApiEndPoints {
   static String  question = '/question';
   static String  exam = '/exam';
   static String  leaderboard = '/leaderboard';
+  static String  planner = '/user/planner';
 
 }

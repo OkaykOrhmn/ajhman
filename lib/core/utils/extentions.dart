@@ -4,7 +4,7 @@ extension MinuetsLabel on String {
   }
 
   String get withOutLabel{
-    String a = replaceAll("دقیقه", "");
+    String a = replaceAll("دقیقه", "").replaceAll(" ", "");
     return a;
   }
 

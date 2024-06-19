@@ -17,9 +17,15 @@ import '../text/primary_text.dart';
 
 class RecentCourseCardPlaceholder extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
+  final double? width;
+  final double? height;
 
-
-  const RecentCourseCardPlaceholder({super.key, this.padding,});
+  const RecentCourseCardPlaceholder({
+    super.key,
+    this.padding,
+    this.width,
+    this.height,
+  });
 
   @override
   State<RecentCourseCardPlaceholder> createState() => _RecentCourseCardState();
@@ -28,46 +34,57 @@ class RecentCourseCardPlaceholder extends StatefulWidget {
 class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
   @override
   Widget build(BuildContext context) {
-
-
-
     return Center(
       child: Container(
+          width: widget.width,
+          height: widget.height,
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              boxShadow: DesignConfig.defaultShadow,
+              boxShadow: DesignConfig.lowShadow,
               color: Colors.white),
           padding: const EdgeInsets.all(8),
-          margin: widget.padding?? EdgeInsets.zero,
-          child:  Stack(
+          margin: widget.padding ?? EdgeInsets.zero,
+          child: Stack(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   DefaultPlaceHolder(
-                    child: _image(
-                        ""),
+                    child: _image(""),
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DefaultPlaceHolder(child: _title("response.name.toString()")),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          _infoes(),
+                          DefaultPlaceHolder(
+                              child: Container(
+                                width: 200,
+                                height: 12,
+                              )),
                           const SizedBox(
                             height: 8,
                           ),
                           DefaultPlaceHolder(
+                              child: Container(
+                                width: 130,
+                                height: 12,
+                              )),
+                          const SizedBox(
+                            height: 24
+                          ),
+                          _infoes(),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          DefaultPlaceHolder(
                             child: Container(
                               width: 100,
-                              decoration:
-                              BoxDecoration(boxShadow: DesignConfig.defaultShadow),
-                              child:  LinearProgress(value: 0.8, minHeight: 8),
+                              decoration: BoxDecoration(
+                                  boxShadow: DesignConfig.lowShadow),
+                              child: LinearProgress(value: 0.8, minHeight: 8),
                             ),
                           ),
                         ],
@@ -76,16 +93,16 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
                   )
                 ],
               ),
-              Positioned(
-                  bottom: 18,
-                  left: 20,
-                  child: DefaultPlaceHolder(
-                    child: PrimaryText(
-                      text: "response.progress.toString()",
-                      style: mThemeData.textTheme.searchHint,
-                      color: grayColor900,
-                    ),
-                  ))
+              // Positioned(
+              //     bottom: 18,
+              //     left: 20,
+              //     child: DefaultPlaceHolder(
+              //       child: PrimaryText(
+              //         text: "response.progress.toString()",
+              //         style: mThemeData.textTheme.searchHint,
+              //         color: grayColor900,
+              //       ),
+              //     ))
             ],
           )),
     );
@@ -95,17 +112,24 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DefaultPlaceHolder(child: Container(width: 100,height: 12,)),
+        DefaultPlaceHolder(
+            child: Container(
+          width: 100,
+          height: 12,
+        )),
         const SizedBox(
           height: 8,
         ),
-        DefaultPlaceHolder(child: Container(width: 100,height: 12,)),
+        DefaultPlaceHolder(
+            child: Container(
+          width: 100,
+          height: 12,
+        )),
       ],
     );
   }
 
   Container _title(String text) {
-
     return Container(
       child: PrimaryText(
         text: text,
@@ -118,6 +142,6 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
   }
 
   Widget _image(String src) {
-    return PrimaryImageNetwork(src: src, aspectRatio: 1/1);
+    return PrimaryImageNetwork(src: src, aspectRatio: 1 / 1);
   }
 }

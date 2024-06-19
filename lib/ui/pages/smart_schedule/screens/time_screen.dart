@@ -1,7 +1,10 @@
 import 'dart:ffi';
 
+import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/core/utils/extentions.dart';
+import 'package:ajhman/data/model/planner_request_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +32,20 @@ class _TimeScreenState extends State<TimeScreen> {
   List<TButtons> buttons = [
     TButtons("", false),
     TButtons("", false),
-    TButtons("", true),
+    TButtons("", false),
   ];
+
+  late PlannerRequestModel planner;
 
   @override
   void initState() {
     _minInput.addListener(() {
       setState(() {});
+    });
+    planner = context.read<PlannerCubit>().state;
+    _minInput.addListener(() {
+      planner.time = timeSelectedValue;
+      context.read<PlannerCubit>().setData(planner);
     });
     super.initState();
   }

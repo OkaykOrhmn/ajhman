@@ -27,7 +27,7 @@ class TitleDivider extends StatelessWidget {
           PrimaryText(
               text: title,
               style: mThemeData.textTheme.titleBold,
-              color: primaryColor900),
+              color: Theme.of(context).primaryColor900()),
           btn != null
               ? InkWell(
                   onTap: btn,

@@ -5,8 +5,10 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
   connectivity_plus_windows
+  file_selector_windows
   flutter_localization
   flutter_volume_controller
+  permission_handler_windows
   smart_auth
 )
 

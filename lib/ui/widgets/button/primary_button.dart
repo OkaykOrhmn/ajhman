@@ -1,4 +1,5 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/text/text_styles.dart';
@@ -24,9 +25,13 @@ class PrimaryButton extends StatelessWidget {
               foregroundColor: secondaryColor,
               shape: const RoundedRectangleBorder(borderRadius: DesignConfig.mediumBorderRadius)),
           onPressed: onClick,
-          child: Text(
-            title,
-            style: AppTextStyles.primaryButtonText,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: PrimaryText(
+              text: title,
+              style: Theme.of(context).textTheme.searchHint,
+              color: Colors.white,
+            ),
           )),
     );
   }

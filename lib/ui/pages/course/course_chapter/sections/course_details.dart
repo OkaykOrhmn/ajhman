@@ -44,7 +44,7 @@ class _CourseDetailsState extends State<CourseDetails> {
               PrimaryText(
                 text: "آنچه در این دوره می‌آموزیم",
                 style: mThemeData.textTheme.dialogTitle,
-                color: primaryColor900,
+                color: Theme.of(context).primaryColor900(),
                 textAlign: TextAlign.start,
               ),
               const SizedBox(
@@ -116,7 +116,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: primaryColor50),
+                          shape: BoxShape.circle, color: Theme.of(context).primaryColor50()),
                       width: 40,
                       height: 40,
                       child: Center(

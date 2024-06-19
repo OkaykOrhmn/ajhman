@@ -1,8 +1,126 @@
 import 'package:flutter/material.dart';
 
+extension ThemeDataApp on ThemeData {
+  Color primaryColor50() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink50;
+      case blue:
+        return blue50;
+      case purple:
+        return purple50;
+      default:
+        return const Color(0xffe6f2f2);
+    }
+  }
+
+  Color primaryColor100() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink100;
+      case blue:
+        return blue100;
+      case purple:
+        return purple100;
+      default:
+        return const Color(0xffb0d7d7);
+    }
+  }
+
+  Color primaryColor200() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink200;
+      case blue:
+        return blue200;
+      case purple:
+        return purple200;
+      default:
+        return const Color(0xff8ac4c4);
+    }
+  }
+
+  Color primaryColor300() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink300;
+      case blue:
+        return blue300;
+      case purple:
+        return purple300;
+      default:
+        return const Color(0xff55a9a9);
+    }
+  }
+
+  Color primaryColor400() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink400;
+      case blue:
+        return blue400;
+      case purple:
+        return purple400;
+      default:
+        return const Color(0xff349899);
+    }
+  }
+
+  Color primaryColor600() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink600;
+      case blue:
+        return blue600;
+      case purple:
+        return purple600;
+      default:
+        return const Color(0xff017374);
+    }
+  }
+
+  Color primaryColor700() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink700;
+      case blue:
+        return blue700;
+      case purple:
+        return purple700;
+      default:
+        return const Color(0xff01595a);
+    }
+  }
+
+  Color primaryColor800() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink800;
+      case blue:
+        return blue800;
+      case purple:
+        return purple800;
+      default:
+        return const Color(0xff014546);
+    }
+  }
+
+  Color primaryColor900() {
+    switch (this.primaryColor) {
+      case pink:
+        return pink900;
+      case blue:
+        return blue900;
+      case purple:
+        return purple900;
+      default:
+        return const Color(0xff014546);
+    }
+  }
+}
+
 const primaryColorLight = primaryColor;
 const primaryColorDark = Color(0xff444848);
-
 
 const primaryColor50 = Color(0xffe6f2f2);
 const primaryColor100 = Color(0xffb0d7d7);
@@ -14,6 +132,39 @@ const primaryColor600 = Color(0xff017374);
 const primaryColor700 = Color(0xff01595a);
 const primaryColor800 = Color(0xff014546);
 const primaryColor900 = Color(0xff014546);
+
+const pink50 = Color(0xfffde9ef);
+const pink100 = Color(0xfff8b9cf);
+const pink200 = Color(0xfff598b7);
+const pink300 = Color(0xfff06896);
+const pink400 = Color(0xffed4b82);
+const pink = Color(0xffe91e63);
+const pink600 = Color(0xffd41b5a);
+const pink700 = Color(0xffa51546);
+const pink800 = Color(0xff801136);
+const pink900 = Color(0xff620d2a);
+
+const purple50 = Color(0xfff0ebf8);
+const purple100 = Color(0xffd0c2e9);
+const purple200 = Color(0xffb9a4de);
+const purple300 = Color(0xff997bcf);
+const purple400 = Color(0xff8561c5);
+const purple = Color(0xff673ab7);
+const purple600 = Color(0xff5e35a7);
+const purple700 = Color(0xff492982);
+const purple800 = Color(0xff392065);
+const purple900 = Color(0xff2b184d);
+
+const blue50 = Color(0xffeceef8);
+const blue100 = Color(0xffc3c9e8);
+const blue200 = Color(0xffa7afdd);
+const blue300 = Color(0xff7e8acd);
+const blue400 = Color(0xff6574c4);
+const blue = Color(0xff3f51b5);
+const blue600 = Color(0xff394aa5);
+const blue700 = Color(0xff2d3a81);
+const blue800 = Color(0xff232d64);
+const blue900 = Color(0xff1a224c);
 
 //Secondary
 const secondaryColor50 = Color(0xffede6f2);

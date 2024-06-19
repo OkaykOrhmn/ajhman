@@ -1,6 +1,7 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
+import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -63,10 +64,12 @@ class _outlinePrimaryLoadingButtonState extends State< OutlinePrimaryLoadingButt
             )),
       ),
       onTap: widget.onTap,
-      child: Text(
-        widget.title,
-        style: AppTextStyles.outlinedPrimaryButtonText,
-      ),
+      child: PrimaryText(
+       text:  widget.title,
+                 style: Theme.of(context).textTheme.title,
+        color: Theme.of(context).primaryColor,
+
+    ),
     );
   }
 }

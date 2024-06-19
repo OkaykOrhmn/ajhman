@@ -3,6 +3,7 @@ import 'package:ajhman/data/api/options.dart';
 import 'package:ajhman/data/model/auth/auth_login_user_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
+import 'package:ajhman/data/model/planner_request_model.dart';
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:dio/dio.dart';
@@ -38,9 +39,31 @@ class ProfileRepository implements ProfileInformation {
       rethrow;
     }
   }
+
+  @override
+  Future<Response> putPlanner(PlannerRequestModel plannerRequestModel) async {
+    try {
+      Response response = await dioHelper.putRequest(ApiEndPoints.planner,plannerRequestModel);
+      return response;
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> putProfileImage(FormData  image) async {
+    try {
+      Response response = await dioHelper.putRequest(ApiEndPoints.userProfile,image);
+      return response;
+    } catch (ex) {
+      rethrow;
+    }
+  }
 }
 
 abstract class ProfileInformation {
   Future<ProfileResponseModel> getProfile();
   Future<Response> deleteProfile();
+  Future<Response> putPlanner(PlannerRequestModel plannerRequestModel);
+  Future<Response> putProfileImage(FormData  image);
 }

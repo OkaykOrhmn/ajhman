@@ -29,9 +29,10 @@ class NewCourseCard extends StatefulWidget {
   final int index;
   final EdgeInsetsGeometry? padding;
   final NewCourseCardModel response;
-
+  final double? width;
+  final double? height;
   const NewCourseCard(
-      {super.key, required this.index, this.padding, required this.response});
+      {super.key, required this.index, this.padding, required this.response, this.width, this.height});
 
   @override
   State<NewCourseCard> createState() => _RecentCurseCardState();
@@ -49,39 +50,43 @@ class _RecentCurseCardState extends State<NewCourseCard> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        navigatorKey.currentState!.pushNamed(
-            RoutePaths.courseMain,
-            arguments: CourseMainArgs(courseId: response.id));
-      },
-      child: Padding(
-        padding: widget.padding ?? EdgeInsets.zero,
-        child: Center(
-          child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: DesignConfig.highBorderRadius,
-                  boxShadow: DesignConfig.defaultShadow,
-                  color: Colors.white),
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _image(getImageUrl(response.image.toString()), "3.4"),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _title(),
-                        _infoes(),
-                        _footer(),
-                      ],
-                    ),
-                  )
-                ],
-              )),
+    return SizedBox(
+      width: widget.width,
+      height: widget.height,
+      child: InkWell(
+        onTap: (){
+          navigatorKey.currentState!.pushNamed(
+              RoutePaths.courseMain,
+              arguments: CourseMainArgs(courseId: response.id));
+        },
+        child: Padding(
+          padding: widget.padding ?? EdgeInsets.zero,
+          child: Center(
+            child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: DesignConfig.highBorderRadius,
+                    boxShadow: DesignConfig.lowShadow,
+                    color: Colors.white),
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _image(getImageUrl(response.image.toString()), "3.4"),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _title(),
+                          _infoes(),
+                          _footer(),
+                        ],
+                      ),
+                    )
+                  ],
+                )),
+          ),
         ),
       ),
     );
@@ -173,7 +178,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                         style: mThemeData.textTheme.navbarTitle,
                         color: grayColor600),
                     PrimaryText(
-                        text: "${response.score} امتیاز",
+                        text: "${response.score}",
                         style: mThemeData.textTheme.navbarTitleBold,
                         color: Theme.of(context).primaryColor),
                   ],

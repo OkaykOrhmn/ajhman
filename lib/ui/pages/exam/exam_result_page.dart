@@ -86,7 +86,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
                     PrimaryText(
                       text: "آمار پاسخگویی شما",
                       style: mThemeData.textTheme.rate,
-                      color: primaryColor900,
+                      color: Theme.of(context).primaryColor900(),
                       textAlign: TextAlign.start,
                     ),
                     SizedBox(
@@ -100,29 +100,29 @@ class _ExamResultPageState extends State<ExamResultPage> {
                           value: correctValue,
                           strokeWidth: 6,
                           color: successMain,
-                          width: MediaQuery.sizeOf(context).width / 5,
-                          height: MediaQuery.sizeOf(context).width / 5,
+                          width: MediaQuery.sizeOf(context).width / 4.4,
+                          height: MediaQuery.sizeOf(context).width / 4.4,
                         ),
                         SizedBox(
-                          width: 24,
+                          width: 18,
                         ),
                         CircleProgress(
                           text: '${result.noAnswer!} سوال\nبدون پاسخ',
                           value: noAnswerValue,
                           strokeWidth: 6,
-                          width: MediaQuery.sizeOf(context).width / 5,
-                          height: MediaQuery.sizeOf(context).width / 5,
+                          width: MediaQuery.sizeOf(context).width / 4.4,
+                          height: MediaQuery.sizeOf(context).width / 4.4,
                         ),
                         SizedBox(
-                          width: 24,
+                          width: 18,
                         ),
                         CircleProgress(
                           text: '${result.incorrect} سوال\nغلط',
                           value: inCorrectValue,
                           strokeWidth: 6,
                           color: errorMain,
-                          width: MediaQuery.sizeOf(context).width / 5,
-                          height: MediaQuery.sizeOf(context).width / 5,
+                          width: MediaQuery.sizeOf(context).width / 4.4,
+                          height: MediaQuery.sizeOf(context).width / 4.4,
                         ),
                       ],
                     )

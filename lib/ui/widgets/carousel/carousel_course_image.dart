@@ -93,7 +93,7 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                         bottomLeft: DesignConfig.aHighBorderRadius),
                   ),
                   child: Assets.icon.outline.arrowLeft
-                      .svg(width: 16, height: 16, color: primaryColor900),
+                      .svg(width: 16, height: 16, color: Theme.of(context).primaryColor900()),
                 ),
               ),
               InkWell(
@@ -119,7 +119,7 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                         topRight: DesignConfig.aHighBorderRadius),
                   ),
                   child: Assets.icon.outline.arrowRight1
-                      .svg(width: 16, height: 16, color: primaryColor900),
+                      .svg(width: 16, height: 16, color: Theme.of(context).primaryColor900()),
                 ),
               ),
             ],

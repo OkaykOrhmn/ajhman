@@ -50,7 +50,7 @@ class _SummeryPageState extends State<SummeryPage> {
                         PrimaryText(
                             text: "جمع‌بندی دوره فنون مذاکره",
                             style: mThemeData.textTheme.dialogTitle,
-                            color: primaryColor900),
+                            color: Theme.of(context).primaryColor900()),
                         const SizedBox(
                           height: 16,
                         ),
@@ -66,7 +66,7 @@ class _SummeryPageState extends State<SummeryPage> {
                               PrimaryText(
                                   text: "نکات مهم اشاره شده در دوره",
                                   style: mThemeData.textTheme.titleBold,
-                                  color: primaryColor900),
+                                  color: Theme.of(context).primaryColor900()),
                               SizedBox(
                                 height: 16,
                               ),

@@ -192,8 +192,8 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                                       thumbVisibility: true,
                                       trackVisibility: true,
                                       radius: DesignConfig.aHighBorderRadius,
-                                      trackColor: primaryColor100,
-                                      thumbColor: primaryColor700,
+                                      trackColor: Theme.of(context).primaryColor100(),
+                                      thumbColor: Theme.of(context).primaryColor700(),
                                       trackRadius:
                                           DesignConfig.aVeryHighBorderRadius,
                                       interactive: true,
@@ -244,7 +244,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
           margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: subchapter.visited! ? backgroundColor200 : primaryColor50),
+              color: subchapter.visited! ? backgroundColor200 : Theme.of(context).primaryColor50()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

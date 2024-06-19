@@ -21,30 +21,11 @@ class VideoHandler{
   late CustomVideoPlayerController _customVideoPlayerController;
   late CustomVideoPlayerWebController _customVideoPlayerWebController;
   late CustomVideoPlayerWebSettings _customVideoPlayerWebSettings ;
-  late CustomVideoPlayerSettings _customVideoPlayerSettings ;
+  // late CustomVideoPlayerSettings _customVideoPlayerSettings ;
 
 
 
   VideoHandler(BuildContext context ,String url, Function() whenInitialize){
-    _customVideoPlayerSettings = CustomVideoPlayerSettings(
-      showSeekButtons: false,
-      playbackSpeedButtonAvailable: false,
-      showMuteButton: false,
-      showDurationPlayed: false,
-      showDurationRemaining: false,
-      showFullscreenButton: false,
-      showPlayButton: false,
-      controlBarPadding: const EdgeInsets.only(bottom: 40),
-      settingsButtonAvailable: false,
-      seekDuration: const Duration(seconds: 5),
-      customVideoPlayerProgressBarSettings: CustomVideoPlayerProgressBarSettings(
-          backgroundColor: primaryColor50,
-          bufferedColor: primaryColor100,
-          progressColor: Theme.of(context).primaryColor),
-      controlBarDecoration: const BoxDecoration(
-        color: Colors.transparent,
-      ),
-    );
     _customVideoPlayerWebSettings =   CustomVideoPlayerWebSettings(
       src: url,
     );
@@ -54,7 +35,25 @@ class VideoHandler{
     _customVideoPlayerController = CustomVideoPlayerController(
       context: context,
       videoPlayerController: _videoPlayerController,
-      customVideoPlayerSettings: _customVideoPlayerSettings,
+      customVideoPlayerSettings: CustomVideoPlayerSettings(
+        showSeekButtons: false,
+        playbackSpeedButtonAvailable: false,
+        showMuteButton: false,
+        showDurationPlayed: false,
+        showDurationRemaining: false,
+        showFullscreenButton: false,
+        showPlayButton: false,
+        controlBarPadding: const EdgeInsets.only(bottom: 40),
+        settingsButtonAvailable: false,
+        seekDuration: const Duration(seconds: 5),
+        customVideoPlayerProgressBarSettings: CustomVideoPlayerProgressBarSettings(
+            backgroundColor: Theme.of(navigatorKey.currentContext!).primaryColor50(),
+            bufferedColor: Theme.of(navigatorKey.currentContext!).primaryColor100(),
+            progressColor: Theme.of(navigatorKey.currentContext!).primaryColor),
+        controlBarDecoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
+      ),
       // additionalVideoSources: {
       //   "240p": _videoPlayerController2,
       //   "480p": _videoPlayerController3,
@@ -82,8 +81,8 @@ class VideoHandler{
       },
     );
     _setOrientationForVideo();
-    SystemChrome.setEnabledSystemUIMode(
-        _customVideoPlayerSettings.systemUIModeInsideFullscreen);
+    // SystemChrome.setEnabledSystemUIMode(
+    //     _customVideoPlayerSettings.systemUIModeInsideFullscreen);
     await navigatorKey.currentState!.push(route);
   }
 

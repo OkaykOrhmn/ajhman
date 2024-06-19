@@ -20,7 +20,7 @@ class _AuthPageStartedState extends State<AuthPageStarted> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor50,
+      backgroundColor: Theme.of(context).primaryColor50(),
       body: SafeArea(
           child: Stack(
         children: [

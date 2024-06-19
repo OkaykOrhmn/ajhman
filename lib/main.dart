@@ -5,10 +5,12 @@ import 'package:ajhman/core/bloc/for_you/for_you_bloc.dart';
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
 import 'package:ajhman/core/bloc/roadmap/roadmap_bloc.dart';
 import 'package:ajhman/core/bloc/search/search_bloc.dart';
+import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/core/bloc/treasure/treasure_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
 import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
+import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/cubit/search/search_cubit.dart';
 import 'package:ajhman/core/cubit/summery/summery_cubit.dart';
@@ -16,6 +18,7 @@ import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
+import 'package:ajhman/ui/pages/splash_page.dart';
 
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
@@ -28,6 +31,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/bloc/auth/auth_screen_bloc.dart';
@@ -51,7 +55,6 @@ double fontSize = 1;
 bool isDarkTheme =
     SchedulerBinding.instance.platformDispatcher.platformBrightness ==
         Brightness.dark;
-ProfileResponseModel profile = ProfileResponseModel();
 
 void main() {
   runApp(MultiBlocProvider(providers: [
@@ -190,6 +193,12 @@ void main() {
     BlocProvider(
       create: (context) => NewsCourseHomeCubit(),
     ),
+    BlocProvider(
+      create: (context) => PlannerCubit(),
+    ),
+    BlocProvider(
+      create: (context) => ImagePickerCubit(),
+    ),
   ], child: const MyApp()));
 }
 
@@ -236,6 +245,7 @@ class _MyAppState extends State<MyApp> {
                       // Add more supported locales based on your application's target audience
                     ],
                     theme: themeData,
+                    // home: const SplashPage(),
                     initialRoute: RoutePaths.splash,
                     onGenerateRoute: (settings) =>
                         RouteGenerator.destination(settings),

@@ -27,7 +27,7 @@ class PrimaryText extends StatelessWidget {
           fontSize: style.fontSize! * context.read<ThemeBloc>().state.fontSize),
       textAlign: textAlign,
       maxLines: maxLines,
-      overflow: maxLines == null ? TextOverflow.visible : TextOverflow.ellipsis,
+      overflow: maxLines == null ? null : TextOverflow.ellipsis,
       softWrap: true,
     );
   }

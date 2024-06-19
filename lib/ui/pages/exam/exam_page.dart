@@ -113,7 +113,7 @@ class _ExamPageState extends State<ExamPage>
                   PrimaryText(
                       text: "آزمون فنون مذاکره",
                       style: mThemeData.textTheme.dialogTitle,
-                      color: primaryColor900),
+                      color: Theme.of(context).primaryColor900()),
                   const SizedBox(
                     height: 16,
                   ),
@@ -236,7 +236,7 @@ class _ExamPageState extends State<ExamPage>
                                               EdgeInsets.symmetric(vertical: 8),
                                           decoration: BoxDecoration(
                                               color: selected
-                                                  ? primaryColor50
+                                                  ? Theme.of(context).primaryColor50()
                                                   : Colors.white,
                                               borderRadius: DesignConfig
                                                   .highBorderRadius),

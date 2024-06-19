@@ -1,4 +1,8 @@
+import 'package:ajhman/data/model/planner_request_model.dart';
+import 'package:ajhman/data/repository/profile_repository.dart';
+import 'package:ajhman/main.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 part 'smart_schedule_event.dart';
@@ -19,8 +23,15 @@ class SmartScheduleBloc extends Bloc<SmartScheduleEvent, SmartScheduleState> {
         emit(SmartScheduleTimer());
       }
 
-      if (event is SmartScheduleToSuccess) {
-        emit(SmartScheduleSuccess());
+      if (event is PutPlanner) {
+        emit(SmartScheduleLoading());
+        try {
+          Response response =
+              await profileRepository.putPlanner(event.plannerRequestModel);
+          emit(SmartScheduleSuccess());
+        } on DioError catch (e) {
+          emit(SmartScheduleError(e.message.toString()));
+        }
       }
     });
   }

@@ -132,7 +132,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: DesignConfig.highBorderRadius,
-                boxShadow: DesignConfig.defaultShadow),
+                boxShadow: DesignConfig.lowShadow),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -195,7 +195,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             PrimaryText(
               text: "توضیحات دوره",
               style: mThemeData.textTheme.dialogTitle,
-              color: primaryColor900,
+              color: Theme.of(context).primaryColor900(),
               textAlign: TextAlign.start,
             ),
             const SizedBox(
@@ -238,7 +238,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   PrimaryText(
                     text: "توضیحات",
                     style: mThemeData.textTheme.title,
-                    color: primaryColor900,
+                    color: Theme.of(context).primaryColor900(),
                     textAlign: TextAlign.justify,
                   ),
                 ],
@@ -254,7 +254,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 PrimaryText(
                   text: "آنچه در این دوره می‌آموزیم",
                   style: mThemeData.textTheme.dialogTitle,
-                  color: primaryColor900,
+                  color: Theme.of(context).primaryColor900(),
                   textAlign: TextAlign.start,
                 ),
                 const SizedBox(
@@ -284,40 +284,42 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ProfileImageNetwork(
-                    width: 64, height: 64, src: getImageUrl(profile.image)),
+                FutureBuilder(
+                  future: getProfile(),
+                  builder: (context,snapshot) {
+                    return ProfileImageNetwork(
+                        width: 64, height: 64, src: getImageUrl(snapshot.data!.image));
+                  }
+                ),
                 SizedBox(width: 8,),
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          PrimaryText(
-                              text: "نمره‌ی شما",
-                              style: mThemeData.textTheme.titleBold,
-                              color: grayColor800),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                                color: successBackground,
-                                borderRadius: DesignConfig.highBorderRadius),
-                            child: Center(
-                              child: PrimaryText(
-                                  text:
-                                  "${80 > 60 ? "پذیرفته" : "رد"} شده در آزمون",
-                                  style: mThemeData.textTheme.title,
-                                  color: 80 > 60 ? successMain : errorMain),
-                            ),
-                          )
-                        ],
-                      ),
+                      PrimaryText(
+                          text: "نمره‌ی شما",
+                          style: mThemeData.textTheme.titleBold,
+                          color: grayColor800),
                       SizedBox(
                         height: 8,
                       ),
-                      _resultExam(80)
+
+                      _resultExam(80),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: successBackground,
+                            borderRadius: DesignConfig.highBorderRadius),
+                        child: Center(
+                          child: PrimaryText(
+                              text:
+                              "${80 > 60 ? "پذیرفته" : "رد"} شده در آزمون",
+                              style: mThemeData.textTheme.title,
+                              color: 80 > 60 ? successMain : errorMain),
+                        ),
+                      ),
+
                     ],
                   ),
                 )
@@ -481,66 +483,70 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                            color: backgroundColor200,
-                            borderRadius: DesignConfig.highBorderRadius),
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Assets.icon.outline.documentCopy
-                                .svg(color: secondaryColor),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            PrimaryText(
-                                text: "${chapter.subchapters!.length} زیر فصل",
-                                style: mThemeData.textTheme.searchHint,
-                                color: secondaryColor)
-                          ],
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: backgroundColor200,
+                              borderRadius: DesignConfig.highBorderRadius),
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              Assets.icon.outline.documentCopy
+                                  .svg(color: secondaryColor),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              PrimaryText(
+                                  text: "${chapter.subchapters!.length} زیر فصل",
+                                  style: mThemeData.textTheme.searchHint,
+                                  color: secondaryColor)
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        decoration: const BoxDecoration(
-                            color: backgroundColor200,
-                            borderRadius: DesignConfig.highBorderRadius),
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Assets.icon.outline.clock
-                                .svg(color: secondaryColor),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            PrimaryText(
-                                text: "${chapter.time} ساعت",
-                                style: mThemeData.textTheme.searchHint,
-                                color: secondaryColor)
-                          ],
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: backgroundColor200,
+                              borderRadius: DesignConfig.highBorderRadius),
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              Assets.icon.outline.clock
+                                  .svg(color: secondaryColor),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              PrimaryText(
+                                  text: "${chapter.time} ساعت",
+                                  style: mThemeData.textTheme.searchHint,
+                                  color: secondaryColor)
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        decoration: const BoxDecoration(
-                            color: backgroundColor200,
-                            borderRadius: DesignConfig.highBorderRadius),
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Assets.icon.outlineMedal.svg(color: secondaryColor),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            PrimaryText(
-                                text: "${chapter.score} امتیاز",
-                                style: mThemeData.textTheme.searchHint,
-                                color: secondaryColor)
-                          ],
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: backgroundColor200,
+                              borderRadius: DesignConfig.highBorderRadius),
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              Assets.icon.outlineMedal.svg(color: secondaryColor),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              PrimaryText(
+                                  text: "${chapter.score} امتیاز",
+                                  style: mThemeData.textTheme.searchHint,
+                                  color: secondaryColor)
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 16,
@@ -726,7 +732,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
           margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: subchapter.visited! ? backgroundColor200 : primaryColor50),
+              color: subchapter.visited! ? backgroundColor200 : Theme.of(context).primaryColor50()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -778,7 +784,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
           margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: primaryColor50),
+              color: Theme.of(context).primaryColor50()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -1,10 +1,13 @@
 import 'dart:math';
 
+import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
+import 'package:ajhman/data/model/planner_request_model.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -30,21 +33,16 @@ class _TimerScreenState extends State<TimerScreen>
   bool _inLight = false;
   late AnimationController fadeIn;
   late Animation<double> animation;
+  late PlannerRequestModel planner;
 
+  @override
   initState() {
-    super.initState();
     fadeIn = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     animation = CurvedAnimation(parent: fadeIn, curve: Curves.easeIn);
-
-    /*animation.addStatusListener((status) {
-    if (status == AnimationStatus.completed) {
-      controller.reverse();
-    } else if (status == AnimationStatus.dismissed) {
-      controller.forward();
-    }
-  });*/ //this will start the animation
+    planner = context.read<PlannerCubit>().state;
     fadeIn.forward();
+    super.initState();
   }
 
   void click() {
@@ -177,10 +175,9 @@ class _TimerScreenState extends State<TimerScreen>
                 ),
                 SfSliderTheme(
                   data: SfSliderThemeData(
-                    activeDividerColor: Theme.of(context).primaryColor,
-                    tooltipBackgroundColor: Theme.of(context).primaryColor,
-                    tooltipTextStyle: body6
-                  ),
+                      activeDividerColor: Theme.of(context).primaryColor,
+                      tooltipBackgroundColor: Theme.of(context).primaryColor,
+                      tooltipTextStyle: body6),
                   child: _inHour
                       ? SfSlider(
                           activeColor: Theme.of(context).primaryColor,
@@ -197,6 +194,7 @@ class _TimerScreenState extends State<TimerScreen>
                           showDividers: true,
                           minorTicksPerInterval: 1,
                           onChanged: (value) {
+                            final val = value as double;
                             setState(() {
                               if (value >= 1) {
                                 _hValue = value;
@@ -206,6 +204,16 @@ class _TimerScreenState extends State<TimerScreen>
                                   _inLight = true;
                                 }
                               }
+                              if (planner.startAt == null ||
+                                  planner.startAt!.isEmpty) {
+                                planner.startAt =
+                                    "${_hValue.round().toString().padLeft(2, "0")}:01";
+                              } else {
+                                planner.startAt =
+                                    "${_hValue.round().toString().padLeft(2, "0")}${planner.startAt!.substring(2)}";
+                              }
+                              context.read<PlannerCubit>().setData(planner);
+
                             });
                           },
                         )
@@ -223,10 +231,20 @@ class _TimerScreenState extends State<TimerScreen>
                           enableTooltip: true,
                           minorTicksPerInterval: 1,
                           onChanged: (value) {
+                            final val = value as double;
                             setState(() {
                               if (value <= 59) {
                                 _mValue = value;
                               }
+                              if (planner.startAt == null ||
+                                  planner.startAt!.isEmpty) {
+                                planner.startAt =
+                                    "01:${_mValue.round().toString().padLeft(2, "0")}";
+                              } else {
+                                planner.startAt =
+                                    "${planner.startAt!.substring(0, 3)}${_mValue.round().toString().padLeft(2, "0")}";
+                              }
+                              context.read<PlannerCubit>().setData(planner);
                             });
                           },
                         ),

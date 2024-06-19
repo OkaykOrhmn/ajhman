@@ -13,3 +13,9 @@ Future<void> setProfile(ProfileResponseModel profile) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString("profile_data", jsonEncode(profile.toJson()));
 }
+
+
+Future<void> clearProfile() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('profile_data');
+}

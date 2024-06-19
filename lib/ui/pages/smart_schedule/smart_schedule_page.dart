@@ -1,11 +1,15 @@
 import 'dart:ui';
 
+import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
+import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/smart_schedule/screens/time_screen.dart';
 import 'package:ajhman/ui/pages/smart_schedule/screens/timer_screen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/widgets/app_bar/primary_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
+import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
+import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -13,10 +17,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/bloc/smart_schedule/smart_schedule_bloc.dart';
+import '../../../core/enum/dialogs_status.dart';
 import '../../../core/utils/app_locale.dart';
 import '../../../core/utils/language/bloc/language_bloc.dart';
 import '../../../data/model/language.dart';
 import '../../../gen/assets.gen.dart';
+import '../../widgets/snackbar/snackbar_handler.dart';
 import 'screens/calender_screen.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../theme/text/text_styles.dart';
@@ -32,16 +38,28 @@ class SmartSchedulePage extends StatefulWidget {
 
 class _SmartSchedulePageState extends State<SmartSchedulePage> {
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    DialogHandler(context).showWelcomeDialog();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: PrimaryAppBar(title: ChangeLocale
-        (context).appLocal!.smartScheduleTitle,),
+      appBar: PrimaryAppBar(
+        title: ChangeLocale(context).appLocal!.smartScheduleTitle,
+      ),
       body: BlocConsumer<SmartScheduleBloc, SmartScheduleState>(
         listener: (context, state) {
-          if (state is SmartScheduleCalender) {
-            ShowWelcomeDialog(context);
+          if (state is SmartScheduleSuccess) {
+            navigatorKey.currentState!.pop();
+            SnackBarHandler(context)
+                .show("با موفقیت انتخاب شد!", DialogStatus.success, true);
+          } else if (state is SmartScheduleError) {
+            SnackBarHandler(context)
+                .show("خطا! دوباره امتحان کنید.", DialogStatus.error, true);
+            context.read<SmartScheduleBloc>().add(SmartScheduleToCalender());
           }
         },
         builder: (context, state) {
@@ -53,42 +71,13 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
     );
   }
 
-  Future<dynamic> ShowWelcomeDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: AlertDialog(
-            title: Center(child: Assets.icon.main.sIcon.svg()),
-            content: Text(
-              ChangeLocale(context).appLocal!.welcomeSmartSchedule,
-              style: AppTextStyles.descWelcomeDialogSmartSchedule,
-              textAlign: TextAlign.center,
-            ),
-            actions: [
-              Center(
-                child: OutlinedPrimaryButton(
-                  title: ChangeLocale(context).appLocal!.confirm,
-                  onClick: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   Widget StepsView(SmartScheduleState state) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
       child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: primaryColor50, borderRadius: BorderRadius.circular(20)),
+              color: Theme.of(context).primaryColor50(), borderRadius: BorderRadius.circular(20)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,20 +89,13 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
                         ? const TimeScreen()
                         : state is SmartScheduleTimer
                             ? const TimerScreen()
-                            : state is SmartScheduleError
-                                ? Center(
-                                    child: Text(state.error),
-                                  )
-                                : const Center(
-                                    child: Text("empty"),
-                                  ),
+                            : const ThreeBounceLoading(),
               ),
               ChangeStateButtons(context, state)
             ],
           )),
     );
   }
-
 
   Widget ChangeStateButtons(BuildContext context, SmartScheduleState state) {
     return Padding(
@@ -125,13 +107,32 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
             child: PrimaryButton(
                 title: ChangeLocale(context).appLocal!.confirm.toUpperCase(),
                 onClick: () {
+
+
+
                   late SmartScheduleEvent cl = SmartScheduleToCalender();
                   if (state is SmartScheduleCalender) {
+                    if (context.read<PlannerCubit>().state.days == null ||
+                        context.read<PlannerCubit>().state.days!.isEmpty) {
+                      SnackBarHandler(context).show(
+                          "حداقل یک روز را انتخاب کنید!",
+                          DialogStatus.warning,
+                          true);
+                      return;
+                    }
                     cl = SmartScheduleToTime();
                   } else if (state is SmartScheduleTime) {
+
+                    if (context.read<PlannerCubit>().state.time == null) {
+                      SnackBarHandler(context).show(
+                          "زمان را انتخاب کنید!", DialogStatus.warning, true);
+                      return;
+                    }
                     cl = SmartScheduleToTimer();
                   } else if (state is SmartScheduleTimer) {
-                    cl = SmartScheduleToSuccess();
+                    cl = PutPlanner(
+                        plannerRequestModel:
+                            context.read<PlannerCubit>().state);
                   }
                   context.read<SmartScheduleBloc>().add(cl);
                 }),
@@ -142,7 +143,16 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
           Expanded(
             child: OutlinedPrimaryButton(
               title: ChangeLocale(context).appLocal!.reject.toUpperCase(),
-              onClick: () {},
+              onClick: () {
+                late SmartScheduleEvent cl = SmartScheduleToCalender();
+                if (state is SmartScheduleTimer) {
+                  cl = SmartScheduleToTime();
+                } else if (state is SmartScheduleTime) {
+                  cl = SmartScheduleToCalender();
+                }
+
+                context.read<SmartScheduleBloc>().add(cl);
+              },
             ),
           )
         ],
@@ -175,7 +185,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
               active: activeCalender),
           Expanded(
             child: HorizontalDashedLine(
-              active: activeCalender? Theme.of(context).primaryColor : null,
+              active: activeCalender ? Theme.of(context).primaryColor : null,
               dashed: activeCalender,
               dashSize: 8,
               height: 2,
@@ -185,7 +195,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
               svgGenImage: Assets.icon.outline.timer, active: activeTime),
           Expanded(
             child: HorizontalDashedLine(
-              active: activeCalender? Theme.of(context).primaryColor : null,
+              active: activeCalender ? Theme.of(context).primaryColor : null,
               dashed: activeTime,
               dashSize: 8,
               height: 2,

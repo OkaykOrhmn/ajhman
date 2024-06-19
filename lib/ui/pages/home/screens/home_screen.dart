@@ -73,84 +73,172 @@ class _HomeScreenState extends State<HomeScreen> {
             FutureBuilder(
               future: learningRepository.getCards(ApiEndPoints.learning),
               builder: (context, state) {
-                recentCards = state.data;
-                return recentCards != null && recentCards!.isEmpty
-                    ? SizedBox()
-                    : Column(
-                        children: [
-                          TitleDivider(
-                              title: "دوره‌های اخیرا دیده شده", btn: () {}),
-                          HorizontalListView(
-                            placeholder: (index) => RecentCourseCardPlaceholder(
-                              padding:
-                                  DesignConfig.horizontalListViwItemPadding(
-                                      16, index, items.length),
-                            ),
-                            height: 190,
-                            width: MediaQuery.sizeOf(context).width / 1.1,
-                            item: (index) => InkWell(
-                              onTap: () {
-                                navigatorKey.currentState!.pushNamed(
-                                    RoutePaths.courseMain,
-                                    arguments: CourseMainArgs(
-                                        courseId: recentCards![index].id));
-                              },
-                              child: RecentCourseCard(
-                                index: index,
+                if (state.hasData) {
+                  if (state.data!.isEmpty) {
+                    return const SizedBox();
+                  } else {
+                    recentCards = state.data;
+                    return Column(
+                      children: [
+                        TitleDivider(
+                            title: "دوره‌های اخیرا دیده شده", btn: () {}),
+                        SizedBox(
+                          height: context.read<ThemeBloc>().state.fontSize >= 1
+                              ? (200 + (context.read<ThemeBloc>().state.fontSize * 10))
+                              : (200 -  (context.read<ThemeBloc>().state.fontSize * 10)),                          width: MediaQuery.sizeOf(context).width,
+                          child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: recentCards!.length,
+                              itemExtent:
+                              context.read<ThemeBloc>().state.fontSize >= 1
+                                  ? (MediaQuery.sizeOf(context).width / 1.2 +
+                                  (context
+                                      .read<ThemeBloc>()
+                                      .state
+                                      .fontSize *
+                                      30))
+                                  : (MediaQuery.sizeOf(context).width / 1.2 -
+                                  (context
+                                      .read<ThemeBloc>()
+                                      .state
+                                      .fontSize *
+                                      60)),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return RecentCourseCard(
+                                  // width: MediaQuery.sizeOf(context).width / 1.1,
+                                  padding:
+                                      DesignConfig.horizontalListViwItemPadding(
+                                          16, index, items.length),
+                                  index: index,
+                                  response: recentCards![index],
+                                );
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                      ],
+                    );
+                  }
+                } else {
+                  return Column(
+                    children: [
+                      TitleDivider(
+                          title: "دوره‌های اخیرا دیده شده", btn: () {}),
+                      SizedBox(
+                        height: context.read<ThemeBloc>().state.fontSize >= 1
+                            ? (210 + (context.read<ThemeBloc>().state.fontSize * 10))
+                            : (210 -  (context.read<ThemeBloc>().state.fontSize * 10)),
+                        width: MediaQuery.sizeOf(context).width,
+                        child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            itemCount: 4,
+                            itemExtent: MediaQuery.sizeOf(context).width / 1.1,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return RecentCourseCardPlaceholder(
+                                // width: MediaQuery.sizeOf(context).width / 1.1,
                                 padding:
                                     DesignConfig.horizontalListViwItemPadding(
                                         16, index, items.length),
-                                response: recentCards![index],
-                              ),
-                            ),
-                            items: recentCards,
-                          ),
-                        ],
-                      );
+                              );
+                            }),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                    ],
+                  );
+                }
               },
-            ),
-
-            const SizedBox(
-              height: 40,
             ),
 
             BlocBuilder<NewsCourseHomeCubit, List<NewCourseCardModel>?>(
               builder: (context, state) {
-                newsCards = state;
-                return newsCards != null && newsCards!.isEmpty
-                    ? SizedBox()
-                    : Column(
-                        children: [
-                          TitleDivider(
-                              title: "جدیدترین دوره ها",
-                              btn: () {
-                                navigatorKey.currentState!.pushNamed(
-                                    RoutePaths.category,
-                                    arguments:
-                                        CategoryArgs(categoriesId: [1, 2, 3]));
+                if (state == null) {
+                  return Column(
+                    children: [
+                      TitleDivider(title: "جدیدترین دوره ها", btn: () {}),
+                      SizedBox(
+                        height: context.read<ThemeBloc>().state.fontSize >= 1
+                            ? (320 + (context.read<ThemeBloc>().state.fontSize * 10))
+                            : (320 -  (context.read<ThemeBloc>().state.fontSize * 10)),
+                        width: MediaQuery.sizeOf(context).width,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: 4,
+                            itemExtent: MediaQuery.sizeOf(context).width / 1.2,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return NewCourseCardPlaceholder(
+                                // width: MediaQuery.sizeOf(context).width / 1.1,
+                                padding:
+                                    DesignConfig.horizontalListViwItemPadding(
+                                        16, index, items.length),
+                                type: CardType.normal,
+                              );
+                            }),
+                      ),
+                    ],
+                  );
+                } else {
+                  if (state.isEmpty) {
+                    return const SizedBox();
+                  } else {
+                    newsCards = state;
+                    return Column(
+                      children: [
+                        TitleDivider(
+                            title: "جدیدترین دوره ها",
+                            btn: () {
+                              navigatorKey.currentState!.pushNamed(
+                                  RoutePaths.category,
+                                  arguments:
+                                      CategoryArgs(categoriesId: [1, 2, 3]));
+                            }),
+                        SizedBox(
+                          height: context.read<ThemeBloc>().state.fontSize >= 1
+                              ? (500 +
+                                  (context.read<ThemeBloc>().state.fontSize *
+                                      10))
+                              : (500 -
+                                  (context.read<ThemeBloc>().state.fontSize *
+                                      100)),
+                          width: MediaQuery.sizeOf(context).width,
+                          child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: newsCards!.length,
+                              itemExtent:
+                                  context.read<ThemeBloc>().state.fontSize >= 1
+                                      ? (MediaQuery.sizeOf(context).width / 1.2 +
+                                          (context
+                                                  .read<ThemeBloc>()
+                                                  .state
+                                                  .fontSize *
+                                              30))
+                                      : (MediaQuery.sizeOf(context).width / 1.2 -
+                                          (context
+                                                  .read<ThemeBloc>()
+                                                  .state
+                                                  .fontSize *
+                                              60)),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return NewCourseCard(
+                                  // width: MediaQuery.sizeOf(context).width / 1.1,
+                                  padding:
+                                      DesignConfig.horizontalListViwItemPadding(
+                                          16, index, items.length),
+                                  index: index,
+                                  response: newsCards![index],
+                                );
                               }),
-                          HorizontalListView(
-
-                            placeholder: (index) =>
-                                const NewCourseCardPlaceholder(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              type: CardType.normal,
-                            ),
-                            item: (index) => NewCourseCard(
-                              index: index,
-                              padding:
-                                  DesignConfig.horizontalListViwItemPadding(
-                                      16, index, items.length),
-                              response: newsCards![index],
-                            ),
-                            items: newsCards,
-                            width: MediaQuery.sizeOf(context).width / 1.2,
-                            height: 480 ,
-
-                          ),
-                        ],
-                      );
+                        ),
+                      ],
+                    );
+                  }
+                }
               },
             ),
           ],
@@ -169,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 16, bottom: 24),
             child: PrimaryText(
-                text: "ظهر بخیر آقای موسوی",
+                text: "ظهر بخیر آقای عامری",
                 style: mThemeData.textTheme.titleBold,
                 color: Colors.white),
           ),
@@ -196,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(
             color: backgroundColor100,
             borderRadius: DesignConfig.highBorderRadius,
-            boxShadow: DesignConfig.defaultShadow,
+            boxShadow: DesignConfig.lowShadow,
           ),
           padding: const EdgeInsets.all(18),
           child: Row(
@@ -223,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Padding _gridLayout() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 40),
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 24),
       child: Column(
         children: [
           Row(
@@ -261,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
                 color: backgroundColor100,
                 borderRadius: DesignConfig.highBorderRadius,
-                boxShadow: DesignConfig.defaultShadow),
+                boxShadow: DesignConfig.lowShadow),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -272,6 +360,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 PrimaryText(
                     text: title,
                     style: mThemeData.textTheme.searchHint,
+                    maxLines: 1,
                     color: grayColor700)
               ],
             ),

@@ -18,3 +18,4 @@ final class SmartScheduleError extends SmartScheduleState {
 }
 
 final class SmartScheduleSuccess extends SmartScheduleState {}
+final class SmartScheduleLoading extends SmartScheduleState {}

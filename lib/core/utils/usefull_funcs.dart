@@ -79,10 +79,10 @@ double daysBetween(DateTime from, DateTime to) {
   return (to.difference(from).inHours).toDouble();
 }
 
-double convertDatetimeComment(String createdAt) {
+int convertDatetimeComment(String createdAt) {
   DateTime createdDate = DateFormat('yyyy-MM-ddThh:mm:ss').parse(createdAt);
   DateTime todayDate = DateTime.now();
-  return daysBetween(createdDate, todayDate);
+  return daysBetween(createdDate, todayDate).round();
 }
 
 CourseTypes? getTypeOfCourse(String type) {

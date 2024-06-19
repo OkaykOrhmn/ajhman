@@ -18,9 +18,11 @@ class RecentCourseCard extends StatefulWidget {
   final int index;
   final EdgeInsetsGeometry? padding;
   final NewCourseCardModel response;
+  final double? width;
+  final double? height;
 
 
-  const RecentCourseCard({super.key, required this.index, this.padding, required this.response});
+  const RecentCourseCard({super.key, required this.index, this.padding, required this.response, this.width, this.height});
 
   @override
   State<RecentCourseCard> createState() => _RecentCourseCardState();
@@ -39,9 +41,11 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
 
     return Center(
       child: Container(
+        width: widget.width,
+        height: widget.height,
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              boxShadow: DesignConfig.defaultShadow,
+              boxShadow: DesignConfig.lowShadow,
               color: Colors.white),
           padding: const EdgeInsets.all(8),
           margin: widget.padding?? EdgeInsets.zero,
@@ -69,7 +73,7 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
                           Container(
                             width: 100,
                             decoration:
-                            BoxDecoration(boxShadow: DesignConfig.defaultShadow),
+                            BoxDecoration(boxShadow: DesignConfig.lowShadow),
                             child:  LinearProgress(value: p, minHeight: 8),
                           ),
                         ],

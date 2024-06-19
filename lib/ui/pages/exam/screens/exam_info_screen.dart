@@ -25,7 +25,7 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
         PrimaryText(
             text: "آزمون فنون مذاکره",
             style: mThemeData.textTheme.dialogTitle,
-            color: primaryColor900),
+            color: Theme.of(context).primaryColor900()),
         const SizedBox(
           height: 16,
         ),
@@ -66,7 +66,7 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
               PrimaryText(
                   text: "قبل از شروع آزمون به نکات زیر دقت فرمایید",
                   style: mThemeData.textTheme.titleBold,
-                  color: primaryColor900),
+                  color: Theme.of(context).primaryColor900()),
               SizedBox(
                 height: 16,
               ),
@@ -108,7 +108,7 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
             PrimaryText(
                 text: title,
                 style: mThemeData.textTheme.titleBold,
-                color: primaryColor900),
+                color: Theme.of(context).primaryColor900()),
             const SizedBox(
               height: 4,
             ),

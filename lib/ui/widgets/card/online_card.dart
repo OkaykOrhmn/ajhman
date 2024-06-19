@@ -25,7 +25,7 @@ class _OnlineCardState extends State<OnlineCard> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: DesignConfig.highBorderRadius,
-          boxShadow: DesignConfig.defaultShadow,
+          boxShadow: DesignConfig.lowShadow,
           color: Colors.white,
         ),
         child: Padding(

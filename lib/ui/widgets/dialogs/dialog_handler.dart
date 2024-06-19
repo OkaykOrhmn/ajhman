@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/data/model/answer_request_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
@@ -13,10 +16,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif/gif.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:loading_btn/loading_btn.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 import '../../../core/routes/route_paths.dart';
+import '../../../core/utils/app_locale.dart';
 import '../../../data/model/answer_result_model.dart';
 import '../../../data/repository/exam_repository.dart';
 import '../../../gen/assets.gen.dart';
@@ -26,8 +33,53 @@ class DialogHandler {
 
   DialogHandler(this.context);
 
-  Future<void> showErrorDialog(
-      String title, String btnTitle, Function()? onTap) async {
+  // Future<void> showErrorDialog(
+  //     String title, String btnTitle, Function()? onTap) async {
+  //   ThemeData themeData = Theme.of(context);
+  //   await showDialog(
+  //     barrierDismissible: false,
+  //     context: context,
+  //     builder: (context) => Dialog(
+  //       backgroundColor: Colors.white,
+  //       insetPadding: const EdgeInsets.all(16),
+  //       shape: const RoundedRectangleBorder(
+  //           borderRadius: DesignConfig.highBorderRadius),
+  //       child: SizedBox(
+  //         width: MediaQuery.sizeOf(context).width,
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           children: [
+  //             Padding(
+  //               padding: const EdgeInsets.symmetric(vertical: 30),
+  //               child: Container(
+  //                   decoration: const BoxDecoration(
+  //                       shape: BoxShape.circle, color: errorBackground),
+  //                   padding: const EdgeInsets.all(6),
+  //                   child: Assets.icon.bold.closeCircle.svg()),
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.symmetric(horizontal: 32.0),
+  //               child: PrimaryText(
+  //                   text: title,
+  //                   style: themeData.textTheme.dialogTitle,
+  //                   color: Colors.black),
+  //             ),
+  //             Container(
+  //                 width: MediaQuery.sizeOf(context).width / 2,
+  //                 padding: const EdgeInsets.symmetric(vertical: 24),
+  //                 child: PrimaryButton(
+  //                   title: btnTitle,
+  //                   onClick: onTap,
+  //                 ))
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Future<void> showWelcomeDialog() async {
     ThemeData themeData = Theme.of(context);
     await showDialog(
       barrierDismissible: false,
@@ -37,34 +89,24 @@ class DialogHandler {
         insetPadding: const EdgeInsets.all(16),
         shape: const RoundedRectangleBorder(
             borderRadius: DesignConfig.highBorderRadius),
-        child: SizedBox(
-          width: MediaQuery.sizeOf(context).width,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: Container(
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: errorBackground),
-                    padding: const EdgeInsets.all(6),
-                    child: Assets.icon.bold.closeCircle.svg()),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: AlertDialog(
+            title: Center(child: Assets.icon.main.sIcon.svg()),
+            content: Text(
+              ChangeLocale(context).appLocal!.welcomeSmartSchedule,
+              style: AppTextStyles.descWelcomeDialogSmartSchedule,
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              Center(
+                child: OutlinedPrimaryButton(
+                  title: ChangeLocale(context).appLocal!.confirm,
+                  onClick: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: PrimaryText(
-                    text: title,
-                    style: themeData.textTheme.dialogTitle,
-                    color: Colors.black),
-              ),
-              Container(
-                  width: MediaQuery.sizeOf(context).width / 2,
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  child: PrimaryButton(
-                    title: btnTitle,
-                    onClick: onTap,
-                  ))
             ],
           ),
         ),
@@ -213,78 +255,94 @@ class DialogHandler {
                 padding:
                     const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: DesignConfig.mediumBorderRadius,
-                        color: backgroundColor100,
-                      ),
-                      width: 100,
-                      height: 100,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Assets.icon.outline.profileCircle
-                              .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          PrimaryText(
-                              text: "آواتار",
-                              style: mThemeData.textTheme.title,
-                              color: grayColor900)
-                        ],
+                    // Container(
+                    //   decoration: const BoxDecoration(
+                    //     borderRadius: DesignConfig.mediumBorderRadius,
+                    //     color: backgroundColor100,
+                    //   ),
+                    //   width: 100,
+                    //   height: 100,
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Assets.icon.outline.profileCircle
+                    //           .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
+                    //       const SizedBox(
+                    //         height: 8,
+                    //       ),
+                    //       PrimaryText(
+                    //           text: "آواتار",
+                    //           style: mThemeData.textTheme.title,
+                    //           color: grayColor900)
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   width: 16,
+                    // ),
+                    InkWell(
+                      onTap: () async {
+                        context.read<ImagePickerCubit>().getImageFromGallery();
+                        pop();
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: DesignConfig.mediumBorderRadius,
+                          color: backgroundColor100,
+                        ),
+                        width: 100,
+                        height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Assets.icon.outline.folder2.svg(
+                                width: 32,
+                                height: 32,
+                                color: Theme.of(context).primaryColor),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            PrimaryText(
+                                text: "حافظه داخلی",
+                                style: mThemeData.textTheme.title,
+                                color: grayColor900)
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(
                       width: 16,
                     ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: DesignConfig.mediumBorderRadius,
-                        color: backgroundColor100,
-                      ),
-                      width: 100,
-                      height: 100,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Assets.icon.outline.folder2
-                              .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          PrimaryText(
-                              text: "حافظه داخلی",
-                              style: mThemeData.textTheme.title,
-                              color: grayColor900)
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: DesignConfig.mediumBorderRadius,
-                        color: backgroundColor100,
-                      ),
-                      width: 100,
-                      height: 100,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Assets.icon.outline.camera
-                              .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          PrimaryText(
-                              text: "دوربین",
-                              style: mThemeData.textTheme.title,
-                              color: grayColor900)
-                        ],
+                    InkWell(
+                      onTap: () {
+                        context.read<ImagePickerCubit>().getImageFromCamera();
+                        pop();
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: DesignConfig.mediumBorderRadius,
+                          color: backgroundColor100,
+                        ),
+                        width: 100,
+                        height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Assets.icon.outline.camera.svg(
+                                width: 32,
+                                height: 32,
+                                color: Theme.of(context).primaryColor),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            PrimaryText(
+                                text: "دوربین",
+                                style: mThemeData.textTheme.title,
+                                color: grayColor900)
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -400,7 +458,7 @@ class DialogHandler {
         });
   }
 
-  static void pop() {
+  void pop() {
     navigatorKey.currentState!.pop();
   }
 }

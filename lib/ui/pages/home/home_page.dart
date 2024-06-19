@@ -1,3 +1,4 @@
+import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/home/screens/for_you_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/home_screen.dart';
@@ -8,6 +9,7 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/bottom_navigation/bottom_navigation_Btn.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
+import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -43,12 +45,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
     var state = context.watch<SelectedIndexCubit>().state;
     tabController.animateTo(state.index);
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(

@@ -39,6 +39,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
 
       if (event is PostComments) {
         try {
+          final profile = await getProfile();
           CommentsResponseModel response = await commentsRepository.addComment(
               event.chapterId, event.subChapterId, event.request);
           response.likes = 0;

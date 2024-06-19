@@ -81,7 +81,7 @@ TextStyle body6 = const TextStyle(
 extension AppTextStyle on TextTheme {
   TextStyle get headerBold => headline3;
 
-  TextStyle get headerLargeBold => headline2;
+  TextStyle get headerLargeBold => headline3;
 
   TextStyle get dialogTitle => headline4;
 

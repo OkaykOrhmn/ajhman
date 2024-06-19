@@ -17,7 +17,6 @@ import '../../../../../data/model/auth/auth_user_otp_request.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../theme/color/colors.dart';
 import '../../../../theme/text/text_styles.dart';
-import '../../../../theme/widget/pin_put_style.dart';
 import '../../../../widgets/button/primary_button.dart';
 import '../../../../widgets/loading/three_bounce_loading.dart';
 
@@ -128,10 +127,19 @@ class _PinScreenState extends State<PinScreen> {
                                   .toString(),
                               otp: pin.toString());
                           context.read<PinBloc>().add(PostOtp(req));
-                          await context.read<PinBloc>().stream.lastWhere(
-                              (state) =>
+                          await context
+                              .read<PinBloc>()
+                              .stream
+                              .lastWhere((state) =>
                                   state is PinErrorState ||
-                                  state is PinSuccessState);
+                                  state is PinSuccessState)
+                              .then((value) {
+                            if (value is PinStartState) {
+                              context
+                                  .read<AuthScreensBloc>()
+                                  .add(AuthNavigateOtpEvent());
+                            }
+                          });
                         },
                         defaultPinTheme: _error
                             ? PinTheme(
@@ -177,7 +185,7 @@ class _PinScreenState extends State<PinScreen> {
                                 height: 56,
                                 textStyle: AppTextStyles.pinPutTextStyle,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: primaryColor),
+                                  border: Border.all(color: Theme.of(context).primaryColor),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
