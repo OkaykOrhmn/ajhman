@@ -50,8 +50,8 @@ class _CommentLayoutState extends State<CommentLayout> {
             decoration: BoxDecoration(
                 color:
                     snapshot.data != null && snapshot.data!.id == data.user!.id
-                        ? Theme.of(context).primaryColor50()
-                        : Colors.white,
+                        ? Theme.of(context).surfaceCard()
+                        : Theme.of(context).onWhite(),
                 borderRadius: DesignConfig.highBorderRadius,
                 boxShadow: DesignConfig.lowShadow),
             child: Column(
@@ -93,7 +93,7 @@ class _CommentLayoutState extends State<CommentLayout> {
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               child: VerticalDivider(
                                 width: 1,
-                                color: secondaryColor,
+                                color: Theme.of(context).secondaryColor(),
                               )),
                           InkWell(
                             onTap: () {
@@ -121,7 +121,7 @@ class _CommentLayoutState extends State<CommentLayout> {
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               child: VerticalDivider(
                                 width: 1,
-                                color: secondaryColor,
+                                color: Theme.of(context).secondaryColor(),
                               )),
                           _commentButton(
                               data.replies != null && data.replies!.isNotEmpty
@@ -146,8 +146,8 @@ class _CommentLayoutState extends State<CommentLayout> {
     return Row(
       children: [
         Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
+          baseColor: Theme.of(context).placeholderBaseColor(),
+          highlightColor: Theme.of(context).placeholderHighlightColor(),
           child: _commentButton(
               data.likes.toString(), CommentBtnType.like, data.userFeedback),
         ),
@@ -156,11 +156,11 @@ class _CommentLayoutState extends State<CommentLayout> {
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: VerticalDivider(
               width: 1,
-              color: secondaryColor,
+              color: Theme.of(context).secondaryColor(),
             )),
         Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
+          baseColor: Theme.of(context).placeholderBaseColor(),
+          highlightColor: Theme.of(context).placeholderHighlightColor(),
           child: _commentButton(data.dislikes.toString(),
               CommentBtnType.disLike, data.userFeedback),
         ),
@@ -169,11 +169,11 @@ class _CommentLayoutState extends State<CommentLayout> {
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: VerticalDivider(
               width: 1,
-              color: secondaryColor,
+              color: Theme.of(context).secondaryColor(),
             )),
         Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
+          baseColor: Theme.of(context).placeholderBaseColor(),
+          highlightColor: Theme.of(context).placeholderHighlightColor(),
           child: _commentButton(
               data.replies != null && data.replies!.isNotEmpty
                   ? data.replies!.length.toString()
@@ -203,13 +203,13 @@ class _CommentLayoutState extends State<CommentLayout> {
             children: [
               PrimaryText(
                   text: data.user!.name.toString(),
-                  style: mThemeData.textTheme.rate,
-                  color: grayColor900),
+                  style: Theme.of(context).textTheme.rate,
+                  color: Theme.of(context).progressText()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Assets.icon.outline.clock
-                      .svg(width: 12, height: 12, color: grayColor400),
+                      .svg(width: 12, height: 12, color: Theme.of(context).progressText()),
                   SizedBox(
                     width: 8,
                   ),
@@ -217,8 +217,8 @@ class _CommentLayoutState extends State<CommentLayout> {
                     maxLines: 1,
                       text:
                           "${convertDatetimeComment(data.createdAt!)} ساعت پیش",
-                      style: mThemeData.textTheme.navbarTitle,
-                      color: grayColor400)
+                      style: Theme.of(context).textTheme.navbarTitle,
+                      color: Theme.of(context).progressText())
                 ],
               )
             ],
@@ -230,7 +230,7 @@ class _CommentLayoutState extends State<CommentLayout> {
 
   Widget _commentButton(String number, CommentBtnType type, bool? active) {
     String src = type.icon;
-    Color color = grayColor400;
+    Color color = Theme.of(context).pinTextFont();
     if (active != null && active) {
       src = type.fill;
       color = errorMain;
@@ -243,8 +243,8 @@ class _CommentLayoutState extends State<CommentLayout> {
           padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
           child: PrimaryText(
               text: number,
-              style: mThemeData.textTheme.title,
-              color: grayColor800),
+              style: Theme.of(context).textTheme.title,
+              color: Theme.of(context).pinTextFont()),
         )
       ],
     );
@@ -259,15 +259,15 @@ class _CommentLayoutState extends State<CommentLayout> {
             data.replyUser != null
                 ? PrimaryText(
                     text: "${data.replyUser!.name} ",
-                    style: mThemeData.textTheme.titleBold,
+                    style: Theme.of(context).textTheme.titleBold,
                     textAlign: TextAlign.justify,
                     color: Theme.of(context).primaryColor)
                 : const SizedBox(),
             PrimaryText(
                 text: data.text.toString(),
-                style: mThemeData.textTheme.title,
+                style: Theme.of(context).textTheme.title,
                 textAlign: TextAlign.justify,
-                color: grayColor800),
+                color: Theme.of(context).pinTextFont()),
           ],
         ),
         const SizedBox(
@@ -286,9 +286,9 @@ class _CommentLayoutState extends State<CommentLayout> {
                   ),
                   PrimaryText(
                       text: data.resource.toString(),
-                      style: mThemeData.textTheme.title,
+                      style: Theme.of(context).textTheme.title,
                       textAlign: TextAlign.justify,
-                      color: grayColor800),
+                      color: Theme.of(context).pinTextFont()),
                 ],
               )
             : const SizedBox(),

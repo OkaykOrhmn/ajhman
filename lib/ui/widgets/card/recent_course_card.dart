@@ -46,7 +46,7 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
               boxShadow: DesignConfig.lowShadow,
-              color: Colors.white),
+              color: Theme.of(context).white()),
           padding: const EdgeInsets.all(8),
           margin: widget.padding?? EdgeInsets.zero,
           child:  Stack(
@@ -87,8 +87,8 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
                   left: 20,
                   child: PrimaryText(
                     text: p.toString().replaceAll(".", " / "),
-                    style: mThemeData.textTheme.searchHint,
-                    color: grayColor900,
+                    style: Theme.of(context).textTheme.searchHint,
+                    color: Theme.of(context).progressText(),
                   ))
             ],
           )),
@@ -111,16 +111,16 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
   Container _title(String text) {
 
     return Container(
-      height: (mThemeData.textTheme.title.fontSize! * 3),
+      height: (Theme.of(context).textTheme.title.fontSize! * 3),
       constraints: const BoxConstraints(
         minWidth: 100,
         maxWidth: 190,
       ),
       child: PrimaryText(
         text: text,
-        style: mThemeData.textTheme.title,
+        style: Theme.of(context).textTheme.title,
         textAlign: TextAlign.start,
-        color: grayColor900,
+        color: Theme.of(context).progressText(),
         maxLines: 2,
       ),
     );

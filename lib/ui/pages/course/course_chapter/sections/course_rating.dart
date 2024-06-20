@@ -1,11 +1,14 @@
 import 'package:ajhman/core/bloc/questions/questions_bloc.dart';
+import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/data/model/feedbacks_questions_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
+import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,13 +16,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
+import 'package:loading_btn/loading_btn.dart';
 
 import '../../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../data/model/questions_model.dart';
 
 class CourseRating extends StatefulWidget {
-  const CourseRating({super.key});
+  final int id;
+  const CourseRating({super.key, required this.id});
 
   @override
   State<CourseRating> createState() => _CourseRatingState();
@@ -46,27 +51,25 @@ class _CourseRatingState extends State<CourseRating> {
     'قوی',
   ];
 
-  late QuestionsModel questionsModel;
+  QuestionsModel questionsModel = QuestionsModel();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final data = context.read<SubChapterCubit>().state!.chapterModel;
-
-    return BlocProvider<QuestionsBloc>(
-      create: (buildContext) {
-        final bloc = QuestionsBloc();
-        bloc.add(GetAllQuestions(id: data.id!));
-        return bloc;
-      },
-      child: BlocConsumer<QuestionsBloc, QuestionsState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+    return BlocBuilder<QuestionsBloc, QuestionsState>(
         builder: (context, state) {
-          if (state is QuestionsSuccess) {
-            questionsModel = state.questionsModel;
-            print(questionsModel.toJson());
-            return questionsModel.questions!.isEmpty?SizedBox():Container(
+      if (state is QuestionsSuccess) {
+        questionsModel = state.questionsModel;
+      } else if (state is QuestionsPutFail) {
+        questionsModel = state.questionsModel;
+      }
+      return questionsModel.questions != null &&
+              questionsModel.questions!.isNotEmpty
+          ? Container(
               margin: EdgeInsets.all(16),
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -127,7 +130,7 @@ class _CourseRatingState extends State<CourseRating> {
                     height: 8,
                   ),
                   VerticalListView(
-                      items: state.questionsModel.questions,
+                      items: questionsModel.questions,
                       item: (context, index) {
                         final q = questionsModel.questions![index];
                         late GroupButtonController _radioController =
@@ -183,7 +186,8 @@ class _CourseRatingState extends State<CourseRating> {
                                       Radio<int>(
                                         groupValue:
                                             _radioController.selectedIndex,
-                                        activeColor: Theme.of(context).primaryColor,
+                                        activeColor:
+                                            Theme.of(context).primaryColor,
                                         value: _index,
                                         onChanged: (val) {
                                           _radioController.selectIndex(_index);
@@ -205,35 +209,51 @@ class _CourseRatingState extends State<CourseRating> {
                   SizedBox(
                     height: 8,
                   ),
-                  OutlinedPrimaryButton(
+                  OutlinePrimaryLoadingButton(
                     title: "ارسال",
-                    fill: true,
-                    onClick: () async {
-                      List<Feedbacks> feeds = [];
-                      for (var element in questionsModel.questions!) {
-                        if (element.score != null) {
-                          feeds.add(Feedbacks(
-                              questionId: element.id, score: element.score));
+                    onTap: (Function startLoading, Function stopLoading,
+                        ButtonState btnState) async {
+                      if (btnState == ButtonState.idle) {
+                        startLoading();
+                        List<Feedbacks> feeds = [];
+                        for (var element in questionsModel.questions!) {
+                          if (element.score != null) {
+                            feeds.add(Feedbacks(
+                                questionId: element.id, score: element.score));
+                          }
                         }
+                        context.read<QuestionsBloc>().add(PutQuestions(
+                            id: widget.id,
+                            feedbacksQuestionsModel:
+                                FeedbacksQuestionsModel(feedbacks: feeds),
+                            questionsModel: questionsModel));
+                        context
+                            .read<QuestionsBloc>()
+                            .stream
+                            .firstWhere((element) =>
+                                state is QuestionsSuccess ||
+                                state is QuestionsPutFail)
+                            .then((value) {
+                          if (value is QuestionsSuccess) {
+                            SnackBarHandler(context).show(
+                                "نظر با موفقیت ثبت شد 😃",
+                                DialogStatus.success,
+                                true);
+                          }
+                          if (value is QuestionsPutFail) {
+                            SnackBarHandler(context).show(
+                                "خطا در ثیت نظر!", DialogStatus.error, true);
+                          }
+                        });
+                        stopLoading();
                       }
-                      print(FeedbacksQuestionsModel(feedbacks: feeds).toJson());
-                      context.read<QuestionsBloc>().add(PutQuestions(
-                          id: data.id!,
-                          feedbacksQuestionsModel:
-                              FeedbacksQuestionsModel(feedbacks: feeds),
-                          questionsModel: questionsModel));
                     },
+                    disable: false,
                   )
                 ],
               ),
-            );
-          } else if (State is QuestionsFail) {
-            return SizedBox();
-          } else {
-            return SizedBox();
-          }
-        },
-      ),
-    );
+            )
+          : const SizedBox();
+    });
   }
 }

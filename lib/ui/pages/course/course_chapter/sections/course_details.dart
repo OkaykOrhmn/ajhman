@@ -13,7 +13,6 @@ import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../widgets/listview/highlight_listview.dart';
 
-
 class CourseDetails extends StatefulWidget {
   const CourseDetails({super.key});
 
@@ -34,24 +33,23 @@ class _CourseDetailsState extends State<CourseDetails> {
           padding: EdgeInsets.all(16),
           margin: EdgeInsets.all(16),
           decoration: BoxDecoration(
-              color: backgroundColor100,
+              color: Theme.of(context).cardBackground(),
               borderRadius: DesignConfig.highBorderRadius,
-              boxShadow: DesignConfig.lowShadow
-          ),
+              boxShadow: DesignConfig.lowShadow),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               PrimaryText(
                 text: "آنچه در این دوره می‌آموزیم",
-                style: mThemeData.textTheme.dialogTitle,
-                color: Theme.of(context).primaryColor900(),
+                style: Theme.of(context).textTheme.dialogTitle,
+                color: Theme.of(context).headText(),
                 textAlign: TextAlign.start,
               ),
               const SizedBox(
                 height: 16,
               ),
               HighlightListView(
-                  items: data.highlight!,
+                items: data.highlight!,
               )
             ],
           ),
@@ -60,10 +58,10 @@ class _CourseDetailsState extends State<CourseDetails> {
           children: [
             Container(
               margin: EdgeInsets.all(16),
-              padding: EdgeInsets.all(16).copyWith(bottom: _showMore? 48 : 16),
+              padding: EdgeInsets.all(16).copyWith(bottom: _showMore ? 48 : 16),
               decoration: BoxDecoration(
                   boxShadow: DesignConfig.lowShadow,
-                  color: CupertinoColors.white,
+                  color: Theme.of(context).white(),
                   borderRadius: DesignConfig.highBorderRadius),
               child: Column(
                 children: [
@@ -77,10 +75,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: PrimaryText(
-                      text:
-                          data.description.toString(),
-                      style: mThemeData.textTheme.title,
-                      color: grayColor900,
+                      text: data.description.toString(),
+                      style: Theme.of(context).textTheme.title,
+                      color: Theme.of(context).progressText(),
                       textAlign: TextAlign.justify,
                       maxLines: _showMore ? null : 10,
                     ),
@@ -90,21 +87,24 @@ class _CourseDetailsState extends State<CourseDetails> {
             ),
             Positioned(
                 bottom: 0,
-                left: 0,
-                right: 0,
+                left: 16,
+                right: 16,
                 child: Container(
                   height: 90,
                   alignment: Alignment.bottomCenter,
                   decoration: _showMore
                       ? null
                       : BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: DesignConfig.aHighBorderRadius,
+                              bottomRight: DesignConfig.aHighBorderRadius),
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.white.withOpacity(0.8),
-                              Colors.white.withOpacity(0.9),
-                              Colors.white,
+                              Theme.of(context).white().withOpacity(0.8),
+                              Theme.of(context).white().withOpacity(0.9),
+                              Theme.of(context).white(),
                             ],
                           ),
                         ),
@@ -116,15 +116,20 @@ class _CourseDetailsState extends State<CourseDetails> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Theme.of(context).primaryColor50()),
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).primaryColor50()),
                       width: 40,
                       height: 40,
                       child: Center(
                           child: _showMore
-                              ? Assets.icon.outline.arrowUp
-                                  .svg(width: 24, height: 24, color: Theme.of(context).primaryColor)
-                              : Assets.icon.outline.arrowDown
-                                  .svg(width: 24, height: 24, color: Theme.of(context).primaryColor)),
+                              ? Assets.icon.outline.arrowUp.svg(
+                                  width: 24,
+                                  height: 24,
+                                  color: Theme.of(context).primaryColor)
+                              : Assets.icon.outline.arrowDown.svg(
+                                  width: 24,
+                                  height: 24,
+                                  color: Theme.of(context).primaryColor)),
                     ),
                   ),
                 ))

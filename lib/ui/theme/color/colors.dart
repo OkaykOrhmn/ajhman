@@ -117,6 +117,191 @@ extension ThemeDataApp on ThemeData {
         return const Color(0xff014546);
     }
   }
+
+  Color surfacePrimaryColor(){
+    if(brightness == Brightness.light){
+      return primaryColor;
+    }else{
+      return grayColor800;
+    }
+  }
+
+  Color white(){
+    if(brightness == Brightness.light){
+      return Colors.white;
+    }else{
+      return grayColor800;
+    }
+  }
+
+  Color black(){
+    if(brightness == Brightness.light){
+      return Colors.black;
+    }else{
+      return Colors.white;
+    }
+  }
+
+  Color onWhite(){
+    if(brightness == Brightness.light){
+      return Color(0xffeef1f1);
+    }else{
+      return grayColor700;
+    }
+  }
+
+  Color shadow(){
+    if(brightness == Brightness.light){
+      return grayColor900;
+    }else{
+      return backgroundColor100;
+    }
+  }
+
+  Color disable(){
+    if(brightness == Brightness.light){
+      return backgroundColor600;
+    }else{
+      return grayColor600;
+    }
+  }
+
+  Color editTextFilled(){
+    if(brightness == Brightness.light){
+      return backgroundColor100;
+    }else{
+      return grayColor800;
+    }
+  }
+
+  Color editTextFont(){
+    if(brightness == Brightness.light){
+      return grayColor600;
+    }else{
+      return grayColor300;
+    }
+  }
+
+  Color pinTextFont(){
+    if(brightness == Brightness.light){
+      return grayColor800;
+    }else{
+      return grayColor100;
+    }
+  }
+
+  Color background(){
+    if(brightness == Brightness.light){
+      return Color(0xffeef1f1);
+    }else{
+      return grayColor900;
+    }
+  }
+
+  Color cardBackground(){
+    if(brightness == Brightness.light){
+      return backgroundColor100;
+    }else{
+      return grayColor800;
+    }
+  }
+
+  Color cardText(){
+    if(brightness == Brightness.light){
+      return grayColor700;
+    }else{
+      return grayColor50;
+    }
+  }
+
+  Color progressText(){
+    if(brightness == Brightness.light){
+      return grayColor900;
+    }else{
+      return grayColor50;
+    }
+  }
+
+  Color headText(){
+    if(brightness == Brightness.light){
+      return primaryColor900();
+    }else{
+      return grayColor50;
+    }
+  }
+
+  Color headText2(){
+    if(brightness == Brightness.light){
+      return primaryColor800();
+    }else{
+      return primaryColor400();
+    }
+  }
+
+  Color surfaceCard(){
+    if(brightness == Brightness.light){
+      return primaryColor50();
+    }else{
+      return grayColor400;
+    }
+  }
+
+  Color secondaryColor(){
+    if(brightness == Brightness.light){
+      return secondaryColor600;
+    }else{
+      return secondaryColor200;
+    }
+
+  }
+
+  Color placeholderBaseColor(){
+    if(brightness == Brightness.light){
+      return grayColor300;
+    }else{
+      return grayColor600;
+    }
+  }
+
+  Color placeholderHighlightColor(){
+    if(brightness == Brightness.light){
+      return grayColor200;
+    }else{
+      return grayColor700;
+    }
+  }
+
+  Color backgroundSuccess(){
+    if(brightness == Brightness.light){
+      return successBackground;
+    }else{
+      return successFont;
+    }
+  }
+  Color backgroundError(){
+    if(brightness == Brightness.light){
+      return errorBackground;
+    }else{
+      return errorFont;
+    }
+  }
+  Color fontSuccess(){
+    if(brightness == Brightness.light){
+      return successFont;
+    }else{
+      return successMain;
+    }
+  }
+ Color fontError(){
+    if(brightness == Brightness.light){
+      return errorFont;
+    }else{
+      return errorMain;
+    }
+  }
+
+
+
 }
 
 const primaryColorLight = primaryColor;

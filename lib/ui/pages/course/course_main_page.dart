@@ -23,6 +23,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif/gif.dart';
 
 import '../../../core/bloc/course/main/course_main_bloc.dart';
+import '../../../core/bloc/questions/questions_bloc.dart';
 import '../../../gen/assets.gen.dart';
 
 class CourseMainPage extends StatefulWidget {
@@ -47,34 +48,36 @@ class _CourseMainPageState extends State<CourseMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).background(),
       appBar: const ReversibleAppBar(title: "محتوای دوره"),
       body: BlocConsumer<CourseMainBloc, CourseMainState>(
         builder: (context, state) {
-          
-          if(state is CourseMainSuccess){
+          if (state is CourseMainSuccess) {
             return CourseInfoPage(response: state.response);
-          }else if(state is CourseRoadmapSuccess){
+          } else if (state is CourseRoadmapSuccess) {
             return RoadMapPage(
               response: state.response,
               courseId: widget.args.courseId!,
             );
-          }else if(state is CourseMainLoading){
+          } else {
             return Center(
               child: Gif(
                 image: Assets.gif.roadMapLoading.provider(),
                 autostart: Autostart.loop,
               ),
             );
-          }else{
-            return const SizedBox();
           }
-        }, listener: (BuildContext context, CourseMainState state) {
-          if(state is CourseRoadmapEmpty){
+        },
+        listener: (BuildContext context, CourseMainState state) {
+          if (state is CourseRoadmapEmpty) {
             context
                 .read<CourseMainBloc>()
                 .add(GetCourseMainInfo(courseId: widget.args.courseId!));
+            context
+                .read<QuestionsBloc>()
+                .add(GetAllQuestions(id: widget.args.courseId!));
           }
-      },
+        },
       ),
     );
   }

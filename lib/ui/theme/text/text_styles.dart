@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../main.dart';
 import '../bloc/theme_bloc.dart';
 
-const _defaultFontFamily = 'Dana';
+const _defaultFontFamily = 'Dana-FaNum-Regular';
 
 class AppTextStyles {
   static TextStyle headerBoldWhite = headline3.copyWith(color: Colors.white);

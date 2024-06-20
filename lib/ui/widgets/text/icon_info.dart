@@ -19,7 +19,7 @@ class IconInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        icon.svg(color: secondaryColor, width: 16, height: 16),
+        icon.svg(color:  Theme.of(context).secondaryColor(), width: 16, height: 16),
         const SizedBox(
           width: 4,
         ),
@@ -29,7 +29,7 @@ class IconInfo extends StatelessWidget {
               textAlign: TextAlign.start,
               style: mThemeData.textTheme.searchHint,
               maxLines: 1,
-              color: grayColor600),
+              color: Theme.of(context).editTextFont()),
         )
       ],
     );

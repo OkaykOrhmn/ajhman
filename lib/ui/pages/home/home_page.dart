@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-          backgroundColor: mThemeData.colorScheme.background,
+          backgroundColor: Theme.of(context).background(),
           appBar: PrimaryAppBar(
             title: state.title,
           ),
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                           //this is why click effect Inkwell not work
-                          color: Colors.white,
+                          color:  Theme.of(context).white(),
                           boxShadow: DesignConfig.mediumShadow,
                           borderRadius: const BorderRadius.only(
                               topRight: DesignConfig.aHighBorderRadius,

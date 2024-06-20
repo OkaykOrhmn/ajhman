@@ -8,8 +8,9 @@
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vector_graphics/vector_graphics.dart';
 
 class $AssetsGifGen {
   const $AssetsGifGen();
@@ -32,7 +33,10 @@ class $AssetsGifGen {
 class $AssetsIconGen {
   const $AssetsIconGen();
 
+  /// Directory path: assets/icon/Blod
   $AssetsIconBlodGen get blod => const $AssetsIconBlodGen();
+
+  /// Directory path: assets/icon/bold
   $AssetsIconBoldGen get bold => const $AssetsIconBoldGen();
 
   /// File path: assets/icon/bold - tick-circle.svg
@@ -49,6 +53,7 @@ class $AssetsIconGen {
   /// File path: assets/icon/bold-note.svg
   SvgGenImage get boldNote => const SvgGenImage('assets/icon/bold-note.svg');
 
+  /// Directory path: assets/icon/main
   $AssetsIconMainGen get main => const $AssetsIconMainGen();
 
   /// File path: assets/icon/medal1.png
@@ -64,6 +69,7 @@ class $AssetsIconGen {
   SvgGenImage get notification =>
       const SvgGenImage('assets/icon/notification.svg');
 
+  /// Directory path: assets/icon/outline
   $AssetsIconOutlineGen get outline => const $AssetsIconOutlineGen();
 
   /// File path: assets/icon/outline - tick-circle.svg
@@ -93,12 +99,16 @@ class $AssetsIconGen {
   /// File path: assets/icon/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icon/profile.svg');
 
+  /// Directory path: assets/icon/twotone
   $AssetsIconTwotoneGen get twotone => const $AssetsIconTwotoneGen();
 
   /// File path: assets/icon/user.svg
   SvgGenImage get user => const SvgGenImage('assets/icon/user.svg');
 
+  /// Directory path: assets/icon/utline
   $AssetsIconUtlineGen get utline => const $AssetsIconUtlineGen();
+
+  /// Directory path: assets/icon/vuesax
   $AssetsIconVuesaxGen get vuesax => const $AssetsIconVuesaxGen();
 
   /// List of all assets
@@ -146,6 +156,7 @@ class $AssetsImageGen {
   SvgGenImage get finishExam =>
       const SvgGenImage('assets/image/finish-exam.svg');
 
+  /// Directory path: assets/image/moon
   $AssetsImageMoonGen get moon => const $AssetsImageMoonGen();
 
   /// File path: assets/image/success-exam.svg
@@ -771,9 +782,11 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName);
+  const AssetGenImage(this._assetName, {this.size = null});
 
   final String _assetName;
+
+  final Size? size;
 
   Image image({
     Key? key,
@@ -845,9 +858,20 @@ class AssetGenImage {
 }
 
 class SvgGenImage {
-  const SvgGenImage(this._assetName);
+  const SvgGenImage(
+    this._assetName, {
+    this.size = null,
+  }) : _isVecFormat = false;
+
+  const SvgGenImage.vec(
+    this._assetName, {
+    this.size = null,
+  }) : _isVecFormat = true;
 
   final String _assetName;
+
+  final Size? size;
+  final bool _isVecFormat;
 
   SvgPicture svg({
     Key? key,
@@ -862,19 +886,21 @@ class SvgGenImage {
     WidgetBuilder? placeholderBuilder,
     String? semanticsLabel,
     bool excludeFromSemantics = false,
-    SvgTheme theme = const SvgTheme(),
+    SvgTheme? theme,
     ColorFilter? colorFilter,
     Clip clipBehavior = Clip.hardEdge,
     @deprecated Color? color,
     @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
     @deprecated bool cacheColorFilter = false,
   }) {
-    return SvgPicture.asset(
-      _assetName,
+    return SvgPicture(
+      _isVecFormat
+          ? AssetBytesLoader(_assetName,
+              assetBundle: bundle, packageName: package)
+          : SvgAssetLoader(_assetName,
+              assetBundle: bundle, packageName: package),
       key: key,
       matchTextDirection: matchTextDirection,
-      bundle: bundle,
-      package: package,
       width: width,
       height: height,
       fit: fit,
@@ -884,9 +910,8 @@ class SvgGenImage {
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
       theme: theme,
-      colorFilter: colorFilter,
-      color: color,
-      colorBlendMode: colorBlendMode,
+      colorFilter: colorFilter ??
+          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );

@@ -44,7 +44,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: backgroundColor100,
+                        color: Theme.of(context).cardBackground(),
                         borderRadius: DesignConfig.highBorderRadius,
                         boxShadow: DesignConfig.lowShadow),
                     padding: EdgeInsets.all(8),
@@ -56,7 +56,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
-                              color: Colors.white),
+                              color:Theme.of(context).onWhite()),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -67,7 +67,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                               ),
                               PrimaryText(
                                   text: "گواهینامه‌های طلایی",
-                                  style: mThemeData.textTheme.headerLargeBold,
+                                  style: Theme.of(context).textTheme.headerLargeBold,
                                   color: goldColor),
                             ],
                           ),
@@ -77,8 +77,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                           child: PrimaryText(
                               text:
                                   "با اعلام این امتیاز به سازمان خود، می‌توانید سرتیفیکت معتبر دریافت نمایید.",
-                              style: mThemeData.textTheme.title,
-                              color: grayColor900),
+                              style: Theme.of(context).textTheme.title,
+                              color: Theme.of(context).progressText()),
                         ),
                         const SizedBox(
                           height: 8,
@@ -103,7 +103,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: DesignConfig.highBorderRadius,
-                      color: backgroundColor100,
+                      color: Theme.of(context).cardBackground(),
                     ),
                     padding: EdgeInsets.all(16),
                     child: Column(
@@ -114,7 +114,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
-                              color: Colors.white),
+                              color: Theme.of(context).onWhite()),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -125,7 +125,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                               ),
                               PrimaryText(
                                   text: "گواهینامه‌های نقره‌ای",
-                                  style: mThemeData.textTheme.headerLargeBold,
+                                  style: Theme.of(context).textTheme.headerLargeBold,
                                   color: silverColor),
                             ],
                           ),
@@ -135,8 +135,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                           child: PrimaryText(
                               text:
                                   "با اعلام این امتیاز به سازمان خود، می‌توانید سرتیفیکت معتبر دریافت نمایید.",
-                              style: mThemeData.textTheme.title,
-                              color: grayColor900),
+                              style: Theme.of(context).textTheme.title,
+                              color: Theme.of(context).progressText()),
                         ),
                         state.response.silver!.isEmpty
                             ? _empty()
@@ -155,7 +155,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: DesignConfig.highBorderRadius,
-                      color: backgroundColor100,
+                      color: Theme.of(context).cardBackground(),
                     ),
                     padding: EdgeInsets.all(16),
                     child: Column(
@@ -166,7 +166,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
-                              color: Colors.white),
+                              color: Theme.of(context).onWhite()),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -177,7 +177,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                               ),
                               PrimaryText(
                                   text: "گواهینامه‌های برنزی",
-                                  style: mThemeData.textTheme.headerLargeBold,
+                                  style: Theme.of(context).textTheme.headerLargeBold,
                                   color: bronzeColor),
                             ],
                           ),
@@ -187,8 +187,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                           child: PrimaryText(
                               text:
                                   "با اعلام این امتیاز به سازمان خود، می‌توانید سرتیفیکت معتبر دریافت نمایید.",
-                              style: mThemeData.textTheme.title,
-                              color: grayColor900),
+                              style: Theme.of(context).textTheme.title,
+                              color: Theme.of(context).progressText()),
                         ),
                         state.response.bronze!.isEmpty
                             ? _empty()
@@ -226,8 +226,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
           padding: const EdgeInsets.only(bottom: 24.0),
           child: PrimaryText(
               text: "هنوز موفق به کسب امتیاز حد نصاب نشده‌اید.",
-              style: mThemeData.textTheme.title,
-              color: grayColor900),
+              style: Theme.of(context).textTheme.title,
+              color: Theme.of(context).progressText()),
         ),
         Padding(
           padding: const EdgeInsets.only(
@@ -250,7 +250,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: Colors.white,
+              color: Theme.of(context).onWhite(),
               boxShadow: DesignConfig.lowShadow),
           padding: EdgeInsets.all(8),
           child: Row(
@@ -272,8 +272,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                 children: [
                   PrimaryText(
                       text: "دوره هوش مصنوعی",
-                      style: mThemeData.textTheme.title,
-                      color: grayColor900),
+                      style: Theme.of(context).textTheme.title,
+                      color: Theme.of(context).progressText()),
                   SizedBox(
                     height: 8,
                   ),
@@ -287,8 +287,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                       ),
                       PrimaryText(
                           text: "۳۲۴۱ امتیاز",
-                          style: mThemeData.textTheme.searchHint,
-                          color: grayColor700),
+                          style: Theme.of(context).textTheme.searchHint,
+                          color: Theme.of(context).progressText()),
                     ],
                   )
                 ],
@@ -304,7 +304,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: DesignConfig.highBorderRadius,
-          color: Colors.white,
+          color: Theme.of(context).onWhite(),
           boxShadow: DesignConfig.lowShadow),
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.symmetric(horizontal: 8),
@@ -326,8 +326,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
             children: [
               PrimaryText(
                   text: data.name.toString(),
-                  style: mThemeData.textTheme.title,
-                  color: grayColor900),
+                  style: Theme.of(context).textTheme.title,
+                  color: Theme.of(context).progressText()),
               SizedBox(
                 height: 8,
               ),
@@ -341,8 +341,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                   ),
                   PrimaryText(
                       text: "${data.score!} امتیاز",
-                      style: mThemeData.textTheme.searchHint,
-                      color: grayColor700),
+                      style: Theme.of(context).textTheme.searchHint,
+                      color: Theme.of(context).progressText()),
                 ],
               )
             ],

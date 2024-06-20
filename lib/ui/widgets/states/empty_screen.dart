@@ -10,7 +10,7 @@ class EmptyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Center(
-      child: PrimaryText(text: "چیزی در این صفحه وجود ندارد", style: mThemeData.textTheme.headerBold, color: grayColor800)
+      child: PrimaryText(text: "چیزی در این صفحه وجود ندارد", style: Theme.of(context).textTheme.headerBold, color: Theme.of(context).pinTextFont())
     );
   }
 }

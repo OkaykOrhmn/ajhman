@@ -9,6 +9,7 @@ import '../../../core/utils/language/bloc/language_bloc.dart';
 import '../../../data/model/language.dart';
 import '../../../gen/assets.gen.dart';
 import '../../theme/bloc/theme_bloc.dart';
+import '../../theme/color/colors.dart';
 import '../../theme/text/text_styles.dart';
 
 class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,7 +21,7 @@ class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor:Theme.of(context).surfacePrimaryColor(),
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

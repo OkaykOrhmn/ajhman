@@ -145,7 +145,7 @@ class _PinScreenState extends State<PinScreen> {
                             ? PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: AppTextStyles.pinPutTextStyle,
+                                textStyle: Theme.of(context).textTheme.title.copyWith(color: errorMain),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: errorMain),
                                   borderRadius: BorderRadius.circular(8),
@@ -154,7 +154,7 @@ class _PinScreenState extends State<PinScreen> {
                             : PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: AppTextStyles.pinPutTextStyle,
+                                textStyle: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).pinTextFont()),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: backgroundColor600),
                                   borderRadius: BorderRadius.circular(8),
@@ -163,7 +163,7 @@ class _PinScreenState extends State<PinScreen> {
                         focusedPinTheme: PinTheme(
                           width: 56,
                           height: 56,
-                          textStyle: AppTextStyles.pinPutTextStyle,
+                          textStyle: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).pinTextFont()),
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: Theme.of(context).primaryColor),
@@ -174,7 +174,7 @@ class _PinScreenState extends State<PinScreen> {
                             ? PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: AppTextStyles.pinPutTextStyle,
+                                textStyle: Theme.of(context).textTheme.title.copyWith(color: errorMain),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: errorMain),
                                   borderRadius: BorderRadius.circular(8),
@@ -183,7 +183,7 @@ class _PinScreenState extends State<PinScreen> {
                             : PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: AppTextStyles.pinPutTextStyle,
+                                textStyle: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).primaryColor),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Theme.of(context).primaryColor),
                                   borderRadius: BorderRadius.circular(8),

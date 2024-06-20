@@ -407,7 +407,7 @@ class DialogHandler {
                   PrimaryText(
                       text: "آیا از پایان دادن به آزمون مطمئن هستید؟",
                       style: themeData.textTheme.titleBold,
-                      color: Colors.black),
+                      color: Theme.of(context).black()),
                   Container(
                     width: MediaQuery.sizeOf(context).width,
                     height: MediaQuery.sizeOf(context).width / 1.3,

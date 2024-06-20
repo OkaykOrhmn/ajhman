@@ -79,6 +79,7 @@ class _ExamPageState extends State<ExamPage>
                 context.read<AnswerCubit>().state.answerRequestModel.answers);
         try {
           AnswerResultModel response = await examRepository.postExam(4, result);
+
           navigatorKey.currentState!
               .pushReplacementNamed(RoutePaths.examResult, arguments: response);
         } on DioError catch (e) {}
@@ -100,6 +101,7 @@ class _ExamPageState extends State<ExamPage>
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Theme.of(context).background(),
         appBar: const ReversibleAppBar(
           title: "آزمون دوره",
           canBack: false,
@@ -112,8 +114,8 @@ class _ExamPageState extends State<ExamPage>
                 children: [
                   PrimaryText(
                       text: "آزمون فنون مذاکره",
-                      style: mThemeData.textTheme.dialogTitle,
-                      color: Theme.of(context).primaryColor900()),
+                      style: Theme.of(context).textTheme.dialogTitle,
+                      color: Theme.of(context).headText()),
                   const SizedBox(
                     height: 16,
                   ),
@@ -156,7 +158,7 @@ class _ExamPageState extends State<ExamPage>
                                     width: 16, height: 16, color: grayColor800),
                                 PrimaryText(
                                     text: getFormatDuration(time.round()),
-                                    style: mThemeData.textTheme.rate,
+                                    style: Theme.of(context).textTheme.rate,
                                     color: Colors.white)
                               ],
                             ),
@@ -185,7 +187,7 @@ class _ExamPageState extends State<ExamPage>
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                             borderRadius: DesignConfig.highBorderRadius,
-                            color: backgroundColor100,
+                            color: Theme.of(context).editTextFilled(),
                             boxShadow: DesignConfig.lowShadow),
                         child: Column(
                           children: [
@@ -194,8 +196,8 @@ class _ExamPageState extends State<ExamPage>
                                 PrimaryText(
                                     text:
                                         "سوال ${state.index + 1} از ${exams.length}",
-                                    style: mThemeData.textTheme.rate,
-                                    color: grayColor800)
+                                    style: Theme.of(context).textTheme.rate,
+                                    color: Theme.of(context).pinTextFont())
                               ],
                             ),
                             SizedBox(
@@ -207,7 +209,7 @@ class _ExamPageState extends State<ExamPage>
                               child: Container(
                                 padding: EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: backgroundColor100,
+                                  color: Theme.of(context).white(),
                                   borderRadius: DesignConfig.highBorderRadius,
                                 ),
                                 child: Column(
@@ -215,8 +217,8 @@ class _ExamPageState extends State<ExamPage>
                                   children: [
                                     PrimaryText(
                                       text: exam.text.toString(),
-                                      style: mThemeData.textTheme.title,
-                                      color: grayColor900,
+                                      style: Theme.of(context).textTheme.title,
+                                      color: Theme.of(context).progressText(),
                                       textAlign: TextAlign.start,
                                     ),
                                     SizedBox(
@@ -237,7 +239,7 @@ class _ExamPageState extends State<ExamPage>
                                           decoration: BoxDecoration(
                                               color: selected
                                                   ? Theme.of(context).primaryColor50()
-                                                  : Colors.white,
+                                                  : Theme.of(context).onWhite(),
                                               borderRadius: DesignConfig
                                                   .highBorderRadius),
                                           child: Row(
@@ -258,9 +260,9 @@ class _ExamPageState extends State<ExamPage>
                                                   child: PrimaryText(
                                                 text:
                                                     "${getAlphIndex(_index)}${exam.options![_index]}",
-                                                style: mThemeData
+                                                style: Theme.of(context)
                                                     .textTheme.searchHint,
-                                                color: grayColor800,
+                                                color: selected? Colors.black :Theme.of(context).pinTextFont(),
                                                 textAlign: TextAlign.start,
                                               )),
                                             ],

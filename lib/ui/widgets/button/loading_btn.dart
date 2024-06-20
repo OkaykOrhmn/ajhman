@@ -48,7 +48,7 @@ class _PrimaryLoadingButtonState extends State<PrimaryLoadingButton>
       height: 46,
       borderRadius: 14,
       animate: false,
-      color: widget.disable ? backgroundColor : Theme.of(context).primaryColor,
+      color: widget.disable ? Theme.of(context).disable() : Theme.of(context).primaryColor,
       width: widget.width,
       elevation: widget.disable ? 0 : 2,
       roundLoadingShape: false,

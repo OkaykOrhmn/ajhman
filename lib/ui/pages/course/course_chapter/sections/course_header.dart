@@ -35,7 +35,7 @@ class _CourseHeaderState extends State<CourseHeader> {
             children: [
               PrimaryText(
                   text: widget.title,
-                  style: mThemeData.textTheme.titleBold,
+                  style: Theme.of(context).textTheme.titleBold,
                   color: CupertinoColors.white),
               Container(
                 padding: EdgeInsets.all(8),
@@ -45,7 +45,7 @@ class _CourseHeaderState extends State<CourseHeader> {
                 ),
                 child: Row(
                   children: [
-                  PrimaryText(text: "4.2", style: mThemeData.textTheme.searchHint, color: grayColor700),
+                  PrimaryText(text: "4.2", style: Theme.of(context).textTheme.searchHint, color: Theme.of(context).cardText()),
                   SizedBox(width: 2,),
                   Icon(CupertinoIcons.star_fill,color: goldColor,size: 16,)
                 ],),
@@ -58,7 +58,7 @@ class _CourseHeaderState extends State<CourseHeader> {
           margin: EdgeInsets.all(16),
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
-              color: backgroundColor100, borderRadius: DesignConfig.highBorderRadius),
+              color: Theme.of(context).cardBackground(), borderRadius: DesignConfig.highBorderRadius),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
@@ -68,14 +68,14 @@ class _CourseHeaderState extends State<CourseHeader> {
                 SizedBox(width: 16,),
                 PrimaryText(
                     text: "شما ۶۷ درصد از دوره را مشاهده کرده‌اید ",
-                    style: mThemeData.textTheme.title,
-                    color: grayColor700),
+                    style: Theme.of(context).textTheme.title,
+                    color: Theme.of(context).cardText()),
               ],
             ),
           ),
         ),
         SizedBox(height: 24,),
-        PrimaryText(text: data.name.toString(), style: mThemeData.textTheme.titleBold, color: Theme.of(context).primaryColor900()),
+        PrimaryText(text: data.name.toString(), style: Theme.of(context).textTheme.titleBold, color: Theme.of(context).headText()),
         SizedBox(height: 40,),
 
 

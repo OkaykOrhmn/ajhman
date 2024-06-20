@@ -35,8 +35,8 @@ class _AuthPageState extends State<AuthPage> {
       child: Container(
         color: Theme.of(context).primaryColor,
         child: Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
+          decoration:  BoxDecoration(
+              color: Theme.of(context).white(),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(24), topRight: Radius.circular(24))),
           child: Padding(

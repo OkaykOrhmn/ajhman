@@ -1,4 +1,5 @@
 import 'package:ajhman/main.dart';
+import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,7 @@ class DesignConfig {
 
   static List<BoxShadow> get defaultShadow => [
     BoxShadow(
-      color: const Color(0XFF1B3C59).withOpacity(0.25),
+      color: Theme.of(context!).white().withOpacity(0.25),
       blurRadius: 16,
       spreadRadius: 0,
     )

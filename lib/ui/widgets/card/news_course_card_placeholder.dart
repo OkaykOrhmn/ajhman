@@ -50,7 +50,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                 decoration: BoxDecoration(
                     borderRadius: DesignConfig.highBorderRadius,
                     boxShadow: DesignConfig.lowShadow,
-                    color: Colors.white),
+                    color: Theme.of(context).white()),
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -81,11 +81,11 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
       case CardType.onLearning:
         return Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
+             Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
-                color: backgroundColor600,
+                color: Theme.of(context).disable(),
               ),
             ),
             Row(
@@ -103,8 +103,8 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                     DefaultPlaceHolder(
                       child: PrimaryText(
                           text: "response.progress.toString()",
-                          style: mThemeData.textTheme.navbarTitle,
-                          color: grayColor900),
+                          style: Theme.of(context).textTheme.navbarTitle,
+                          color: Theme.of(context).progressText()),
                     ),
                   ],
                 ),
@@ -127,11 +127,11 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
       case CardType.completed:
         return Column(
           children: [
-            const Padding(
+             Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
-                color: backgroundColor600,
+                color: Theme.of(context).disable(),
               ),
             ),
             Row(
@@ -142,13 +142,13 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                     DefaultPlaceHolder(
                       child: PrimaryText(
                           text: "امتیاز شما: ",
-                          style: mThemeData.textTheme.navbarTitle,
-                          color: grayColor600),
+                          style: Theme.of(context).textTheme.navbarTitle,
+                          color: Theme.of(context).editTextFont()),
                     ),
                     DefaultPlaceHolder(
                       child: PrimaryText(
                           text: "{response.score} امتیاز",
-                          style: mThemeData.textTheme.navbarTitleBold,
+                          style: Theme.of(context).textTheme.navbarTitleBold,
                           color: Theme.of(context).primaryColor),
                     ),
                   ],
@@ -243,9 +243,9 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
       child: DefaultPlaceHolder(
         child: PrimaryText(
           text: "response.name.toString()",
-          style: mThemeData.textTheme.titleBold,
+          style: Theme.of(context).textTheme.titleBold,
           textAlign: TextAlign.start,
-          color: grayColor900,
+          color: Theme.of(context).progressText(),
           maxLines: 2,
         ),
       ),
@@ -274,8 +274,8 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
 
   Container _rateBar(String rate) {
     return Container(
-      decoration: const BoxDecoration(
-          color: Colors.white, borderRadius: DesignConfig.highBorderRadius),
+      decoration:  BoxDecoration(
+          color: Theme.of(context).white(), borderRadius: DesignConfig.highBorderRadius),
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       child: Center(
         child: Row(
@@ -285,8 +285,8 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
               padding: const EdgeInsets.only(top: 2),
               child: PrimaryText(
                   text: rate,
-                  style: mThemeData.textTheme.searchHint,
-                  color: grayColor700),
+                  style: Theme.of(context).textTheme.searchHint,
+                  color: Theme.of(context).cardText()),
             ),
             const SizedBox(
               width: 4,

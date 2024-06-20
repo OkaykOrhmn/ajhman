@@ -1,3 +1,4 @@
+import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -12,8 +13,8 @@ class DefaultPlaceHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: Theme.of(context).placeholderBaseColor(),
+      highlightColor: Theme.of(context).placeholderHighlightColor(),
       child: Container(
           decoration: BoxDecoration(
               color: Colors.cyan, borderRadius: DesignConfig.highBorderRadius),

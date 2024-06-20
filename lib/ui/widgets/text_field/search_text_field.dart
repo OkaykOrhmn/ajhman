@@ -37,7 +37,7 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: backgroundColor100,
+        color: Theme.of(context).cardBackground(),
         borderRadius: DesignConfig.highBorderRadius,
         boxShadow: DesignConfig.lowShadow,
       ),
@@ -46,10 +46,10 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
       child: Row(
         children: [
           SizedBox(width: 16,),
-          Center(child: Assets.icon.outline.searchNormal.svg(color: backgroundColor600,width: 16,height: 16)),
+          Center(child: Assets.icon.outline.searchNormal.svg(color: Theme.of(context).disable(),width: 16,height: 16)),
           const SizedBox(width: 8,),
           Container(
-            color: backgroundColor600,
+            color: Theme.of(context).disable(),
             width: 1,
             height: 20,
           ),
@@ -58,7 +58,7 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
               padding: const EdgeInsets.only(left: 8.0),
               child: TextField(
                 controller: widget.textEditingController,
-                style: mThemeData.textTheme.searchHint,
+                style: Theme.of(context).textTheme.searchHint,
                 onChanged: (val) {
                   setState(() {
                     _onChange(val);
@@ -83,7 +83,7 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
                         : null,
                     filled: true,
                     hintText: widget.hint,
-                    fillColor: backgroundColor200,
+                    fillColor: Theme.of(context).editTextFilled(),
                     hintStyle: AppTextStyles.primaryTextFieldHint,
                     focusedBorder: InputBorder.none,
                     border: InputBorder.none),

@@ -4,6 +4,7 @@ import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../gen/assets.gen.dart';
@@ -32,17 +33,17 @@ class _LearningCompleteScreenState extends State<LearningCompleteScreen> {
           Container(
             padding: const EdgeInsets.all(18),
             margin: const EdgeInsets.all(24),
-            decoration: const BoxDecoration(
+            decoration:  BoxDecoration(
                 borderRadius: DesignConfig.highBorderRadius,
-                color: backgroundColor100),
+                color: Theme.of(context).cardBackground()),
             child: Row(
               children: [
                 Assets.icon.outline.infoCircle
-                    .svg(color: secondaryColor, width: 18, height: 18),
+                    .svg(color: Theme.of(context).secondaryColor(), width: 18, height: 18),
                 PrimaryText(
                     text: "کاربر گرامی شما دو دوره در حال یادگیری دارید",
-                    style: mThemeData.textTheme.title,
-                    color: secondaryColor)
+                    style: Theme.of(context).textTheme.title,
+                    color: Theme.of(context).secondaryColor())
               ],
             ),
           ),

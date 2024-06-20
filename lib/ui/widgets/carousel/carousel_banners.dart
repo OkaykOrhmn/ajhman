@@ -82,7 +82,7 @@ class _CarouseBannersState extends State<CarouseBanners> {
           return Center(
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).surfacePrimaryColor(),
                   borderRadius: BorderRadius.only(
                       topRight: DesignConfig.aHighBorderRadius,
                       topLeft: DesignConfig.aHighBorderRadius)),

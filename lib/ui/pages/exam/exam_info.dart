@@ -56,6 +56,7 @@ class _ExamInfoState extends State<ExamInfo> {
         }
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).background(),
           appBar: ReversibleAppBar(
               title: index == 0 ? "آزمون دوره" : "آنچه شما یاد گرفته‌اید"),
           body: SingleChildScrollView(

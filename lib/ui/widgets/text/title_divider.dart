@@ -26,8 +26,8 @@ class TitleDivider extends StatelessWidget {
         children: [
           PrimaryText(
               text: title,
-              style: mThemeData.textTheme.titleBold,
-              color: Theme.of(context).primaryColor900()),
+              style: Theme.of(context).textTheme.titleBold,
+              color: Theme.of(context).headText()),
           btn != null
               ? InkWell(
                   onTap: btn,
@@ -37,7 +37,7 @@ class TitleDivider extends StatelessWidget {
                     children: [
                       PrimaryText(
                         text: "مشاهده همه",
-                        style: mThemeData.textTheme.searchHint,
+                        style: Theme.of(context).textTheme.searchHint,
                         color: Theme.of(context).primaryColor,
                       ),
                       Assets.icon.outline.arrowLeft

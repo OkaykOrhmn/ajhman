@@ -55,18 +55,18 @@ class _CourseCommentsState extends State<CourseComments> {
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-          color: backgroundColor100,
+      decoration:  BoxDecoration(
+          color: Theme.of(context).cardBackground(),
           borderRadius: DesignConfig.highBorderRadius),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _header(),
-          const Padding(
+           Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Divider(
               height: 1,
-              color: backgroundColor600,
+              color: Theme.of(context).disable(),
             ),
           ),
           _comments()
@@ -234,17 +234,17 @@ class _CourseCommentsState extends State<CourseComments> {
         RichText(
           text: TextSpan(
             text: title,
-            style: mThemeData.textTheme.title.copyWith(
-                color: backgroundColor800,
-                fontSize: mThemeData.textTheme.title.fontSize! *
+            style: Theme.of(context).textTheme.title.copyWith(
+                color: Theme.of(context).cardText(),
+                fontSize: Theme.of(context).textTheme.title.fontSize! *
                     context.read<ThemeBloc>().state.fontSize),
             children: important
                 ? <TextSpan>[
                     TextSpan(
                         text: '*',
-                        style: mThemeData.textTheme.title.copyWith(
+                        style: Theme.of(context).textTheme.title.copyWith(
                             color: errorMain,
-                            fontSize: mThemeData.textTheme.title.fontSize! *
+                            fontSize: Theme.of(context).textTheme.title.fontSize! *
                                 context.read<ThemeBloc>().state.fontSize)),
                   ]
                 : null,
@@ -255,7 +255,7 @@ class _CourseCommentsState extends State<CourseComments> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).onWhite(),
               borderRadius: DesignConfig.mediumBorderRadius,
               boxShadow: DesignConfig.lowShadow),
           padding: EdgeInsets.all(16),
@@ -268,7 +268,7 @@ class _CourseCommentsState extends State<CourseComments> {
             decoration: InputDecoration.collapsed(
               hintText: hint,
               hintStyle:
-                  mThemeData.textTheme.searchHint.copyWith(color: grayColor300),
+                  Theme.of(context).textTheme.searchHint.copyWith(color: Theme.of(context).editTextFont()),
             ),
           ),
         ),

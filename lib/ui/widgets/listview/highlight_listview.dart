@@ -42,18 +42,18 @@ class _HighlightListViewState extends State<HighlightListView> {
                           children: [
                              Padding(
                               padding:  const EdgeInsets.symmetric(horizontal: 8.0).copyWith(top: 6),
-                              child:  const Icon(
+                              child:   Icon(
                                 Icons.circle,
                                 size: 8,
-                                color: grayColor600,
+                                color: Theme.of(context).editTextFont(),
                               ),
                             ),
                             Expanded(
                               child: PrimaryText(
                                   text: widget.items[index].toString(),
-                                  style: mThemeData.textTheme.title,
+                                  style: Theme.of(context).textTheme.title,
                                   textAlign: TextAlign.start,
-                                  color: grayColor600),
+                                  color: Theme.of(context).editTextFont()),
                             )
                           ],
                         ),

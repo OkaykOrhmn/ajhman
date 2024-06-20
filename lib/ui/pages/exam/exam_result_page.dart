@@ -62,6 +62,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
           title: "آزمون دوره",
           canBack: false,
         ),
+        backgroundColor: Theme.of(context).background(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -79,14 +80,14 @@ class _ExamResultPageState extends State<ExamResultPage> {
                 decoration: BoxDecoration(
                     boxShadow: DesignConfig.lowShadow,
                     borderRadius: DesignConfig.highBorderRadius,
-                    color: Colors.white),
+                    color: Theme.of(context).white()),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     PrimaryText(
                       text: "آمار پاسخگویی شما",
                       style: mThemeData.textTheme.rate,
-                      color: Theme.of(context).primaryColor900(),
+                      color: Theme.of(context).headText(),
                       textAlign: TextAlign.start,
                     ),
                     SizedBox(

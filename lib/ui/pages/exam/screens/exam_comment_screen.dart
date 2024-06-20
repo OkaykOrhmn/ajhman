@@ -22,20 +22,20 @@ class ExamCommentScreen extends StatelessWidget {
           child: PrimaryText(
               text:
                   "فراگیر محترم، لطفا آموخته‌های خود را پیرامون محتواهای ارائه شده در این دوره در کادر زیر وارد کنید. به منظور دسترسی به دوره‌های آتی تکمیل این بخش الزامی است.",
-              style: mThemeData.textTheme.title,
-              color: grayColor900),
+              style: Theme.of(context).textTheme.title,
+              color: Theme.of(context).progressText()),
         ),
         TextField(
           controller: comment,
-          style: mThemeData.textTheme.searchHint,
+          style: Theme.of(context).textTheme.searchHint,
           maxLength: 2000,
           minLines: 10,
           maxLines: 20,
           keyboardType: TextInputType.multiline,
           decoration: InputDecoration(
             hintText: 'متن خود را وارد کنید',
-            counterStyle: mThemeData.textTheme.searchHint,
-            hintStyle: mThemeData.textTheme.searchHint,
+            counterStyle: Theme.of(context).textTheme.searchHint,
+            hintStyle: Theme.of(context).textTheme.searchHint,
             fillColor: Theme.of(context).primaryColor,
             focusedBorder: OutlineInputBorder(
               borderSide:  BorderSide(color: Theme.of(context).primaryColor,),

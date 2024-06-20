@@ -24,16 +24,16 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
       children: [
         PrimaryText(
             text: "آزمون فنون مذاکره",
-            style: mThemeData.textTheme.dialogTitle,
-            color: Theme.of(context).primaryColor900()),
+            style: Theme.of(context).textTheme.dialogTitle,
+            color: Theme.of(context).headText()),
         const SizedBox(
           height: 16,
         ),
         Container(
           padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: backgroundColor100),
+              color: Theme.of(context).white()),
           child: Column(
             children: [
               _examInfoIconRow("۱۰ سوال", "سوال ۴ گزینه‌ای",
@@ -59,14 +59,14 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
               boxShadow: DesignConfig.lowShadow,
-              color: Colors.white),
+              color: Theme.of(context).white()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               PrimaryText(
                   text: "قبل از شروع آزمون به نکات زیر دقت فرمایید",
-                  style: mThemeData.textTheme.titleBold,
-                  color: Theme.of(context).primaryColor900()),
+                  style: Theme.of(context).textTheme.titleBold,
+                  color: Theme.of(context).headText()),
               SizedBox(
                 height: 16,
               ),
@@ -92,12 +92,12 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
         Container(
           width: 40,
           height: 40,
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration:  BoxDecoration(
+            color: Theme.of(context).white(),
             shape: BoxShape.circle,
           ),
           child: Center(
-              child: icon.svg(width: 16, height: 16, color: secondaryColor)),
+              child: icon.svg(width: 16, height: 16, color: Theme.of(context).secondaryColor())),
         ),
         const SizedBox(
           width: 8,
@@ -107,15 +107,15 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
           children: [
             PrimaryText(
                 text: title,
-                style: mThemeData.textTheme.titleBold,
-                color: Theme.of(context).primaryColor900()),
+                style: Theme.of(context).textTheme.titleBold,
+                color: Theme.of(context).headText()),
             const SizedBox(
               height: 4,
             ),
             PrimaryText(
                 text: subTitle,
-                style: mThemeData.textTheme.rate,
-                color: grayColor600),
+                style: Theme.of(context).textTheme.rate,
+                color: Theme.of(context).editTextFont()),
           ],
         ),
       ],

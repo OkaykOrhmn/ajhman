@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
+// import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../core/utils/app_locale.dart';
 import '../../../theme/text/text_styles.dart';
 import '../../../theme/widget/design_config.dart';
 import '../../../widgets/button/toggle_button_time.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+// import 'package:syncfusion_flutter_core/theme.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({super.key});
@@ -173,82 +173,82 @@ class _TimerScreenState extends State<TimerScreen>
                     ),
                   ],
                 ),
-                SfSliderTheme(
-                  data: SfSliderThemeData(
-                      activeDividerColor: Theme.of(context).primaryColor,
-                      tooltipBackgroundColor: Theme.of(context).primaryColor,
-                      tooltipTextStyle: body6),
-                  child: _inHour
-                      ? SfSlider(
-                          activeColor: Theme.of(context).primaryColor,
-                          inactiveColor: grayColor50,
-                          min: 0,
-                          max: 24,
-                          labelPlacement: LabelPlacement.onTicks,
-                          value: _hValue.round(),
-                          interval: 1,
-                          showTicks: false,
-                          showLabels: false,
-                          enableTooltip: true,
-                          tooltipShape: SfPaddleTooltipShape(),
-                          showDividers: true,
-                          minorTicksPerInterval: 1,
-                          onChanged: (value) {
-                            final val = value as double;
-                            setState(() {
-                              if (value >= 1) {
-                                _hValue = value;
-                                if (value <= 8 || value >= 18) {
-                                  _inLight = false;
-                                } else {
-                                  _inLight = true;
-                                }
-                              }
-                              if (planner.startAt == null ||
-                                  planner.startAt!.isEmpty) {
-                                planner.startAt =
-                                    "${_hValue.round().toString().padLeft(2, "0")}:01";
-                              } else {
-                                planner.startAt =
-                                    "${_hValue.round().toString().padLeft(2, "0")}${planner.startAt!.substring(2)}";
-                              }
-                              context.read<PlannerCubit>().setData(planner);
-
-                            });
-                          },
-                        )
-                      : SfSlider(
-                          activeColor: Theme.of(context).primaryColor,
-                          inactiveColor: grayColor50,
-                          dateFormat: DateFormat.H(),
-                          min: 0,
-                          max: 60,
-                          labelPlacement: LabelPlacement.onTicks,
-                          value: _mValue.round(),
-                          interval: 15,
-                          showTicks: true,
-                          showLabels: true,
-                          enableTooltip: true,
-                          minorTicksPerInterval: 1,
-                          onChanged: (value) {
-                            final val = value as double;
-                            setState(() {
-                              if (value <= 59) {
-                                _mValue = value;
-                              }
-                              if (planner.startAt == null ||
-                                  planner.startAt!.isEmpty) {
-                                planner.startAt =
-                                    "01:${_mValue.round().toString().padLeft(2, "0")}";
-                              } else {
-                                planner.startAt =
-                                    "${planner.startAt!.substring(0, 3)}${_mValue.round().toString().padLeft(2, "0")}";
-                              }
-                              context.read<PlannerCubit>().setData(planner);
-                            });
-                          },
-                        ),
-                ),
+                // SfSliderTheme(
+                //   data: SfSliderThemeData(
+                //       activeDividerColor: Theme.of(context).primaryColor,
+                //       tooltipBackgroundColor: Theme.of(context).primaryColor,
+                //       tooltipTextStyle: body6),
+                //   child: _inHour
+                //       ? SfSlider(
+                //           activeColor: Theme.of(context).primaryColor,
+                //           inactiveColor: grayColor50,
+                //           min: 0,
+                //           max: 24,
+                //           labelPlacement: LabelPlacement.onTicks,
+                //           value: _hValue.round(),
+                //           interval: 1,
+                //           showTicks: false,
+                //           showLabels: false,
+                //           enableTooltip: true,
+                //           tooltipShape: SfPaddleTooltipShape(),
+                //           showDividers: true,
+                //           minorTicksPerInterval: 1,
+                //           onChanged: (value) {
+                //             final val = value as double;
+                //             setState(() {
+                //               if (value >= 1) {
+                //                 _hValue = value;
+                //                 if (value <= 8 || value >= 18) {
+                //                   _inLight = false;
+                //                 } else {
+                //                   _inLight = true;
+                //                 }
+                //               }
+                //               if (planner.startAt == null ||
+                //                   planner.startAt!.isEmpty) {
+                //                 planner.startAt =
+                //                     "${_hValue.round().toString().padLeft(2, "0")}:01";
+                //               } else {
+                //                 planner.startAt =
+                //                     "${_hValue.round().toString().padLeft(2, "0")}${planner.startAt!.substring(2)}";
+                //               }
+                //               context.read<PlannerCubit>().setData(planner);
+                //
+                //             });
+                //           },
+                //         )
+                //       : SfSlider(
+                //           activeColor: Theme.of(context).primaryColor,
+                //           inactiveColor: grayColor50,
+                //           dateFormat: DateFormat.H(),
+                //           min: 0,
+                //           max: 60,
+                //           labelPlacement: LabelPlacement.onTicks,
+                //           value: _mValue.round(),
+                //           interval: 15,
+                //           showTicks: true,
+                //           showLabels: true,
+                //           enableTooltip: true,
+                //           minorTicksPerInterval: 1,
+                //           onChanged: (value) {
+                //             final val = value as double;
+                //             setState(() {
+                //               if (value <= 59) {
+                //                 _mValue = value;
+                //               }
+                //               if (planner.startAt == null ||
+                //                   planner.startAt!.isEmpty) {
+                //                 planner.startAt =
+                //                     "01:${_mValue.round().toString().padLeft(2, "0")}";
+                //               } else {
+                //                 planner.startAt =
+                //                     "${planner.startAt!.substring(0, 3)}${_mValue.round().toString().padLeft(2, "0")}";
+                //               }
+                //               context.read<PlannerCubit>().setData(planner);
+                //             });
+                //           },
+                //         ),
+                // ),
                 SizedBox(
                   height: 14,
                 )

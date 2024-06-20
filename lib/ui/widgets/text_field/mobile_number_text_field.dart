@@ -58,7 +58,7 @@ class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
               : null,
           filled: true,
           hintText: ChangeLocale(context).appLocal!.enterNumberHint.toString(),
-          fillColor: backgroundColor200,
+          fillColor: Theme.of(context).editTextFilled(),
           hintStyle: AppTextStyles.primaryTextFieldHint,
           focusedBorder: OutlineInputBorder(
             borderSide:  BorderSide(color: Theme.of(context).primaryColor),
@@ -77,7 +77,7 @@ class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
         ),
-        style: AppTextStyles.primaryTextFieldText,
+        style:Theme.of(context).textTheme.searchHint.copyWith(color: Theme.of(context).editTextFont()),
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         keyboardType: TextInputType.number,
         maxLength: 11,

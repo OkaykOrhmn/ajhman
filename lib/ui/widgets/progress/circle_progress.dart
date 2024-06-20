@@ -39,7 +39,7 @@ class CircleProgress extends StatelessWidget {
             strokeWidth: strokeWidth,
             valueColor: AlwaysStoppedAnimation<Color>(c),
           )),
-          Center(child: PrimaryText(text: text?? '', style: mThemeData.textTheme.navbarTitle, color: grayColor800),)
+          Center(child: PrimaryText(text: text?? '', style: Theme.of(context).textTheme.navbarTitle, color: Theme.of(context).pinTextFont()),)
         ],
       ),
     );

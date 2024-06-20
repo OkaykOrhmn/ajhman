@@ -21,6 +21,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loading_btn/loading_btn.dart';
 
 import '../../../core/bloc/course/main/course_main_bloc.dart';
+import '../../../core/bloc/questions/questions_bloc.dart';
 import '../../../core/routes/route_paths.dart';
 import '../../../data/model/course_main_response_model.dart';
 import '../../../gen/assets.gen.dart';
@@ -54,22 +55,22 @@ class _RoadMapPageState extends State<RoadMapPage> {
             padding: EdgeInsets.all(16),
             margin: EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: backgroundColor200,
+                color: Theme.of(context).editTextFilled(),
                 borderRadius: DesignConfig.highBorderRadius),
             child: Column(
               children: [
                 PrimaryText(
                     text: widget.response.name.toString(),
-                    style: mThemeData.textTheme.titleBold,
-                    color: secondaryColor),
+                    style: Theme.of(context).textTheme.titleBold,
+                    color: Theme.of(context).secondaryColor()),
                 SizedBox(
                   height: 8,
                 ),
                 PrimaryText(
                     text:
                         'در رودمپ زیر شما می‌توانید مسیر یادگیری خودتان را مشاهده کنید',
-                    style: mThemeData.textTheme.rate,
-                    color: grayColor900),
+                    style: Theme.of(context).textTheme.rate,
+                    color: Theme.of(context).progressText()),
               ],
             ),
           ),
@@ -128,7 +129,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                   decoration: BoxDecoration(
                                     borderRadius:
                                         DesignConfig.mediumBorderRadius,
-                                    color: CupertinoColors.white,
+                                    color: Theme.of(context).white(),
                                     border: Border.all(color: view.color),
                                   ),
                                   padding: EdgeInsets.all(8),
@@ -140,7 +141,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                         text: widget
                                             .response.chapters![index].name
                                             .toString(),
-                                        style: mThemeData.textTheme.titleBold,
+                                        style: Theme.of(context).textTheme.titleBold,
                                         color: view.color,
                                         textAlign: TextAlign.start,
                                       ),
@@ -158,9 +159,9 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                           ),
                                           PrimaryText(
                                               text: "۸۵ از ۱۰۰",
-                                              style: mThemeData
+                                              style: Theme.of(context)
                                                   .textTheme.searchHint,
-                                              color: grayColor800)
+                                              color: Theme.of(context).pinTextFont())
                                         ],
                                       ),
                                       SizedBox(
@@ -223,13 +224,23 @@ class _RoadMapPageState extends State<RoadMapPage> {
                   ButtonState btnState) async {
                 if (btnState == ButtonState.idle) {
                   startLoading();
+
+                  context
+                      .read<QuestionsBloc>()
+                      .add(GetAllQuestions(id: widget.courseId));
+
+                  await context.read<QuestionsBloc>().stream.firstWhere(
+                          (state) =>
+                      state is QuestionsSuccess || state is QuestionsFail);
+
                   context
                       .read<CourseMainBloc>()
                       .add(GetCourseMainInfo(courseId: widget.courseId));
-                  await context.read<CourseMainBloc>().stream.firstWhere(
-                      (state) =>
-                          state is CourseMainSuccess ||
-                          state is CourseMainFail);
+
+
+                  await context.read<CourseMainBloc>().stream.firstWhere((state) =>
+                      state is CourseMainSuccess || state is CourseMainFail);
+
                   stopLoading();
                 }
               },

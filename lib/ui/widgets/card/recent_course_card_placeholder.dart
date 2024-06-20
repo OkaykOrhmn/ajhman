@@ -41,7 +41,7 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
               boxShadow: DesignConfig.lowShadow,
-              color: Colors.white),
+              color: Theme.of(context).white()),
           padding: const EdgeInsets.all(8),
           margin: widget.padding ?? EdgeInsets.zero,
           child: Stack(
@@ -135,7 +135,7 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
         text: text,
         style: mThemeData.textTheme.title,
         textAlign: TextAlign.start,
-        color: grayColor900,
+        color: Theme.of(context).progressText(),
         maxLines: 2,
       ),
     );

@@ -53,6 +53,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ReversibleAppBar(title: "جستجو"),
+      backgroundColor: Theme.of(context).background(),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -94,7 +95,7 @@ class _SearchPageState extends State<SearchPage> {
                       decoration: BoxDecoration(
                           border: Border.all(color: Theme.of(context).primaryColor, width: 1),
                           borderRadius: DesignConfig.veryHighBorderRadius,
-                          color: selected ? Theme.of(context).primaryColor : Colors.white),
+                          color: selected ? Theme.of(context).primaryColor : Theme.of(context).white()),
                       padding:
                           EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                       margin: EdgeInsets.symmetric(horizontal: 8),

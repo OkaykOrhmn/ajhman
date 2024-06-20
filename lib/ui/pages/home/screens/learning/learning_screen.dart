@@ -78,7 +78,7 @@ class _LearningScreenState extends State<LearningScreen>
     return Container(
       padding: EdgeInsets.symmetric(vertical: 22, horizontal: 16),
       decoration:  BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).surfacePrimaryColor(),
           borderRadius: BorderRadius.only(
               bottomLeft: DesignConfig.aHighBorderRadius,
               bottomRight: DesignConfig.aHighBorderRadius)),

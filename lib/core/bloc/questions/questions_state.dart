@@ -13,3 +13,9 @@ final class QuestionsSuccess extends QuestionsState {
 
 }
 final class QuestionsFail extends QuestionsState {}
+final class QuestionsPutFail extends QuestionsState {
+  final QuestionsModel questionsModel;
+
+  QuestionsPutFail({required this.questionsModel});
+
+}

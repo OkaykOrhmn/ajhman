@@ -53,6 +53,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const ReversibleAppBar(title: "مدیریت کسب‌وکار"),
+        backgroundColor: Theme.of(context).background(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -73,11 +74,11 @@ class _CategoryPageState extends State<CategoryPage> {
                       groupingType: GroupingType.row,
                       runSpacing: 4,
                       selectedColor: Theme.of(context).primaryColor,
-                      selectedTextStyle: mThemeData.textTheme.navbarTitle
+                      selectedTextStyle: Theme.of(context).textTheme.navbarTitle
                           .copyWith(color: Colors.white),
                       unselectedBorderColor: Theme.of(context).primaryColor,
-                      unselectedColor: Colors.white,
-                      unselectedTextStyle: mThemeData.textTheme.navbarTitle
+                      unselectedColor: Theme.of(context).white(),
+                      unselectedTextStyle: Theme.of(context).textTheme.navbarTitle
                           .copyWith(color: Theme.of(context).primaryColor),
                       textAlign: TextAlign.center,
                       textPadding: EdgeInsets.symmetric(horizontal: 16),

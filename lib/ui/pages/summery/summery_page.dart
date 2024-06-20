@@ -36,6 +36,7 @@ class _SummeryPageState extends State<SummeryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const ReversibleAppBar(title: "جمع بندی دوره"),
+        backgroundColor: Theme.of(context).background(),
         body: BlocBuilder<SummeryCubit, SummaryModel>(
           builder: (context, state) {
             if (state.summary == null) {
@@ -49,8 +50,8 @@ class _SummeryPageState extends State<SummeryPage> {
                       children: [
                         PrimaryText(
                             text: "جمع‌بندی دوره فنون مذاکره",
-                            style: mThemeData.textTheme.dialogTitle,
-                            color: Theme.of(context).primaryColor900()),
+                            style: Theme.of(context).textTheme.dialogTitle,
+                            color: Theme.of(context).headText()),
                         const SizedBox(
                           height: 16,
                         ),
@@ -59,14 +60,14 @@ class _SummeryPageState extends State<SummeryPage> {
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
-                              color: Colors.white),
+                              color: Theme.of(context).white()),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               PrimaryText(
                                   text: "نکات مهم اشاره شده در دوره",
-                                  style: mThemeData.textTheme.titleBold,
-                                  color: Theme.of(context).primaryColor900()),
+                                  style: Theme.of(context).textTheme.titleBold,
+                                  color: Theme.of(context).headText()),
                               SizedBox(
                                 height: 16,
                               ),

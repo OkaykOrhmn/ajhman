@@ -41,8 +41,8 @@ class _ForYouScreenState extends State<ForYouScreen> {
       child: Column(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              color: backgroundColor100,
+            decoration:  BoxDecoration(
+              color: Theme.of(context).cardBackground(),
               borderRadius: DesignConfig.highBorderRadius,
             ),
             margin: EdgeInsets.all(16),
@@ -51,7 +51,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
               children: [
                 CustomPrimaryButton(
                   fill: true,
-                  color: secondaryColor,
+                  color: Theme.of(context).secondaryColor(),
                   onClick: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +75,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                     text:
                         "با احترام، این برنامه آموزشی توسط سازمان برای شما در نظر گرفته شده است تا بهترین نتیجه را بدست آورید. این برنامه با هدف ارتقای دانش و مهارت‌های شما طراحی شده است.",
                     style: mThemeData.textTheme.title,
-                    color: grayColor800)
+                    color: Theme.of(context).pinTextFont())
               ],
             ),
           ),

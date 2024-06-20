@@ -1,9 +1,11 @@
+import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/core/routes/route_generator.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/auth/auth_page.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
+import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:ajhman/ui/widgets/states/no_connectivity_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,39 +55,47 @@ class _SplashPageState extends State<SplashPage> {
             if (snapshot.hasData) {
               token = snapshot.data!;
             }
-            return BlocBuilder<ProfileBloc, ProfileState>(
-                builder: (context, state) {
+            return BlocConsumer<ProfileBloc, ProfileState>(
+                listener: (context, state) {
               if (state is ProfileSuccess) {
                 setProfile(state.response);
-                return const HomePage();
+                navigatorKey.currentState!.pushNamed(RoutePaths.home);
               } else if (state is ProfileFail) {
                 if (state.error == "connection") {
-                  return NoConnectivityScreen(
-                    click: () {
-                      context.read<ProfileBloc>().add(GetProfileInfo());
-                    },
-                  );
+                  SnackBarHandler(context).show(
+                      "اینترنت خود را بررسی کنید", DialogStatus.error, true);
                 } else {
-                  if (snapshot.hasData) {
-                    // if (snapshot.data!.isNotEmpty) {
-                    //   DialogHandler(context).showErrorDialog(
-                    //       state.error, "صفحه ورورد", () => _tryAgain());
-                    // }
-                  }
+                  SnackBarHandler(context)
+                      .show("نشست منقضی شده است", DialogStatus.error, true);
+                  navigatorKey.currentState!.pushNamed(RoutePaths.auth);
                 }
-                return const AuthPage();
-              } else {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Assets.icon.main.lIcon.svg(),
-                    ThreeBounceLoading(),
-                  ],
-                );
               }
+            }, builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Column(
+                    children: [
+                      Assets.icon.main.lIcon
+                          .svg(color: Theme.of(context).primaryColor),
+                      state is ProfileFail
+                          ? PrimaryButton(
+                              title: "تلاش مجدد",
+                              onClick: () {
+                                context
+                                    .read<ProfileBloc>()
+                                    .add(GetProfileInfo());
+                              },
+                            )
+                          : const SizedBox(),
+                    ],
+                  ),
+                  ThreeBounceLoading(),
+                ],
+              );
             });
           }),
     );

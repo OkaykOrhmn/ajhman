@@ -30,7 +30,7 @@ class QuestionsBloc extends Bloc<QuestionsEvent, QuestionsState> {
               event.id, event.feedbacksQuestionsModel);
           emit(QuestionsSuccess(questionsModel: event.questionsModel));
         } on DioError catch (e) {
-          emit(QuestionsFail());
+          emit(QuestionsPutFail(questionsModel: event.questionsModel));
         }
       }
     });

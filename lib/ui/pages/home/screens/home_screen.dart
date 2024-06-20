@@ -250,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Container _mainAppBar(BuildContext context) {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+      decoration: BoxDecoration(color: Theme.of(context).surfacePrimaryColor()),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: backgroundColor100,
+            color: Theme.of(context).editTextFilled(),
             borderRadius: DesignConfig.highBorderRadius,
             boxShadow: DesignConfig.lowShadow,
           ),
@@ -347,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
-                color: backgroundColor100,
+                color: Theme.of(context).cardBackground(),
                 borderRadius: DesignConfig.highBorderRadius,
                 boxShadow: DesignConfig.lowShadow),
             child: Column(
@@ -359,9 +359,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 PrimaryText(
                     text: title,
-                    style: mThemeData.textTheme.searchHint,
+                    style: Theme.of(context).textTheme.searchHint,
                     maxLines: 1,
-                    color: grayColor700)
+                    color: Theme.of(context).cardText())
               ],
             ),
           ),

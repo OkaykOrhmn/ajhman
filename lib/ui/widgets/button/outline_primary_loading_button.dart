@@ -48,7 +48,7 @@ class _outlinePrimaryLoadingButtonState extends State< OutlinePrimaryLoadingButt
       height: 46,
       borderRadius: 14,
       animate: false,
-      color: widget.disable ? backgroundColor : Colors.white,
+      color: widget.disable ? Theme.of(context).disable() : Theme.of(context).white(),
       borderSide: BorderSide(color: Theme.of(context).primaryColor,width: 1),
       width: widget.width,
       elevation: widget.disable ? 0 : 2,

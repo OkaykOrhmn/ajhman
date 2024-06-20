@@ -39,6 +39,7 @@ import 'core/bloc/course/main/course_main_bloc.dart';
 import 'core/bloc/learning/leaning_bloc.dart';
 import 'core/bloc/otp/otp_bloc.dart';
 import 'core/bloc/pin/pin_bloc.dart';
+import 'core/bloc/questions/questions_bloc.dart';
 import 'core/bloc/smart_schedule/smart_schedule_bloc.dart';
 import 'core/bloc/ticker/timer_bloc.dart';
 import 'core/cubit/home/selected_index_cubit.dart';
@@ -124,6 +125,13 @@ void main() {
     BlocProvider<CommentsBloc>(
       create: (buildContext) {
         final bloc = CommentsBloc();
+        return bloc;
+      },
+    ),
+    BlocProvider<QuestionsBloc>(
+      create: (buildContext) {
+        final bloc = QuestionsBloc();
+        // bloc.add(GetAllQuestions(id: data.id!));
         return bloc;
       },
     ),

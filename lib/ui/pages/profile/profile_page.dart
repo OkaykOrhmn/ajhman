@@ -47,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
         return true;
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).background(),
         appBar: ReversibleAppBar(title: "تنظیمات حساب"),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -60,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: backgroundColor100,
+                      color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
                       boxShadow: DesignConfig.lowShadow),
                   child: Column(
@@ -153,14 +154,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ? PrimaryText(
                                             text:
                                                 snapshot.data!.name.toString(),
-                                            style: mThemeData.textTheme.title,
-                                            color: grayColor900)
+                                            style: Theme.of(context).textTheme.title,
+                                            color: Theme.of(context).progressText())
                                         : DefaultPlaceHolder(
                                             child: PrimaryText(
                                                 text: "اسم",
                                                 style:
-                                                    mThemeData.textTheme.title,
-                                                color: grayColor900),
+                                                    Theme.of(context).textTheme.title,
+                                                color: Theme.of(context).progressText()),
                                           ),
                                     Row(
                                       children: [
@@ -169,15 +170,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 text: snapshot
                                                     .data!.mobileNumber
                                                     .toString(),
-                                                style: mThemeData
+                                                style: Theme.of(context)
                                                     .textTheme.searchHint,
-                                                color: grayColor700)
+                                                color: Theme.of(context).cardText())
                                             : DefaultPlaceHolder(
                                                 child: PrimaryText(
                                                     text: "موبایل",
-                                                    style: mThemeData
+                                                    style: Theme.of(context)
                                                         .textTheme.searchHint,
-                                                    color: grayColor700),
+                                                    color: Theme.of(context).cardText()),
                                               ),
                                         Container(
                                           height: 12,
@@ -189,8 +190,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         PrimaryText(
                                             text: "کارشناس ارشد",
                                             style:
-                                                mThemeData.textTheme.searchHint,
-                                            color: grayColor700),
+                                                Theme.of(context).textTheme.searchHint,
+                                            color: Theme.of(context).cardText()),
                                       ],
                                     )
                                   ],
@@ -234,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: backgroundColor100,
+                      color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
                       boxShadow: DesignConfig.lowShadow),
                   child: Column(
@@ -380,8 +381,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: PrimaryText(
                                   text:
                                       "${(context.read<ThemeBloc>().state.fontSize * 10).round() + 4}",
-                                  style: mThemeData.textTheme.title,
-                                  color: Theme.of(context).primaryColor900()),
+                                  style: Theme.of(context).textTheme.title,
+                                  color: Theme.of(context).headText()),
                             ),
                           ),
                           SizedBox(
@@ -416,8 +417,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: PrimaryText(
                             text: "این یک متن نمونه است",
-                            style: mThemeData.textTheme.title,
-                            color: grayColor900),
+                            style: Theme.of(context).textTheme.title,
+                            color: Theme.of(context).progressText()),
                       )
                     ],
                   ),
@@ -428,7 +429,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: backgroundColor100,
+                      color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
                       boxShadow: DesignConfig.lowShadow),
                   child: Column(
@@ -462,7 +463,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: backgroundColor100,
+                      color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
                       boxShadow: DesignConfig.lowShadow),
                   child: Column(
@@ -508,7 +509,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Container(
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                        color: backgroundColor100,
+                        color: Theme.of(context).cardBackground(),
                         borderRadius: DesignConfig.highBorderRadius,
                         boxShadow: DesignConfig.lowShadow),
                     child: Column(
@@ -522,7 +523,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             PrimaryText(
                                 text: "خروج از حساب کاربری",
-                                style: mThemeData.textTheme.title,
+                                style: Theme.of(context).textTheme.title,
                                 color: errorMain)
                           ],
                         )
@@ -538,8 +539,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       horizontal: 4, vertical: 16),
                   child: PrimaryText(
                       text: "نسخه نرم‌افزار: ۱.۲.۰",
-                      style: mThemeData.textTheme.title,
-                      color: grayColor800),
+                      style: Theme.of(context).textTheme.title,
+                      color: Theme.of(context).pinTextFont()),
                 ),
                 const SizedBox(
                   height: 16 + 24,
@@ -560,14 +561,14 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Row(
             children: [
-              icon.svg(color: grayColor600, width: 16, height: 16),
+              icon.svg(color: Theme.of(context).editTextFont(), width: 16, height: 16),
               SizedBox(
                 width: 8,
               ),
               PrimaryText(
                   text: title,
-                  style: mThemeData.textTheme.title,
-                  color: grayColor900)
+                  style: Theme.of(context).textTheme.title,
+                  color: Theme.of(context).progressText())
             ],
           ),
           Assets.icon.outline.arrowLeft
@@ -583,14 +584,14 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          icon.svg(color: grayColor600, width: 16, height: 16),
+          icon.svg(color: Theme.of(context).editTextFont(), width: 16, height: 16),
           SizedBox(
             width: 8,
           ),
           PrimaryText(
               text: title,
-              style: mThemeData.textTheme.title,
-              color: grayColor900),
+              style: Theme.of(context).textTheme.title,
+              color: Theme.of(context).progressText()),
         ],
       ),
     );
@@ -604,14 +605,14 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Row(
             children: [
-              icon.svg(color: grayColor600, width: 16, height: 16),
+              icon.svg(color: Theme.of(context).editTextFont(), width: 16, height: 16),
               SizedBox(
                 width: 8,
               ),
               PrimaryText(
                   text: title,
-                  style: mThemeData.textTheme.title,
-                  color: grayColor900)
+                  style: Theme.of(context).textTheme.title,
+                  color: Theme.of(context).progressText())
             ],
           ),
           BlocBuilder<ThemeBloc, ThemeState>(

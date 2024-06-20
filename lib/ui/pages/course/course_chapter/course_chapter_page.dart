@@ -26,6 +26,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../core/bloc/comments/comments_bloc.dart';
+import '../../../../core/bloc/questions/questions_bloc.dart';
 import '../../../../core/routes/route_paths.dart';
 import '../../../../data/args/course_args.dart';
 import '../../../../data/model/chapter_model.dart';
@@ -113,6 +114,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const ReversibleAppBar(title: "محتوای دوره"),
+      backgroundColor: Theme.of(context).background(),
       body: BlocProvider<SubChapterCubit>(
         create: (context) => SubChapterCubit(courseArgs),
         child: BlocBuilder<SubChapterCubit, CourseArgs>(
@@ -135,7 +137,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                   ),
                   _main(),
                   CourseDetails(),
-                  CourseRating(),
+                  SizedBox(height: 24,),
                   CourseComments(),
                   InkWell(
                     onTap: () {
@@ -165,7 +167,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                             children: [
                               PrimaryText(
                                   text: "زیرفصل‌های دوره",
-                                  style: mThemeData.textTheme.dialogTitle,
+                                  style: Theme.of(context).textTheme.dialogTitle,
                                   color: Colors.white),
                               true
                                   ? Assets.icon.outline.arrowUp
@@ -257,7 +259,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                   ),
                   PrimaryText(
                       text: subchapter.name.toString(),
-                      style: mThemeData.textTheme.searchHint,
+                      style: Theme.of(context).textTheme.searchHint,
                       color: grayColor900)
                 ],
               ),
@@ -304,12 +306,12 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                       ),
                       PrimaryText(
                           text: "درس بعدی",
-                          style: mThemeData.textTheme.rate,
+                          style: Theme.of(context).textTheme.rate,
                           color: Theme.of(context).primaryColor),
                     ],
                   )),
               CustomPrimaryButton(
-                color: Colors.white,
+                color: Theme.of(context).white(),
                 elevation: 0,
                 onClick: subchapter.id != subChapters.first.id
                     ? () {
@@ -327,7 +329,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                   children: [
                     PrimaryText(
                         text: "درس قبلی",
-                        style: mThemeData.textTheme.rate,
+                        style: Theme.of(context).textTheme.rate,
                         color: Theme.of(context).primaryColor),
                     SizedBox(
                       width: 8,
