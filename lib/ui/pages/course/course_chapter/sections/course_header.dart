@@ -45,7 +45,7 @@ class _CourseHeaderState extends State<CourseHeader> {
                 ),
                 child: Row(
                   children: [
-                  PrimaryText(text: "4.2", style: Theme.of(context).textTheme.searchHint, color: Theme.of(context).cardText()),
+                  PrimaryText(text: "4.2", style: Theme.of(context).textTheme.searchHint, color: Colors.black),
                   SizedBox(width: 2,),
                   Icon(CupertinoIcons.star_fill,color: goldColor,size: 16,)
                 ],),

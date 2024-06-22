@@ -49,10 +49,12 @@ class _ForYouScreenState extends State<ForYouScreen> {
             padding: EdgeInsets.all(16),
             child: Column(
               children: [
-                CustomPrimaryButton(
-                  fill: true,
-                  color: Theme.of(context).secondaryColor(),
-                  onClick: () {},
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).secondaryColor(),
+                    borderRadius: DesignConfig.highBorderRadius
+                  ),
+                  padding: EdgeInsetsDirectional.symmetric(vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -88,8 +90,8 @@ class _ForYouScreenState extends State<ForYouScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: state.response.isEmpty
-                      ? const Padding(
-                          padding: EdgeInsets.all(8),
+                      ?  Padding(
+                          padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height/20),
                           child: EmptyScreen(),
                         )
                       : VerticalListView(

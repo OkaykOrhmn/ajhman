@@ -154,13 +154,13 @@ class _SearchPageState extends State<SearchPage> {
               } else if (state is SearchEmpty) {
                 return Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.sizeOf(context).height / 3),
+                      top: MediaQuery.sizeOf(context).height / 10),
                   child: const EmptyScreen(),
                 );
               } else if (state is SearchLoading) {
                 return Padding(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.sizeOf(context).height / 3),
+                      top: MediaQuery.sizeOf(context).height / 10),
                   child: const ThreeBounceLoading(),
                 );
               } else {

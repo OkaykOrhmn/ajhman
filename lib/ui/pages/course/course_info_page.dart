@@ -133,7 +133,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: Theme.of(context).white(),
+                color: Theme.of(context).onWhite(),
                 borderRadius: DesignConfig.highBorderRadius,
                 boxShadow: DesignConfig.lowShadow),
             child: Column(
@@ -400,7 +400,10 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                         state is ChapterLoading && data.chapters![index].isOpen!
                             ? Positioned.fill(
                                 child: Container(
-                                    color: Theme.of(context).white().withOpacity(0.5),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).white().withOpacity(0.5),
+                                      borderRadius: DesignConfig.highBorderRadius
+                                    ),
                                     child: const ThreeBounceLoading()),
                               )
                             : const SizedBox()

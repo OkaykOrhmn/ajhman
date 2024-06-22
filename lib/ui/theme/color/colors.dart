@@ -120,7 +120,7 @@ extension ThemeDataApp on ThemeData {
 
   Color surfacePrimaryColor(){
     if(brightness == Brightness.light){
-      return primaryColor;
+      return this.primaryColor;
     }else{
       return grayColor800;
     }

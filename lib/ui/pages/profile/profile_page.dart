@@ -129,7 +129,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           child: Container(
                                             decoration: BoxDecoration(
                                               color:
-                                                  Colors.white.withOpacity(0.5),
+                                                 Theme.of(context).white().withOpacity(0.5),
+                                              shape: BoxShape.circle
                                             ),
                                             child: const ThreeBounceLoading(
                                               size: 32,

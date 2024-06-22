@@ -13,7 +13,7 @@ class RoundedCardIcon extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: active ? Theme.of(context).primaryColor : Colors.white,
+        color: active ? Theme.of(context).primaryColor : Theme.of(context).white(),
         borderRadius: BorderRadius.circular(360),
         border: Border.all(color: Theme.of(context).primaryColor),
       ),

@@ -127,7 +127,7 @@ class _CourseAudioState extends State<CourseAudio> {
             decoration: BoxDecoration(
                 borderRadius: DesignConfig.highBorderRadius,
                 boxShadow: DesignConfig.lowShadow,
-                color: backgroundColor100),
+                color: Theme.of(context).cardBackground()),
             child: Stack(
               children: [
                 IgnorePointer(
@@ -182,7 +182,7 @@ class _CourseAudioState extends State<CourseAudio> {
                                         if (i <= a) {
                                           bars[i].color = Theme.of(context).primaryColor;
                                         } else {
-                                          bars[i].color = grayColor300;
+                                          bars[i].color = Theme.of(context).placeholderBaseColor();
                                         }
                                       }
                                     });
@@ -213,7 +213,10 @@ class _CourseAudioState extends State<CourseAudio> {
                 playerState == null
                     ? Positioned.fill(
                         child: Container(
-                        color: Colors.white.withOpacity(0.5),
+                        decoration: BoxDecoration(
+                          borderRadius: DesignConfig.highBorderRadius,
+                          color: Theme.of(context).white().withOpacity(0.5),
+                        ),
                         child: ThreeBounceLoading(),
                       ))
                     : SizedBox(),

@@ -35,10 +35,12 @@ class ProfileImageNetwork extends StatelessWidget {
                 child: Container(
                   color: Colors.white,
                 )),
-            errorWidget: (context, url, error) => Assets.icon.profilePlaceholder
-                .svg(
-                    width: width,
-                    height: height),
+            errorWidget: (context, url, error) =>
+                Theme.of(context).brightness == Brightness.light
+                    ? Assets.icon.profilePlaceholder
+                        .svg(width: width, height: height)
+                    : Assets.icon.profilePlaceholderDark
+                        .svg(width: width, height: height),
             fit: BoxFit.cover,
           ),
         ),

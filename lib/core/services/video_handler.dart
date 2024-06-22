@@ -17,7 +17,7 @@ class VideoHandler{
 
   CustomVideoPlayerController get customVideoPlayerController => _customVideoPlayerController;
 
-  late CachedVideoPlayerController _videoPlayerController;
+  late VideoPlayerController _videoPlayerController;
   late CustomVideoPlayerController _customVideoPlayerController;
   late CustomVideoPlayerWebController _customVideoPlayerWebController;
   late CustomVideoPlayerWebSettings _customVideoPlayerWebSettings ;
@@ -29,7 +29,7 @@ class VideoHandler{
     _customVideoPlayerWebSettings =   CustomVideoPlayerWebSettings(
       src: url,
     );
-    _videoPlayerController = CachedVideoPlayerController.network(
+     _videoPlayerController = VideoPlayerController.network(
       longVideo,
     )..initialize().then((value) => whenInitialize());
     _customVideoPlayerController = CustomVideoPlayerController(
@@ -38,7 +38,8 @@ class VideoHandler{
       customVideoPlayerSettings: CustomVideoPlayerSettings(
         showSeekButtons: false,
         playbackSpeedButtonAvailable: false,
-        showMuteButton: false,
+        // showMuteButton: false,
+
         showDurationPlayed: false,
         showDurationRemaining: false,
         showFullscreenButton: false,

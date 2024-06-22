@@ -10,7 +10,9 @@ class ProfileSuccess extends ProfileState {
   ProfileSuccess({required this.response});
 }
 class ProfileFail extends ProfileState {
-  final String error;
 
-  ProfileFail({required this.error});
+}
+
+class ProfileFailConnection extends ProfileState {
+
 }

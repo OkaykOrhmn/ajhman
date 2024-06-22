@@ -1,7 +1,9 @@
+import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/core/enum/state_status.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/data/args/course_main_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
+import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/course/course_info_page.dart';
 import 'package:ajhman/ui/pages/roadmap/roadmap_page.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
@@ -13,6 +15,7 @@ import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/image/profile_image_network.dart';
 import 'package:ajhman/ui/widgets/listview/highlight_listview.dart';
+import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
@@ -21,10 +24,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif/gif.dart';
+import 'package:loading_btn/loading_btn.dart';
 
 import '../../../core/bloc/course/main/course_main_bloc.dart';
 import '../../../core/bloc/questions/questions_bloc.dart';
 import '../../../gen/assets.gen.dart';
+import '../../widgets/button/outline_primary_loading_button.dart';
 
 class CourseMainPage extends StatefulWidget {
   final CourseMainArgs args;
@@ -55,9 +60,47 @@ class _CourseMainPageState extends State<CourseMainPage> {
           if (state is CourseMainSuccess) {
             return CourseInfoPage(response: state.response);
           } else if (state is CourseRoadmapSuccess) {
-            return RoadMapPage(
-              response: state.response,
-              courseId: widget.args.courseId!,
+            return Stack(
+              children: [
+                RoadMapPage(
+                  response: state.response,
+                ),
+                Positioned(
+                    bottom: 24,
+                    left: 16,
+                    right: 16,
+                    child: OutlinePrimaryLoadingButton(
+                      title: "رفتن به صفحه دوره",
+                      onTap: (Function startLoading, Function stopLoading,
+                          ButtonState btnState) async {
+                        if (btnState == ButtonState.idle) {
+                          startLoading();
+
+                          context
+                              .read<QuestionsBloc>()
+                              .add(GetAllQuestions(id: widget.args.courseId!));
+
+                          await context.read<QuestionsBloc>().stream.firstWhere(
+                              (state) =>
+                                  state is QuestionsSuccess ||
+                                  state is QuestionsFail);
+
+                          context.read<CourseMainBloc>().add(GetCourseMainInfo(
+                              courseId: widget.args.courseId!));
+
+                          await context
+                              .read<CourseMainBloc>()
+                              .stream
+                              .firstWhere((state) =>
+                                  state is CourseMainSuccess ||
+                                  state is CourseMainFail);
+
+                          stopLoading();
+                        }
+                      },
+                      disable: false,
+                    ))
+              ],
             );
           } else {
             return Center(
@@ -76,6 +119,10 @@ class _CourseMainPageState extends State<CourseMainPage> {
             context
                 .read<QuestionsBloc>()
                 .add(GetAllQuestions(id: widget.args.courseId!));
+          } else if (state is CourseMainFail) {
+            SnackBarHandler(context).show(
+                "خطایی رخ داده دوباره امتحان کنید!", DialogStatus.error, true);
+            navigatorKey.currentState!.pop();
           }
         },
       ),

@@ -26,9 +26,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           String error = 'normal';
           if (e.type == DioExceptionType.connectionError ||
               e.type == DioExceptionType.connectionTimeout) {
-            error = 'connection';
+            emit(ProfileFailConnection());
+          }else{
+            emit(ProfileFail());
           }
-          emit(ProfileFail(error: error));
         }
       }
     });

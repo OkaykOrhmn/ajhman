@@ -37,14 +37,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           InkWell(
             onTap: () {
-              if (context.read<LanguageBloc>().state.selectedLanguage ==
-                  Language.english) {
-                context.read<LanguageBloc>().add(
-                    const ChangeLanguage(selectedLanguage: Language.farsi));
-              } else {
-                context.read<LanguageBloc>().add(
-                    const ChangeLanguage(selectedLanguage: Language.english));
-              }
+
             },
             child: Assets.icon.notification.svg(color: Colors.white),
           ),

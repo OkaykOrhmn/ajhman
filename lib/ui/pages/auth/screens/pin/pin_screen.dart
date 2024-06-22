@@ -1,3 +1,4 @@
+import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/extentions.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:ajhman/main.dart';
@@ -43,10 +44,8 @@ class _PinScreenState extends State<PinScreen> {
               setState(() {
                 setToken(pinState.token);
                 context.read<TimerBloc>().add(TimerReset());
-                Navigator.of(context).pushAndRemoveUntil(
-                    CupertinoPageRoute(builder: (context) {
-                  return const HomePage();
-                }), ModalRoute.withName("/PinScreen"));
+                Navigator.of(context)
+                    .restorablePushReplacementNamed(RoutePaths.splash);
               });
             } else if (pinState is PinGetAgainState) {
               _complete = false;
@@ -145,7 +144,10 @@ class _PinScreenState extends State<PinScreen> {
                             ? PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: Theme.of(context).textTheme.title.copyWith(color: errorMain),
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .title
+                                    .copyWith(color: errorMain),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: errorMain),
                                   borderRadius: BorderRadius.circular(8),
@@ -154,7 +156,11 @@ class _PinScreenState extends State<PinScreen> {
                             : PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).pinTextFont()),
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .title
+                                    .copyWith(
+                                        color: Theme.of(context).pinTextFont()),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: backgroundColor600),
                                   borderRadius: BorderRadius.circular(8),
@@ -163,7 +169,10 @@ class _PinScreenState extends State<PinScreen> {
                         focusedPinTheme: PinTheme(
                           width: 56,
                           height: 56,
-                          textStyle: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).pinTextFont()),
+                          textStyle: Theme.of(context)
+                              .textTheme
+                              .title
+                              .copyWith(color: Theme.of(context).pinTextFont()),
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: Theme.of(context).primaryColor),
@@ -174,7 +183,10 @@ class _PinScreenState extends State<PinScreen> {
                             ? PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: Theme.of(context).textTheme.title.copyWith(color: errorMain),
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .title
+                                    .copyWith(color: errorMain),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: errorMain),
                                   borderRadius: BorderRadius.circular(8),
@@ -183,9 +195,14 @@ class _PinScreenState extends State<PinScreen> {
                             : PinTheme(
                                 width: 56,
                                 height: 56,
-                                textStyle: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).primaryColor),
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .title
+                                    .copyWith(
+                                        color: Theme.of(context).primaryColor),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Theme.of(context).primaryColor),
+                                  border: Border.all(
+                                      color: Theme.of(context).primaryColor),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),

@@ -87,13 +87,13 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 4)
                       .copyWith(right: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
+                    color: Theme.of(context).white().withOpacity(0.5),
                     borderRadius: BorderRadius.only(
                         topLeft: DesignConfig.aHighBorderRadius,
                         bottomLeft: DesignConfig.aHighBorderRadius),
                   ),
                   child: Assets.icon.outline.arrowLeft
-                      .svg(width: 16, height: 16, color: Theme.of(context).primaryColor900()),
+                      .svg(width: 16, height: 16, color: Theme.of(context).headText()),
                 ),
               ),
               InkWell(
@@ -113,13 +113,13 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 4)
                       .copyWith(left: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
+                    color: Theme.of(context).white().withOpacity(0.5),
                     borderRadius: BorderRadius.only(
                         bottomRight: DesignConfig.aHighBorderRadius,
                         topRight: DesignConfig.aHighBorderRadius),
                   ),
                   child: Assets.icon.outline.arrowRight1
-                      .svg(width: 16, height: 16, color: Theme.of(context).primaryColor900()),
+                      .svg(width: 16, height: 16, color: Theme.of(context).headText()),
                 ),
               ),
             ],

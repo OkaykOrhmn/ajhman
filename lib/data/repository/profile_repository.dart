@@ -59,6 +59,16 @@ class ProfileRepository implements ProfileInformation {
       rethrow;
     }
   }
+
+  @override
+  Future<Response> deleteProfileImage() async {
+    try {
+      Response response = await dioHelper.putRequest(ApiEndPoints.userProfile,null);
+      return response;
+    } catch (ex) {
+      rethrow;
+    }
+  }
 }
 
 abstract class ProfileInformation {
@@ -66,4 +76,5 @@ abstract class ProfileInformation {
   Future<Response> deleteProfile();
   Future<Response> putPlanner(PlannerRequestModel plannerRequestModel);
   Future<Response> putProfileImage(FormData  image);
+  Future<Response> deleteProfileImage();
 }

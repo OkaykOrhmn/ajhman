@@ -3,7 +3,9 @@ import 'dart:ffi';
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/core/utils/extentions.dart';
 import 'package:ajhman/data/model/planner_request_model.dart';
+import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
@@ -109,10 +111,11 @@ class _TimeScreenState extends State<TimeScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(24),
-          child: Text(
-            ChangeLocale(context).appLocal!.timeTitle,
-            style: body1,
+          child: PrimaryText(
+            text: ChangeLocale(context).appLocal!.timeTitle,
+            style: Theme.of(context).textTheme.title,
             textAlign: TextAlign.center,
+            color: Theme.of(context).cardText(),
           ),
         ),
         Padding(
@@ -152,7 +155,7 @@ class _TimeScreenState extends State<TimeScreen> {
                       }
                       print("change");
                     },
-                    style: body1,
+                    style:  Theme.of(context).textTheme.title,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
@@ -160,7 +163,7 @@ class _TimeScreenState extends State<TimeScreen> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: ChangeLocale(context).appLocal!.enterTime,
-                      hintStyle: body4,
+                      hintStyle: Theme.of(context).textTheme.rate,
                     ),
                   ),
                 ),

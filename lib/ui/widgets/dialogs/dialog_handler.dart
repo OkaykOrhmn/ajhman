@@ -172,57 +172,61 @@ class DialogHandler {
     await showModalBottomSheet(
         context: context,
         useSafeArea: true,
+        backgroundColor: Theme.of(context).background(),
         builder: (context) {
           return Stack(
             children: [
               Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     height: 5,
                     width: MediaQuery.sizeOf(context).width / 4,
                     margin: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).black(),
                       borderRadius: DesignConfig.highBorderRadius,
                     ),
                   ),
                   const SizedBox(
-                    height: 32,
+                    height: 18,
                   ),
                   PrimaryText(
                       text: "قصد خارج شدن از برنامه را دارید؟",
                       style: themeData.textTheme.titleBold,
-                      color: Colors.black),
+                      color: Theme.of(context).black()),
                   Gif(
                     image: Assets.gif.exit.provider(),
                     autostart: Autostart.loop,
-                    width: MediaQuery.sizeOf(context).width / 1.3,
-                    height: MediaQuery.sizeOf(context).width / 1.3,
+                    width: MediaQuery.sizeOf(context).width / 1.5,
+                    height: MediaQuery.sizeOf(context).width / 1.5,
                   ),
                   Row(
                     children: [
-                      Container(
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
-                          child: PrimaryButton(
-                            title: "بله",
-                            onClick: () {
-                              if (Platform.isAndroid) {
-                                SystemNavigator.pop();
-                              } else if (Platform.isIOS) {
-                                exit(0);
-                              }
-                            },
-                          )),
-                      Container(
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                          child: OutlinedPrimaryButton(
-                            title: "خیر",
-                            onClick: () {
-                              pop();
-                            },
-                          ))
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 18, 16, 8),
+                        child: PrimaryButton(
+                          title: "بله",
+                          onClick: () {
+                            if (Platform.isAndroid) {
+                              SystemNavigator.pop();
+                            } else if (Platform.isIOS) {
+                              exit(0);
+                            }
+                          },
+                        ),
+                      )),
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 18, 8, 8),
+                        child: OutlinedPrimaryButton(
+                          title: "خیر",
+                          onClick: () {
+                            pop();
+                          },
+                        ),
+                      ))
                     ],
                   ),
                 ],
@@ -237,7 +241,7 @@ class DialogHandler {
     await showModalBottomSheet(
         context: context,
         useSafeArea: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).background(),
         builder: (context) {
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -246,14 +250,14 @@ class DialogHandler {
                 height: 5,
                 width: MediaQuery.sizeOf(context).width / 4,
                 margin: const EdgeInsets.symmetric(vertical: 16),
-                decoration: const BoxDecoration(
-                  color: Colors.black,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).black(),
                   borderRadius: DesignConfig.highBorderRadius,
                 ),
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 40.0, horizontal: 16),
+                    const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -274,7 +278,7 @@ class DialogHandler {
                     //       ),
                     //       PrimaryText(
                     //           text: "آواتار",
-                    //           style: mThemeData.textTheme.title,
+                    //           style: themeData.textTheme.title,
                     //           color: grayColor900)
                     //     ],
                     //   ),
@@ -288,9 +292,9 @@ class DialogHandler {
                         pop();
                       },
                       child: Container(
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           borderRadius: DesignConfig.mediumBorderRadius,
-                          color: backgroundColor100,
+                          color: Theme.of(context).cardBackground(),
                         ),
                         width: 100,
                         height: 100,
@@ -306,8 +310,8 @@ class DialogHandler {
                             ),
                             PrimaryText(
                                 text: "حافظه داخلی",
-                                style: mThemeData.textTheme.title,
-                                color: grayColor900)
+                                style: themeData.textTheme.title,
+                                color: Theme.of(context).progressText())
                           ],
                         ),
                       ),
@@ -321,9 +325,9 @@ class DialogHandler {
                         pop();
                       },
                       child: Container(
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           borderRadius: DesignConfig.mediumBorderRadius,
-                          color: backgroundColor100,
+                          color: Theme.of(context).cardBackground(),
                         ),
                         width: 100,
                         height: 100,
@@ -339,8 +343,8 @@ class DialogHandler {
                             ),
                             PrimaryText(
                                 text: "دوربین",
-                                style: mThemeData.textTheme.title,
-                                color: grayColor900)
+                                style: themeData.textTheme.title,
+                                color: Theme.of(context).progressText())
                           ],
                         ),
                       ),
@@ -350,33 +354,33 @@ class DialogHandler {
               ),
               Row(
                 children: [
-                  Container(
-                      width: MediaQuery.sizeOf(context).width / 2,
-                      padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
-                      child: PrimaryButton(
-                        title: "بازگشت",
-                        onClick: () {
-                          pop();
-                        },
-                      )),
-                  Container(
-                      width: MediaQuery.sizeOf(context).width / 2,
-                      padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                      child: CustomOutlinedPrimaryButton(
-                        color: errorMain,
-                        child: PrimaryText(
-                            text: "حذف عکس",
-                            style: AppTextStyles.outlinedPrimaryButtonText,
-                            color: errorMain),
-                        onClick: () {
-                          pop();
-                        },
-                      ))
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 18, 16, 8),
+                    child: PrimaryButton(
+                      title: "بازگشت",
+                      onClick: () {
+                        pop();
+                      },
+                    ),
+                  )),
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 18, 8, 8),
+                    child: CustomOutlinedPrimaryButton(
+                      color: errorMain,
+                      child: PrimaryText(
+                          text: "حذف عکس",
+                          style: AppTextStyles.outlinedPrimaryButtonText,
+                          color: errorMain),
+                      onClick: () {
+                        context.read<ImagePickerCubit>().deleteProfileImage();
+                        pop();
+                      },
+                    ),
+                  ))
                 ],
               ),
-              const SizedBox(
-                height: 40,
-              )
             ],
           );
         });
@@ -387,68 +391,75 @@ class DialogHandler {
     await showModalBottomSheet(
         context: context,
         useSafeArea: true,
+        backgroundColor: Theme.of(context).background(),
         builder: (context) {
           return Stack(
             children: [
               Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     height: 5,
                     width: MediaQuery.sizeOf(context).width / 4,
                     margin: EdgeInsets.symmetric(vertical: 16),
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).black(),
                       borderRadius: DesignConfig.highBorderRadius,
                     ),
                   ),
                   const SizedBox(
-                    height: 32,
+                    height: 16,
                   ),
                   PrimaryText(
                       text: "آیا از پایان دادن به آزمون مطمئن هستید؟",
                       style: themeData.textTheme.titleBold,
                       color: Theme.of(context).black()),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: MediaQuery.sizeOf(context).width / 1.3,
-                    padding: const EdgeInsets.fromLTRB(46, 32, 46, 32),
-                    child: Assets.image.finishExam.svg(),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  Assets.image.finishExam.svg(
+                    width: MediaQuery.sizeOf(context).width / 2,
+                    height: MediaQuery.sizeOf(context).width / 2,
+                  ),
+                  const SizedBox(
+                    height: 24,
                   ),
                   Row(
                     children: [
-                      Container(
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
-                          child: PrimaryLoadingButton(
-                            title: "بله",
-                            onTap: (Function startLoading, Function stopLoading,
-                                ButtonState btnState) async {
-                              if (btnState == ButtonState.idle) {
-                                startLoading();
-                                try {
-                                  AnswerResultModel response =
-                                      await examRepository.postExam(4, answers);
-                                  pop();
-                                  navigatorKey.currentState!
-                                      .pushReplacementNamed(
-                                          RoutePaths.examResult,
-                                          arguments: response);
-                                } on DioError catch (e) {}
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 18, 16, 8),
+                        child: PrimaryLoadingButton(
+                          title: "بله",
+                          onTap: (Function startLoading, Function stopLoading,
+                              ButtonState btnState) async {
+                            if (btnState == ButtonState.idle) {
+                              startLoading();
+                              try {
+                                AnswerResultModel response =
+                                    await examRepository.postExam(4, answers);
+                                pop();
+                                navigatorKey.currentState!.pushReplacementNamed(
+                                    RoutePaths.examResult,
+                                    arguments: response);
+                              } on DioError catch (e) {}
 
-                                stopLoading();
-                              }
-                            },
-                            disable: false,
-                          )),
-                      Container(
-                          width: MediaQuery.sizeOf(context).width / 2,
-                          padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
-                          child: OutlinedPrimaryButton(
-                            title: "خیر",
-                            onClick: () {
-                              pop();
-                            },
-                          ))
+                              stopLoading();
+                            }
+                          },
+                          disable: false,
+                        ),
+                      )),
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 18, 8, 8),
+                        child: OutlinedPrimaryButton(
+                          title: "خیر",
+                          onClick: () {
+                            pop();
+                          },
+                        ),
+                      ))
                     ],
                   ),
                 ],

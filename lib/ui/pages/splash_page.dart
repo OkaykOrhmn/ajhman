@@ -4,6 +4,7 @@ import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/auth/auth_page.dart';
 import 'package:ajhman/ui/pages/auth/auth_page_started.dart';
+import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:ajhman/ui/widgets/states/no_connectivity_screen.dart';
@@ -38,16 +39,11 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
   }
 
-  void _tryAgain() {
-    setState(() {
-      clearToken();
-      Navigator.pop(context);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).background(),
       body: FutureBuilder(
           future: getToken(),
           builder: (context, snapshot) {
@@ -60,15 +56,11 @@ class _SplashPageState extends State<SplashPage> {
               if (state is ProfileSuccess) {
                 setProfile(state.response);
                 navigatorKey.currentState!.pushNamed(RoutePaths.home);
+              } else if (state is ProfileFailConnection) {
+                SnackBarHandler(context).show(
+                    "اینترنت خود را بررسی کنید", DialogStatus.error, true);
               } else if (state is ProfileFail) {
-                if (state.error == "connection") {
-                  SnackBarHandler(context).show(
-                      "اینترنت خود را بررسی کنید", DialogStatus.error, true);
-                } else {
-                  SnackBarHandler(context)
-                      .show("نشست منقضی شده است", DialogStatus.error, true);
-                  navigatorKey.currentState!.pushNamed(RoutePaths.auth);
-                }
+                navigatorKey.currentState!.pushReplacementNamed(RoutePaths.auth);
               }
             }, builder: (context, state) {
               return Column(
@@ -81,7 +73,7 @@ class _SplashPageState extends State<SplashPage> {
                     children: [
                       Assets.icon.main.lIcon
                           .svg(color: Theme.of(context).primaryColor),
-                      state is ProfileFail
+                      state is ProfileFailConnection
                           ? PrimaryButton(
                               title: "تلاش مجدد",
                               onClick: () {

@@ -44,9 +44,22 @@ class ImagePickerCubit extends Cubit<ImagePickerState> {
     }
   }
 
+  void deleteProfileImage() async {
+    try {
+      emit(ImagePickerLoading());
+      final response = await profileRepository.deleteProfile();
+      final profile = await getProfile();
+      profile.image = response.data["image"].toString();
+      await setProfile(profile);
+      emit(ImagePickerSuccess());
+    } on DioError catch (e) {
+      emit(ImagePickerError());
+    }
+  }
+
   void getImageFromCamera() async {
     final permission =
-    await permissionHandler.requestPermission(Permission.camera);
+        await permissionHandler.requestPermission(Permission.camera);
     if (permission) {
       final path = await imagePickerHandler.pickImageFromCamera();
       if (path != null) {

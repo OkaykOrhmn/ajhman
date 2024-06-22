@@ -1,5 +1,6 @@
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/data/model/planner_request_model.dart';
+import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_locale.dart';
@@ -78,12 +79,13 @@ class _GridDaysViewState extends State<GridDaysView> {
       },
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).white(),
             borderRadius: DesignConfig.mediumBorderRadius,
             border: Border.all(
+              width: 2,
                 color: days[index].isSelected
                     ? Theme.of(context).primaryColor
-                    : Colors.white)),
+                    : Theme.of(context).white())),
         child: Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
           child: Flex(
@@ -100,9 +102,10 @@ class _GridDaysViewState extends State<GridDaysView> {
               ),
               Flexible(
                   flex: 3,
-                  child: Text(
-                    days[index].dayName,
-                    style: body4,
+                  child: PrimaryText(
+                    text: days[index].dayName,
+                    style: Theme.of(context).textTheme.rate,
+                    color: days[index].isSelected?Theme.of(context).primaryColor: Theme.of(context).pinTextFont(),
                   )),
             ],
           ),

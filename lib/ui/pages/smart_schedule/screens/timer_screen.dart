@@ -4,19 +4,18 @@ import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/data/model/planner_request_model.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
+import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-// import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../core/utils/app_locale.dart';
 import '../../../theme/text/text_styles.dart';
 import '../../../theme/widget/design_config.dart';
 import '../../../widgets/button/toggle_button_time.dart';
-// import 'package:syncfusion_flutter_core/theme.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({super.key});
@@ -61,9 +60,10 @@ class _TimerScreenState extends State<TimerScreen>
       children: [
         Padding(
           padding: const EdgeInsets.all(24),
-          child: Text(
-            ChangeLocale(context).appLocal!.timerTitle,
-            style: body1,
+          child: PrimaryText(
+            text: ChangeLocale(context).appLocal!.timerTitle,
+            style: Theme.of(context).textTheme.title,
+            color: Theme.of(context).cardText(),
             textAlign: TextAlign.center,
           ),
         ),
@@ -72,7 +72,7 @@ class _TimerScreenState extends State<TimerScreen>
           child: Container(
             decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: Colors.white,
+              color: Theme.of(context).white(),
             ),
             child: Column(
               children: [
@@ -137,13 +137,21 @@ class _TimerScreenState extends State<TimerScreen>
                   height: 8,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("ق.ظ"),
-                    SizedBox(
-                      width: 4,
+                    SizedBox(width: 4,),
+                    PrimaryText(
+                      text: "دقیقه",
+                      style: Theme.of(context).textTheme.rate,
+                      color: Theme.of(context).cardText(),
                     ),
-                    Text("ب.ظ"),
+                    SizedBox(width: 4,),
+                    PrimaryText(
+                      text: "ساعت",
+                      style: Theme.of(context).textTheme.rate,
+                      color: Theme.of(context).cardText(),
+                    ),
+                  SizedBox(width: 4,)
                   ],
                 ),
                 SizedBox(
@@ -173,82 +181,75 @@ class _TimerScreenState extends State<TimerScreen>
                     ),
                   ],
                 ),
-                // SfSliderTheme(
-                //   data: SfSliderThemeData(
-                //       activeDividerColor: Theme.of(context).primaryColor,
-                //       tooltipBackgroundColor: Theme.of(context).primaryColor,
-                //       tooltipTextStyle: body6),
-                //   child: _inHour
-                //       ? SfSlider(
-                //           activeColor: Theme.of(context).primaryColor,
-                //           inactiveColor: grayColor50,
-                //           min: 0,
-                //           max: 24,
-                //           labelPlacement: LabelPlacement.onTicks,
-                //           value: _hValue.round(),
-                //           interval: 1,
-                //           showTicks: false,
-                //           showLabels: false,
-                //           enableTooltip: true,
-                //           tooltipShape: SfPaddleTooltipShape(),
-                //           showDividers: true,
-                //           minorTicksPerInterval: 1,
-                //           onChanged: (value) {
-                //             final val = value as double;
-                //             setState(() {
-                //               if (value >= 1) {
-                //                 _hValue = value;
-                //                 if (value <= 8 || value >= 18) {
-                //                   _inLight = false;
-                //                 } else {
-                //                   _inLight = true;
-                //                 }
-                //               }
-                //               if (planner.startAt == null ||
-                //                   planner.startAt!.isEmpty) {
-                //                 planner.startAt =
-                //                     "${_hValue.round().toString().padLeft(2, "0")}:01";
-                //               } else {
-                //                 planner.startAt =
-                //                     "${_hValue.round().toString().padLeft(2, "0")}${planner.startAt!.substring(2)}";
-                //               }
-                //               context.read<PlannerCubit>().setData(planner);
-                //
-                //             });
-                //           },
-                //         )
-                //       : SfSlider(
-                //           activeColor: Theme.of(context).primaryColor,
-                //           inactiveColor: grayColor50,
-                //           dateFormat: DateFormat.H(),
-                //           min: 0,
-                //           max: 60,
-                //           labelPlacement: LabelPlacement.onTicks,
-                //           value: _mValue.round(),
-                //           interval: 15,
-                //           showTicks: true,
-                //           showLabels: true,
-                //           enableTooltip: true,
-                //           minorTicksPerInterval: 1,
-                //           onChanged: (value) {
-                //             final val = value as double;
-                //             setState(() {
-                //               if (value <= 59) {
-                //                 _mValue = value;
-                //               }
-                //               if (planner.startAt == null ||
-                //                   planner.startAt!.isEmpty) {
-                //                 planner.startAt =
-                //                     "01:${_mValue.round().toString().padLeft(2, "0")}";
-                //               } else {
-                //                 planner.startAt =
-                //                     "${planner.startAt!.substring(0, 3)}${_mValue.round().toString().padLeft(2, "0")}";
-                //               }
-                //               context.read<PlannerCubit>().setData(planner);
-                //             });
-                //           },
-                //         ),
-                // ),
+                _inHour
+                    ? Slider(
+                        activeColor: Theme.of(context).primaryColor,
+                        inactiveColor: grayColor50,
+                        min: 0,
+                        max: 24,
+                        // labelPlacement: LabelPlacement.onTicks,
+                        value: _hValue.round().toDouble(),
+                        // interval: 1,
+                        // showTicks: false,
+                        // showLabels: false,
+                        // enableTooltip: true,
+                        // tooltipShape: SfPaddleTooltipShape(),
+                        // showDividers: true,
+                        // minorTicksPerInterval: 1,
+                        onChanged: (value) {
+                          final val = value as double;
+                          setState(() {
+                            if (value >= 1) {
+                              _hValue = value;
+                              if (value <= 8 || value >= 18) {
+                                _inLight = false;
+                              } else {
+                                _inLight = true;
+                              }
+                            }
+                            if (planner.startAt == null ||
+                                planner.startAt!.isEmpty) {
+                              planner.startAt =
+                                  "${_hValue.round().toString().padLeft(2, "0")}:01";
+                            } else {
+                              planner.startAt =
+                                  "${_hValue.round().toString().padLeft(2, "0")}${planner.startAt!.substring(2)}";
+                            }
+                            context.read<PlannerCubit>().setData(planner);
+                          });
+                        },
+                      )
+                    : Slider(
+                        activeColor: Theme.of(context).primaryColor,
+                        inactiveColor: grayColor50,
+                        // dateFormat: DateFormat.H(),
+                        min: 0,
+                        max: 60,
+                        // labelPlacement: LabelPlacement.onTicks,
+                        value: _mValue.round().toDouble(),
+                        // interval: 15,
+                        // showTicks: true,
+                        // showLabels: true,
+                        // enableTooltip: true,
+                        // minorTicksPerInterval: 1,
+                        onChanged: (value) {
+                          final val = value as double;
+                          setState(() {
+                            if (value <= 59) {
+                              _mValue = value;
+                            }
+                            if (planner.startAt == null ||
+                                planner.startAt!.isEmpty) {
+                              planner.startAt =
+                                  "01:${_mValue.round().toString().padLeft(2, "0")}";
+                            } else {
+                              planner.startAt =
+                                  "${planner.startAt!.substring(0, 3)}${_mValue.round().toString().padLeft(2, "0")}";
+                            }
+                            context.read<PlannerCubit>().setData(planner);
+                          });
+                        },
+                      ),
                 SizedBox(
                   height: 14,
                 )

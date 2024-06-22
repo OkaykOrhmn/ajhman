@@ -3,6 +3,7 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 import '../../../core/cubit/video/video_player_cubit.dart';
 import '../../../core/services/video_handler.dart';
@@ -95,12 +96,14 @@ class _VideoBarState extends State<VideoBar> {
                       width: 8,
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: () async{
                         context.read<VideoPlayerCubit>().changeMute();
+                        double volume = await VolumeController().getVolume();
+
                         if (state.mute) {
-                          videoHandler.customVideoPlayerController.mute();
+                          videoHandler.customVideoPlayerController.videoPlayerController.setVolume(volume);
                         } else {
-                          videoHandler.customVideoPlayerController.unMute();
+                          videoHandler.customVideoPlayerController.videoPlayerController.setVolume(0);
                         }
                       },
                       child: state.mute
@@ -114,13 +117,16 @@ class _VideoBarState extends State<VideoBar> {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () {
-                        Duration pos = videoHandler
-                            .customVideoPlayerController.getPosition;
-                        Duration next = Duration(seconds: pos.inSeconds + 5);
-                        videoHandler
-                            .customVideoPlayerController.videoPlayerController
-                            .seekTo(next);
+                      onTap: () async{
+                        Duration? pos = await videoHandler
+                            .customVideoPlayerController.videoPlayerController.position;
+                        if(pos != null){
+                          Duration next = Duration(seconds: pos.inSeconds + 5);
+                          videoHandler
+                              .customVideoPlayerController.videoPlayerController
+                              .seekTo(next);
+                        }
+
                       },
                       child: Assets.icon.outline.forward5Seconds
                           .svg(width: 24, height: 24, color: Colors.white),
@@ -129,13 +135,15 @@ class _VideoBarState extends State<VideoBar> {
                       width: 8,
                     ),
                     InkWell(
-                      onTap: () {
-                        Duration pos = videoHandler
-                            .customVideoPlayerController.getPosition;
-                        Duration next = Duration(seconds: pos.inSeconds - 5);
-                        videoHandler
-                            .customVideoPlayerController.videoPlayerController
-                            .seekTo(next);
+                      onTap: () async{
+                        Duration? pos = await videoHandler
+                            .customVideoPlayerController.videoPlayerController.position;
+                        if(pos != null){
+                          Duration next = Duration(seconds: pos.inSeconds - 5);
+                          videoHandler
+                              .customVideoPlayerController.videoPlayerController
+                              .seekTo(next);
+                        }
                       },
                       child: Assets.icon.outline.backward5Seconds
                           .svg(width: 24, height: 24, color: Colors.white),

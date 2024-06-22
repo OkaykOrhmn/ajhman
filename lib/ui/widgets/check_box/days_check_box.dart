@@ -18,10 +18,11 @@ class _DaysCheckBoxState extends State<DaysCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-        side: const BorderSide(
-          color: grayColor700,
+        side:  BorderSide(
+          color: Theme.of(context).cardText(),
         ),
         activeColor: Theme.of(context).primaryColor,
+        checkColor: Theme.of(context).black(),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         value: widget.value,
         onChanged: (val) {

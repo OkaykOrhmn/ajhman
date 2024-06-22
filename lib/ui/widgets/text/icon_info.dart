@@ -27,7 +27,7 @@ class IconInfo extends StatelessWidget {
           child: PrimaryText(
               text: desc,
               textAlign: TextAlign.start,
-              style: mThemeData.textTheme.searchHint,
+              style:  Theme.of(context).textTheme.searchHint,
               maxLines: 1,
               color: Theme.of(context).editTextFont()),
         )

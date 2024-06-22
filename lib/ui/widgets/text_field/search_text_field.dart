@@ -45,9 +45,15 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          SizedBox(width: 16,),
-          Center(child: Assets.icon.outline.searchNormal.svg(color: Theme.of(context).disable(),width: 16,height: 16)),
-          const SizedBox(width: 8,),
+          SizedBox(
+            width: 16,
+          ),
+          Center(
+              child: Assets.icon.outline.searchNormal.svg(
+                  color: Theme.of(context).disable(), width: 16, height: 16)),
+          const SizedBox(
+            width: 8,
+          ),
           Container(
             color: Theme.of(context).disable(),
             width: 1,
@@ -58,14 +64,17 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
               padding: const EdgeInsets.only(left: 8.0),
               child: TextField(
                 controller: widget.textEditingController,
-                style: Theme.of(context).textTheme.searchHint,
+                style: Theme.of(context).textTheme.searchHint.copyWith(
+                      decoration: TextDecoration.none,
+                    ),
                 onChanged: (val) {
                   setState(() {
                     _onChange(val);
                   });
                 },
                 maxLines: 1,
-
+                autocorrect: false,
+                enableSuggestions: false,
                 autofocus: true,
                 decoration: InputDecoration(
                     suffixIcon: widget.textEditingController.text.isNotEmpty

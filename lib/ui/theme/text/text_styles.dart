@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../main.dart';
 import '../bloc/theme_bloc.dart';
 
-const _defaultFontFamily = 'Dana-FaNum-Regular';
+const _defaultFontFamily = 'Dana';
 
 class AppTextStyles {
   static TextStyle headerBoldWhite = headline3.copyWith(color: Colors.white);
@@ -91,7 +91,7 @@ extension AppTextStyle on TextTheme {
 
   TextStyle get navbarTitle => body5;
 
-  TextStyle get navbarTitleBold => body5.copyWith(fontWeight: FontWeight.bold);
+  TextStyle get navbarTitleBold => body6;
 
   TextStyle get searchHint => body3;
 

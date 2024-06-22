@@ -45,22 +45,28 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
 
         return Expanded(
           child: buttons[index].active
-              ? PrimaryButton(
-                  title: buttons[index].name,
-                  onClick: () {
-                    setState(() {
-                      click();
-                    });
-                  },
-                )
-              : OutlinedPrimaryButton(
-                  title: buttons[index].name,
-                  onClick: () {
-                    setState(() {
-                      click();
-                    });
-                  },
-                ),
+              ? Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: PrimaryButton(
+                    title: buttons[index].name,
+                    onClick: () {
+                      setState(() {
+                        click();
+                      });
+                    },
+                  ),
+              )
+              : Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: OutlinedPrimaryButton(
+                    title: buttons[index].name,
+                    onClick: () {
+                      setState(() {
+                        click();
+                      });
+                    },
+                  ),
+              ),
         );
       }),
     );

@@ -162,8 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       TitleDivider(title: "جدیدترین دوره ها", btn: () {}),
                       SizedBox(
                         height: context.read<ThemeBloc>().state.fontSize >= 1
-                            ? (320 + (context.read<ThemeBloc>().state.fontSize * 10))
-                            : (320 -  (context.read<ThemeBloc>().state.fontSize * 10)),
+                            ? (340 + (context.read<ThemeBloc>().state.fontSize * 10))
+                            : (340 -  (context.read<ThemeBloc>().state.fontSize * 10)),
                         width: MediaQuery.sizeOf(context).width,
                         child: ListView.builder(
                             physics: const BouncingScrollPhysics(),

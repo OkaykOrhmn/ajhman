@@ -48,8 +48,8 @@ class _AudioBarState extends State<AudioBar> {
                   },
                   child: PrimaryText(
                       text: "${state.speed}X",
-                      style: mThemeData.textTheme.navbarTitle,
-                      color: grayColor900),
+                      style: Theme.of(context).textTheme.navbarTitle,
+                      color: Theme.of(context).progressText()),
                 ),
                 SizedBox(
                   width: 16,
@@ -72,9 +72,9 @@ class _AudioBarState extends State<AudioBar> {
                   },
                   child: state.volume != 0
                       ? Assets.icon.outline.volumeHigh
-                          .svg(width: 24, height: 24, color: grayColor800)
+                          .svg(width: 24, height: 24, color: Theme.of(context).pinTextFont())
                       : Assets.icon.outline.volumeSlash
-                          .svg(width: 24, height: 24, color: grayColor800),
+                          .svg(width: 24, height: 24, color: Theme.of(context).pinTextFont()),
                 ),
               ],
             ),
@@ -90,7 +90,7 @@ class _AudioBarState extends State<AudioBar> {
                     }
                   },
                   child: Assets.icon.outline.forward5Seconds
-                      .svg(width: 24, height: 24, color: grayColor800),
+                      .svg(width: 24, height: 24, color: Theme.of(context).pinTextFont()),
                 ),
                 SizedBox(
                   width: 8,
@@ -104,7 +104,7 @@ class _AudioBarState extends State<AudioBar> {
                     }
                   },
                   child: Assets.icon.outline.backward5Seconds
-                      .svg(width: 24, height: 24, color: grayColor800),
+                      .svg(width: 24, height: 24, color: Theme.of(context).pinTextFont()),
                 ),
                 SizedBox(
                   width: 16,

@@ -234,6 +234,7 @@ class _MyAppState extends State<MyApp> {
                 if (state is ConnectivitySuccessState ||
                     state is ConnectivityInitialState) {
                   return MaterialApp(
+                    theme: themeData,
                     navigatorKey: navigatorKey,
                     title: 'Flutter Demo',
                     debugShowCheckedModeBanner: false,
@@ -252,7 +253,6 @@ class _MyAppState extends State<MyApp> {
                       // farsi
                       // Add more supported locales based on your application's target audience
                     ],
-                    theme: themeData,
                     // home: const SplashPage(),
                     initialRoute: RoutePaths.splash,
                     onGenerateRoute: (settings) =>

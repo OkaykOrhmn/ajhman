@@ -117,8 +117,9 @@ class _CourseVideoState extends State<CourseVideo> {
                   borderRadius: DesignConfig.highBorderRadius,
                   child: loading
                       ? Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[100]!,
+                          baseColor: Theme.of(context).placeholderBaseColor(),
+                          highlightColor:
+                              Theme.of(context).placeholderHighlightColor(),
                           child: Container(
                             color: Colors.white,
                           ))

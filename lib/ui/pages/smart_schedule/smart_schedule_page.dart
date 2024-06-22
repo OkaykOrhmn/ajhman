@@ -47,6 +47,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Theme.of(context).background(),
       appBar: PrimaryAppBar(
         title: ChangeLocale(context).appLocal!.smartScheduleTitle,
       ),
@@ -77,7 +78,8 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
       child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor50(), borderRadius: BorderRadius.circular(20)),
+              color: Theme.of(context).surfaceCard()
+              , borderRadius: BorderRadius.circular(20)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
