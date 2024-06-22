@@ -11,6 +11,7 @@ class CourseMainResponseModel {
   Category? category;
   bool? registered;
   int? examScore;
+  String? tag;
 
 
   CourseMainResponseModel(
@@ -25,6 +26,7 @@ class CourseMainResponseModel {
         this.chapters,
         this.registered,
         this.examScore,
+        this.tag,
         this.category});
 
   CourseMainResponseModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class CourseMainResponseModel {
     description = json['description'];
     registered = json['registered'];
     examScore = json['examScore'];
+    tag = json['tag'];
     if (json['Chapters'] != null) {
       chapters = <courseMainChapters>[];
       json['Chapters'].forEach((v) {
@@ -61,6 +64,7 @@ class CourseMainResponseModel {
     data['description'] = this.description;
     data['registered'] = this.registered;
     data['examScore'] = this.examScore;
+    data['tag'] = this.tag;
     if (this.chapters != null) {
       data['Chapters'] = this.chapters!.map((v) => v.toJson()).toList();
     }

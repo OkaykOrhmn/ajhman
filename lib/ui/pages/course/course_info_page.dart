@@ -6,9 +6,7 @@ import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
-import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +17,8 @@ import 'package:loading_btn/loading_btn.dart';
 
 import '../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../core/cubit/home/news_course_home_cubit.dart';
-import '../../../data/args/exam_args.dart';
+import '../../../core/utils/language/bloc/language_bloc.dart';
+import '../../../data/model/language.dart';
 import '../../../data/shared_preferences/profile_data.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
@@ -27,7 +26,6 @@ import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../../widgets/animation/animated_visibility.dart';
 import '../../widgets/button/loading_btn.dart';
-import '../../widgets/button/outlined_primary_button.dart';
 import '../../widgets/image/primary_image_network.dart';
 import '../../widgets/image/profile_image_network.dart';
 import '../../widgets/listview/highlight_listview.dart';
@@ -50,13 +48,28 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   late CourseMainResponseModel data;
 
   bool isShowLast = false;
+  bool isInternational = false;
+
+  @override
+  void initState() {
+    if (widget.response.tag != null && widget.response.tag == "international" ||
+        context.read<LanguageBloc>().state.selectedLanguage ==
+            Language.english) {
+      setState(() {
+        isInternational = true;
+      });
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     data = widget.response;
-    return Scaffold(
-      backgroundColor: Theme.of(context).background(),
-      body: SingleChildScrollView(
+
+    return Directionality(
+      textDirection: isInternational ? TextDirection.ltr : TextDirection.rtl,
+      child: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: Column(
@@ -72,7 +85,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             //       child: const OutlinedPrimaryButton(
             //           title: "رفتن به نوشته و نشان شده‌ها")),
             // )),
-            CourseRating(id: data.id!,),
+            CourseRating(
+              id: data.id!,
+            ),
             _pointsPlatform(),
             data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
             data.registered != null && data.registered!
@@ -153,10 +168,12 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     Expanded(
                         child: IconInfo(
                             icon: Assets.icon.outline.user,
-                            desc: "۱٬۳۴۲ فراگیر")),
+                            desc:
+                                "۱٬۳۴۲ ${isInternational ? "Participants" : 'فراگیر'}")),
                     Expanded(
                         child: IconInfo(
-                            icon: Assets.icon.outline.clock, desc: "۵۶ ساعت")),
+                            icon: Assets.icon.outline.clock,
+                            desc: "۵۶ ${isInternational ? "Hours" : 'ساعت'}")),
                   ],
                 ),
                 const SizedBox(
@@ -168,7 +185,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     Expanded(
                         child: IconInfo(
                             icon: Assets.icon.outline.chart,
-                            desc: "سطح ${getLevel(data.level)}")),
+                            desc:
+                                "${isInternational ? "Level" : 'سطح'} ${getLevel(data.level, isInternational)}")),
                     Expanded(
                         child: IconInfo(
                             icon: Assets.icon.outline.note2,
@@ -196,7 +214,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PrimaryText(
-              text: "توضیحات دوره",
+              text: isInternational ? "Course Details" : "توضیحات دوره",
               style: Theme.of(context).textTheme.dialogTitle,
               color: Theme.of(context).headText(),
               textAlign: TextAlign.start,
@@ -255,7 +273,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PrimaryText(
-                        text: "آنچه در این دوره می‌آموزیم",
+                        text: isInternational
+                            ? "What you'll learn"
+                            : "آنچه در این دوره می‌آموزیم",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).headText(),
                         textAlign: TextAlign.start,
@@ -278,7 +298,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 40),
       child: Container(
         padding: const EdgeInsets.all(16),
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
             color: Theme.of(context).cardBackground(),
             borderRadius: DesignConfig.highBorderRadius),
         child: Column(
@@ -304,7 +324,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PrimaryText(
-                          text: "نمره‌ی شما",
+                          text: isInternational ? "Your Score" : "نمره‌ی شما",
                           style: Theme.of(context).textTheme.titleBold,
                           color: Theme.of(context).pinTextFont()),
                       SizedBox(
@@ -322,8 +342,10 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                         child: Center(
                           child: PrimaryText(
                               text: data.examScore == null
-                                  ? "آزمونی داده نشده"
-                                  : "${80 > 60 ? "پذیرفته" : "رد"} شده در آزمون",
+                                  ? isInternational
+                                      ? "No test given"
+                                      : "آزمونی داده نشده"
+                                  : "${80 > 60 ? isInternational ? 'accepted' : "پذیرفته" : isInternational ? 'rejection' : "رد"} ${isInternational ? 'in the exam' : 'شده در آزمون'}",
                               style: Theme.of(context).textTheme.title,
                               color: 80 > 60 ? successMain : errorMain),
                         ),
@@ -340,7 +362,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 child: SizedBox(
               width: MediaQuery.sizeOf(context).width,
               child: OutlinePrimaryLoadingButton(
-                title: "رفتن به سکوی امتیازات",
+                title: isInternational
+                    ? 'Go to the Leaderboard'
+                    : "رفتن به سکوی امتیازات",
                 onTap: (Function startLoading, Function stopLoading,
                     ButtonState btnState) async {
                   if (btnState == ButtonState.idle) {
@@ -372,9 +396,12 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         PrimaryText(
-            text: "نمره کسب شده: ${score}",
+            text:
+                "${isInternational ? 'Score obtained' : 'نمره کسب شده'}: ${score}",
             style: Theme.of(context).textTheme.title,
-            color: score > 60 ? Theme.of(context).fontSuccess() : Theme.of(context).fontError()),
+            color: score > 60
+                ? Theme.of(context).fontSuccess()
+                : Theme.of(context).fontError()),
       ],
     );
   }
@@ -382,7 +409,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   Widget _chapters() {
     return Column(
       children: [
-        const TitleDivider(title: "سرفصل‌ها"),
+        data.tag != null && data.tag == 'mini'
+            ? const SizedBox()
+            : TitleDivider(title: isInternational ? 'Chapters' : "سرفصل‌ها"),
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: ListView.builder(
@@ -401,9 +430,11 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             ? Positioned.fill(
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).white().withOpacity(0.5),
-                                      borderRadius: DesignConfig.highBorderRadius
-                                    ),
+                                        color: Theme.of(context)
+                                            .white()
+                                            .withOpacity(0.5),
+                                        borderRadius:
+                                            DesignConfig.highBorderRadius),
                                     child: const ThreeBounceLoading()),
                               )
                             : const SizedBox()
@@ -413,7 +444,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 );
               }),
         ),
-        _chapterLastLayout()
+        (data.tag != null && data.tag == 'mini')
+            ? const SizedBox()
+            : _chapterLastLayout()
       ],
     );
   }
@@ -450,7 +483,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 Row(
                   children: [
                     PrimaryText(
-                        text: "فصل ${getChapterNumber(index)}",
+                        text: (data.tag != null && data.tag == 'mini')
+                            ? "شروع مینی دوره"
+                            : "${isInternational ? 'Chapter' : "فصل"} ${getChapterNumber(index, isInternational)}",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).primaryColor),
                     SizedBox(
@@ -458,25 +493,29 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     ),
                     completed
                         ? PrimaryText(
-                            text: "(گذرانده)",
+                            text: isInternational ? '(Pass)' : "(گذرانده)",
                             style: Theme.of(context).textTheme.titleBold,
                             color: successMain)
                         : PrimaryText(
-                            text: "(در حال یادگیری)",
+                            text: isInternational
+                                ? "(In Progress)"
+                                : "(در حال یادگیری)",
                             style: Theme.of(context).textTheme.titleBold,
                             color: warningMain),
                   ],
                 ),
-                isShow
-                    ? Assets.icon.outline.arrowUp
-                        .svg(color: Theme.of(context).primaryColor)
-                    : Assets.icon.outline.arrowDown
-                        .svg(color: Theme.of(context).primaryColor)
+                (data.tag != null && data.tag == 'mini')
+                    ? const SizedBox()
+                    : isShow
+                        ? Assets.icon.outline.arrowUp
+                            .svg(color: Theme.of(context).primaryColor)
+                        : Assets.icon.outline.arrowDown
+                            .svg(color: Theme.of(context).primaryColor)
               ],
             ),
           ),
           AnimatedVisibility(
-              isVisible: isShow,
+              isVisible: data.tag != null && data.tag == 'mini' ? true : isShow,
               duration: DesignConfig.lowAnimationDuration,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -498,60 +537,66 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          decoration:  BoxDecoration(
+                          decoration: BoxDecoration(
                               color: Theme.of(context).cardBackground(),
                               borderRadius: DesignConfig.highBorderRadius),
                           padding: const EdgeInsets.all(8),
                           child: Row(
                             children: [
-                              Assets.icon.outline.documentCopy
-                                  .svg(color: Theme.of(context).secondaryColor()),
+                              Assets.icon.outline.documentCopy.svg(
+                                  color: Theme.of(context).secondaryColor()),
                               const SizedBox(
                                 width: 8,
                               ),
                               PrimaryText(
                                   text:
-                                      "${chapter.subchapters!.length} زیر فصل",
+                                      "${chapter.subchapters!.length} ${(data.tag != null && data.tag == 'mini') ? 'قسمت' : isInternational ? 'Subchapter' : 'زیر فصل'}",
                                   style: Theme.of(context).textTheme.searchHint,
                                   color: Theme.of(context).secondaryColor())
                             ],
                           ),
                         ),
-                        const SizedBox(width: 8,),
+                        const SizedBox(
+                          width: 8,
+                        ),
                         Container(
-                          decoration:  BoxDecoration(
+                          decoration: BoxDecoration(
                               color: Theme.of(context).cardBackground(),
                               borderRadius: DesignConfig.highBorderRadius),
                           padding: const EdgeInsets.all(8),
                           child: Row(
                             children: [
-                              Assets.icon.outline.clock
-                                  .svg(color: Theme.of(context).secondaryColor()),
+                              Assets.icon.outline.clock.svg(
+                                  color: Theme.of(context).secondaryColor()),
                               const SizedBox(
                                 width: 8,
                               ),
                               PrimaryText(
-                                  text: "${chapter.time} ساعت",
+                                  text:
+                                      "${chapter.time} ${isInternational ? 'Hours' : 'ساعت'}",
                                   style: Theme.of(context).textTheme.searchHint,
                                   color: Theme.of(context).secondaryColor())
                             ],
                           ),
                         ),
-                        const SizedBox(width: 8,),
+                        const SizedBox(
+                          width: 8,
+                        ),
                         Container(
-                          decoration:  BoxDecoration(
+                          decoration: BoxDecoration(
                               color: Theme.of(context).cardBackground(),
                               borderRadius: DesignConfig.highBorderRadius),
                           padding: const EdgeInsets.all(8),
                           child: Row(
                             children: [
-                              Assets.icon.outlineMedal
-                                  .svg(color: Theme.of(context).secondaryColor()),
+                              Assets.icon.outlineMedal.svg(
+                                  color: Theme.of(context).secondaryColor()),
                               const SizedBox(
                                 width: 8,
                               ),
                               PrimaryText(
-                                  text: "${chapter.score} امتیاز",
+                                  text:
+                                      "${chapter.score} ${isInternational ? 'Points' : 'امتیاز'}",
                                   style: Theme.of(context).textTheme.searchHint,
                                   color: Theme.of(context).secondaryColor())
                             ],
@@ -563,7 +608,27 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  _subchapters(chapter)
+                  _subchapters(chapter),
+                  (data.tag != null && data.tag == 'mini')
+                      ? Column(
+                          children: [
+                            _subchapterLayoutExam(
+                                0,
+                                Assets.icon.outline.video,
+                                Subchapters(
+                                    name: isInternational
+                                        ? 'Summary of the course'
+                                        : "جمع‌بندی دوره")),
+                            _subchapterLayoutExam(
+                                1,
+                                Assets.icon.outline.exam,
+                                Subchapters(
+                                    name: isInternational
+                                        ? 'Final exam of the first season'
+                                        : "آزمون پایانی دوره")),
+                          ],
+                        )
+                      : const SizedBox(),
                 ],
               ))
         ],
@@ -594,7 +659,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 Row(
                   children: [
                     PrimaryText(
-                        text: "فصل آخر",
+                        text: isInternational ? 'Last Chapter' : "فصل آخر",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).primaryColor),
                     SizedBox(
@@ -620,7 +685,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     height: 16,
                   ),
                   PrimaryText(
-                      text: "جمع‌بندی",
+                      text: isInternational ? 'Conclusion' : "جمع‌بندی",
                       style: Theme.of(context).textTheme.title,
                       color: Theme.of(context).pinTextFont()),
                   const SizedBox(
@@ -690,10 +755,20 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  _subchapterLayoutExam(0, Assets.icon.outline.video,
-                      Subchapters(name: "جمع‌بندی دوره")),
-                  _subchapterLayoutExam(1, Assets.icon.outline.exam,
-                      Subchapters(name: "آزمون پایانی دوره")),
+                  _subchapterLayoutExam(
+                      0,
+                      Assets.icon.outline.video,
+                      Subchapters(
+                          name: isInternational
+                              ? 'Summary of the course'
+                              : "جمع‌بندی دوره")),
+                  _subchapterLayoutExam(
+                      1,
+                      Assets.icon.outline.exam,
+                      Subchapters(
+                          name: isInternational
+                              ? 'Final exam of the first season'
+                              : "آزمون پایانی دوره")),
                 ],
               ))
         ],
@@ -756,16 +831,22 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     width: 8,
                   ),
                   PrimaryText(
-                      text: subchapter.name.toString(),
+                      text:
+                          "${(data.tag != null && data.tag == 'mini') ? 'قسمت ${getChapterNumber(index, false)}: ' : ''}${subchapter.name.toString()}",
                       style: Theme.of(context).textTheme.searchHint,
                       color: grayColor900)
                 ],
               ),
               data.registered!
-                  ? Assets.icon.outline.arrowLeft.svg(
-                      color: Theme.of(context).primaryColor,
-                      width: 18,
-                      height: 18)
+                  ? isInternational
+                      ? Assets.icon.outline.arrowRight1.svg(
+                          color: Theme.of(context).primaryColor,
+                          width: 18,
+                          height: 18)
+                      : Assets.icon.outline.arrowLeft.svg(
+                          color: Theme.of(context).primaryColor,
+                          width: 18,
+                          height: 18)
                   : Assets.icon.outline.lock
                       .svg(color: grayColor700, width: 18, height: 18)
             ],
@@ -813,10 +894,15 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 ],
               ),
               data.registered!
-                  ? Assets.icon.outline.arrowLeft.svg(
-                      color: Theme.of(context).primaryColor,
-                      width: 18,
-                      height: 18)
+                  ? isInternational
+                      ? Assets.icon.outline.arrowRight1.svg(
+                          color: Theme.of(context).primaryColor,
+                          width: 18,
+                          height: 18)
+                      : Assets.icon.outline.arrowLeft.svg(
+                          color: Theme.of(context).primaryColor,
+                          width: 18,
+                          height: 18)
                   : Assets.icon.outline.lock
                       .svg(color: grayColor700, width: 18, height: 18)
             ],

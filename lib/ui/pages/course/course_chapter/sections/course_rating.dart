@@ -73,7 +73,7 @@ class _CourseRatingState extends State<CourseRating> {
               margin: EdgeInsets.all(16),
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: backgroundColor100,
+                  color: Theme.of(context).cardBackground(),
                   borderRadius: DesignConfig.highBorderRadius),
               child: Column(
                 children: [
@@ -87,7 +87,7 @@ class _CourseRatingState extends State<CourseRating> {
                   Container(
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                        color: CupertinoColors.white,
+                        color: Theme.of(context).white(),
                         borderRadius: DesignConfig.highBorderRadius),
                     child: Column(
                       children: [
@@ -104,15 +104,15 @@ class _CourseRatingState extends State<CourseRating> {
                             ),
                             PrimaryText(
                                 text: "4.2",
-                                style: mThemeData.textTheme.headerLargeBold,
-                                color: grayColor700),
+                                style: Theme.of(context).textTheme.headerLargeBold,
+                                color: Theme.of(context).cardText()),
                             SizedBox(
                               width: 16,
                             ),
                             PrimaryText(
                                 text: "(از ۳۴۱ رای)",
-                                style: mThemeData.textTheme.title,
-                                color: grayColor700)
+                                style: Theme.of(context).textTheme.title,
+                                color: Theme.of(context).cardText())
                           ],
                         ),
                         SizedBox(
@@ -121,8 +121,8 @@ class _CourseRatingState extends State<CourseRating> {
                         PrimaryText(
                             text:
                                 "نظرات شما باعث رشد و پیشرفت آژمان می‌شود ممنونم که در این راه ما را همراهی می‌کنید",
-                            style: mThemeData.textTheme.rate,
-                            color: grayColor700)
+                            style: Theme.of(context).textTheme.rate,
+                            color: Theme.of(context).cardText())
                       ],
                     ),
                   ),
@@ -142,7 +142,7 @@ class _CourseRatingState extends State<CourseRating> {
                           padding: EdgeInsets.all(16),
                           margin: EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).onWhite(),
                               boxShadow: DesignConfig.lowShadow,
                               borderRadius: DesignConfig.highBorderRadius),
                           child: Column(
@@ -163,8 +163,8 @@ class _CourseRatingState extends State<CourseRating> {
                                   ),
                                   PrimaryText(
                                       text: q.question!.text.toString(),
-                                      style: mThemeData.textTheme.title,
-                                      color: grayColor900)
+                                      style: Theme.of(context).textTheme.title,
+                                      color: Theme.of(context).progressText())
                                 ],
                               ),
                               SizedBox(
@@ -182,7 +182,7 @@ class _CourseRatingState extends State<CourseRating> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(_radioButtons[_index]),
+                                      PrimaryText(text: _radioButtons[_index],style: Theme.of(context).textTheme.title,color: Theme.of(context).progressText(),),
                                       Radio<int>(
                                         groupValue:
                                             _radioController.selectedIndex,

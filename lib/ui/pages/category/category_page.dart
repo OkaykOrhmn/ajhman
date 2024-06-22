@@ -40,7 +40,6 @@ class _CategoryPageState extends State<CategoryPage> {
     TButtons("اینترنشنال شو", false),
   ];
   final controller = GroupButtonController(selectedIndex: 0);
-  List<NewCourseCardModel>? cards;
 
   @override
   void initState() {
@@ -52,7 +51,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const ReversibleAppBar(title: "مدیریت کسب‌وکار"),
+        appBar: ReversibleAppBar(title: widget.args.title.toString()),
         backgroundColor: Theme.of(context).background(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -74,11 +73,15 @@ class _CategoryPageState extends State<CategoryPage> {
                       groupingType: GroupingType.row,
                       runSpacing: 4,
                       selectedColor: Theme.of(context).primaryColor,
-                      selectedTextStyle: Theme.of(context).textTheme.navbarTitle
+                      selectedTextStyle: Theme.of(context)
+                          .textTheme
+                          .navbarTitle
                           .copyWith(color: Colors.white),
                       unselectedBorderColor: Theme.of(context).primaryColor,
                       unselectedColor: Theme.of(context).white(),
-                      unselectedTextStyle: Theme.of(context).textTheme.navbarTitle
+                      unselectedTextStyle: Theme.of(context)
+                          .textTheme
+                          .navbarTitle
                           .copyWith(color: Theme.of(context).primaryColor),
                       textAlign: TextAlign.center,
                       textPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -100,8 +103,9 @@ class _CategoryPageState extends State<CategoryPage> {
                           t = Tags.international;
                           break;
                       }
-                      context.read<CategoryBloc>().add(
-                          GetAllCategoryCards(categories: [2, 3], tag: t));
+                      context
+                          .read<CategoryBloc>()
+                          .add(GetAllCategoryCards(categories: [2, 3], tag: t));
                     },
                     buttons: const [
                       "تازه‌ترین‌ها",
@@ -114,6 +118,7 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
+                  List<NewCourseCardModel>? cards;
                   if (state is CategoryLoadingState) {
                     cards = null;
                   } else if (state is CategorySuccessState) {

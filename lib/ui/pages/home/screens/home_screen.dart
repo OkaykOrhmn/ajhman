@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               navigatorKey.currentState!.pushNamed(
                                   RoutePaths.category,
                                   arguments:
-                                      CategoryArgs(categoriesId: [1, 2, 3]));
+                                      CategoryArgs(categoriesId: [1, 2, 3], title: 'دوره ها'));
                             }),
                         SizedBox(
                           height: context.read<ThemeBloc>().state.fontSize >= 1
@@ -340,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: DesignConfig.highBorderRadius,
         onTap: () {
           navigatorKey.currentState!.pushNamed(RoutePaths.category,
-              arguments: CategoryArgs(categoriesId: [index]));
+              arguments: CategoryArgs(categoriesId: [index], title: title));
         },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),

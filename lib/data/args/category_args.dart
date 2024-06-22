@@ -1,7 +1,9 @@
 class CategoryArgs {
-  List<int>? categoriesId;
+   List<int>? categoriesId;
+   String? title;
 
-  CategoryArgs({this.categoriesId});
+  CategoryArgs({required this.categoriesId, required this.title});
+
 
   CategoryArgs.fromJson(Map<String, dynamic> json) {
     categoriesId = json['categoriesId'];

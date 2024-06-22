@@ -113,7 +113,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                       children: [
                         PrimaryText(
                             text:
-                                "آزمون ${getChapterNumber(response.user!.examAnswer!.length - (index + 1))}",
+                                "آزمون ${getChapterNumber(response.user!.examAnswer!.length - (index + 1),false)}",
                             style: Theme.of(context).textTheme.rate,
                             color: Theme.of(context).headText2()),
                         

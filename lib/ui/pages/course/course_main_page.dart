@@ -57,6 +57,7 @@ class _CourseMainPageState extends State<CourseMainPage> {
       appBar: const ReversibleAppBar(title: "محتوای دوره"),
       body: BlocConsumer<CourseMainBloc, CourseMainState>(
         builder: (context, state) {
+
           if (state is CourseMainSuccess) {
             return CourseInfoPage(response: state.response);
           } else if (state is CourseRoadmapSuccess) {

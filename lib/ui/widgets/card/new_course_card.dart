@@ -1,28 +1,31 @@
-import 'package:ajhman/core/cubit/home/selected_index_cubit.dart';
-import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
-import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
-import 'package:ajhman/core/enum/card_type.dart';
-import 'package:ajhman/core/routes/route_paths.dart';
-import 'package:ajhman/core/utils/usefull_funcs.dart';
-import 'package:ajhman/data/api/api_end_points.dart';
-import 'package:ajhman/data/args/course_main_args.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
+
+
+
+import 'dart:ui';
+
+import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
-import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
-import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:shamsi_date/shamsi_date.dart';
 
+import '../../../core/cubit/home/selected_index_cubit.dart';
+import '../../../core/cubit/mark/mark_cubit.dart';
 import '../../../core/enum/course_types.dart';
+import '../../../core/routes/route_paths.dart';
+import '../../../core/utils/language/bloc/language_bloc.dart';
+import '../../../core/utils/usefull_funcs.dart';
+import '../../../data/args/course_main_args.dart';
+import '../../../data/model/cards/new_course_card_model.dart';
+import '../../../data/model/language.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
-import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../button/primary_button.dart';
+import '../image/primary_image_network.dart';
+import '../progress/linear_progress.dart';
+import '../text/icon_info.dart';
 import '../text/primary_text.dart';
 
 class NewCourseCard extends StatefulWidget {
@@ -40,11 +43,18 @@ class NewCourseCard extends StatefulWidget {
 
 class _RecentCurseCardState extends State<NewCourseCard> {
   late NewCourseCardModel response;
+  bool isInternational = false;
 
   @override
   void initState() {
     response = widget.response;
-
+    if (widget.response.tag != null && widget.response.tag == "international" ||
+        context.read<LanguageBloc>().state.selectedLanguage ==
+            Language.english) {
+      setState(() {
+        isInternational = true;
+      });
+    }
     super.initState();
   }
 
@@ -73,15 +83,18 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _image(getImageUrl(response.image.toString()), "3.4"),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _title(),
-                          _infoes(),
-                          _footer(),
-                        ],
+                    Directionality(
+                      textDirection: isInternational? TextDirection.ltr: TextDirection.rtl,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _title(),
+                            _infoes(),
+                            _footer(),
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -210,12 +223,12 @@ class _RecentCurseCardState extends State<NewCourseCard> {
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.user,
-                  desc: "${response.users.toString()} فراگیر"),
+                  desc: "${response.users.toString()} ${isInternational? 'Participants':'فراگیر'}"),
             ),
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.outline.clock,
-                  desc: "${response.time.toString()} ساعت"),
+                  desc: "${response.time.toString()} ${isInternational? 'Hours':'ساعت'}"),
             ),
           ],
         ),
@@ -228,7 +241,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.outline.chart,
-                  desc: "سطح ${getLevel(response.level)}"),
+                  desc: "${isInternational? 'Level':'سطح'} ${getLevel(response.level,isInternational)}"),
             ),
             Expanded(
               child: IconInfo(
@@ -300,7 +313,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                     width: 8,
                   ),
                   PrimaryText(
-                      text: courseTypes.title,
+                      text: isInternational? courseTypes.type : courseTypes.title,
                       style: Theme.of(context).textTheme.searchHint,
                       color: Theme.of(context).secondaryColor())
                 ],

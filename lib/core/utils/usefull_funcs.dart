@@ -18,7 +18,9 @@ Future<Color> getPrimaryColor() async {
   return Color(hax);
 }
 
-String getLevel(int? level) => Levels.values[level!].value;
+String getLevel(int? level, bool isInternational) => isInternational
+    ? Levels.values[level!].enValue
+    : Levels.values[level!].value;
 
 CourseTypes getType(String? type) {
   CourseTypes result = CourseTypes.text;
@@ -38,7 +40,7 @@ String getTypeImage(int? level) => Levels.values[level!].value;
 
 String getImageUrl(String? image) => ApiEndPoints.baseURL + image.toString();
 
-String getChapterNumber(int index) {
+String getChapterNumber(int index ,bool isInternational) {
   final list = [
     "اول",
     "دوم",
@@ -70,7 +72,39 @@ String getChapterNumber(int index) {
     "سیم",
   ];
 
-  return list[index];
+  final listEn= [
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten",
+  "eleven",
+  "twelve",
+  "thirteen",
+  "fourteen",
+  "fifteen",
+  "sixteen",
+  "seventeen",
+  "eighteen",
+  "nineteen",
+  "twenty",
+  "twenty-one",
+  "twenty-two",
+  "twenty-three",
+  "twenty-four",
+  "twenty-five",
+  "twenty-six",
+  "twenty-seven",
+  "twenty-eight",
+  "twenty-nine",
+  "thirty",
+  ];
+  return isInternational?listEn[index]: list[index];
 }
 
 double daysBetween(DateTime from, DateTime to) {

@@ -99,7 +99,7 @@ class _RecentCourseCardState extends State<RecentCourseCard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        IconInfo(icon: Assets.icon.outline.chart, desc: "سطح ${getLevel(response.level)}"),
+        IconInfo(icon: Assets.icon.outline.chart, desc: "سطح ${getLevel(response.level,false)}"),
         const SizedBox(
           height: 8,
         ),

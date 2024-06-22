@@ -14,6 +14,7 @@ class NewCourseCardModel {
   String? expiresAt;
   bool? canStart;
   bool? registered;
+  String? tag;
 
 
   NewCourseCardModel(
@@ -32,6 +33,7 @@ class NewCourseCardModel {
         this.expiresAt,
         this.canStart,
         this.registered,
+        this.tag,
       });
 
   NewCourseCardModel.fromJson(Map<String, dynamic> json) {
@@ -51,6 +53,7 @@ class NewCourseCardModel {
     status = json['status'];
     expiresAt = json['expiresAt'];
     registered = json['registered'];
+    tag = json['tag'];
   }
 
   Map<String, dynamic> toJson() {
@@ -71,6 +74,7 @@ class NewCourseCardModel {
     data['status'] = this.status;
     data['expiresAt'] = this.expiresAt;
     data['registered'] = this.registered;
+    data['tag'] = this.tag;
     return data;
   }
 }

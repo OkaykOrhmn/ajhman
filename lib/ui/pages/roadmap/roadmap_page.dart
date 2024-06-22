@@ -104,7 +104,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                         item: (context, index) {
                           return Road(
                             index: index + 1,
-                            length: 3 + 1,
+                            length: widget.response.chapters!.length + 1,
                           );
                         }),
                   ],
@@ -138,15 +138,19 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        PrimaryText(
-                                          text: widget
-                                              .response.chapters![index].name
-                                              .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleBold,
-                                          color: view.color,
-                                          textAlign: TextAlign.start,
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 32.0),
+                                          child: PrimaryText(
+                                            text: widget
+                                                .response.chapters![index].name
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleBold,
+                                            color: view.color,
+                                            textAlign: TextAlign.start,
+                                            maxLines: 2,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 8,
@@ -208,14 +212,14 @@ class _RoadMapPageState extends State<RoadMapPage> {
             Stack(
               children: [
                 Road(
-                  index: 4 % 2 == 0 ? 2 : 1,
+                  index: widget.response.chapters!.length -1  % 2 == 0 ? 2 : 1,
                   length: null,
                   height: 80,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: Row(
-                    mainAxisAlignment: 4 % 2 == 0
+                    mainAxisAlignment: widget.response.chapters!.length -1  % 2 == 0
                         ? MainAxisAlignment.end
                         : MainAxisAlignment.start,
                     children: [
