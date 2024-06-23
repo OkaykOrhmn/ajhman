@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "431081904894",
+    "project_id": "ajhman-22ca0",
+    "storage_bucket": "ajhman-22ca0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431081904894:android:9ba75a094da67bfed723af",
+        "android_client_info": {
+          "package_name": "com.example.ajhman"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9NRgEYpqSsfNEF0kTCFwOmZav1dvvUnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

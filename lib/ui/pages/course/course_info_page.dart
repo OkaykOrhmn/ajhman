@@ -88,7 +88,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             CourseRating(
               id: data.id!,
             ),
-            _pointsPlatform(),
+            data.category!.id == 6 ? const SizedBox() : _pointsPlatform(),
             data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
             data.registered != null && data.registered!
                 ? const SizedBox()
@@ -107,7 +107,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                 widget.response.registered = true;
                               });
                               DialogHandler(context).showRegCourseDialog(
-                                  "دوره “فنون مذاکره” با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
+                                  "دوره ${data.name} با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
                                   "متوجه شدم");
                               context.read<NewsCourseHomeCubit>().getNews();
                             } on DioError catch (e) {}
@@ -128,7 +128,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
         Container(
           padding: const EdgeInsets.only(bottom: 60),
           child: Container(
-            padding: const EdgeInsets.all(16).copyWith(bottom: 90),
+            padding: const EdgeInsets.all(16).copyWith(bottom:data.category!.id == 6?140: 90),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                   bottomLeft: DesignConfig.aVeryHighBorderRadius,
@@ -160,43 +160,116 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   color: Theme.of(context).progressText(),
                   textAlign: TextAlign.start,
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: IconInfo(
-                            icon: Assets.icon.outline.user,
-                            desc:
-                                "۱٬۳۴۲ ${isInternational ? "Participants" : 'فراگیر'}")),
-                    Expanded(
-                        child: IconInfo(
-                            icon: Assets.icon.outline.clock,
-                            desc: "۵۶ ${isInternational ? "Hours" : 'ساعت'}")),
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: IconInfo(
-                            icon: Assets.icon.outline.chart,
-                            desc:
-                                "${isInternational ? "Level" : 'سطح'} ${getLevel(data.level, isInternational)}")),
-                    Expanded(
-                        child: IconInfo(
-                            icon: Assets.icon.outline.note2,
-                            desc: data.category!.name.toString())),
-                  ],
-                ),
+                data.category!.id == 6 ? _infoesBook() : _infoes()
               ],
             ),
           ),
         )
+      ],
+    );
+  }
+
+  Column _infoes() {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          children: [
+            Expanded(
+                child: IconInfo(
+                    icon: Assets.icon.outline.user,
+                    desc:
+                        "${data.users} ${isInternational ? "Participants" : 'فراگیر'}")),
+            Expanded(
+                child: IconInfo(
+                    icon: Assets.icon.outline.clock,
+                    desc:
+                        "${data.time} ${isInternational ? "Hours" : 'ساعت'}")),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+                child: IconInfo(
+                    icon: Assets.icon.outline.chart,
+                    desc:
+                        "${isInternational ? "Level" : 'سطح'} ${getLevel(data.level, isInternational)}")),
+            Expanded(
+                child: IconInfo(
+                    icon: Assets.icon.outline.note2,
+                    desc: data.category!.name.toString())),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Column _infoesBook() {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.edit2,
+                  desc: data.writer.toString()),
+            ),
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.note2, desc: data.pages.toString()+" صفحه"),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.book,
+                  desc: "انتشارات ${data.publisher}"),
+            ),
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.ranking,
+                  desc: data.topic.toString()),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.microphone,
+                  desc:
+                      "خلاصه صوتی ${data.audio != null && data.audio!.isEmpty ? 'ن' : ''}دارد"),
+            ),
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.headphone,
+                  desc: '${data.users} شنیده شده'),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
       ],
     );
   }
@@ -214,7 +287,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PrimaryText(
-              text: isInternational ? "Course Details" : "توضیحات دوره",
+              text: isInternational
+                  ? "Course Details"
+                  : "توضیحات ${data.category!.id == 6 ? 'کتاب' : 'دوره'}",
               style: Theme.of(context).textTheme.dialogTitle,
               color: Theme.of(context).headText(),
               textAlign: TextAlign.start,
@@ -275,7 +350,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                       PrimaryText(
                         text: isInternational
                             ? "What you'll learn"
-                            : "آنچه در این دوره می‌آموزیم",
+                            : "آنچه در این ${data.category!.id == 6 ? 'کتاب خواهید خواند' : 'دوره می‌آموزیم'}",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).headText(),
                         textAlign: TextAlign.start,
@@ -409,9 +484,12 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   Widget _chapters() {
     return Column(
       children: [
-        data.tag != null && data.tag == 'mini'
+        (data.tag != null && data.tag == 'mini') || data.category!.id == 6
             ? const SizedBox()
-            : TitleDivider(title: isInternational ? 'Chapters' : "سرفصل‌ها"),
+            : TitleDivider(
+                title: isInternational
+                    ? 'Chapters'
+                    : "${data.category!.id == 6 ? 'ی کتاب' : ''}سرفصل‌ها"),
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: ListView.builder(
@@ -444,7 +522,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 );
               }),
         ),
-        (data.tag != null && data.tag == 'mini')
+        (data.tag != null && data.tag == 'mini') || data.category!.id == 6
             ? const SizedBox()
             : _chapterLastLayout()
       ],
@@ -485,7 +563,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     PrimaryText(
                         text: (data.tag != null && data.tag == 'mini')
                             ? "شروع مینی دوره"
-                            : "${isInternational ? 'Chapter' : "فصل"} ${getChapterNumber(index, isInternational)}",
+                            : data.category!.id == 6
+                                ? 'سرفصل‌های کتاب'
+                                : "${isInternational ? 'Chapter' : "فصل"} ${getChapterNumber(index, isInternational)}",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).primaryColor),
                     SizedBox(
@@ -504,7 +584,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             color: warningMain),
                   ],
                 ),
-                (data.tag != null && data.tag == 'mini')
+                (data.tag != null && data.tag == 'mini') ||
+                        data.category!.id == 6
                     ? const SizedBox()
                     : isShow
                         ? Assets.icon.outline.arrowUp
@@ -515,7 +596,10 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             ),
           ),
           AnimatedVisibility(
-              isVisible: data.tag != null && data.tag == 'mini' ? true : isShow,
+              isVisible: (data.tag != null && data.tag == 'mini') ||
+                      data.category!.id == 6
+                  ? true
+                  : isShow,
               duration: DesignConfig.lowAnimationDuration,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -530,84 +614,109 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).cardBackground(),
-                              borderRadius: DesignConfig.highBorderRadius),
-                          padding: const EdgeInsets.all(8),
-                          child: Row(
-                            children: [
-                              Assets.icon.outline.documentCopy.svg(
-                                  color: Theme.of(context).secondaryColor()),
-                              const SizedBox(
-                                width: 8,
+                  data.category!.id == 6
+                      ? SizedBox()
+                      : Column(
+                          children: [
+                            SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Theme.of(context).cardBackground(),
+                                        borderRadius:
+                                            DesignConfig.highBorderRadius),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Row(
+                                      children: [
+                                        Assets.icon.outline.documentCopy.svg(
+                                            color: Theme.of(context)
+                                                .secondaryColor()),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        PrimaryText(
+                                            text:
+                                                "${chapter.subchapters!.length} ${(data.tag != null && data.tag == 'mini') ? 'قسمت' : isInternational ? 'Subchapter' : 'زیر فصل'}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .searchHint,
+                                            color: Theme.of(context)
+                                                .secondaryColor())
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Theme.of(context).cardBackground(),
+                                        borderRadius:
+                                            DesignConfig.highBorderRadius),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Row(
+                                      children: [
+                                        Assets.icon.outline.clock.svg(
+                                            color: Theme.of(context)
+                                                .secondaryColor()),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        PrimaryText(
+                                            text:
+                                                "${chapter.time} ${isInternational ? 'Hours' : 'ساعت'}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .searchHint,
+                                            color: Theme.of(context)
+                                                .secondaryColor())
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Theme.of(context).cardBackground(),
+                                        borderRadius:
+                                            DesignConfig.highBorderRadius),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Row(
+                                      children: [
+                                        Assets.icon.outlineMedal.svg(
+                                            color: Theme.of(context)
+                                                .secondaryColor()),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        PrimaryText(
+                                            text:
+                                                "${chapter.score} ${isInternational ? 'Points' : 'امتیاز'}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .searchHint,
+                                            color: Theme.of(context)
+                                                .secondaryColor())
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              PrimaryText(
-                                  text:
-                                      "${chapter.subchapters!.length} ${(data.tag != null && data.tag == 'mini') ? 'قسمت' : isInternational ? 'Subchapter' : 'زیر فصل'}",
-                                  style: Theme.of(context).textTheme.searchHint,
-                                  color: Theme.of(context).secondaryColor())
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).cardBackground(),
-                              borderRadius: DesignConfig.highBorderRadius),
-                          padding: const EdgeInsets.all(8),
-                          child: Row(
-                            children: [
-                              Assets.icon.outline.clock.svg(
-                                  color: Theme.of(context).secondaryColor()),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              PrimaryText(
-                                  text:
-                                      "${chapter.time} ${isInternational ? 'Hours' : 'ساعت'}",
-                                  style: Theme.of(context).textTheme.searchHint,
-                                  color: Theme.of(context).secondaryColor())
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).cardBackground(),
-                              borderRadius: DesignConfig.highBorderRadius),
-                          padding: const EdgeInsets.all(8),
-                          child: Row(
-                            children: [
-                              Assets.icon.outlineMedal.svg(
-                                  color: Theme.of(context).secondaryColor()),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              PrimaryText(
-                                  text:
-                                      "${chapter.score} ${isInternational ? 'Points' : 'امتیاز'}",
-                                  style: Theme.of(context).textTheme.searchHint,
-                                  color: Theme.of(context).secondaryColor())
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
                   _subchapters(chapter),
                   (data.tag != null && data.tag == 'mini')
                       ? Column(

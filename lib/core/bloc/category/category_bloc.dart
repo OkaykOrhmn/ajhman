@@ -21,6 +21,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           emit(CategorySuccessState(newsCards: response));
         } on DioError catch (e) {
           emit(CategoryFailState());
+
         }
       }
     });

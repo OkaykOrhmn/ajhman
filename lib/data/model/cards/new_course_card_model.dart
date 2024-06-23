@@ -15,26 +15,35 @@ class NewCourseCardModel {
   bool? canStart;
   bool? registered;
   String? tag;
+  String? audio;
+  String? writer;
+  int? pages;
+  String? publisher;
+  String? topic;
 
-
-  NewCourseCardModel(
-      {this.id,
-        this.name,
-        this.level,
-        this.image,
-        this.type,
-        this.category,
-        this.time,
-        this.score,
-        this.users,
-        this.marked,
-        this.progress,
-        this.status,
-        this.expiresAt,
-        this.canStart,
-        this.registered,
-        this.tag,
-      });
+  NewCourseCardModel({
+    this.id,
+    this.name,
+    this.level,
+    this.image,
+    this.type,
+    this.category,
+    this.time,
+    this.score,
+    this.users,
+    this.marked,
+    this.progress,
+    this.status,
+    this.expiresAt,
+    this.canStart,
+    this.registered,
+    this.tag,
+    this.audio,
+    this.writer,
+    this.pages,
+    this.publisher,
+    this.topic,
+  });
 
   NewCourseCardModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -54,6 +63,11 @@ class NewCourseCardModel {
     expiresAt = json['expiresAt'];
     registered = json['registered'];
     tag = json['tag'];
+    audio = json['audio'];
+    writer = json['writer'];
+    pages = json['pages'];
+    publisher = json['publisher'];
+    topic = json['topic'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,21 +89,29 @@ class NewCourseCardModel {
     data['expiresAt'] = this.expiresAt;
     data['registered'] = this.registered;
     data['tag'] = this.tag;
+    data['audio'] = this.audio;
+    data['writer'] = this.writer;
+    data['pages'] = this.pages;
+    data['publisher'] = this.publisher;
+    data['topic'] = this.topic;
     return data;
   }
 }
 
 class Category {
+  int? id;
   String? name;
 
-  Category({this.name});
+  Category({this.name, this.id});
 
   Category.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
     return data;
   }

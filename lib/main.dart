@@ -16,8 +16,10 @@ import 'package:ajhman/core/cubit/search/search_cubit.dart';
 import 'package:ajhman/core/cubit/summery/summery_cubit.dart';
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/core/services/firebase_api.dart';
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
+import 'package:ajhman/firebase_options.dart';
 import 'package:ajhman/ui/pages/splash_page.dart';
 
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
@@ -25,6 +27,8 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/theme_helper.dart';
 import 'package:ajhman/ui/widgets/states/no_connectivity_screen.dart';
 import 'package:connectivity_bloc/connectivity_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -57,7 +61,20 @@ bool isDarkTheme =
     SchedulerBinding.instance.platformDispatcher.platformBrightness ==
         Brightness.dark;
 
-void main() {
+// @pragma('vm:entry-point')
+Future _initPushNotification(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  print('Got a message whilst in the background!: ${message.toString()}');
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try{
+    FirebaseMessaging.onBackgroundMessage(_initPushNotification);
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await FirebaseApi().initNotification();
+  }catch(e){}
+
   runApp(MultiBlocProvider(providers: [
     BlocProvider<ThemeBloc>(
       create: (buildContext) {
@@ -259,7 +276,9 @@ class _MyAppState extends State<MyApp> {
                         RouteGenerator.destination(settings),
                   );
                 } else if (state is ConnectivityFailureState) {
-                  return const NoConnectivityScreen();
+                  return NoConnectivityScreen(
+                    themeData: themeData,
+                  );
                 } else {
                   return SizedBox();
                 }

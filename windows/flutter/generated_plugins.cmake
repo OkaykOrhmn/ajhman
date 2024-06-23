@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
   connectivity_plus
   file_selector_windows
+  firebase_core
   flutter_localization
   flutter_volume_controller
   permission_handler_windows

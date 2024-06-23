@@ -139,7 +139,8 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 32.0),
+                                          padding:
+                                              const EdgeInsets.only(left: 32.0),
                                           child: PrimaryText(
                                             text: widget
                                                 .response.chapters![index].name
@@ -177,19 +178,26 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                         SizedBox(
                                           height: 8,
                                         ),
-                                        Directionality(
-                                          textDirection: TextDirection.ltr,
-                                          child: LinearProgress(
-                                            value: widget.response
-                                                    .chapters![index].percent!
-                                                    .toDouble() /
-                                                100,
-                                            minHeight: 8,
-                                            backgroundColor:
-                                                view.color.withOpacity(0.5),
-                                            valueColor: view.color,
-                                          ),
-                                        )
+                                        widget.response.chapters![index]
+                                                    .percent ==
+                                                null
+                                            ? const SizedBox()
+                                            : Directionality(
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                child: LinearProgress(
+                                                  value: widget
+                                                          .response
+                                                          .chapters![index]
+                                                          .percent!
+                                                          .toDouble() /
+                                                      100,
+                                                  minHeight: 8,
+                                                  backgroundColor: view.color
+                                                      .withOpacity(0.5),
+                                                  valueColor: view.color,
+                                                ),
+                                              )
                                       ],
                                     ),
                                   ),
@@ -212,16 +220,17 @@ class _RoadMapPageState extends State<RoadMapPage> {
             Stack(
               children: [
                 Road(
-                  index: widget.response.chapters!.length -1  % 2 == 0 ? 2 : 1,
+                  index: widget.response.chapters!.length - 1 % 2 == 0 ? 2 : 1,
                   length: null,
                   height: 80,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: Row(
-                    mainAxisAlignment: widget.response.chapters!.length -1  % 2 == 0
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
+                    mainAxisAlignment:
+                        widget.response.chapters!.length - 1 % 2 == 0
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start,
                     children: [
                       Assets.image.gang.image(),
                     ],

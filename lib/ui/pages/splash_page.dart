@@ -69,23 +69,20 @@ class _SplashPageState extends State<SplashPage> {
                   SizedBox(
                     height: 16,
                   ),
-                  Column(
-                    children: [
-                      Assets.icon.main.lIcon
-                          .svg(color: Theme.of(context).primaryColor),
-                      state is ProfileFailConnection
-                          ? PrimaryButton(
-                              title: "تلاش مجدد",
-                              onClick: () {
-                                context
-                                    .read<ProfileBloc>()
-                                    .add(GetProfileInfo());
-                              },
-                            )
-                          : const SizedBox(),
-                    ],
+                  Assets.icon.main.lIcon
+                      .svg(color: Theme.of(context).primaryColor),
+                  Center(
+                    child: state is ProfileFailConnection
+                        ? PrimaryButton(
+                      title: "تلاش مجدد",
+                      onClick: () {
+                        context
+                            .read<ProfileBloc>()
+                            .add(GetProfileInfo());
+                      },
+                    )
+                        : const ThreeBounceLoading(),
                   ),
-                  ThreeBounceLoading(),
                 ],
               );
             });

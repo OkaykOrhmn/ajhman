@@ -61,7 +61,6 @@ class SnackBarHandler {
         break;
     }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-
       content: PrimaryText(
           text: message, style: mThemeData.textTheme.title, color: background),
       backgroundColor: border,
@@ -71,10 +70,25 @@ class SnackBarHandler {
         borderRadius: DesignConfig.lowBorderRadius,
       ),
       margin: EdgeInsets.only(
-          bottom: isTop? MediaQuery.of(context).size.height - 90 : 36,
+          bottom: isTop ? MediaQuery.of(context).size.height - 90 : 36,
           left: 16,
           right: 16),
     ));
+  }
+
+  errorFetch(DioExceptionType type) {
+    String message = '';
+    switch (type) {
+      case DioException.connectionTimeout:
+      case DioException.connectionError:
+        message = 'اینترنت خود را چک کنید!!';
+        break;
+      default:
+        message = "خطایی پیش آمده است لطفا لحضاتی دیگر تلاش کنید!!";
+        break;
+    }
+
+    show(message, DialogStatus.error, true);
   }
 
   static void pop() {

@@ -1,6 +1,3 @@
-
-
-
 import 'dart:ui';
 
 import 'package:ajhman/ui/theme/color/colors.dart';
@@ -34,8 +31,14 @@ class NewCourseCard extends StatefulWidget {
   final NewCourseCardModel response;
   final double? width;
   final double? height;
+
   const NewCourseCard(
-      {super.key, required this.index, this.padding, required this.response, this.width, this.height});
+      {super.key,
+      required this.index,
+      this.padding,
+      required this.response,
+      this.width,
+      this.height});
 
   @override
   State<NewCourseCard> createState() => _RecentCurseCardState();
@@ -64,9 +67,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
       width: widget.width,
       height: widget.height,
       child: InkWell(
-        onTap: (){
-          navigatorKey.currentState!.pushNamed(
-              RoutePaths.courseMain,
+        onTap: () {
+          navigatorKey.currentState!.pushNamed(RoutePaths.courseMain,
               arguments: CourseMainArgs(courseId: response.id));
         },
         child: Padding(
@@ -84,14 +86,18 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                   children: [
                     _image(getImageUrl(response.image.toString()), "3.4"),
                     Directionality(
-                      textDirection: isInternational? TextDirection.ltr: TextDirection.rtl,
+                      textDirection: isInternational
+                          ? TextDirection.ltr
+                          : TextDirection.rtl,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _title(),
-                            _infoes(),
+                            response.category!.id == 6
+                                ? _bookInfoes()
+                                : _infoes(),
                             _footer(),
                           ],
                         ),
@@ -111,7 +117,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
         final p = getProgressCard(response.progress.toString());
         return Column(
           children: [
-             Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
@@ -150,7 +156,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
       case "not learned":
         return Column(
           children: [
-             Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
@@ -174,7 +180,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
       case "learned":
         return Column(
           children: [
-             Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
@@ -223,12 +229,14 @@ class _RecentCurseCardState extends State<NewCourseCard> {
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.user,
-                  desc: "${response.users.toString()} ${isInternational? 'Participants':'فراگیر'}"),
+                  desc:
+                      "${response.users.toString()} ${isInternational ? 'Participants' : 'فراگیر'}"),
             ),
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.outline.clock,
-                  desc: "${response.time.toString()} ${isInternational? 'Hours':'ساعت'}"),
+                  desc:
+                      "${response.time.toString()} ${isInternational ? 'Hours' : 'ساعت'}"),
             ),
           ],
         ),
@@ -241,12 +249,75 @@ class _RecentCurseCardState extends State<NewCourseCard> {
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.outline.chart,
-                  desc: "${isInternational? 'Level':'سطح'} ${getLevel(response.level,isInternational)}"),
+                  desc:
+                      "${isInternational ? 'Level' : 'سطح'} ${getLevel(response.level, isInternational)}"),
             ),
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.outline.note2,
                   desc: response.category!.name.toString()),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+      ],
+    );
+  }
+
+  Column _bookInfoes() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.edit2,
+                  desc: response.writer.toString()),
+            ),
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.note2,
+                  desc: response.pages.toString()),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.book,
+                  desc: response.publisher.toString()),
+            ),
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.ranking,
+                  desc: response.topic.toString()),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.microphone,
+                  desc:
+                      "خلاصه صوتی ${response.audio != null && response.audio!.isEmpty ? 'ن' : ''}دارد"),
+            ),
+            Expanded(
+              child: IconInfo(
+                  icon: Assets.icon.outline.user,
+                  desc: '${response.users} فراگیر'),
             ),
           ],
         ),
@@ -295,30 +366,36 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                 // _rateBar(rate),
               ],
             )),
-        Positioned(
-            bottom: 12,
-            right: 12,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).white().withOpacity(0.5),
-                  boxShadow: DesignConfig.lowShadow,
-                  borderRadius: DesignConfig.highBorderRadius),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgGenImage(courseTypes.icon)
-                      .svg(color: Theme.of(context).secondaryColor(), width: 14, height: 14),
-                  SizedBox(
-                    width: 8,
+        response.category!.id == 6
+            ? const SizedBox()
+            : Positioned(
+                bottom: 12,
+                right: 12,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).white().withOpacity(0.5),
+                      boxShadow: DesignConfig.lowShadow,
+                      borderRadius: DesignConfig.highBorderRadius),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgGenImage(courseTypes.icon).svg(
+                          color: Theme.of(context).secondaryColor(),
+                          width: 14,
+                          height: 14),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      PrimaryText(
+                          text: isInternational
+                              ? courseTypes.type
+                              : courseTypes.title,
+                          style: Theme.of(context).textTheme.searchHint,
+                          color: Theme.of(context).secondaryColor())
+                    ],
                   ),
-                  PrimaryText(
-                      text: isInternational? courseTypes.type : courseTypes.title,
-                      style: Theme.of(context).textTheme.searchHint,
-                      color: Theme.of(context).secondaryColor())
-                ],
-              ),
-            )),
+                )),
         widget.response.expiresAt == null
             ? const SizedBox()
             : Positioned(
@@ -333,8 +410,10 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Assets.icon.outline.calendar
-                          .svg(color: Theme.of(context).secondaryColor(), width: 14, height: 14),
+                      Assets.icon.outline.calendar.svg(
+                          color: Theme.of(context).secondaryColor(),
+                          width: 14,
+                          height: 14),
                       SizedBox(
                         width: 8,
                       ),
@@ -352,8 +431,9 @@ class _RecentCurseCardState extends State<NewCourseCard> {
 
   Container _rateBar(String rate) {
     return Container(
-      decoration:  BoxDecoration(
-          color: Theme.of(context).white(), borderRadius: DesignConfig.highBorderRadius),
+      decoration: BoxDecoration(
+          color: Theme.of(context).white(),
+          borderRadius: DesignConfig.highBorderRadius),
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       child: Center(
         child: Row(
@@ -403,10 +483,14 @@ class _RecentCurseCardState extends State<NewCourseCard> {
               height: 28,
               child: Center(
                 child: state.mark
-                    ? Assets.icon.boldArchive
-                        .svg(width: 18, height: 18, color: Theme.of(context).primaryColor)
-                    : Assets.icon.outlineArchive
-                        .svg(width: 18, height: 18, color: Theme.of(context).primaryColor),
+                    ? Assets.icon.boldArchive.svg(
+                        width: 18,
+                        height: 18,
+                        color: Theme.of(context).primaryColor)
+                    : Assets.icon.outlineArchive.svg(
+                        width: 18,
+                        height: 18,
+                        color: Theme.of(context).primaryColor),
               ),
             ));
       }),

@@ -12,22 +12,31 @@ class CourseMainResponseModel {
   bool? registered;
   int? examScore;
   String? tag;
-
+  String? audio;
+  String? writer;
+  int? pages;
+  String? publisher;
+  String? topic;
 
   CourseMainResponseModel(
       {this.id,
-        this.name,
-        this.level,
-        this.time,
-        this.users,
-        this.image,
-        this.highlight,
-        this.description,
-        this.chapters,
-        this.registered,
-        this.examScore,
-        this.tag,
-        this.category});
+      this.name,
+      this.level,
+      this.time,
+      this.users,
+      this.image,
+      this.highlight,
+      this.description,
+      this.chapters,
+      this.registered,
+      this.examScore,
+      this.tag,
+      this.audio,
+      this.writer,
+      this.pages,
+      this.publisher,
+      this.topic,
+      this.category});
 
   CourseMainResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,6 +50,11 @@ class CourseMainResponseModel {
     registered = json['registered'];
     examScore = json['examScore'];
     tag = json['tag'];
+    audio = json['audio'];
+    writer = json['writer'];
+    pages = json['pages'];
+    publisher = json['publisher'];
+    topic = json['topic'];
     if (json['Chapters'] != null) {
       chapters = <courseMainChapters>[];
       json['Chapters'].forEach((v) {
@@ -65,6 +79,11 @@ class CourseMainResponseModel {
     data['registered'] = this.registered;
     data['examScore'] = this.examScore;
     data['tag'] = this.tag;
+    data['audio'] = this.audio;
+    data['writer'] = this.writer;
+    data['pages'] = this.pages;
+    data['publisher'] = this.publisher;
+    data['topic'] = this.topic;
     if (this.chapters != null) {
       data['Chapters'] = this.chapters!.map((v) => v.toJson()).toList();
     }
@@ -117,7 +136,7 @@ class Subchapters {
   String? name;
   bool? visited;
 
-  Subchapters({this.id, this.type, this.name,this.visited});
+  Subchapters({this.id, this.type, this.name, this.visited});
 
   Subchapters.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -137,16 +156,19 @@ class Subchapters {
 }
 
 class Category {
+  int? id;
   String? name;
 
-  Category({this.name});
+  Category({this.id, this.name});
 
   Category.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
     return data;
   }

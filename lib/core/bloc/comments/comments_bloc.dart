@@ -78,6 +78,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           emit(CommentSuccess(response: event.data));
         } on DioError catch (e) {
           emit(CommentChangeFail(response: event.data));
+
         }
       }
     });
