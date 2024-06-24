@@ -1,13 +1,24 @@
+import 'package:ajhman/core/cubit/download/download_cubit.dart';
 import 'package:ajhman/core/enum/course_types.dart';
+import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
+import 'package:ajhman/core/services/audio_handler.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
+import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
+import 'package:ajhman/data/repository/download_repository.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/widgets/audio/audio_player_wave.dart';
 import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
+import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
+import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
+import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +28,10 @@ import 'package:loading_btn/loading_btn.dart';
 
 import '../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../core/cubit/home/news_course_home_cubit.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../core/utils/language/bloc/language_bloc.dart';
 import '../../../data/model/language.dart';
+import '../../../data/model/notification_model.dart';
 import '../../../data/shared_preferences/profile_data.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
@@ -49,6 +62,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
 
   bool isShowLast = false;
   bool isInternational = false;
+  late AudioHandler audioHandler;
 
   @override
   void initState() {
@@ -59,7 +73,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
         isInternational = true;
       });
     }
-
+    audioHandler =
+        AudioHandler(ApiEndPoints.baseURL + widget.response.audio.toString());
     super.initState();
   }
 
@@ -88,7 +103,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             CourseRating(
               id: data.id!,
             ),
-            data.category!.id == 6 ? const SizedBox() : _pointsPlatform(),
+            data.category!.id == 6 ? _bookAudioDownload() : _pointsPlatform(),
             data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
             data.registered != null && data.registered!
                 ? const SizedBox()
@@ -128,7 +143,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
         Container(
           padding: const EdgeInsets.only(bottom: 60),
           child: Container(
-            padding: const EdgeInsets.all(16).copyWith(bottom:data.category!.id == 6?140: 90),
+            padding: const EdgeInsets.all(16)
+                .copyWith(bottom: data.category!.id == 6 ? 140 : 90),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                   bottomLeft: DesignConfig.aVeryHighBorderRadius,
@@ -226,7 +242,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             ),
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.note2, desc: data.pages.toString()+" صفحه"),
+                  icon: Assets.icon.outline.note2,
+                  desc: data.pages.toString() + " صفحه"),
             ),
           ],
         ),
@@ -460,6 +477,90 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 disable: false,
               ),
             )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _bookAudioDownload() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+            color: Theme.of(context).cardBackground(),
+            borderRadius: DesignConfig.highBorderRadius),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Assets.image.audioBook.image(width: 64, height: 64),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PrimaryText(
+                            text: 'خلاصه کتاب ${data.name}',
+                            style: Theme.of(context).textTheme.titleBold,
+                            color: Theme.of(context).pinTextFont()),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: [
+                            Assets.icon.outline.clock.svg(
+                                width: 14,
+                                height: 14,
+                                color:
+                                    Theme.of(context).placeholderBaseColor()),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            StreamBuilder(
+                                stream: audioHandler.player.onDurationChanged,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return PrimaryText(
+                                        text:
+                                            "${snapshot.data != null && snapshot.data!.inHours != 0 ? '${snapshot.data!.inHours} ساعت و ' : ''}"
+                                            "${snapshot.data != null && snapshot.data!.inMinutes != 0 ? '${snapshot.data!.inMinutes} دقیقه' : ''}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .searchHint,
+                                        color: Theme.of(context)
+                                            .placeholderBaseColor());
+                                  } else {
+                                    return DefaultPlaceHolder(
+                                        child: SizedBox(
+                                      width: 120,
+                                      height: 12,
+                                    ));
+                                  }
+                                }),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            AudioPlayerWave(
+              source: data.audio.toString(),
+              name: "کتاب ${data.name}",
+            ),
           ],
         ),
       ),

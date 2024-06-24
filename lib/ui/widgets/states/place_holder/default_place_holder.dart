@@ -17,7 +17,7 @@ class DefaultPlaceHolder extends StatelessWidget {
       highlightColor: Theme.of(context).placeholderHighlightColor(),
       child: Container(
           decoration: BoxDecoration(
-              color: Colors.cyan, borderRadius: DesignConfig.highBorderRadius),
+              color: Theme.of(context).white(), borderRadius: DesignConfig.highBorderRadius),
           child: child),
     );
   }

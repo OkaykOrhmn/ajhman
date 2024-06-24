@@ -141,6 +141,10 @@ class $AssetsImageGen {
   /// File path: assets/image/Gang.png
   AssetGenImage get gang => const AssetGenImage('assets/image/Gang.png');
 
+  /// File path: assets/image/audio-book.png
+  AssetGenImage get audioBook =>
+      const AssetGenImage('assets/image/audio-book.png');
+
   /// File path: assets/image/calenda_frame.png
   AssetGenImage get calendaFrame =>
       const AssetGenImage('assets/image/calenda_frame.png');
@@ -171,6 +175,7 @@ class $AssetsImageGen {
   List<dynamic> get values => [
         flag,
         gang,
+        audioBook,
         calendaFrame,
         emptyMessageFrame,
         failExam,

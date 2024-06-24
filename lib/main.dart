@@ -9,6 +9,7 @@ import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/core/bloc/treasure/treasure_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
+import 'package:ajhman/core/cubit/download/download_cubit.dart';
 import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
 import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
@@ -17,6 +18,7 @@ import 'package:ajhman/core/cubit/summery/summery_cubit.dart';
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/services/firebase_api.dart';
+import 'package:ajhman/core/services/notification_service.dart';
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:ajhman/firebase_options.dart';
@@ -73,6 +75,7 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(_initPushNotification);
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     await FirebaseApi().initNotification();
+    await NotificationService.initializeNotification();
   }catch(e){}
 
   runApp(MultiBlocProvider(providers: [
@@ -224,6 +227,9 @@ void main() async {
     BlocProvider(
       create: (context) => ImagePickerCubit(),
     ),
+    BlocProvider(
+      create: (context) => DownloadCubit(),
+    ),
   ], child: const MyApp()));
 }
 
@@ -246,10 +252,10 @@ class _MyAppState extends State<MyApp> {
         }
         return BlocBuilder<LanguageBloc, LanguageState>(
           builder: (context, lang) {
-            return BlocBuilder<ConnectivityBloc, ConnectivityState>(
-              builder: (context, state) {
-                if (state is ConnectivitySuccessState ||
-                    state is ConnectivityInitialState) {
+            // return BlocBuilder<ConnectivityBloc, ConnectivityState>(
+            //   builder: (context, state) {
+            //     if (state is ConnectivitySuccessState ||
+            //         state is ConnectivityInitialState) {
                   return MaterialApp(
                     theme: themeData,
                     navigatorKey: navigatorKey,
@@ -275,16 +281,16 @@ class _MyAppState extends State<MyApp> {
                     onGenerateRoute: (settings) =>
                         RouteGenerator.destination(settings),
                   );
-                } else if (state is ConnectivityFailureState) {
-                  return NoConnectivityScreen(
-                    themeData: themeData,
-                  );
-                } else {
-                  return SizedBox();
-                }
+                // } else if (state is ConnectivityFailureState) {
+                //   return NoConnectivityScreen(
+                //     themeData: themeData,
+                //   );
+                // } else {
+                //   return SizedBox();
+                // }
               },
-            );
-          },
+            // );
+          // },
         );
       },
     );

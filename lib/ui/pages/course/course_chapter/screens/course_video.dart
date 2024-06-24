@@ -46,7 +46,7 @@ class _CourseVideoState extends State<CourseVideo> {
   @override
   void initState() {
     super.initState();
-    final data = context.read<SubChapterCubit>().state.chapterModel;
+     data = context.read<SubChapterCubit>().state.chapterModel;
     video = data.media![0];
 
     videoHandler =
@@ -129,7 +129,11 @@ class _CourseVideoState extends State<CourseVideo> {
                         ),
                 ),
               ),
-              VideoBar(videoHandler: videoHandler)
+              VideoBar(
+                videoHandler: videoHandler,
+                audioSource: video.source.toString(),
+                name: data.name.toString(),
+              )
             ],
           ),
         );

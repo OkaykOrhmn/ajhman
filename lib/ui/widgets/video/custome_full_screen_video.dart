@@ -52,7 +52,7 @@ class CostumeFullscreenVideo extends StatelessWidget {
                 customVideoPlayerController: videoHandler.customVideoPlayerController,
                 isFullscreen: true,
               ),
-              VideoBar(videoHandler: videoHandler)
+              // VideoBar(videoHandler: videoHandler)
             ],
           ),
         ),

@@ -30,27 +30,15 @@ class AudioHandler {
 
   AudioHandler(String url) {
     _player = AudioPlayer();
-
-    // Set the release mode to keep the source after playback has completed.
     _player.setReleaseMode(ReleaseMode.stop);
-
-    // Start the player as soon as the app is displayed.
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-
     _player
-        // .play(UrlSource(
-        //     'https://bedunim.ir/wp-content/uploads/2024/06/02.Mehrad-Hidden-Shayea-Romania-320.mp3'))
         .play(UrlSource(url))
         .then((value) {
       _player.pause();
       isLoading = false;
       _playerState = PlayerState.paused;
     });
-
-    // });
-
     player.getDuration().then((value) => audioDuration = value);
-
     player.getCurrentPosition().then((value) => audioPosition = value);
   }
 

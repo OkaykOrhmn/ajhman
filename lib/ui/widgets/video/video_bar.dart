@@ -5,18 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volume_controller/volume_controller.dart';
 
+import '../../../core/cubit/download/download_cubit.dart';
 import '../../../core/cubit/video/video_player_cubit.dart';
+import '../../../core/enum/dialogs_status.dart';
 import '../../../core/services/video_handler.dart';
+import '../../../data/api/api_end_points.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../animation/animated_visibility.dart';
+import '../progress/circle_progress.dart';
+import '../snackbar/snackbar_handler.dart';
 import '../text/primary_text.dart';
 
 class VideoBar extends StatefulWidget {
   final VideoHandler videoHandler;
+  final String audioSource;
+  final String name;
 
-  const VideoBar({super.key, required this.videoHandler});
+  const VideoBar(
+      {super.key,
+      required this.videoHandler,
+      required this.audioSource,
+      required this.name});
 
   @override
   State<VideoBar> createState() => _VideoBarState();
@@ -57,11 +68,47 @@ class _VideoBarState extends State<VideoBar> {
                     SizedBox(
                       width: 8,
                     ),
-                    // Assets.icon.outline.download
-                    //     .svg(width: 24, height: 24, color: Colors.white),
-                    // SizedBox(
-                    //   width: 8,
-                    // ),
+                    InkWell(
+                      onTap: () async {
+                        await context.read<DownloadCubit>().downloadAudio(
+                             widget.audioSource,
+                            widget.name);
+                      },
+                      child: BlocConsumer<DownloadCubit, DownloadState>(
+                        listener: (downloadContext, state) {
+                          if (state is DownloadFail) {
+                            SnackBarHandler(context)
+                                .show(state.error, DialogStatus.error, false);
+                          } else if (state is DownloadSuccess) {
+                            SnackBarHandler(context).show(
+                                "با موفقیت دانلود شد 😃",
+                                DialogStatus.success,
+                                true);
+                          } else if (state is DownloadedAlready) {
+                            SnackBarHandler(context).show(
+                                "فایل موجود است 🧐", DialogStatus.info, true);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is DownloadLoading) {
+                            return CircleProgress(
+                              value: (state.pr / 100),
+                              strokeWidth: 2,
+                              width: 24,
+                              height: 24,
+                              backgroundColor: Colors.white,
+                              text: "${state.pr}",
+                            );
+                          } else {
+                            return Assets.icon.outline.download.svg(
+                                width: 24, height: 24, color: Colors.white);
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
                     InkWell(
                       onTap: () {
                         if (state.speed == 2.0) {
@@ -96,14 +143,18 @@ class _VideoBarState extends State<VideoBar> {
                       width: 8,
                     ),
                     InkWell(
-                      onTap: () async{
+                      onTap: () async {
                         context.read<VideoPlayerCubit>().changeMute();
                         double volume = await VolumeController().getVolume();
 
                         if (state.mute) {
-                          videoHandler.customVideoPlayerController.videoPlayerController.setVolume(volume);
+                          videoHandler
+                              .customVideoPlayerController.videoPlayerController
+                              .setVolume(volume);
                         } else {
-                          videoHandler.customVideoPlayerController.videoPlayerController.setVolume(0);
+                          videoHandler
+                              .customVideoPlayerController.videoPlayerController
+                              .setVolume(0);
                         }
                       },
                       child: state.mute
@@ -117,16 +168,17 @@ class _VideoBarState extends State<VideoBar> {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () async{
+                      onTap: () async {
                         Duration? pos = await videoHandler
-                            .customVideoPlayerController.videoPlayerController.position;
-                        if(pos != null){
+                            .customVideoPlayerController
+                            .videoPlayerController
+                            .position;
+                        if (pos != null) {
                           Duration next = Duration(seconds: pos.inSeconds + 5);
                           videoHandler
                               .customVideoPlayerController.videoPlayerController
                               .seekTo(next);
                         }
-
                       },
                       child: Assets.icon.outline.forward5Seconds
                           .svg(width: 24, height: 24, color: Colors.white),
@@ -135,10 +187,12 @@ class _VideoBarState extends State<VideoBar> {
                       width: 8,
                     ),
                     InkWell(
-                      onTap: () async{
+                      onTap: () async {
                         Duration? pos = await videoHandler
-                            .customVideoPlayerController.videoPlayerController.position;
-                        if(pos != null){
+                            .customVideoPlayerController
+                            .videoPlayerController
+                            .position;
+                        if (pos != null) {
                           Duration next = Duration(seconds: pos.inSeconds - 5);
                           videoHandler
                               .customVideoPlayerController.videoPlayerController

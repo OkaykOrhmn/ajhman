@@ -257,7 +257,7 @@ extension ThemeDataApp on ThemeData {
 
   Color placeholderBaseColor(){
     if(brightness == Brightness.light){
-      return grayColor300;
+      return grayColor200;
     }else{
       return grayColor600;
     }
@@ -265,7 +265,7 @@ extension ThemeDataApp on ThemeData {
 
   Color placeholderHighlightColor(){
     if(brightness == Brightness.light){
-      return grayColor200;
+      return grayColor100;
     }else{
       return grayColor700;
     }

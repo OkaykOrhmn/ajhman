@@ -51,6 +51,7 @@ class _PrimaryLoadingButtonState extends State<PrimaryLoadingButton>
       color: widget.disable ? Theme.of(context).disable() : Theme.of(context).primaryColor,
       width: widget.width,
       elevation: widget.disable ? 0 : 2,
+
       roundLoadingShape: false,
       disabledColor: Theme.of(context).primaryColor.withOpacity(0.1),
       loader: Container(
