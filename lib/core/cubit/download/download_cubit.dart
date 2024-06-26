@@ -48,24 +48,24 @@ class DownloadCubit extends Cubit<DownloadState> {
     };
   }
 
-  Future<void> downloadAudio(String url, String name) async {
+  Future<void> downloadAudio(String url, List<String> names, String type) async {
     emit(DownloadLoading(pr: 0));
     final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     try {
-      final path = await StorageHandler.getMediaFileDir(url, name);
+      final path = await StorageHandler.getMediaFileDir(url, names);
       if (path == null) {
         emit(DownloadFail(error: "لطفا دسترسی هارا تایید کنید!!"));
       } else if (path == "exist") {
         emit(DownloadedAlready());
       } else {
         await downloadRepository.getAudio(
-            url, name, path, _loadingNotification(id, path, name, "فایل صوتی"));
-        final p = {"path": path, "name": name, "url": url, "id": id.toString()};
+            url, path, _loadingNotification(id, path, names.last, type));
+        final p = {"path": path, "name": names.last, "url": url, "id": id.toString()};
         await Future.delayed(
             const Duration(milliseconds: 500),
             () => NotificationService.showNotification(NotificationData(
                     id: id,
-                    title: "فایل صوتی $name",
+                    title: "$type ${names.last}",
                     body: 'دانلود تکمیل شد',
                     payload: p,
                     actionButtons: [
@@ -86,7 +86,7 @@ class DownloadCubit extends Cubit<DownloadState> {
       String error = "خطا در برقراری ارتباط دوباره تلاش کنید!!";
       NotificationService.showNotification(NotificationData(
           id: id,
-          title: "فایل صوتی کتاب ${name}",
+          title: "فایل صوتی کتاب ${names.last}",
           body: 'خطا در دانلود فایل',
           actionButtons: [
             NotificationActionButton(
@@ -100,60 +100,4 @@ class DownloadCubit extends Cubit<DownloadState> {
     }
   }
 
-  Future<void> downloadVideo(String url, String name) async {
-    emit(DownloadLoading(pr: 0));
-    final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    try {
-      final path = await StorageHandler.getMediaFileDir(url, name);
-      if (path == null) {
-        emit(DownloadFail(error: "لطفا دسترسی هارا تایید کنید!!"));
-      } else if (path == "exist") {
-        emit(DownloadedAlready());
-      } else {
-        final response = await downloadRepository.getVideo(
-            url, name, path, _loadingNotification(id, path, name, "فایل صوتی"));
-        File file = File(path);
-        var raf = file.openSync(mode: FileMode.write);
-        // response.data is List<int> type
-        raf.writeFromSync(response.data);
-        await raf.close();
-        final p = {"path": path, "name": name, "url": url, "id": id.toString()};
-        await Future.delayed(
-            const Duration(milliseconds: 500),
-            () => NotificationService.showNotification(NotificationData(
-                    id: id,
-                    title: "فایل صوتی $name",
-                    body: 'دانلود تکمیل شد',
-                    payload: p,
-                    actionButtons: [
-                      NotificationActionButton(
-                          key: 'autoDisable',
-                          label: 'بستن',
-                          autoDismissible: true,
-                          actionType: ActionType.DismissAction),
-                      // NotificationActionButton(
-                      //   key: 'openFile',
-                      //   label: 'باز کردن فایل',
-                      //   autoDismissible: true,
-                      // ),
-                    ])));
-        emit(DownloadSuccess());
-      }
-    } catch (e) {
-      String error = "خطا در برقراری ارتباط دوباره تلاش کنید!!";
-      NotificationService.showNotification(NotificationData(
-          id: id,
-          title: "فایل صوتی کتاب ${name}",
-          body: 'خطا در دانلود فایل',
-          actionButtons: [
-            NotificationActionButton(
-                key: 'autoDisable',
-                label: 'بستن',
-                autoDismissible: true,
-                actionType: ActionType.DismissAction),
-          ]));
-
-      emit(DownloadFail(error: error));
-    }
-  }
 }

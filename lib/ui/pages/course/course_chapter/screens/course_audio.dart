@@ -74,7 +74,15 @@ class _CourseAudioState extends State<CourseAudio> {
                 color: Theme.of(context).cardBackground()),
             child: AudioPlayerWave(
               source: audio.source.toString(),
-              name: data.name.toString(),
+              name: [
+                context
+                    .read<SubChapterCubit>()
+                    .state
+                    .courseData
+                    .name
+                    .toString(),
+                data.name.toString()
+              ],
             ),
           )
         ],

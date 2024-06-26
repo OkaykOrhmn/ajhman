@@ -12,12 +12,14 @@ class StorageHandler {
         .requestPermission(Permission.accessMediaLocation);
     final m = await permissionHandler
         .requestPermission(Permission.manageExternalStorage);
+    await permissionHandler
+        .requestPermission(Permission.mediaLibrary);
     if (a && m) {
-      Directory appDocDir = await getApplicationDocumentsDirectory();
-      if (Platform.isAndroid) {
-        appDocDir = (await Directory('/storage/emulated/0'))!;
-      }
-      final Directory appDocDirFolder = Directory('${appDocDir.path}/Ajhman');
+      Directory? appDocDir = await getDownloadsDirectory();
+      // if (Platform.isAndroid) {
+      //   appDocDir =  Directory('/storage/emulated/0/Download');
+      // }
+      final Directory appDocDirFolder = Directory('${appDocDir!.path}');
       if (await appDocDirFolder.exists()) {
         return appDocDirFolder;
       } else {
@@ -47,14 +49,17 @@ class StorageHandler {
     }
   }
 
-  static Future<String?> getMediaFileDir(String url, String name) async {
-    String? dir = await createFolderInAppDocDir(name);
-    if (dir == null) return null;
+  static Future<String?> getMediaFileDir(String url, List<String> names) async {
+    Directory? main = await getAjhmanInAppDocDir();
+    if (main == null) return null;
+    for (var name in names) {
+      main = Directory('${main!.path}/$name');
+    }
     String fileName = url
         .replaceAll(ApiEndPoints.baseURL, '')
         .substring(1)
         .replaceAll("/", '_');
-    File file = File('$dir/$fileName');
+    File file = File('${main!.path}/$fileName');
     if (await file.exists()) {
       return "exist";
     } else {

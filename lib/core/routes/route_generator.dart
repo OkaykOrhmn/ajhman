@@ -13,6 +13,7 @@ import 'package:ajhman/ui/pages/course/course_chapter/course_chapter_page.dart';
 import 'package:ajhman/ui/pages/exam/exam_info.dart';
 import 'package:ajhman/ui/pages/exam/exam_page.dart';
 import 'package:ajhman/ui/pages/exam/exam_result_page.dart';
+import 'package:ajhman/ui/pages/file_manager/file_manager_page.dart';
 import 'package:ajhman/ui/pages/home/home_page.dart';
 import 'package:ajhman/ui/pages/points_platform/points_platform_page.dart';
 import 'package:ajhman/ui/pages/profile/profile_page.dart';
@@ -46,9 +47,12 @@ class RouteGenerator {
       case RoutePaths.smartSchedule:
         return _createRoute(const SmartSchedulePage());
       case RoutePaths.courseMain:
-        return _createRoute( CourseMainPage(  args:routeSettings.arguments as CourseMainArgs,));
+        return _createRoute(CourseMainPage(
+          args: routeSettings.arguments as CourseMainArgs,
+        ));
       case RoutePaths.course:
-        return _createRoute( CourseChapterPage(args: routeSettings.arguments as CourseArgs));
+        return _createRoute(
+            CourseChapterPage(args: routeSettings.arguments as CourseArgs));
       case RoutePaths.category:
         return _createRoute(CategoryPage(
           args: routeSettings.arguments as CategoryArgs,
@@ -59,17 +63,22 @@ class RouteGenerator {
           // response: ExamResponseModel(),
         ));
       case RoutePaths.examInfo:
-        return _createRoute( ExamInfo(courseId: routeSettings.arguments as int,));
-      case RoutePaths.examResult:
-        return _createRoute( ExamResultPage(
-            result: routeSettings.arguments as AnswerResultModel
+        return _createRoute(ExamInfo(
+          courseId: routeSettings.arguments as int,
         ));
+      case RoutePaths.examResult:
+        return _createRoute(ExamResultPage(
+            result: routeSettings.arguments as AnswerResultModel));
       case RoutePaths.search:
-        return _createRoute( const SearchPage());
-        case RoutePaths.summery:
-        return _createRoute( SummeryPage(id: routeSettings.arguments as int));
+        return _createRoute(const SearchPage());
+      case RoutePaths.summery:
+        return _createRoute(SummeryPage(id: routeSettings.arguments as int));
       case RoutePaths.leaderboard:
-        return _createRoute(  PointsPlatformPage(response: routeSettings.arguments as LeaderboardModel,));
+        return _createRoute(PointsPlatformPage(
+          response: routeSettings.arguments as LeaderboardModel,
+        ));
+      case RoutePaths.fileManager:
+        return _createRoute(const FileManagerPage());
       default:
         return _createRoute(const SizedBox());
     }

@@ -76,17 +76,20 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: [
                           BlocConsumer<ImagePickerCubit, ImagePickerState>(
-                            listener: (context, state)async{
-                              if(state is ImagePickerSuccess){
-                                await SnackBarHandler(context).show("عکس پروفایل با موفقیت تغییر کرد 😃", DialogStatus.success, true);
-
-                              }else if(state is ImagePickerError){
-                                await SnackBarHandler(context).show("خطا در تغییر عکس پروفایل!!", DialogStatus.error, true);
-
+                            listener: (context, state) async {
+                              if (state is ImagePickerSuccess) {
+                                await SnackBarHandler(context).show(
+                                    "عکس پروفایل با موفقیت تغییر کرد 😃",
+                                    DialogStatus.success,
+                                    true);
+                              } else if (state is ImagePickerError) {
+                                await SnackBarHandler(context).show(
+                                    "خطا در تغییر عکس پروفایل!!",
+                                    DialogStatus.error,
+                                    true);
                               }
                             },
                             builder: (context, state) {
-
                               return Stack(
                                 children: [
                                   SizedBox(
@@ -128,10 +131,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ? Positioned.fill(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color:
-                                                 Theme.of(context).white().withOpacity(0.5),
-                                              shape: BoxShape.circle
-                                            ),
+                                                color: Theme.of(context)
+                                                    .white()
+                                                    .withOpacity(0.5),
+                                                shape: BoxShape.circle),
                                             child: const ThreeBounceLoading(
                                               size: 32,
                                             ),
@@ -155,14 +158,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ? PrimaryText(
                                             text:
                                                 snapshot.data!.name.toString(),
-                                            style: Theme.of(context).textTheme.title,
-                                            color: Theme.of(context).progressText())
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .title,
+                                            color: Theme.of(context)
+                                                .progressText())
                                         : DefaultPlaceHolder(
                                             child: PrimaryText(
                                                 text: "اسم",
-                                                style:
-                                                    Theme.of(context).textTheme.title,
-                                                color: Theme.of(context).progressText()),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .title,
+                                                color: Theme.of(context)
+                                                    .progressText()),
                                           ),
                                     Row(
                                       children: [
@@ -172,14 +180,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     .data!.mobileNumber
                                                     .toString(),
                                                 style: Theme.of(context)
-                                                    .textTheme.searchHint,
-                                                color: Theme.of(context).cardText())
+                                                    .textTheme
+                                                    .searchHint,
+                                                color: Theme.of(context)
+                                                    .cardText())
                                             : DefaultPlaceHolder(
                                                 child: PrimaryText(
                                                     text: "موبایل",
                                                     style: Theme.of(context)
-                                                        .textTheme.searchHint,
-                                                    color: Theme.of(context).cardText()),
+                                                        .textTheme
+                                                        .searchHint,
+                                                    color: Theme.of(context)
+                                                        .cardText()),
                                               ),
                                         Container(
                                           height: 12,
@@ -190,9 +202,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                         PrimaryText(
                                             text: "کارشناس ارشد",
-                                            style:
-                                                Theme.of(context).textTheme.searchHint,
-                                            color: Theme.of(context).cardText()),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .searchHint,
+                                            color:
+                                                Theme.of(context).cardText()),
                                       ],
                                     )
                                   ],
@@ -207,29 +221,35 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
-                // const SizedBox(
-                //   height: 24,
-                // ),
-                // Container(
-                //   padding: EdgeInsets.all(16),
-                //   decoration: BoxDecoration(
-                //       color: backgroundColor100,
-                //       borderRadius: DesignConfig.highBorderRadius,
-                //       boxShadow: DesignConfig.lowShadow),
-                //   child: Column(
-                //     children: [
-                //       const TitleDivider(
-                //         title: "ذخیره شده‌ها",
-                //         hasPadding: false,
-                //       ),
-                //       SizedBox(
-                //         height: 16,
-                //       ),
-                //       _rowBtn("لیست ذخیره‌ شده‌ها", Assets.icon.outline.download,
-                //           null)
-                //     ],
-                //   ),
-                // ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).cardBackground(),
+                      borderRadius: DesignConfig.highBorderRadius,
+                      boxShadow: DesignConfig.lowShadow),
+                  child: Column(
+                    children: [
+                      const TitleDivider(
+                        title: "ذخیره شده‌ها",
+                        hasPadding: false,
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          navigatorKey.currentState!
+                              .pushNamed(RoutePaths.fileManager);
+                        },
+                        child: _rowBtn("لیست ذخیره‌ شده‌ها",
+                            Assets.icon.outline.download, null),
+                      )
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 24,
                 ),
@@ -268,8 +288,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Expanded(
                               child: InkWell(
                             onTap: () {
-                              context.read<ThemeBloc>().add(
-                                  ThemePrimaryEvent(color:purple));
+                              context
+                                  .read<ThemeBloc>()
+                                  .add(ThemePrimaryEvent(color: purple));
                               setState(() {});
                             },
                             child: Container(
@@ -285,8 +306,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Expanded(
                               child: InkWell(
                             onTap: () {
-                              context.read<ThemeBloc>().add(
-                                  ThemePrimaryEvent(color: blue));
+                              context
+                                  .read<ThemeBloc>()
+                                  .add(ThemePrimaryEvent(color: blue));
                               setState(() {});
                             },
                             child: Container(
@@ -302,8 +324,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Expanded(
                               child: InkWell(
                             onTap: () {
-                              context.read<ThemeBloc>().add(
-                                  ThemePrimaryEvent(color: pink));
+                              context
+                                  .read<ThemeBloc>()
+                                  .add(ThemePrimaryEvent(color: pink));
                               setState(() {});
                             },
                             child: Container(
@@ -372,7 +395,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: Theme.of(context).primaryColor300(), width: 1),
+                                    color: Theme.of(context).primaryColor300(),
+                                    width: 1),
                                 borderRadius: DesignConfig.lowBorderRadius),
                             padding: EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 18),
@@ -398,7 +422,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                               .state
                                               .fontSize -
                                           0.5,
-                                      thumbColor: Theme.of(context).primaryColor700(),
+                                      thumbColor:
+                                          Theme.of(context).primaryColor700(),
                                       activeColor:
                                           Theme.of(context).primaryColor,
                                       inactiveColor: backgroundColor300,
@@ -562,7 +587,10 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Row(
             children: [
-              icon.svg(color: Theme.of(context).editTextFont(), width: 16, height: 16),
+              icon.svg(
+                  color: Theme.of(context).editTextFont(),
+                  width: 16,
+                  height: 16),
               SizedBox(
                 width: 8,
               ),
@@ -585,7 +613,8 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          icon.svg(color: Theme.of(context).editTextFont(), width: 16, height: 16),
+          icon.svg(
+              color: Theme.of(context).editTextFont(), width: 16, height: 16),
           SizedBox(
             width: 8,
           ),
@@ -606,7 +635,10 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Row(
             children: [
-              icon.svg(color: Theme.of(context).editTextFont(), width: 16, height: 16),
+              icon.svg(
+                  color: Theme.of(context).editTextFont(),
+                  width: 16,
+                  height: 16),
               SizedBox(
                 width: 8,
               ),

@@ -15,5 +15,6 @@ class RoutePaths{
   static const String search = '/search';
   static const String summery = '/summery';
   static const String leaderboard = '/leaderboard';
+  static const String fileManager = '/file-manager';
 
 }

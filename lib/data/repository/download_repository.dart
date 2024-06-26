@@ -19,7 +19,7 @@ class DownloadRepository implements Download {
   DownloadRepository(this.dioHelper);
 
   @override
-  Future<Response> getAudio(String url, String name, String path,
+  Future<Response> getAudio(String url,  String path,
       Function(int, int)? progress) async {
     // try {
     final response = await dioHelper.sendRequest.download(url, path,
@@ -49,7 +49,7 @@ class DownloadRepository implements Download {
 
 abstract class Download {
   Future<Response> getAudio(
-      String url, String name, String path, Function(int, int)? progress);
+      String url, String path, Function(int, int)? progress);
   Future<Response> getVideo(
       String url, String name, String path, Function(int, int)? progress);
 }

@@ -21,7 +21,7 @@ import '../text/primary_text.dart';
 class AudioBar extends StatefulWidget {
   final AudioHandler audioHandler;
   final String audioSource;
-  final String name;
+  final List<String> name;
 
   const AudioBar(
       {super.key,
@@ -39,7 +39,7 @@ class _AudioBarState extends State<AudioBar> {
     final audioHandler = widget.audioHandler;
 
     return BlocBuilder<AudioPlayerCubit, AudioPlayerModel>(
-      builder: (context, state) {
+      builder: (contextA, state) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -71,11 +71,11 @@ class _AudioBarState extends State<AudioBar> {
                 InkWell(
                   onTap: () async {
                     await context.read<DownloadCubit>().downloadAudio(
-                        ApiEndPoints.baseURL + widget.audioSource,
-                        widget.name);
+                         widget.audioSource,
+                        widget.name,"فایل صوتی");
                   },
                   child: BlocConsumer<DownloadCubit, DownloadState>(
-                    listener: (context, state) {
+                    listener: (contextD, state) {
                       if (state is DownloadFail) {
                         SnackBarHandler(context)
                             .show(state.error, DialogStatus.error, false);
@@ -98,7 +98,7 @@ class _AudioBarState extends State<AudioBar> {
                         );
                       } else {
                         return Assets.icon.outline.download
-                            .svg(width: 24, height: 24, color: grayColor800);
+                            .svg(width: 24, height: 24, color: Theme.of(context).pinTextFont());
                       }
                     },
                   ),

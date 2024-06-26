@@ -11,14 +11,13 @@ class EmptyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
-      child: Column(
-        children: [
-          PrimaryText(text: "چیزی در این صفحه وجود ندارد", style: Theme.of(context).textTheme.headerBold, color: Theme.of(context).pinTextFont()),
-          SizedBox(height: 12,),
-          Assets.image.emptyMessageFrame.svg()
-        ],
-      )
+    return  Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        PrimaryText(text: "چیزی در این صفحه وجود ندارد", style: Theme.of(context).textTheme.headerBold, color: Theme.of(context).pinTextFont()),
+        SizedBox(height: 12,),
+        Assets.image.emptyMessageFrame.svg()
+      ],
     );
   }
 }

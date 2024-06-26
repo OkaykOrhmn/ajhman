@@ -21,7 +21,7 @@ import '../text/primary_text.dart';
 class VideoBar extends StatefulWidget {
   final VideoHandler videoHandler;
   final String audioSource;
-  final String name;
+  final List<String> name;
 
   const VideoBar(
       {super.key,
@@ -72,7 +72,7 @@ class _VideoBarState extends State<VideoBar> {
                       onTap: () async {
                         await context.read<DownloadCubit>().downloadAudio(
                              widget.audioSource,
-                            widget.name);
+                            widget.name,"ویدیو");
                       },
                       child: BlocConsumer<DownloadCubit, DownloadState>(
                         listener: (downloadContext, state) {

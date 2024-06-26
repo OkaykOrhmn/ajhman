@@ -15,7 +15,7 @@ import 'audio_bar.dart';
 
 class AudioPlayerWave extends StatefulWidget {
   final String source;
-  final String name;
+  final List<String> name;
 
   const AudioPlayerWave({super.key, required this.source, required this.name});
 

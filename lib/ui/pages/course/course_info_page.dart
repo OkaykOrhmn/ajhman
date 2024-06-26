@@ -558,8 +558,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               height: 16,
             ),
             AudioPlayerWave(
-              source: data.audio.toString(),
-              name: "کتاب ${data.name}",
+              source: ApiEndPoints.baseURL + data.audio.toString(),
+              name: ["کتاب ${data.name}"],
             ),
           ],
         ),
