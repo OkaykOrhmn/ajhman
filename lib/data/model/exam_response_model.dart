@@ -7,15 +7,15 @@ class ExamResponseModel {
     if (json['Exam'] != null) {
       exam = <Exam>[];
       json['Exam'].forEach((v) {
-        exam!.add(new Exam.fromJson(v));
+        exam!.add(Exam.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.exam != null) {
-      data['Exam'] = this.exam!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (exam != null) {
+      data['Exam'] = exam!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -35,10 +35,10 @@ class Exam {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['options'] = this.options;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['options'] = options;
     return data;
   }
 }

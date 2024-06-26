@@ -52,7 +52,7 @@ class NewCourseCardModel {
     image = json['image'];
     type = json['type'];
     category = json['Category'] != null
-        ? new Category.fromJson(json['Category'])
+        ? Category.fromJson(json['Category'])
         : null;
     time = json['time'];
     users = json['users'];
@@ -71,29 +71,29 @@ class NewCourseCardModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['level'] = this.level;
-    data['image'] = this.image;
-    data['type'] = this.type;
-    if (this.category != null) {
-      data['Category'] = this.category!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['level'] = level;
+    data['image'] = image;
+    data['type'] = type;
+    if (category != null) {
+      data['Category'] = category!.toJson();
     }
-    data['time'] = this.time;
-    data['users'] = this.users;
-    data['score'] = this.score;
-    data['marked'] = this.marked;
-    data['progress'] = this.progress;
-    data['status'] = this.status;
-    data['expiresAt'] = this.expiresAt;
-    data['registered'] = this.registered;
-    data['tag'] = this.tag;
-    data['audio'] = this.audio;
-    data['writer'] = this.writer;
-    data['pages'] = this.pages;
-    data['publisher'] = this.publisher;
-    data['topic'] = this.topic;
+    data['time'] = time;
+    data['users'] = users;
+    data['score'] = score;
+    data['marked'] = marked;
+    data['progress'] = progress;
+    data['status'] = status;
+    data['expiresAt'] = expiresAt;
+    data['registered'] = registered;
+    data['tag'] = tag;
+    data['audio'] = audio;
+    data['writer'] = writer;
+    data['pages'] = pages;
+    data['publisher'] = publisher;
+    data['topic'] = topic;
     return data;
   }
 }
@@ -110,9 +110,9 @@ class Category {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }

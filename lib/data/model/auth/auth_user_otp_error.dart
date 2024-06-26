@@ -9,20 +9,20 @@ class AuthUserOtpError {
 
   AuthUserOtpError.fromJson(Map<String, dynamic> json) {
     message =
-    json['message'] != null ? new Message.fromJson(json['message']) : null;
+    json['message'] != null ? Message.fromJson(json['message']) : null;
     statusCode = json['statusCode'];
     timestamp = json['timestamp'];
     path = json['path'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.message != null) {
-      data['message'] = this.message!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (message != null) {
+      data['message'] = message!.toJson();
     }
-    data['statusCode'] = this.statusCode;
-    data['timestamp'] = this.timestamp;
-    data['path'] = this.path;
+    data['statusCode'] = statusCode;
+    data['timestamp'] = timestamp;
+    data['path'] = path;
     return data;
   }
 }
@@ -39,9 +39,9 @@ class Message {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['statusCode'] = this.statusCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['statusCode'] = statusCode;
     return data;
   }
 }

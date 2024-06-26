@@ -14,11 +14,11 @@ class AnswerResultModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['correct'] = this.correct;
-    data['incorrect'] = this.incorrect;
-    data['noAnswer'] = this.noAnswer;
-    data['total'] = this.total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['correct'] = correct;
+    data['incorrect'] = incorrect;
+    data['noAnswer'] = noAnswer;
+    data['total'] = total;
     return data;
   }
 }

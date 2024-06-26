@@ -1,12 +1,7 @@
-import 'dart:ui';
 
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/theme_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../main.dart';
-import '../bloc/theme_bloc.dart';
 
 const _defaultFontFamily = 'Dana';
 

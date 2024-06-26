@@ -1,8 +1,6 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loading_btn/loading_btn.dart';

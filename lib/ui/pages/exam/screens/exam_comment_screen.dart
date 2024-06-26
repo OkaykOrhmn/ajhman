@@ -1,9 +1,7 @@
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ExamCommentScreen extends StatelessWidget {
@@ -14,11 +12,11 @@ class ExamCommentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: PrimaryText(
               text:
                   "فراگیر محترم، لطفا آموخته‌های خود را پیرامون محتواهای ارائه شده در این دوره در کادر زیر وارد کنید. به منظور دسترسی به دوره‌های آتی تکمیل این بخش الزامی است.",
@@ -41,7 +39,7 @@ class ExamCommentScreen extends StatelessWidget {
               borderSide:  BorderSide(color: Theme.of(context).primaryColor,),
               borderRadius: DesignConfig.highBorderRadius,
             ),
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: DesignConfig.highBorderRadius,
             ),
           ),

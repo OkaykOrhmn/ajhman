@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:ajhman/data/repository/download_repository.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/model/notification_model.dart';

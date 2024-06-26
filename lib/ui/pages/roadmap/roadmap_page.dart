@@ -1,29 +1,15 @@
-import 'package:ajhman/core/enum/state_status.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/model/roadmap_model.dart';
 import 'package:ajhman/data/model/roadmap_view.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
-import 'package:ajhman/ui/widgets/button/loading_btn.dart';
-import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
-import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/road.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:loading_btn/loading_btn.dart';
 
-import '../../../core/bloc/course/main/course_main_bloc.dart';
-import '../../../core/bloc/questions/questions_bloc.dart';
-import '../../../core/routes/route_paths.dart';
-import '../../../data/model/course_main_response_model.dart';
 import '../../../gen/assets.gen.dart';
 
 class RoadMapPage extends StatefulWidget {
@@ -52,8 +38,8 @@ class _RoadMapPageState extends State<RoadMapPage> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(16),
-              margin: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                   color: Theme.of(context).editTextFilled(),
                   borderRadius: DesignConfig.highBorderRadius),
@@ -63,7 +49,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                       text: widget.response.name.toString(),
                       style: Theme.of(context).textTheme.titleBold,
                       color: Theme.of(context).secondaryColor()),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   PrimaryText(
@@ -74,7 +60,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             Stack(
@@ -86,7 +72,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                       child: Container(
                         width: 30,
                         height: 40,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 topRight: DesignConfig.aVeryHighBorderRadius,
                                 topLeft: DesignConfig.aVeryHighBorderRadius,
@@ -124,7 +110,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                             child: Stack(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.only(top: 36),
+                                  padding: const EdgeInsets.only(top: 36),
                                   width: 130,
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -133,7 +119,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                       color: Theme.of(context).white(),
                                       border: Border.all(color: view.color),
                                     ),
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -153,7 +139,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                             maxLines: 2,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 8,
                                         ),
                                         Row(
@@ -162,7 +148,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                                 color: goldColor,
                                                 width: 16,
                                                 height: 16),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 4,
                                             ),
                                             PrimaryText(
@@ -175,7 +161,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                                     .pinTextFont())
                                           ],
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 8,
                                         ),
                                         widget.response.chapters![index]
@@ -238,7 +224,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             )
           ],

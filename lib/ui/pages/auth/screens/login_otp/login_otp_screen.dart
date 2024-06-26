@@ -8,8 +8,6 @@ import 'package:pinput/pinput.dart';
 import '../../../../../core/bloc/auth/auth_screen_bloc.dart';
 import '../../../../../core/bloc/otp/otp_bloc.dart';
 import '../../../../../core/utils/app_locale.dart';
-import '../../../../../gen/assets.gen.dart';
-import '../../../../theme/color/colors.dart';
 import '../../../../theme/text/text_styles.dart';
 import '../../../../widgets/text_field/mobile_number_text_field.dart';
 

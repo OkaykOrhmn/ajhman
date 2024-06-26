@@ -1,23 +1,15 @@
-import 'package:ajhman/core/enum/dialogs_status.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/home/screens/for_you_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/home_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/learning/learning_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/my_treasure_screen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/bottom_navigation/bottom_navigation_Btn.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
-import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../core/cubit/home/selected_index_cubit.dart';
-import '../../../core/utils/app_locale.dart';
 import '../../../gen/assets.gen.dart';
 import '../../widgets/app_bar/primary_app_bar.dart';
 
@@ -118,6 +110,5 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ],
           )),
     );
-    ;
   }
 }

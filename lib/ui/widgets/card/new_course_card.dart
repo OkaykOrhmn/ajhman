@@ -1,10 +1,8 @@
-import 'dart:ui';
 
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/cubit/home/selected_index_cubit.dart';
@@ -90,7 +88,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                           ? TextDirection.ltr
                           : TextDirection.rtl,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -118,7 +116,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
         return Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
                 color: Theme.of(context).disable(),
@@ -132,7 +130,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                     SizedBox(
                         width: MediaQuery.sizeOf(context).width / 5,
                         child: LinearProgress(value: p, minHeight: 8)),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     PrimaryText(
@@ -157,7 +155,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
         return Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
                 color: Theme.of(context).disable(),
@@ -181,7 +179,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
         return Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
                 color: Theme.of(context).disable(),
@@ -376,7 +374,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                       color: Theme.of(context).white().withOpacity(0.5),
                       boxShadow: DesignConfig.lowShadow,
                       borderRadius: DesignConfig.highBorderRadius),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -384,7 +382,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                           color: Theme.of(context).secondaryColor(),
                           width: 14,
                           height: 14),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       PrimaryText(
@@ -406,7 +404,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                       color: Theme.of(context).white().withOpacity(0.5),
                       boxShadow: DesignConfig.lowShadow,
                       borderRadius: DesignConfig.highBorderRadius),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -414,7 +412,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                           color: Theme.of(context).secondaryColor(),
                           width: 14,
                           height: 14),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       PrimaryText(

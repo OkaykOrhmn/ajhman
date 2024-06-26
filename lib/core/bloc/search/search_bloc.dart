@@ -22,7 +22,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           } else {
             emit(SearchSuccess(response: response));
           }
-        } on DioError catch (e) {
+        } on DioError {
           emit(SearchFail());
         }
       }

@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:audio_wave/audio_wave.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
 
 class AudioHandler {
   late AudioPlayer _player;

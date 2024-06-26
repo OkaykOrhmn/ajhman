@@ -1,6 +1,5 @@
 import 'package:ajhman/data/model/video_player_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -9,7 +8,6 @@ import '../../../core/cubit/download/download_cubit.dart';
 import '../../../core/cubit/video/video_player_cubit.dart';
 import '../../../core/enum/dialogs_status.dart';
 import '../../../core/services/video_handler.dart';
-import '../../../data/api/api_end_points.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
 import '../../theme/color/colors.dart';
@@ -65,7 +63,7 @@ class _VideoBarState extends State<VideoBar> {
                       child: Assets.icon.outline.maximize3
                           .svg(width: 24, height: 24, color: Colors.white),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     InkWell(
@@ -106,7 +104,7 @@ class _VideoBarState extends State<VideoBar> {
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     InkWell(
@@ -130,7 +128,7 @@ class _VideoBarState extends State<VideoBar> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(6)),
                         padding:
-                            EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                            const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                         child: Center(
                           child: PrimaryText(
                               text: "${state.speed}X",
@@ -139,7 +137,7 @@ class _VideoBarState extends State<VideoBar> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     InkWell(
@@ -183,7 +181,7 @@ class _VideoBarState extends State<VideoBar> {
                       child: Assets.icon.outline.forward5Seconds
                           .svg(width: 24, height: 24, color: Colors.white),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     InkWell(
@@ -202,7 +200,7 @@ class _VideoBarState extends State<VideoBar> {
                       child: Assets.icon.outline.backward5Seconds
                           .svg(width: 24, height: 24, color: Colors.white),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     InkWell(

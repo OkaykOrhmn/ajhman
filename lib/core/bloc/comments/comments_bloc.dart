@@ -1,17 +1,11 @@
-import 'package:ajhman/core/enum/comment.dart';
-import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/data/model/add_comment_request_model.dart';
-import 'package:ajhman/data/model/add_comment_response_model.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
 import 'package:ajhman/data/repository/comments_repository.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
-import 'package:ajhman/main.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../../enum/state_status.dart';
 
 part 'comments_event.dart';
 
@@ -32,7 +26,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           } else {
             emit(CommentSuccess(response: response));
           }
-        } on DioError catch (e) {
+        } on DioError {
           emit(CommentFail());
         }
       }
@@ -49,7 +43,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           response.user = User(id: profile.id,name: profile.name,image: profile.image);
           event.data.insert(0, response);
           emit(CommentSuccess(response: event.data));
-        } on DioError catch (e) {
+        } on DioError {
           emit(CommentAddFail(response: event.data));
         }
       }
@@ -76,7 +70,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
             }
           }
           emit(CommentSuccess(response: event.data));
-        } on DioError catch (e) {
+        } on DioError {
           emit(CommentChangeFail(response: event.data));
 
         }

@@ -1,7 +1,5 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -35,7 +33,7 @@ class PrimaryImageNetwork extends StatelessWidget {
                       color: Theme.of(context).white(),
                     )),
                 errorWidget: (context, url, error) { 
-                  print("errr--------------------------------${error}");
+                  print("errr--------------------------------$error");
                   return Center(
                   child: Assets.image.moon.moon.image(),
                 );},

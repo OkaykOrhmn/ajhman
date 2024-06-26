@@ -23,20 +23,20 @@ class ChapterModel {
     if (json['Media'] != null) {
       media = <Media>[];
       json['Media'].forEach((v) {
-        media!.add(new Media.fromJson(v));
+        media!.add(Media.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['highlight'] = this.highlight;
-    data['type'] = this.type;
-    if (this.media != null) {
-      data['Media'] = this.media!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['highlight'] = highlight;
+    data['type'] = type;
+    if (media != null) {
+      data['Media'] = media!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -58,11 +58,11 @@ class Media {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['source'] = this.source;
-    data['type'] = this.type;
-    data['subchapterId'] = this.subchapterId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['source'] = source;
+    data['type'] = type;
+    data['subchapterId'] = subchapterId;
     return data;
   }
 }

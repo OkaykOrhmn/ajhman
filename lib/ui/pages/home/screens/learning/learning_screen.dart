@@ -2,16 +2,13 @@ import 'package:ajhman/core/bloc/learning/leaning_bloc.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
-import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../data/model/cards/new_course_card_model.dart';
@@ -37,6 +34,8 @@ class _LearningScreenState extends State<LearningScreen>
     super.initState();
     _controller = TabController(length: 3, vsync: this);
     context.read<LeaningBloc>().add(ClearCards());
+    _controller.index = 0;
+    context.read<SelectedTabCubit>().changeSelectedIndex(0);
     context.read<LeaningBloc>().add(GetCards(path: ApiEndPoints.learned));
 
     _controller.addListener(() {
@@ -83,7 +82,7 @@ class _LearningScreenState extends State<LearningScreen>
                         items = state.response;
                       } else if (state is LeaningEmpty) {
                         items = [];
-                      } else if(state is LeaningLoading){
+                      } else if (state is LeaningLoading) {
                         items = null;
                       }
                       return Column(
@@ -92,15 +91,16 @@ class _LearningScreenState extends State<LearningScreen>
                               ? const SizedBox()
                               : Container(
                                   padding: const EdgeInsets.all(18),
-                                  margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 24),
-
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 24),
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           DesignConfig.highBorderRadius,
                                       color:
                                           Theme.of(context).cardBackground()),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Assets.icon.outline.infoCircle.svg(
@@ -108,34 +108,35 @@ class _LearningScreenState extends State<LearningScreen>
                                               .secondaryColor(),
                                           width: 18,
                                           height: 18),
-                                      SizedBox(
-                                        width: 8
-                                      ),
+                                      const SizedBox(width: 8),
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 2.0),
+                                        padding:
+                                            const EdgeInsets.only(top: 2.0),
                                         child: PrimaryText(
                                             text:
                                                 "کاربر گرامی شما ${items != null && items.isNotEmpty ? items.length : 'هیچ'} دوره ${_controller.index == 0 ? 'تکمیل شده' : _controller.index == 1 ? 'در حال یادگیری' : 'نشان شده'} ${items != null && items.isNotEmpty ? '' : 'ن'}دارید.",
-                                            style:
-                                                Theme.of(context).textTheme.title,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .title,
                                             color: Theme.of(context)
                                                 .secondaryColor()),
                                       ),
-                                      SizedBox(width: 8,),
-
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
                                     ],
                                   ),
                                 ),
                           VerticalListView(
                             placeholder: const NewCourseCardPlaceholder(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 12),
                               type: CardType.normal,
                             ),
                             item: (context, index) {
                               return NewCourseCard(
                                 index: index,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                         vertical: 8, horizontal: 16)
                                     .copyWith(top: index == 0 ? 0 : 8),
                                 response: items![index],
@@ -143,11 +144,14 @@ class _LearningScreenState extends State<LearningScreen>
                             },
                             items: items,
                           ),
-
-                          items !=null && items.isEmpty? Padding(
-                            padding:  EdgeInsets.only(top: MediaQuery.sizeOf(context).height/10),
-                            child: const EmptyScreen(),
-                          ):const SizedBox()
+                          items != null && items.isEmpty
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.sizeOf(context).height /
+                                          10),
+                                  child: const EmptyScreen(),
+                                )
+                              : const SizedBox()
                         ],
                       );
                     },
@@ -166,10 +170,10 @@ class _LearningScreenState extends State<LearningScreen>
 
   Container _tabBar() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 22, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 16),
       decoration: BoxDecoration(
           color: Theme.of(context).surfacePrimaryColor(),
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               bottomLeft: DesignConfig.aHighBorderRadius,
               bottomRight: DesignConfig.aHighBorderRadius)),
       child: BlocBuilder<SelectedTabCubit, int>(
@@ -206,7 +210,7 @@ class _LearningScreenState extends State<LearningScreen>
           state == index
               ? fillIcon.svg(color: Colors.white, width: 16, height: 16)
               : icon.svg(color: backgroundColor800, width: 16, height: 16),
-          SizedBox(
+          const SizedBox(
             width: 4,
           ),
           PrimaryText(

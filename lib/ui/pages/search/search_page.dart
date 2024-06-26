@@ -1,6 +1,5 @@
 import 'package:ajhman/core/bloc/search/search_bloc.dart';
 import 'package:ajhman/core/enum/course_types.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/gen/assets.gen.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
@@ -10,9 +9,7 @@ import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text_field/search_text_field.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 
@@ -40,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
     CourseTypes.image,
     CourseTypes.any
   ];
-  late CourseTypes? courseTypes = null;
+  CourseTypes? courseTypes;
 
   final TextEditingController _search = TextEditingController();
 
@@ -52,10 +49,10 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ReversibleAppBar(title: "جستجو"),
+      appBar: const ReversibleAppBar(title: "جستجو"),
       backgroundColor: Theme.of(context).background(),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             SearchTextField(
@@ -67,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
                   EasyDebounce.debounce(
                       'my-debouncer',
                       // <-- An ID for this particular debouncer
-                      Duration(seconds: 1), // <-- The debounce duration
+                      const Duration(seconds: 1), // <-- The debounce duration
                       () {
                     if (val.isNotEmpty) {
                       context.read<SearchBloc>().add(
@@ -85,7 +82,7 @@ class _SearchPageState extends State<SearchPage> {
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
                 child: GroupButton(
                   controller: _radioController,
-                  options: GroupButtonOptions(
+                  options: const GroupButtonOptions(
                     groupingType: GroupingType.row,
                   ),
                   isRadio: true,
@@ -97,15 +94,15 @@ class _SearchPageState extends State<SearchPage> {
                           borderRadius: DesignConfig.veryHighBorderRadius,
                           color: selected ? Theme.of(context).primaryColor : Theme.of(context).white()),
                       padding:
-                          EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                      margin: EdgeInsets.symmetric(horizontal: 8),
+                          const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
                       child: Row(
                         children: [
                           SvgGenImage(types[index].outlined).svg(
                               width: 16,
                               height: 16,
                               color: selected ? Colors.white : Theme.of(context).primaryColor),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           PrimaryText(
@@ -139,13 +136,13 @@ class _SearchPageState extends State<SearchPage> {
               if (state is SearchSuccess) {
                 return VerticalListView(
                   placeholder: const NewCourseCardPlaceholder(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                     type: CardType.normal,
                   ),
                   item: (context, index) => NewCourseCard(
                     index: index,
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16)
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16)
                         .copyWith(top: index == 0 ? 0 : 8),
                     response: state.response[index],
                   ),
@@ -164,7 +161,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: const ThreeBounceLoading(),
                 );
               } else {
-                return SizedBox();
+                return const SizedBox();
               }
             })
           ],

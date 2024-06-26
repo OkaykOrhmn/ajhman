@@ -10,9 +10,9 @@ class AuthUserOtpRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mobileNumber'] = this.mobileNumber.toString();
-    data['otp'] = this.otp.toString();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mobileNumber'] = mobileNumber.toString();
+    data['otp'] = otp.toString();
     return data;
   }
 }

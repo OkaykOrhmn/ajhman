@@ -1,9 +1,6 @@
 import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
-import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
-import 'package:ajhman/data/model/profile_response_model.dart';
-import 'package:ajhman/data/repository/profile_repository.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
 import 'package:ajhman/main.dart';
@@ -19,16 +16,11 @@ import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-import '../../../core/cubit/home/selected_index_cubit.dart';
 import '../../../core/enum/dialogs_status.dart';
 import '../../../gen/assets.gen.dart';
 import '../../theme/bloc/theme_bloc.dart';
-import '../../theme/theme_helper.dart';
 import '../../widgets/snackbar/snackbar_handler.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -48,9 +40,9 @@ class _ProfilePageState extends State<ProfilePage> {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).background(),
-        appBar: ReversibleAppBar(title: "تنظیمات حساب"),
+        appBar: const ReversibleAppBar(title: "تنظیمات حساب"),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
@@ -59,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 16,
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
@@ -70,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: "حساب کاربری",
                         hasPadding: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Row(
@@ -120,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         shape: BoxShape.circle,
                                         color: Theme.of(context).primaryColor,
                                       ),
-                                      padding: EdgeInsets.all(4),
+                                      padding: const EdgeInsets.all(4),
                                       child: Assets.icon.outline.add.svg(
                                           width: 16,
                                           height: 16,
@@ -225,7 +217,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 24,
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
@@ -236,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: "ذخیره شده‌ها",
                         hasPadding: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       InkWell(
@@ -254,7 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 24,
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
@@ -265,7 +257,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: "ظاهر نرم‌افزار",
                         hasPadding: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       _rowSwitch(
@@ -280,7 +272,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 16,
                       ),
                       _rowTitle("انتخاب قالب", Assets.icon.outline.brush),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Row(
@@ -295,12 +287,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: Container(
                               height: 52,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
                                   color: purple),
                             ),
                           )),
-                          SizedBox(
+                          const SizedBox(
                             width: 12,
                           ),
                           Expanded(
@@ -313,12 +305,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: Container(
                               height: 52,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
                                   color: blue),
                             ),
                           )),
-                          SizedBox(
+                          const SizedBox(
                             width: 12,
                           ),
                           Expanded(
@@ -331,12 +323,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: Container(
                               height: 52,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
                                   color: pink),
                             ),
                           )),
-                          SizedBox(
+                          const SizedBox(
                             width: 12,
                           ),
                           Expanded(
@@ -349,7 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: Container(
                               height: 52,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
                                   color: primaryColor),
                               // child: Stack(
@@ -383,11 +375,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           )),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       _rowTitle("اندازه متن", Assets.icon.outline.smallcaps),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Row(
@@ -398,10 +390,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     color: Theme.of(context).primaryColor300(),
                                     width: 1),
                                 borderRadius: DesignConfig.lowBorderRadius),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 18),
                             margin:
-                                EdgeInsetsDirectional.symmetric(vertical: 4),
+                                const EdgeInsetsDirectional.symmetric(vertical: 4),
                             child: Center(
                               child: PrimaryText(
                                   text:
@@ -410,7 +402,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   color: Theme.of(context).headText()),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           Expanded(
@@ -436,7 +428,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       })))
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Padding(
@@ -453,7 +445,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 24,
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
@@ -464,12 +456,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: "آموزش",
                         hasPadding: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       _rowBtn("مهارت‌های مورد علاقه",
                           Assets.icon.outline.brush2, null),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       InkWell(
@@ -487,7 +479,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 24,
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardBackground(),
                       borderRadius: DesignConfig.highBorderRadius,
@@ -498,22 +490,22 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: "درباره‌ ما",
                         hasPadding: false,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       _rowBtn("راهنمای نرم‌افزار",
                           Assets.icon.outline.helpCircle, null),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       _rowBtn(
                           "معرفی آژمان", Assets.icon.outline.helpCircle, null),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       _rowBtn("پیام به پشتیبانی", Assets.icon.outline.messages,
                           null),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       _rowBtn("قوانین و حرم خصوصی", Assets.icon.outline.privacy,
@@ -533,7 +525,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         .restorablePopAndPushNamed(RoutePaths.splash);
                   },
                   child: Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                         color: Theme.of(context).cardBackground(),
                         borderRadius: DesignConfig.highBorderRadius,
@@ -561,7 +553,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 24,
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
+                  padding: const EdgeInsetsDirectional.symmetric(
                       horizontal: 4, vertical: 16),
                   child: PrimaryText(
                       text: "نسخه نرم‌افزار: ۱.۲.۰",
@@ -591,7 +583,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Theme.of(context).editTextFont(),
                   width: 16,
                   height: 16),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               PrimaryText(
@@ -615,7 +607,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           icon.svg(
               color: Theme.of(context).editTextFont(), width: 16, height: 16),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           PrimaryText(
@@ -639,7 +631,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Theme.of(context).editTextFont(),
                   width: 16,
                   height: 16),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               PrimaryText(
@@ -654,7 +646,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   activeColor: Theme.of(context).primaryColor,
                   value: state.themeData.brightness == Brightness.dark,
                   onChanged: (val) => click!(val));
-              ;
             },
           )
         ],

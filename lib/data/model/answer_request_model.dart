@@ -8,18 +8,18 @@ class AnswerRequestModel {
     if (json['answers'] != null) {
       answers = <Answers>[];
       json['answers'].forEach((v) {
-        answers!.add(new Answers.fromJson(v));
+        answers!.add(Answers.fromJson(v));
       });
     }
     comment = json['comment'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.answers != null) {
-      data['answers'] = this.answers!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (answers != null) {
+      data['answers'] = answers!.map((v) => v.toJson()).toList();
     }
-    data['comment'] = this.comment;
+    data['comment'] = comment;
     return data;
   }
 }
@@ -36,9 +36,9 @@ class Answers {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['questionId'] = this.questionId;
-    data['answer'] = this.answer;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['questionId'] = questionId;
+    data['answer'] = answer;
     return data;
   }
 }

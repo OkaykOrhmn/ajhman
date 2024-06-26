@@ -1,5 +1,4 @@
 import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
-import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
 import 'package:ajhman/data/args/exam_args.dart';
 import 'package:ajhman/data/model/answer_request_model.dart';
 import 'package:ajhman/data/model/exam_response_model.dart';
@@ -11,9 +10,7 @@ import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 
@@ -82,7 +79,7 @@ class _ExamPageState extends State<ExamPage>
 
           navigatorKey.currentState!
               .pushReplacementNamed(RoutePaths.examResult, arguments: response);
-        } on DioError catch (e) {}
+        } on DioError {}
       }
     });
     _animationController.forward();
@@ -107,7 +104,7 @@ class _ExamPageState extends State<ExamPage>
           canBack: false,
         ),
         body: Container(
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           child: Stack(
             children: [
               Column(
@@ -167,7 +164,7 @@ class _ExamPageState extends State<ExamPage>
                       );
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Expanded(child: BlocBuilder<AnswerCubit, AnswerModel>(
@@ -180,7 +177,7 @@ class _ExamPageState extends State<ExamPage>
                           selectedIndex = element.answer! - 1;
                         }
                       }
-                      final GroupButtonController _radioController =
+                      final GroupButtonController radioController =
                           GroupButtonController(selectedIndex: selectedIndex);
 
                       return Container(
@@ -200,14 +197,14 @@ class _ExamPageState extends State<ExamPage>
                                     color: Theme.of(context).pinTextFont())
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
                             Expanded(
                                 child: SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
                               child: Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).white(),
                                   borderRadius: DesignConfig.highBorderRadius,
@@ -221,21 +218,21 @@ class _ExamPageState extends State<ExamPage>
                                       color: Theme.of(context).progressText(),
                                       textAlign: TextAlign.start,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 8,
                                     ),
                                     GroupButton(
-                                      controller: _radioController,
+                                      controller: radioController,
                                       isRadio: true,
-                                      options: GroupButtonOptions(
+                                      options: const GroupButtonOptions(
                                           groupingType: GroupingType.column),
                                       buttons: exam.options!,
                                       buttonIndexedBuilder:
-                                          (selected, _index, context) {
+                                          (selected, index, context) {
                                         return Container(
-                                          padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
                                           margin:
-                                              EdgeInsets.symmetric(vertical: 8),
+                                              const EdgeInsets.symmetric(vertical: 8),
                                           decoration: BoxDecoration(
                                               color: selected
                                                   ? Theme.of(context).primaryColor50()
@@ -247,19 +244,19 @@ class _ExamPageState extends State<ExamPage>
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Radio<int>(
-                                                groupValue: _radioController
+                                                groupValue: radioController
                                                     .selectedIndex,
                                                 activeColor: Theme.of(context).primaryColor,
-                                                value: _index,
+                                                value: index,
                                                 onChanged: (val) {
-                                                  _radioController
-                                                      .selectIndex(_index);
+                                                  radioController
+                                                      .selectIndex(index);
                                                 },
                                               ),
                                               Expanded(
                                                   child: PrimaryText(
                                                 text:
-                                                    "${getAlphIndex(_index)}${exam.options![_index]}",
+                                                    "${getAlphIndex(index)}${exam.options![index]}",
                                                 style: Theme.of(context)
                                                     .textTheme.searchHint,
                                                 color: selected? Colors.black :Theme.of(context).pinTextFont(),
@@ -341,7 +338,7 @@ class _ExamPageState extends State<ExamPage>
                       ignoring: timOut,
                       child: Container(
                         color: Colors.white.withOpacity(0.5),
-                        child: ThreeBounceLoading(),
+                        child: const ThreeBounceLoading(),
                       ),
                     )
                   : const SizedBox()

@@ -3,13 +3,10 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../data/model/cards/new_course_card_model.dart';
 import '../../../gen/assets.gen.dart';
-import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../text/primary_text.dart';

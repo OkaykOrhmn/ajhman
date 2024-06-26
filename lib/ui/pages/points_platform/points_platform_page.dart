@@ -1,7 +1,6 @@
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/gen/assets.gen.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
@@ -9,9 +8,7 @@ import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/image/profile_image_network.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PointsPlatformPage extends StatefulWidget {
   final LeaderboardModel response;
@@ -36,21 +33,21 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
     response = widget.response;
 
     return Scaffold(
-      appBar: ReversibleAppBar(title: "سکوی امتیازات"),
+      appBar: const ReversibleAppBar(title: "سکوی امتیازات"),
       backgroundColor: Theme.of(context).background(),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             _header(),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             _self(),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Padding(
@@ -72,7 +69,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                                           color: Theme.of(context).primaryColor, width: 4))
                                   : null,
                               boxShadow: DesignConfig.lowShadow),
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: _prof(response.users![index], index + 1)),
                     );
                   }),
@@ -85,8 +82,8 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
 
   Container _self() {
     return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: Theme.of(context).surfaceCard(),
         borderRadius: DesignConfig.highBorderRadius,
@@ -94,14 +91,14 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
       child: Column(
         children: [
           _prof(response.user!, response.user!.rating!),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Container(
             decoration: BoxDecoration(
                 borderRadius: DesignConfig.highBorderRadius,
                 color: Theme.of(context).white()),
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: VerticalListView(
                 items: response.user!.examAnswer,
                 item: (context, index) {
@@ -129,7 +126,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                               color: exam.score! > 60
                                   ? Theme.of(context).backgroundSuccess()
                                   : Theme.of(context).backgroundError()),
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: PrimaryText(
                               text: exam.score.toString(),
                               style: Theme.of(context).textTheme.rate,
@@ -155,14 +152,14 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
           width: 48,
           height: 48,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         PrimaryText(
             text: users.name.toString(),
             style: Theme.of(context).textTheme.title,
             color: Theme.of(context).headText()),
-        SizedBox(
+        const SizedBox(
           height: 36,
         ),
         Row(
@@ -180,7 +177,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
@@ -198,7 +195,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
@@ -230,7 +227,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
               children: [
                 ProfileImageNetwork(
                     src: getImageUrl(user.image), width: 48, height: 48),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Column(
@@ -256,7 +253,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
               height: 32,
               decoration:
                   BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).secondaryColor()),
-              padding: EdgeInsets.all(6),
+              padding: const EdgeInsets.all(6),
               child: Center(
                   child: PrimaryText(
                       text: index.toString(),
@@ -265,7 +262,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         Row(
@@ -277,7 +274,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           children: [
             Assets.icon.outlineMedal
                 .svg(width: 14, height: 14, color: Theme.of(context).secondaryColor()),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             PrimaryText(
@@ -292,7 +289,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           children: [
             Assets.icon.outline.exam
                 .svg(width: 14, height: 14, color: Theme.of(context).secondaryColor()),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             PrimaryText(
@@ -307,7 +304,7 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           children: [
             Assets.icon.outline.note2
                 .svg(width: 14, height: 14, color: Theme.of(context).secondaryColor()),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             PrimaryText(
@@ -344,24 +341,24 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           color: Theme.of(context).cardBackground(),
                           borderRadius: DesignConfig.highBorderRadius,
                           boxShadow: DesignConfig.lowShadow),
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: Column(
                         children: [
                           Assets.icon.medal2.image(width: 32, height: 32),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                           _leaderUser(userTwo)
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     Container(
                       decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor50(),
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: DesignConfig.aHighBorderRadius,
                               topRight: DesignConfig.aHighBorderRadius)),
                       child: SizedBox(
@@ -370,11 +367,11 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color:Colors.white,
                               ),
-                              padding: EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(4),
                               child: Center(
                                 child: PrimaryText(
                                     text: "2",
@@ -401,24 +398,24 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           color: Theme.of(context).cardBackground(),
                           borderRadius: DesignConfig.highBorderRadius,
                           boxShadow: DesignConfig.lowShadow),
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: Column(
                         children: [
                           Assets.icon.medal1.image(width: 32, height: 32),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                           _leaderUser(userOne)
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     Container(
                       decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor50(),
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: DesignConfig.aHighBorderRadius,
                               topRight: DesignConfig.aHighBorderRadius)),
                       child: SizedBox(
@@ -427,11 +424,11 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.white,
                               ),
-                              padding: EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(4),
                               child: Center(
                                 child: PrimaryText(
                                     text: "1",
@@ -458,24 +455,24 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           color: Theme.of(context).cardBackground(),
                           borderRadius: DesignConfig.highBorderRadius,
                           boxShadow: DesignConfig.lowShadow),
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       child: Column(
                         children: [
                           Assets.icon.medal3.image(width: 32, height: 32),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                           _leaderUser(userThree)
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
                     Container(
                       decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor50(),
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: DesignConfig.aHighBorderRadius,
                               topRight: DesignConfig.aHighBorderRadius)),
                       child: SizedBox(
@@ -484,11 +481,11 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.white,
                               ),
-                              padding: EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(4),
                               child: Center(
                                 child: PrimaryText(
                                     text: "3",
@@ -509,10 +506,10 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
         Container(
           height: 12,
           width: MediaQuery.sizeOf(context).width,
-          margin: EdgeInsets.symmetric(horizontal: 16),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
               color: Theme.of(context).primaryColor800(),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomRight: DesignConfig.aLowBorderRadius,
                   bottomLeft: DesignConfig.aLowBorderRadius)),
         ),

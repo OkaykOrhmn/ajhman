@@ -1,7 +1,6 @@
 import 'package:ajhman/data/repository/mark_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
 
 class MarkCubit extends Cubit<MarkState> {
   MarkCubit(bool b) : super(MarkState(mark: b, markStatus: MarkStatus.init));
@@ -17,7 +16,7 @@ class MarkCubit extends Cubit<MarkState> {
         emit(MarkState(mark: state.mark, markStatus: MarkStatus.fail));
       }
 
-    } on DioError catch (e) {
+    } on DioError {
       emit(MarkState(mark: state.mark, markStatus: MarkStatus.fail));
 
     }
@@ -34,7 +33,7 @@ class MarkCubit extends Cubit<MarkState> {
         emit(MarkState(mark: state.mark, markStatus: MarkStatus.fail));
       }
 
-    } on DioError catch (e) {
+    } on DioError {
       emit(MarkState(mark: state.mark, markStatus: MarkStatus.fail));
 
     }

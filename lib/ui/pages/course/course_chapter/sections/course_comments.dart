@@ -1,32 +1,21 @@
 import 'package:ajhman/core/bloc/comments/comments_bloc.dart';
 import 'package:ajhman/core/cubit/subchapter/sub_chapter_cubit.dart';
-import 'package:ajhman/core/enum/comment.dart';
 import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/add_comment_request_model.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
-import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/comment/comment_layout.dart';
-import 'package:ajhman/ui/widgets/image/profile_image_network.dart';
-import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
-import 'package:ajhman/ui/widgets/text/icon_info.dart';
-import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_btn/loading_btn.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/cubit/comment/feed_comment_cubit.dart';
-import '../../../../../gen/assets.gen.dart';
 import '../../../../theme/bloc/theme_bloc.dart';
 import '../../../../widgets/button/loading_btn.dart';
 
@@ -63,7 +52,7 @@ class _CourseCommentsState extends State<CourseComments> {
         children: [
           _header(),
            Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16),
             child: Divider(
               height: 1,
               color: Theme.of(context).disable(),
@@ -97,7 +86,7 @@ class _CourseCommentsState extends State<CourseComments> {
         } else if (state is CommentChangeFail) {
           comments = state.response;
         }
-        print("comments : ${comments}");
+        print("comments : $comments");
         if (state is CommentSuccess ||
             state is CommentAddFail ||
             state is CommentChangeFail) {
@@ -159,7 +148,7 @@ class _CourseCommentsState extends State<CourseComments> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        TitleDivider(
+        const TitleDivider(
           title: "یک لقمه یادگیری",
           hasPadding: false,
         ),
@@ -250,7 +239,7 @@ class _CourseCommentsState extends State<CourseComments> {
                 : null,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Container(
@@ -258,7 +247,7 @@ class _CourseCommentsState extends State<CourseComments> {
               color: Theme.of(context).onWhite(),
               borderRadius: DesignConfig.mediumBorderRadius,
               boxShadow: DesignConfig.lowShadow),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: TextField(
             controller: controller,
             minLines: 4,

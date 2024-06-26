@@ -10,8 +10,8 @@ class CategoryArgs {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['categoriesId'] = this.categoriesId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['categoriesId'] = categoriesId;
     return data;
   }
 }

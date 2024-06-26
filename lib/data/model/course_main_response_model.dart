@@ -58,37 +58,37 @@ class CourseMainResponseModel {
     if (json['Chapters'] != null) {
       chapters = <courseMainChapters>[];
       json['Chapters'].forEach((v) {
-        chapters!.add(new courseMainChapters.fromJson(v));
+        chapters!.add(courseMainChapters.fromJson(v));
       });
     }
     category = json['Category'] != null
-        ? new Category.fromJson(json['Category'])
+        ? Category.fromJson(json['Category'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['level'] = this.level;
-    data['time'] = this.time;
-    data['users'] = this.users;
-    data['image'] = this.image;
-    data['highlight'] = this.highlight;
-    data['description'] = this.description;
-    data['registered'] = this.registered;
-    data['examScore'] = this.examScore;
-    data['tag'] = this.tag;
-    data['audio'] = this.audio;
-    data['writer'] = this.writer;
-    data['pages'] = this.pages;
-    data['publisher'] = this.publisher;
-    data['topic'] = this.topic;
-    if (this.chapters != null) {
-      data['Chapters'] = this.chapters!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['level'] = level;
+    data['time'] = time;
+    data['users'] = users;
+    data['image'] = image;
+    data['highlight'] = highlight;
+    data['description'] = description;
+    data['registered'] = registered;
+    data['examScore'] = examScore;
+    data['tag'] = tag;
+    data['audio'] = audio;
+    data['writer'] = writer;
+    data['pages'] = pages;
+    data['publisher'] = publisher;
+    data['topic'] = topic;
+    if (chapters != null) {
+      data['Chapters'] = chapters!.map((v) => v.toJson()).toList();
     }
-    if (this.category != null) {
-      data['Category'] = this.category!.toJson();
+    if (category != null) {
+      data['Category'] = category!.toJson();
     }
     return data;
   }
@@ -112,19 +112,19 @@ class courseMainChapters {
     if (json['Subchapters'] != null) {
       subchapters = <Subchapters>[];
       json['Subchapters'].forEach((v) {
-        subchapters!.add(new Subchapters.fromJson(v));
+        subchapters!.add(Subchapters.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['score'] = this.score;
-    data['time'] = this.time;
-    if (this.subchapters != null) {
-      data['Subchapters'] = this.subchapters!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['score'] = score;
+    data['time'] = time;
+    if (subchapters != null) {
+      data['Subchapters'] = subchapters!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -146,11 +146,11 @@ class Subchapters {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
-    data['name'] = this.name;
-    data['visited'] = this.visited;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['type'] = type;
+    data['name'] = name;
+    data['visited'] = visited;
     return data;
   }
 }
@@ -167,9 +167,9 @@ class Category {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }

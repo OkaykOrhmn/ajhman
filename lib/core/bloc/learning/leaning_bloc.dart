@@ -22,7 +22,7 @@ class LeaningBloc extends Bloc<LeaningEvent, LeaningState> {
             emit(LeaningSuccess(response: response));
           }
 
-        } on DioError catch (e) {
+        } on DioError {
           emit(LeaningFail());
         }
       }

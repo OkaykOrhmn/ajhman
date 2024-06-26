@@ -1,5 +1,3 @@
-import 'package:ajhman/gen/assets.gen.dart';
-import 'package:flutter_svg/svg.dart';
 
 enum CourseTypes{
   any("mixed","چند رسانه‌ای","assets/icon/bold-note.svg","assets/icon/outline-note.svg"),

@@ -2,7 +2,6 @@ import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_state.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../../main.dart';
 
 class CarouseCourseImage extends StatefulWidget {
   final List<Media?> items;
@@ -44,8 +42,8 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
     enableInfiniteScroll: false,
     reverse: false,
     autoPlay: false,
-    autoPlayInterval: Duration(seconds: 3),
-    autoPlayAnimationDuration: Duration(milliseconds: 800),
+    autoPlayInterval: const Duration(seconds: 3),
+    autoPlayAnimationDuration: const Duration(milliseconds: 800),
     autoPlayCurve: Curves.fastOutSlowIn,
     enlargeCenterPage: true,
     enlargeFactor: 0.3,
@@ -81,14 +79,14 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                       _buttonCarouselController._state!.pageController!.page!
                               .toInt() -
                           1,
-                      duration: Duration(milliseconds: 800));
+                      duration: const Duration(milliseconds: 800));
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 4)
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4)
                       .copyWith(right: 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).white().withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: DesignConfig.aHighBorderRadius,
                         bottomLeft: DesignConfig.aHighBorderRadius),
                   ),
@@ -107,14 +105,14 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                       _buttonCarouselController._state!.pageController!.page!
                               .toInt() +
                           1,
-                      duration: Duration(milliseconds: 800));
+                      duration: const Duration(milliseconds: 800));
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 4)
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4)
                       .copyWith(left: 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).white().withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         bottomRight: DesignConfig.aHighBorderRadius,
                         topRight: DesignConfig.aHighBorderRadius),
                   ),

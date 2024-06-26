@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:ajhman/core/services/permission_handler.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
-import 'package:ajhman/data/repository/download_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,7 +18,7 @@ class StorageHandler {
       // if (Platform.isAndroid) {
       //   appDocDir =  Directory('/storage/emulated/0/Download');
       // }
-      final Directory appDocDirFolder = Directory('${appDocDir!.path}');
+      final Directory appDocDirFolder = Directory(appDocDir!.path);
       if (await appDocDirFolder.exists()) {
         return appDocDirFolder;
       } else {

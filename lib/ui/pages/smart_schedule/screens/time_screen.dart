@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/core/utils/extentions.dart';
@@ -8,10 +7,8 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_locale.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../../data/model/t_buttons.dart';
 import '../../../../gen/assets.gen.dart';
@@ -54,7 +51,7 @@ class _TimeScreenState extends State<TimeScreen> {
 
   void checkActivateButtons() {
     setState(() {
-      buttons.forEach((element) {
+      for (var element in buttons) {
         try {
           if (int.parse(element.name.withOutLabel) ==
               int.parse(_minInput.text.withOutLabel)) {
@@ -66,7 +63,7 @@ class _TimeScreenState extends State<TimeScreen> {
         } catch (ex) {
           element.active = false;
         }
-      });
+      }
     });
   }
 
@@ -102,10 +99,10 @@ class _TimeScreenState extends State<TimeScreen> {
       ChangeLocale(context).appLocal!.min30,
       ChangeLocale(context).appLocal!.min15,
     ];
-    buttons.forEach((element) {
+    for (var element in buttons) {
       int index = buttons.indexOf(element);
       element.name = names[index];
-    });
+    }
 
     return Column(
       children: [

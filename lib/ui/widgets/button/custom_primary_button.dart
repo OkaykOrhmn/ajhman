@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/color/colors.dart';
-import '../../theme/text/text_styles.dart';
 import '../../theme/widget/design_config.dart';
 
 class CustomPrimaryButton extends StatelessWidget {

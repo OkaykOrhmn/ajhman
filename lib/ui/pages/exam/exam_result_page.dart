@@ -1,4 +1,3 @@
-import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
 import 'package:ajhman/data/model/answer_result_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
@@ -9,13 +8,8 @@ import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/progress/circle_progress.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/model/answer_request_model.dart';
-import '../../../data/model/exam_response_model.dart';
 import '../../../gen/assets.gen.dart';
 
 class ExamResultPage extends StatefulWidget {
@@ -58,7 +52,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: ReversibleAppBar(
+        appBar: const ReversibleAppBar(
           title: "آزمون دوره",
           canBack: false,
         ),
@@ -67,16 +61,16 @@ class _ExamResultPageState extends State<ExamResultPage> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               _mainPicture(success),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Container(
-                margin: EdgeInsets.all(16),
-                padding: EdgeInsets.all(24),
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                     boxShadow: DesignConfig.lowShadow,
                     borderRadius: DesignConfig.highBorderRadius,
@@ -90,7 +84,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
                       color: Theme.of(context).headText(),
                       textAlign: TextAlign.start,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
                     Row(
@@ -104,7 +98,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
                           width: MediaQuery.sizeOf(context).width / 4.4,
                           height: MediaQuery.sizeOf(context).width / 4.4,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 18,
                         ),
                         CircleProgress(
@@ -114,7 +108,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
                           width: MediaQuery.sizeOf(context).width / 4.4,
                           height: MediaQuery.sizeOf(context).width / 4.4,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 18,
                         ),
                         CircleProgress(
@@ -136,7 +130,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
                     const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
                 child: Column(
                   children: [
-                    PrimaryButton(
+                    const PrimaryButton(
                       title: "رفتن به لیدر بورد",
                       fill: true,
                     ),
@@ -168,8 +162,8 @@ class _ExamResultPageState extends State<ExamResultPage> {
             decoration: BoxDecoration(
                 color: score != null ? successBackground : errorBackground,
                 borderRadius: DesignConfig.highBorderRadius),
-            padding: EdgeInsets.all(16),
-            margin: EdgeInsets.all(16).copyWith(top: 0),
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16).copyWith(top: 0),
             child: PrimaryText(
               text: title,
               style: mThemeData.textTheme.title,
@@ -192,7 +186,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
         icon.svg(
             width: MediaQuery.sizeOf(context).width,
             height: MediaQuery.sizeOf(context).width / 2),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         PrimaryText(

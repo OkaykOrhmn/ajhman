@@ -1,7 +1,7 @@
 import 'package:ajhman/core/enum/tags.dart';
 import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/data/repository/categories_repository.dart';
-import 'package:bloc/bloc.dart';
+import "package:bloc/bloc.dart";
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
@@ -19,7 +19,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
             element.canStart = true;
           }
           emit(CategorySuccessState(newsCards: response));
-        } on DioError catch (e) {
+        } on DioError {
           emit(CategoryFailState());
 
         }

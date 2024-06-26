@@ -6,21 +6,12 @@ import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/exam/screens/exam_comment_screen.dart';
 import 'package:ajhman/ui/pages/exam/screens/exam_info_screen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/loading_btn.dart';
-import 'package:ajhman/ui/widgets/button/primary_button.dart';
-import 'package:ajhman/ui/widgets/listview/highlight_listview.dart';
-import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:loading_btn/loading_btn.dart';
-import 'package:pinput/pinput.dart';
 
-import '../../../gen/assets.gen.dart';
 
 class ExamInfo extends StatefulWidget {
   final int courseId;
@@ -32,7 +23,7 @@ class ExamInfo extends StatefulWidget {
 
 class _ExamInfoState extends State<ExamInfo> {
   int index = 0;
-  TextEditingController _comment = TextEditingController();
+  final TextEditingController _comment = TextEditingController();
 
   @override
   void initState() {
@@ -103,7 +94,7 @@ class _ExamInfoState extends State<ExamInfo> {
                               navigatorKey.currentState!.pushReplacementNamed(
                                   RoutePaths.exam,
                                   arguments: args);
-                            } on DioError catch (e) {}
+                            } on DioError {}
                             break;
                         }
 

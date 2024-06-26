@@ -18,7 +18,7 @@ class ForYouBloc extends Bloc<ForYouEvent, ForYouState> {
           await courseRepository.getForYou();
 
           emit(ForYouSuccess(response: response));
-        } on DioError catch (e) {
+        } on DioError {
           emit(ForYouFail());
         }
       }

@@ -1,4 +1,3 @@
-import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -16,7 +15,7 @@ class SearchCubit extends Cubit<List<NewCourseCardModel>?> {
           await courseRepository.getSearch(type,search);
 
       emit(response);
-    } on DioError catch (e) {
+    } on DioError {
       emit([]);
     }
 

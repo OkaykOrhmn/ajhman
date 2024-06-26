@@ -7,15 +7,15 @@ class FeedbacksQuestionsModel {
     if (json['feedbacks'] != null) {
       feedbacks = <Feedbacks>[];
       json['feedbacks'].forEach((v) {
-        feedbacks!.add(new Feedbacks.fromJson(v));
+        feedbacks!.add(Feedbacks.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.feedbacks != null) {
-      data['feedbacks'] = this.feedbacks!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (feedbacks != null) {
+      data['feedbacks'] = feedbacks!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -33,9 +33,9 @@ class Feedbacks {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['questionId'] = this.questionId;
-    data['score'] = this.score;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['questionId'] = questionId;
+    data['score'] = score;
     return data;
   }
 }

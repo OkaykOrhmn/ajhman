@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/main.dart';
@@ -10,22 +9,15 @@ import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/bloc/smart_schedule/smart_schedule_bloc.dart';
 import '../../../core/enum/dialogs_status.dart';
 import '../../../core/utils/app_locale.dart';
-import '../../../core/utils/language/bloc/language_bloc.dart';
-import '../../../data/model/language.dart';
 import '../../../gen/assets.gen.dart';
 import '../../widgets/snackbar/snackbar_handler.dart';
 import 'screens/calender_screen.dart';
-import '../../theme/bloc/theme_bloc.dart';
-import '../../theme/text/text_styles.dart';
 import '../../widgets/card/rounded_card_icon.dart';
 import '../../widgets/divider/horizontal_dashed_line.dart';
 

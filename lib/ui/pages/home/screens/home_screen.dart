@@ -1,4 +1,3 @@
-import 'package:ajhman/core/bloc/category/category_bloc.dart';
 import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
@@ -8,35 +7,20 @@ import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
-import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
-import 'package:ajhman/ui/widgets/card/online_card.dart';
 import 'package:ajhman/ui/widgets/card/recent_course_card.dart';
 import 'package:ajhman/ui/widgets/card/recent_course_card_placeholder.dart';
-import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
-import 'package:ajhman/ui/widgets/listview/horizontal_listview.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:ajhman/ui/widgets/text_field/search_text_field.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
-import 'package:ajhman/ui/widgets/text/title_divider.dart';
-import 'package:ajhman/ui/widgets/text/title_divider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
-import '../../../../core/bloc/learning/leaning_bloc.dart';
-import '../../../../core/enum/tags.dart';
 import '../../../../data/api/api_end_points.dart';
-import '../../../../data/args/course_main_args.dart';
-import '../../../../data/repository/categories_repository.dart';
 import '../../../../data/repository/learning_repository.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../theme/bloc/theme_bloc.dart';
 import '../../../widgets/card/news_course_card_placeholder.dart';
 import '../../../widgets/carousel/carousel_banners.dart';
-import '../../../widgets/states/place_holder/default_place_holder.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -87,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ? (200 + (context.read<ThemeBloc>().state.fontSize * 10))
                               : (200 -  (context.read<ThemeBloc>().state.fontSize * 10)),                          width: MediaQuery.sizeOf(context).width,
                           child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               itemCount: recentCards!.length,
                               itemExtent:
                               context.read<ThemeBloc>().state.fontSize >= 1
@@ -132,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             : (210 -  (context.read<ThemeBloc>().state.fontSize * 10)),
                         width: MediaQuery.sizeOf(context).width,
                         child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemCount: 4,
                             itemExtent: MediaQuery.sizeOf(context).width / 1.1,
                             scrollDirection: Axis.horizontal,
@@ -207,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       100)),
                           width: MediaQuery.sizeOf(context).width,
                           child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               itemCount: newsCards!.length,
                               itemExtent:
                                   context.read<ThemeBloc>().state.fontSize >= 1
@@ -261,10 +245,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: mThemeData.textTheme.titleBold,
                 color: Colors.white),
           ),
-          CarouseBanners(
+          const CarouseBanners(
             items: ["1", "2", "3", "4"],
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           )
         ],
@@ -291,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Assets.icon.outline.searchNormal.svg(color: backgroundColor600),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Container(
                   color: backgroundColor600,
                   width: 1,

@@ -1,5 +1,4 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 

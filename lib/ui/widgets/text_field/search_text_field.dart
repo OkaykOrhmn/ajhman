@@ -1,15 +1,10 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:flutter/widgets.dart';
-import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../../main.dart';
 import '../../theme/text/text_styles.dart';
 import '../../theme/widget/design_config.dart';
-import '../text/primary_text.dart';
 
 class SearchTextField extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -41,11 +36,11 @@ class _PrimaryTextFieldState extends State<SearchTextField> {
         borderRadius: DesignConfig.highBorderRadius,
         boxShadow: DesignConfig.lowShadow,
       ),
-      margin: EdgeInsets.all(16),
-      padding: EdgeInsets.symmetric(vertical: 4),
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: 16,
           ),
           Center(

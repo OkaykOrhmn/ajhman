@@ -1,7 +1,5 @@
 import 'package:ajhman/data/model/audio_player_model.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 
 class AudioPlayerCubit extends Cubit<AudioPlayerModel> {

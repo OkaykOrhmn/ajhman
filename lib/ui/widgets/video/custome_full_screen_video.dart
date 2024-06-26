@@ -1,18 +1,9 @@
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/services/video_handler.dart';
-import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/widgets/video/video_bar.dart';
-import 'package:appinio_video_player/appinio_video_player.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:appinio_video_player/src/embedded_video_player.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../gen/assets.gen.dart';
-import '../../theme/color/colors.dart';
-import '../text/primary_text.dart';
 
 class CostumeFullscreenVideo extends StatelessWidget {
   final VideoHandler videoHandler;

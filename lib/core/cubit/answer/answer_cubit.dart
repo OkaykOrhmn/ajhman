@@ -1,6 +1,5 @@
 import 'package:ajhman/data/model/answer_request_model.dart';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 class AnswerCubit extends Cubit<AnswerModel> {
   AnswerCubit()

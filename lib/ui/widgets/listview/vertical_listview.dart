@@ -1,9 +1,6 @@
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
-import '../../theme/widget/design_config.dart';
 
 class VerticalListView extends StatefulWidget {
   final List<dynamic>? items;

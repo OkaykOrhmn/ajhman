@@ -1,8 +1,6 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
 import '../../../../core/utils/app_locale.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../theme/text/text_styles.dart';
@@ -68,16 +66,16 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             borderSide: BorderSide(color: Theme.of(context).primaryColor),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: errorMain),
+          focusedErrorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: errorMain),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: errorMain),
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: errorMain),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
         ),

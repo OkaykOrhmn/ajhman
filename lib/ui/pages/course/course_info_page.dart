@@ -1,6 +1,4 @@
-import 'package:ajhman/core/cubit/download/download_cubit.dart';
 import 'package:ajhman/core/enum/course_types.dart';
-import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/services/audio_handler.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
@@ -9,29 +7,20 @@ import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
-import 'package:ajhman/data/repository/download_repository.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/audio/audio_player_wave.dart';
 import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
-import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
-import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_btn/loading_btn.dart';
 
 import '../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../core/cubit/home/news_course_home_cubit.dart';
-import '../../../core/services/notification_service.dart';
 import '../../../core/utils/language/bloc/language_bloc.dart';
 import '../../../data/model/language.dart';
-import '../../../data/model/notification_model.dart';
 import '../../../data/shared_preferences/profile_data.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
@@ -125,7 +114,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                   "دوره ${data.name} با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
                                   "متوجه شدم");
                               context.read<NewsCourseHomeCubit>().getNews();
-                            } on DioError catch (e) {}
+                            } on DioError {}
                           }
 
                           stopLoading();
@@ -243,7 +232,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.outline.note2,
-                  desc: data.pages.toString() + " صفحه"),
+                  desc: "${data.pages} صفحه"),
             ),
           ],
         ),
@@ -378,7 +367,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                       HighlightListView(items: data.highlight!)
                     ],
                   )
-                : SizedBox()
+                : const SizedBox()
           ],
         ),
       ),
@@ -387,7 +376,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
 
   Widget _pointsPlatform() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -407,7 +396,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                           height: 64,
                           src: getImageUrl(snapshot.data!.image));
                     }),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Expanded(
@@ -419,7 +408,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                           text: isInternational ? "Your Score" : "نمره‌ی شما",
                           style: Theme.of(context).textTheme.titleBold,
                           color: Theme.of(context).pinTextFont()),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       data.examScore == null
@@ -427,7 +416,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                           : _resultExam(data.examScore!),
                       Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                             color: Theme.of(context).backgroundSuccess(),
                             borderRadius: DesignConfig.highBorderRadius),
@@ -469,7 +458,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             RoutePaths.leaderboard,
                             arguments: response);
                       }
-                    } on DioError catch (e) {}
+                    } on DioError {}
 
                     stopLoading();
                   }
@@ -498,7 +487,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Assets.image.audioBook.image(width: 64, height: 64),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Expanded(
@@ -512,7 +501,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                             text: 'خلاصه کتاب ${data.name}',
                             style: Theme.of(context).textTheme.titleBold,
                             color: Theme.of(context).pinTextFont()),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         Row(
@@ -539,7 +528,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                         color: Theme.of(context)
                                             .placeholderBaseColor());
                                   } else {
-                                    return DefaultPlaceHolder(
+                                    return const DefaultPlaceHolder(
                                         child: SizedBox(
                                       width: 120,
                                       height: 12,
@@ -573,7 +562,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
       children: [
         PrimaryText(
             text:
-                "${isInternational ? 'Score obtained' : 'نمره کسب شده'}: ${score}",
+                "${isInternational ? 'Score obtained' : 'نمره کسب شده'}: $score",
             style: Theme.of(context).textTheme.title,
             color: score > 60
                 ? Theme.of(context).fontSuccess()
@@ -669,7 +658,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                 : "${isInternational ? 'Chapter' : "فصل"} ${getChapterNumber(index, isInternational)}",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).primaryColor),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     completed
@@ -716,7 +705,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     height: 16,
                   ),
                   data.category!.id == 6
-                      ? SizedBox()
+                      ? const SizedBox()
                       : Column(
                           children: [
                             SingleChildScrollView(
@@ -872,7 +861,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                         text: isInternational ? 'Last Chapter' : "فصل آخر",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).primaryColor),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                   ],

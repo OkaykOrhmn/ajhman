@@ -19,7 +19,7 @@ class TreasureBloc extends Bloc<TreasureEvent, TreasureState> {
               await courseRepository.getTreasure();
 
           emit(TreasureSuccess(response: response));
-        } on DioError catch (e) {
+        } on DioError {
           emit(TreasureFail());
         }
       }

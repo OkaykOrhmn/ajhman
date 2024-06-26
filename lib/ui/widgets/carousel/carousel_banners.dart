@@ -1,14 +1,12 @@
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../main.dart';
 
 class CarouseBanners extends StatefulWidget {
   final List<String> items;
@@ -43,8 +41,8 @@ class _CarouseBannersState extends State<CarouseBanners> {
     enableInfiniteScroll: true,
     reverse: false,
     autoPlay: true,
-    autoPlayInterval: Duration(seconds: 3),
-    autoPlayAnimationDuration: Duration(milliseconds: 800),
+    autoPlayInterval: const Duration(seconds: 3),
+    autoPlayAnimationDuration: const Duration(milliseconds: 800),
     autoPlayCurve: Curves.fastOutSlowIn,
     enlargeCenterPage: true,
     enlargeFactor: 0.3,
@@ -83,7 +81,7 @@ class _CarouseBannersState extends State<CarouseBanners> {
             child: Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).surfacePrimaryColor(),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topRight: DesignConfig.aHighBorderRadius,
                       topLeft: DesignConfig.aHighBorderRadius)),
               padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),

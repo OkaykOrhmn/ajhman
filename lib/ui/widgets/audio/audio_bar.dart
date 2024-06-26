@@ -1,19 +1,15 @@
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
-import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/services/audio_handler.dart';
 import 'package:ajhman/data/model/audio_player_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/progress/circle_progress.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volume_controller/volume_controller.dart';
 
 import '../../../core/cubit/download/download_cubit.dart';
 import '../../../core/enum/dialogs_status.dart';
-import '../../../data/api/api_end_points.dart';
 import '../../../gen/assets.gen.dart';
-import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../snackbar/snackbar_handler.dart';
 import '../text/primary_text.dart';
@@ -103,7 +99,7 @@ class _AudioBarState extends State<AudioBar> {
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 InkWell(
@@ -145,7 +141,7 @@ class _AudioBarState extends State<AudioBar> {
                       height: 24,
                       color: Theme.of(context).pinTextFont()),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 InkWell(
@@ -161,7 +157,7 @@ class _AudioBarState extends State<AudioBar> {
                       height: 24,
                       color: Theme.of(context).pinTextFont()),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 InkWell(

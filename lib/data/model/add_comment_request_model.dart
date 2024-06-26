@@ -15,11 +15,11 @@ class AddCommentRequestModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
-    data['resource'] = this.resource;
-    data['commentId'] = this.commentId;
-    data['replyUserId'] = this.replyUserId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
+    data['resource'] = resource;
+    data['commentId'] = commentId;
+    data['replyUserId'] = replyUserId;
     return data;
   }
 }

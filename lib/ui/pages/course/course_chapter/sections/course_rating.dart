@@ -1,25 +1,20 @@
 import 'package:ajhman/core/bloc/questions/questions_bloc.dart';
 import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/data/model/feedbacks_questions_model.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
-import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 import 'package:loading_btn/loading_btn.dart';
 
-import '../../../../../core/bloc/chapter/chapter_bloc.dart';
-import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../data/model/questions_model.dart';
 
 class CourseRating extends StatefulWidget {
@@ -70,22 +65,22 @@ class _CourseRatingState extends State<CourseRating> {
       return questionsModel.questions != null &&
               questionsModel.questions!.isNotEmpty
           ? Container(
-              margin: EdgeInsets.all(16),
-              padding: EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                   color: Theme.of(context).cardBackground(),
                   borderRadius: DesignConfig.highBorderRadius),
               child: Column(
                 children: [
-                  TitleDivider(
+                  const TitleDivider(
                     title: "نظرات",
                     hasPadding: false,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                         color: Theme.of(context).white(),
                         borderRadius: DesignConfig.highBorderRadius),
@@ -94,19 +89,19 @@ class _CourseRatingState extends State<CourseRating> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               CupertinoIcons.star_fill,
                               color: goldColor,
                               size: 32,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
                             PrimaryText(
                                 text: "4.2",
                                 style: Theme.of(context).textTheme.headerLargeBold,
                                 color: Theme.of(context).cardText()),
-                            SizedBox(
+                            const SizedBox(
                               width: 16,
                             ),
                             PrimaryText(
@@ -115,7 +110,7 @@ class _CourseRatingState extends State<CourseRating> {
                                 color: Theme.of(context).cardText())
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         PrimaryText(
@@ -126,21 +121,21 @@ class _CourseRatingState extends State<CourseRating> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   VerticalListView(
                       items: questionsModel.questions,
                       item: (context, index) {
                         final q = questionsModel.questions![index];
-                        late GroupButtonController _radioController =
+                        late GroupButtonController radioController =
                             GroupButtonController(
                                 selectedIndex:
                                     q.score == null ? null : q.score! - 1);
 
                         return Container(
-                          padding: EdgeInsets.all(16),
-                          margin: EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
                               color: Theme.of(context).onWhite(),
                               boxShadow: DesignConfig.lowShadow,
@@ -158,7 +153,7 @@ class _CourseRatingState extends State<CourseRating> {
                                     width: 2,
                                     height: 12,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8,
                                   ),
                                   PrimaryText(
@@ -167,30 +162,30 @@ class _CourseRatingState extends State<CourseRating> {
                                       color: Theme.of(context).progressText())
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 16,
                               ),
                               GroupButton(
-                                controller: _radioController,
+                                controller: radioController,
                                 isRadio: true,
-                                options: GroupButtonOptions(
+                                options: const GroupButtonOptions(
                                     groupingType: GroupingType.row),
                                 buttons: _radioButtons,
                                 buttonIndexedBuilder:
-                                    (selected, _index, context) {
+                                    (selected, index, context) {
                                   return Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      PrimaryText(text: _radioButtons[_index],style: Theme.of(context).textTheme.title,color: Theme.of(context).progressText(),),
+                                      PrimaryText(text: _radioButtons[index],style: Theme.of(context).textTheme.title,color: Theme.of(context).progressText(),),
                                       Radio<int>(
                                         groupValue:
-                                            _radioController.selectedIndex,
+                                            radioController.selectedIndex,
                                         activeColor:
                                             Theme.of(context).primaryColor,
-                                        value: _index,
+                                        value: index,
                                         onChanged: (val) {
-                                          _radioController.selectIndex(_index);
+                                          radioController.selectIndex(index);
                                           questionsModel.questions![index]
                                               .score = val! + 1;
                                         },
@@ -206,7 +201,7 @@ class _CourseRatingState extends State<CourseRating> {
                           ),
                         );
                       }),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   OutlinePrimaryLoadingButton(

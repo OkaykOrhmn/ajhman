@@ -11,17 +11,17 @@ class RoadmapModel {
     if (json['Chapters'] != null) {
       chapters = <Chapters>[];
       json['Chapters'].forEach((v) {
-        chapters!.add(new Chapters.fromJson(v));
+        chapters!.add(Chapters.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    if (this.chapters != null) {
-      data['Chapters'] = this.chapters!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    if (chapters != null) {
+      data['Chapters'] = chapters!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -41,10 +41,10 @@ class Chapters {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['percent'] = this.percent;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['percent'] = percent;
     return data;
   }
 }

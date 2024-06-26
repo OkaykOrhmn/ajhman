@@ -1,9 +1,7 @@
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/pages/auth/auth_page.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/app_locale.dart';

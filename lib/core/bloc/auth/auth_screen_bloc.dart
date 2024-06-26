@@ -1,10 +1,4 @@
-import 'package:ajhman/data/model/auth/auth_login_user_request.dart';
-import 'package:ajhman/data/model/auth/auth_user_otp_error.dart';
-import 'package:ajhman/data/model/auth/auth_user_otp_request.dart';
-import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
-import 'package:ajhman/data/repository/auth_user_otp_repository.dart';
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 

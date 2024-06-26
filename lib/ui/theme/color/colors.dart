@@ -144,7 +144,7 @@ extension ThemeDataApp on ThemeData {
 
   Color onWhite(){
     if(brightness == Brightness.light){
-      return Color(0xffeef1f1);
+      return const Color(0xffeef1f1);
     }else{
       return grayColor700;
     }
@@ -192,7 +192,7 @@ extension ThemeDataApp on ThemeData {
 
   Color background(){
     if(brightness == Brightness.light){
-      return Color(0xffeef1f1);
+      return const Color(0xffeef1f1);
     }else{
       return grayColor900;
     }

@@ -1,23 +1,17 @@
-import 'package:ajhman/core/enum/card_type.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
-import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
 import 'package:ajhman/ui/widgets/divider/vertical_dashed_line.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/bloc/for_you/for_you_bloc.dart';
 import '../../../../gen/assets.gen.dart';
-import '../../../widgets/button/custom_primary_button.dart';
 import '../../../widgets/loading/three_bounce_loading.dart';
 
 class ForYouScreen extends StatefulWidget {
@@ -45,8 +39,8 @@ class _ForYouScreenState extends State<ForYouScreen> {
               color: Theme.of(context).cardBackground(),
               borderRadius: DesignConfig.highBorderRadius,
             ),
-            margin: EdgeInsets.all(16),
-            padding: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 Container(
@@ -54,7 +48,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                     color: Theme.of(context).secondaryColor(),
                     borderRadius: DesignConfig.highBorderRadius
                   ),
-                  padding: EdgeInsetsDirectional.symmetric(vertical: 8),
+                  padding: const EdgeInsetsDirectional.symmetric(vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -92,7 +86,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                   child: state.response.isEmpty
                       ?  Padding(
                           padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height/20),
-                          child: EmptyScreen(),
+                          child: const EmptyScreen(),
                         )
                       : VerticalListView(
                           item: (context, index) {
@@ -126,7 +120,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                         Container(
                                           width: 32,
                                           height: 32,
-                                          padding: EdgeInsets.only(top: 4),
+                                          padding: const EdgeInsets.only(top: 4),
                                           decoration: BoxDecoration(
                                               color: state.response[index]
                                                           .status ==
@@ -174,7 +168,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
                                 Expanded(
@@ -190,7 +184,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
                         ),
                 );
               } else {
-                return ThreeBounceLoading();
+                return const ThreeBounceLoading();
               }
             },
           ),

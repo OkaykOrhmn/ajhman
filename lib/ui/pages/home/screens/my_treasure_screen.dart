@@ -1,5 +1,4 @@
 import 'package:ajhman/core/utils/usefull_funcs.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
@@ -8,9 +7,7 @@ import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/bloc/treasure/treasure_bloc.dart';
@@ -47,12 +44,12 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                         color: Theme.of(context).cardBackground(),
                         borderRadius: DesignConfig.highBorderRadius,
                         boxShadow: DesignConfig.lowShadow),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(16),
-                          margin: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
@@ -91,13 +88,13 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                                 items: state.response.gold,
                                 placeholder: _goldCardPlaceholder(),
                               ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(
@@ -105,12 +102,12 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                       borderRadius: DesignConfig.highBorderRadius,
                       color: Theme.of(context).cardBackground(),
                     ),
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(16),
-                          margin: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
@@ -149,7 +146,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(
@@ -157,12 +154,12 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                       borderRadius: DesignConfig.highBorderRadius,
                       color: Theme.of(context).cardBackground(),
                     ),
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(16),
-                          margin: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
@@ -201,7 +198,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   )
                 ],
@@ -229,8 +226,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
               style: Theme.of(context).textTheme.title,
               color: Theme.of(context).progressText()),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
+        const Padding(
+          padding: EdgeInsets.only(
             left: 24.0,
             right: 24,
           ),
@@ -252,7 +249,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
               borderRadius: DesignConfig.highBorderRadius,
               color: Theme.of(context).onWhite(),
               boxShadow: DesignConfig.lowShadow),
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Row(
             children: [
               const SizedBox(
@@ -264,7 +261,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                   radius: DesignConfig.lowBorderRadius,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Column(
@@ -274,7 +271,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                       text: "دوره هوش مصنوعی",
                       style: Theme.of(context).textTheme.title,
                       color: Theme.of(context).progressText()),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Row(
@@ -306,8 +303,8 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
           borderRadius: DesignConfig.highBorderRadius,
           color: Theme.of(context).onWhite(),
           boxShadow: DesignConfig.lowShadow),
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
           SizedBox(
@@ -318,7 +315,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
               radius: DesignConfig.lowBorderRadius,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           Column(
@@ -328,7 +325,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                   text: data.name.toString(),
                   style: Theme.of(context).textTheme.title,
                   color: Theme.of(context).progressText()),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Row(

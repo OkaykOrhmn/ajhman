@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:audio_wave/audio_wave.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,14 +63,15 @@ class _AudioPlayerWaveState extends State<AudioPlayerWave> {
   @override
   void dispose() {
     if (playerState != null) {
-      audioHandler.durationSubscriptionS?.cancel();
-      audioHandler.positionSubscriptionS?.cancel();
-      audioHandler.playerCompleteSubscriptionS?.cancel();
-      audioHandler.playerStateChangeSubscriptionS?.cancel();
       if (audioHandler.isPlaying) {
         audioHandler.stop();
       }
       context.read<AudioPlayerCubit>().reset();
+      audioHandler.durationSubscriptionS?.cancel();
+      audioHandler.positionSubscriptionS?.cancel();
+      audioHandler.playerCompleteSubscriptionS?.cancel();
+      audioHandler.playerStateChangeSubscriptionS?.cancel();
+
     }
 
     super.dispose();
@@ -160,7 +160,7 @@ class _AudioPlayerWaveState extends State<AudioPlayerWave> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               AudioBar(
@@ -178,9 +178,9 @@ class _AudioPlayerWaveState extends State<AudioPlayerWave> {
                   borderRadius: DesignConfig.highBorderRadius,
                   color: Theme.of(context).white().withOpacity(0.5),
                 ),
-                child: ThreeBounceLoading(),
+                child: const ThreeBounceLoading(),
               ))
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }

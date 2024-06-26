@@ -1,9 +1,7 @@
 import 'package:ajhman/core/services/image_picker.dart';
 import 'package:ajhman/core/services/permission_handler.dart';
-import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/repository/profile_repository.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
-import 'package:ajhman/main.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
@@ -33,7 +31,7 @@ class ImagePickerCubit extends Cubit<ImagePickerState> {
           profile.image = response.data["image"].toString();
           await setProfile(profile);
           emit(ImagePickerSuccess());
-        } on DioError catch (e) {
+        } on DioError {
           emit(ImagePickerError());
         }
       } else {
@@ -52,7 +50,7 @@ class ImagePickerCubit extends Cubit<ImagePickerState> {
       profile.image = response.data["image"].toString();
       await setProfile(profile);
       emit(ImagePickerSuccess());
-    } on DioError catch (e) {
+    } on DioError {
       emit(ImagePickerError());
     }
   }
@@ -75,7 +73,7 @@ class ImagePickerCubit extends Cubit<ImagePickerState> {
           profile.image = response.data["image"].toString();
           await setProfile(profile);
           emit(ImagePickerSuccess());
-        } on DioError catch (e) {
+        } on DioError {
           emit(ImagePickerError());
         }
       } else {

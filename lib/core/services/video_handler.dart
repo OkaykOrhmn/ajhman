@@ -1,14 +1,11 @@
 
 import 'package:ajhman/main.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../ui/theme/color/colors.dart';
 import '../../ui/widgets/video/custome_full_screen_video.dart';
-import '../cubit/video/video_player_cubit.dart';
 
 String longVideo =
     "https://trailer.uptvs.com/trailer/Despicable-Me-4-Trailer.mp4";

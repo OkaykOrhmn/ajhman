@@ -1,9 +1,7 @@
-import 'package:ajhman/main.dart';
 import 'package:ajhman/gen/assets.gen.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +24,7 @@ class BottomNavigationBtn extends StatelessWidget{
 
       },
       child: Padding(
-        padding: EdgeInsets.all(18.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           children: [
             read.state.index == index

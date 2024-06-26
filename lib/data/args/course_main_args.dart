@@ -8,8 +8,8 @@ class CourseMainArgs {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['courseId'] = this.courseId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['courseId'] = courseId;
     return data;
   }
 }

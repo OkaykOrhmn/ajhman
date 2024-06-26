@@ -7,16 +7,16 @@ class FeedbackResponseModel {
     if (json['CommentsFeedback'] != null) {
       commentsFeedback = <CommentsFeedback>[];
       json['CommentsFeedback'].forEach((v) {
-        commentsFeedback!.add(new CommentsFeedback.fromJson(v));
+        commentsFeedback!.add(CommentsFeedback.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.commentsFeedback != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (commentsFeedback != null) {
       data['CommentsFeedback'] =
-          this.commentsFeedback!.map((v) => v.toJson()).toList();
+          commentsFeedback!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -32,8 +32,8 @@ class CommentsFeedback {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['liked'] = this.liked;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['liked'] = liked;
     return data;
   }
 }

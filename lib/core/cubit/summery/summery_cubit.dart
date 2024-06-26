@@ -1,7 +1,6 @@
 import 'package:ajhman/data/model/summary_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
 
 import '../../../data/repository/course_repository.dart';
 
@@ -16,7 +15,7 @@ class SummeryCubit extends Cubit<SummaryModel> {
       await courseRepository.getSummery(id);
 
       emit(response);
-    } on DioError catch (e) {
+    } on DioError {
       emit(SummaryModel());
     }
 

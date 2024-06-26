@@ -3,21 +3,15 @@ import 'package:ajhman/core/enum/comment.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../core/bloc/comments/comments_bloc.dart';
 import '../../../core/utils/usefull_funcs.dart';
-import '../../../data/model/profile_response_model.dart';
 import '../../../gen/assets.gen.dart';
-import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../image/profile_image_network.dart';
-import '../text/icon_info.dart';
 import '../text/primary_text.dart';
 import '../text/title_divider.dart';
 
@@ -90,7 +84,7 @@ class _CommentLayoutState extends State<CommentLayout> {
                           ),
                           Container(
                               height: 12,
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: VerticalDivider(
                                 width: 1,
                                 color: Theme.of(context).secondaryColor(),
@@ -118,7 +112,7 @@ class _CommentLayoutState extends State<CommentLayout> {
                           ),
                           Container(
                               height: 12,
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: VerticalDivider(
                                 width: 1,
                                 color: Theme.of(context).secondaryColor(),
@@ -153,7 +147,7 @@ class _CommentLayoutState extends State<CommentLayout> {
         ),
         Container(
             height: 12,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: VerticalDivider(
               width: 1,
               color: Theme.of(context).secondaryColor(),
@@ -166,7 +160,7 @@ class _CommentLayoutState extends State<CommentLayout> {
         ),
         Container(
             height: 12,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: VerticalDivider(
               width: 1,
               color: Theme.of(context).secondaryColor(),
@@ -188,7 +182,7 @@ class _CommentLayoutState extends State<CommentLayout> {
   Row _profile() {
     return Row(
       children: [
-        ProfileImageNetwork(
+        const ProfileImageNetwork(
           src:
               "https://s3-alpha-sig.figma.com/img/6979/d837/b8c3d365a834f21f938e34ba7b745063?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=K5k8b9iabWknGQvO~8wp0LRu~RGy9OZ2VdUcVft8gfvP9Hh0qfeRPKnzO-88UhmPSqGvsGOVXBU55tiIDZDBuAoEOUcd4RH9MJKhew9grmawB3a0uivmEKHZhhH46-hQfBUd-nbWkcu7GJY83hfpVubdYPpmlCpG7w87j01acFOCfcJvuAcprbyHxELs5NuJ4TRsgRRc1sOBx5yr08PI2xWZ3nlgw2z1KAeFACXAhTqizMFE7Qfv39MQoQM0~TvskHP2vZLUMNNowHRqDHrwPbXi75NS4cz6LYvAPPv1~uEa~mLEJn0M~k1KsFXhSE73zlSp8fbO~eA25n6EVLTI-g__",
           width: 48,
@@ -210,7 +204,7 @@ class _CommentLayoutState extends State<CommentLayout> {
                 children: [
                   Assets.icon.outline.clock
                       .svg(width: 12, height: 12, color: Theme.of(context).progressText()),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   PrimaryText(

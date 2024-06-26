@@ -1,11 +1,7 @@
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/extentions.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
-import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/pages/home/home_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 
@@ -13,7 +9,6 @@ import '../../../../../core/bloc/auth/auth_screen_bloc.dart';
 import '../../../../../core/bloc/pin/pin_bloc.dart';
 import '../../../../../core/bloc/ticker/timer_bloc.dart';
 import '../../../../../core/utils/app_locale.dart';
-import '../../../../../data/api/dio_helper.dart';
 import '../../../../../data/model/auth/auth_user_otp_request.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../theme/color/colors.dart';
@@ -118,7 +113,7 @@ class _PinScreenState extends State<PinScreen> {
                             AndroidSmsAutofillMethod.smsRetrieverApi,
                         onCompleted: (pin) async {
                           _complete = true;
-                          final req = await AuthUserOtpRequest(
+                          final req = AuthUserOtpRequest(
                               mobileNumber: context
                                   .read<AuthScreensBloc>()
                                   .state
@@ -227,7 +222,7 @@ class _PinScreenState extends State<PinScreen> {
                               style: AppTextStyles.errorText,
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                     const SizedBox(
                       height: 32,
                     ),

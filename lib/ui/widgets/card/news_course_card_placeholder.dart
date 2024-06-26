@@ -1,10 +1,4 @@
-import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
-import 'package:ajhman/core/cubit/mark/mark_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
-import 'package:ajhman/core/routes/route_paths.dart';
-import 'package:ajhman/core/utils/usefull_funcs.dart';
-import 'package:ajhman/data/args/course_main_args.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
@@ -12,11 +6,8 @@ import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart'
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../button/primary_button.dart';
@@ -58,7 +49,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                   children: [
                     DefaultPlaceHolder(child: _image("", "3.4")),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -95,9 +86,9 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                   children: [
                     SizedBox(
                         width: MediaQuery.sizeOf(context).width / 5,
-                        child: DefaultPlaceHolder(
+                        child: const DefaultPlaceHolder(
                             child: LinearProgress(value: 0.8, minHeight: 8))),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     DefaultPlaceHolder(
@@ -108,7 +99,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                     ),
                   ],
                 ),
-                DefaultPlaceHolder(
+                const DefaultPlaceHolder(
                     child: PrimaryButton(title: "دریافت گواهینامه"))
               ],
             )
@@ -128,7 +119,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
         return Column(
           children: [
              Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
                 color: Theme.of(context).disable(),
@@ -153,7 +144,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
                     ),
                   ],
                 ),
-                DefaultPlaceHolder(
+                const DefaultPlaceHolder(
                     child: PrimaryButton(title: "دریافت گواهینامه"))
               ],
             )

@@ -15,12 +15,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif/gif.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:loading_btn/loading_btn.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 import '../../../core/routes/route_paths.dart';
 import '../../../core/utils/app_locale.dart';
@@ -401,7 +398,7 @@ class DialogHandler {
                   Container(
                     height: 5,
                     width: MediaQuery.sizeOf(context).width / 4,
-                    margin: EdgeInsets.symmetric(vertical: 16),
+                    margin: const EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
                       color: Theme.of(context).black(),
                       borderRadius: DesignConfig.highBorderRadius,
@@ -442,7 +439,7 @@ class DialogHandler {
                                 navigatorKey.currentState!.pushReplacementNamed(
                                     RoutePaths.examResult,
                                     arguments: response);
-                              } on DioError catch (e) {}
+                              } on DioError {}
 
                               stopLoading();
                             }

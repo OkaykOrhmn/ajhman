@@ -40,14 +40,9 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
         try {
           AuthUserToken response =
           await authLoginUserRepository.postLogin(event.request);
-          if (response != null) {
-            emit(state.copyWith(
-                otpStatus: OtpStatus.success));
-          } else {
-            emit(state.copyWith(
-                otpStatus: OtpStatus.error));
-          }
-        } on DioError catch (e) {
+          emit(state.copyWith(
+              otpStatus: OtpStatus.success));
+                } on DioError catch (e) {
           AuthUserOtpError error = AuthUserOtpError.fromJson(e.response!.data);
           emit(state.copyWith(
               otpStatus: OtpStatus.error,

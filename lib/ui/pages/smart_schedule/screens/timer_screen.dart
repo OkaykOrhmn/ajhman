@@ -3,13 +3,9 @@ import 'dart:math';
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/data/model/planner_request_model.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../core/utils/app_locale.dart';
@@ -76,7 +72,7 @@ class _TimerScreenState extends State<TimerScreen>
             ),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 120,
                   child: Center(
@@ -133,28 +129,28 @@ class _TimerScreenState extends State<TimerScreen>
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SizedBox(width: 4,),
+                    const SizedBox(width: 4,),
                     PrimaryText(
                       text: "دقیقه",
                       style: Theme.of(context).textTheme.rate,
                       color: Theme.of(context).cardText(),
                     ),
-                    SizedBox(width: 4,),
+                    const SizedBox(width: 4,),
                     PrimaryText(
                       text: "ساعت",
                       style: Theme.of(context).textTheme.rate,
                       color: Theme.of(context).cardText(),
                     ),
-                  SizedBox(width: 4,)
+                  const SizedBox(width: 4,)
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Row(
@@ -169,7 +165,7 @@ class _TimerScreenState extends State<TimerScreen>
                         });
                       },
                     ),
-                    Text("    :    "),
+                    const Text("    :    "),
                     ToggleButtonTime(
                       title: _hValue.round().toString(),
                       active: _inHour,
@@ -197,7 +193,7 @@ class _TimerScreenState extends State<TimerScreen>
                         // showDividers: true,
                         // minorTicksPerInterval: 1,
                         onChanged: (value) {
-                          final val = value as double;
+                          final val = value;
                           setState(() {
                             if (value >= 1) {
                               _hValue = value;
@@ -233,7 +229,7 @@ class _TimerScreenState extends State<TimerScreen>
                         // enableTooltip: true,
                         // minorTicksPerInterval: 1,
                         onChanged: (value) {
-                          final val = value as double;
+                          final val = value;
                           setState(() {
                             if (value <= 59) {
                               _mValue = value;
@@ -250,7 +246,7 @@ class _TimerScreenState extends State<TimerScreen>
                           });
                         },
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 )
               ],

@@ -11,16 +11,16 @@ class LeaderboardModel {
         users!.add(User.fromJson(v));
       });
     }
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.users != null) {
-      data['users'] = this.users!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (users != null) {
+      data['users'] = users!.map((v) => v.toJson()).toList();
     }
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }
@@ -55,14 +55,14 @@ class Users {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['current'] = this.current;
-    data['score'] = this.score;
-    data['submitedAt'] = this.submitedAt;
-    data['licenses'] = this.licenses;
-    data['courses'] = this.courses;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['image'] = image;
+    data['current'] = current;
+    data['score'] = score;
+    data['submitedAt'] = submitedAt;
+    data['licenses'] = licenses;
+    data['courses'] = courses;
     return data;
   }
 }
@@ -96,7 +96,7 @@ class User {
     if (json['ExamAnswer'] != null) {
       examAnswer = <ExamAnswer>[];
       json['ExamAnswer'].forEach((v) {
-        examAnswer!.add(new ExamAnswer.fromJson(v));
+        examAnswer!.add(ExamAnswer.fromJson(v));
       });
     }
     score = json['score'];
@@ -108,18 +108,18 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['image'] = this.image;
-    if (this.examAnswer != null) {
-      data['ExamAnswer'] = this.examAnswer!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['image'] = image;
+    if (examAnswer != null) {
+      data['ExamAnswer'] = examAnswer!.map((v) => v.toJson()).toList();
     }
-    data['score'] = this.score;
-    data['licenses'] = this.licenses;
-    data['courses'] = this.courses;
-    data['rating'] = this.rating;
-    data['current'] = this.current;
-    data['submitedAt'] = this.submitedAt;
+    data['score'] = score;
+    data['licenses'] = licenses;
+    data['courses'] = courses;
+    data['rating'] = rating;
+    data['current'] = current;
+    data['submitedAt'] = submitedAt;
     return data;
   }
 }
@@ -136,9 +136,9 @@ class ExamAnswer {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdAt'] = this.createdAt;
-    data['score'] = this.score;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['createdAt'] = createdAt;
+    data['score'] = score;
     return data;
   }
 }

@@ -1,11 +1,7 @@
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../main.dart';
 import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
 import '../text/primary_text.dart';
 
 class HighlightListView extends StatefulWidget {

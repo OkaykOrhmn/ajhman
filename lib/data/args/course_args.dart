@@ -1,4 +1,3 @@
-import 'package:ajhman/core/enum/course_types.dart';
 
 import '../model/chapter_model.dart';
 import '../model/course_main_response_model.dart';

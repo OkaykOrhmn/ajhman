@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/color/colors.dart';
@@ -8,7 +7,7 @@ class DaysCheckBox extends StatefulWidget {
   final Function(bool?)? onChange;
 
 
-  DaysCheckBox({super.key, required this.value, this.onChange});
+  const DaysCheckBox({super.key, required this.value, this.onChange});
 
   @override
   State<DaysCheckBox> createState() => _DaysCheckBoxState();

@@ -1,13 +1,6 @@
-import 'dart:io';
 
-import 'package:ajhman/core/services/notification_service.dart';
-import 'package:ajhman/data/model/notification_model.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
-import '../../core/services/storage_handler.dart';
-import '../../gen/assets.gen.dart';
 import '../api/dio_helper.dart';
 
 final downloadRepository = DownloadRepository(DioHelper());
@@ -25,7 +18,7 @@ class DownloadRepository implements Download {
     final response = await dioHelper.sendRequest.download(url, path,
         cancelToken: downloadCancelToken,
         deleteOnError: true,
-        onReceiveProgress: await progress);
+        onReceiveProgress: progress);
     return response;
     // } catch (e) {
     //   rethrow;
@@ -42,7 +35,7 @@ class DownloadRepository implements Download {
             validateStatus: (status) {
               return status! < 500;
             }),
-        onReceiveProgress: await progress);
+        onReceiveProgress: progress);
     return response;
   }
 }

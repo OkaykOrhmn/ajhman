@@ -1,9 +1,8 @@
 import 'package:ajhman/data/model/notification_model.dart';
-import 'package:ajhman/data/repository/download_repository.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
+// import 'package:open_file/open_file.dart';
 
 import '../../data/api/api_end_points.dart';
 
@@ -63,7 +62,7 @@ class NotificationService {
           .replaceAll(ApiEndPoints.baseURL, '')
           .substring(1)
           .replaceAll("/", '_');
-      await OpenFile.open(dir.replaceAll(fileName, ''));
+      // await OpenFile.open(dir.replaceAll(fileName, ''));
     }
   }
 

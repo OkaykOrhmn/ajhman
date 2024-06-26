@@ -129,16 +129,16 @@ CourseTypes? getTypeOfCourse(String type) {
 }
 
 RoadmapView getLockRoadMapContainer =
-    RoadmapView(Color(0xffD6D6D6), Assets.shape.shape4);
+    RoadmapView(const Color(0xffD6D6D6), Assets.shape.shape4);
 
 RoadmapView getRoadMapContainer(bool inRandom, RoadmapView? lastRoadMapView) {
   List<RoadmapView> colors = [
-    RoadmapView(Color(0xffFF5EEA), Assets.shape.shape),
-    RoadmapView(Color(0xff50FDAE), Assets.shape.shape1),
-    RoadmapView(Color(0xffFEC86F), Assets.shape.shape2),
-    RoadmapView(Color(0xffF817CFF), Assets.shape.shape4),
-    RoadmapView(Color(0xffFB7A3E), Assets.shape.shape5),
-    RoadmapView(Color(0xffA6DC59), Assets.shape.shape7),
+    RoadmapView(const Color(0xffFF5EEA), Assets.shape.shape),
+    RoadmapView(const Color(0xff50FDAE), Assets.shape.shape1),
+    RoadmapView(const Color(0xffFEC86F), Assets.shape.shape2),
+    RoadmapView(const Color(0xfff817cff), Assets.shape.shape4),
+    RoadmapView(const Color(0xffFB7A3E), Assets.shape.shape5),
+    RoadmapView(const Color(0xffA6DC59), Assets.shape.shape7),
   ];
 
   Random random = Random();

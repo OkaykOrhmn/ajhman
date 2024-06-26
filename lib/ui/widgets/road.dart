@@ -1,12 +1,8 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/divider/vertical_dashed_line.dart';
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:flutter/widgets.dart';
 
 import 'divider/horizontal_dashed_line.dart';
 
@@ -33,7 +29,7 @@ class _RoadState extends State<Road> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: 80,
         height: widget.height?? 120,
         child: Stack(
@@ -90,7 +86,7 @@ class _RoadState extends State<Road> {
           children: [
             Container(
               width: 30,
-              padding: EdgeInsets.only(bottom: 0, top: 18),
+              padding: const EdgeInsets.only(bottom: 0, top: 18),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: widget.length == null? DesignConfig.aVeryHighBorderRadius: Radius.zero,
@@ -98,11 +94,11 @@ class _RoadState extends State<Road> {
                     topRight: isEven? Radius.zero:DesignConfig.aVeryHighBorderRadius,
                     topLeft: isEven? DesignConfig.aVeryHighBorderRadius:Radius.zero,
                   ),
-                  gradient: LinearGradient(colors: [
+                  gradient: const LinearGradient(colors: [
                     Color(0xff4A4A4A),
                     Color(0xff575757),
                   ])),
-              child: VerticalDashedLine(width: 2,active: Colors.white, dashed: true,dashSize: 8,),
+              child: const VerticalDashedLine(width: 2,active: Colors.white, dashed: true,dashSize: 8,),
 
             ),
             Positioned(
@@ -113,7 +109,7 @@ class _RoadState extends State<Road> {
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      border: Border(
+                      border: const Border(
                         top: BorderSide(color: Colors.white,width: 2),
                         right: BorderSide(color: Colors.white,width: 2),
                       )
@@ -133,7 +129,7 @@ class _RoadState extends State<Road> {
           children: [
             Container(
               width: 30,
-              padding: EdgeInsets.only(bottom: 12, top: 18),
+              padding: const EdgeInsets.only(bottom: 12, top: 18),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.zero,
@@ -141,11 +137,11 @@ class _RoadState extends State<Road> {
                     bottomLeft: widget.length == null? DesignConfig.aVeryHighBorderRadius: Radius.zero,
                     bottomRight: widget.length == null? DesignConfig.aVeryHighBorderRadius: Radius.zero
                   ),
-                  gradient: LinearGradient(colors: [
+                  gradient: const LinearGradient(colors: [
                     Color(0xff4A4A4A),
                     Color(0xff575757),
                   ])),
-              child: VerticalDashedLine(width: 2,active: Colors.white, dashed: true,dashSize: 8,),
+              child: const VerticalDashedLine(width: 2,active: Colors.white, dashed: true,dashSize: 8,),
 
             ),
             Positioned(
@@ -156,7 +152,7 @@ class _RoadState extends State<Road> {
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      border: Border(
+                      border: const Border(
                         top: BorderSide(color: Colors.white,width: 2),
                         left: BorderSide(color: Colors.white,width: 2),
                       )
@@ -176,7 +172,7 @@ class _RoadState extends State<Road> {
           children: [
             Container(
               height: 30,
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topRight:
@@ -187,11 +183,11 @@ class _RoadState extends State<Road> {
                     bottomLeft: DesignConfig.aVeryHighBorderRadius,
                     bottomRight: DesignConfig.aVeryHighBorderRadius,
                   ),
-                  gradient: LinearGradient(colors: [
+                  gradient: const LinearGradient(colors: [
                     Color(0xff4A4A4A),
                     Color(0xff575757),
                   ])),
-              child: HorizontalDashedLine(height: 2,active: Colors.white, dashed: true,dashSize: 10,),
+              child: const HorizontalDashedLine(height: 2,active: Colors.white, dashed: true,dashSize: 10,),
             ),
             Positioned(
                 top: 8,
@@ -201,7 +197,7 @@ class _RoadState extends State<Road> {
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      border: Border(
+                      border: const Border(
                         bottom: BorderSide(color: Colors.white,width: 2),
                         left: BorderSide(color: Colors.white,width: 2),
                       )
@@ -215,7 +211,7 @@ class _RoadState extends State<Road> {
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
-                      border: Border(
+                      border: const Border(
                         bottom: BorderSide(color: Colors.white,width: 2),
                         right: BorderSide(color: Colors.white,width: 2),
                       )
@@ -227,8 +223,8 @@ class _RoadState extends State<Road> {
   }
 
   Widget _roadLine() {
-    final double size = 24;
-    final border =
+    const double size = 24;
+    const border =
         BorderSide(width: size, color: Colors.black, style: BorderStyle.solid);
     final top = BorderSide(
         width: widget.index != 1 ? size / 2 : size,
@@ -362,48 +358,48 @@ class DashRectPainter extends CustomPainter {
     double x = size.width;
     double y = size.height;
 
-    Path _topPath = getDashedPath(
-      a: math.Point(0, 0),
+    Path topPath = getDashedPath(
+      a: const math.Point(0, 0),
       b: math.Point(x, 0),
       gap: gap,
     );
 
-    Path _rightPath = getDashedPath(
+    Path rightPath = getDashedPath(
       a: math.Point(x, 0),
       b: math.Point(x, y),
       gap: gap,
     );
 
-    Path _bottomPath = getDashedPath(
+    Path bottomPath = getDashedPath(
       a: math.Point(0, y),
       b: math.Point(x, y),
       gap: gap,
     );
 
-    Path _leftPath = getDashedPath(
-      a: math.Point(0, 0),
+    Path leftPath = getDashedPath(
+      a: const math.Point(0, 0),
       b: math.Point(0.001, y),
       gap: gap,
     );
 
     if (dashedContainerAlign == null || dashedContainerAlign!.isEmpty) {
-      canvas.drawPath(_topPath, dashedPaint);
-      canvas.drawPath(_rightPath, dashedPaint);
-      canvas.drawPath(_bottomPath, dashedPaint);
-      canvas.drawPath(_leftPath, dashedPaint);
+      canvas.drawPath(topPath, dashedPaint);
+      canvas.drawPath(rightPath, dashedPaint);
+      canvas.drawPath(bottomPath, dashedPaint);
+      canvas.drawPath(leftPath, dashedPaint);
     } else {
       for (var element in dashedContainerAlign!) {
         if (element == DashedContainerAlign.top) {
-          canvas.drawPath(_topPath, dashedPaint);
+          canvas.drawPath(topPath, dashedPaint);
         }
         if (element == DashedContainerAlign.bottom) {
-          canvas.drawPath(_bottomPath, dashedPaint);
+          canvas.drawPath(bottomPath, dashedPaint);
         }
         if (element == DashedContainerAlign.left) {
-          canvas.drawPath(_leftPath, dashedPaint);
+          canvas.drawPath(leftPath, dashedPaint);
         }
         if (element == DashedContainerAlign.right) {
-          canvas.drawPath(_rightPath, dashedPaint);
+          canvas.drawPath(rightPath, dashedPaint);
         }
       }
     }

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import '../../../data/model/cards/new_course_card_model.dart';
 import '../../../data/repository/categories_repository.dart';

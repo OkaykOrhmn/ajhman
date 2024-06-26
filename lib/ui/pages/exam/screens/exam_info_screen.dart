@@ -1,9 +1,7 @@
 import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
-import '../../../../main.dart';
 import '../../../theme/color/colors.dart';
 import '../../../theme/widget/design_config.dart';
 import '../../../widgets/listview/highlight_listview.dart';
@@ -38,12 +36,12 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
             children: [
               _examInfoIconRow("۱۰ سوال", "سوال ۴ گزینه‌ای",
                   Assets.icon.outline.task),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               _examInfoIconRow("۲ دقیقه", "زمان پاسخگویی به سوال",
                   Assets.icon.outline.clock),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               _examInfoIconRow("۸ سوال", "نمره قبولی در آزمون",
@@ -67,10 +65,10 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
                   text: "قبل از شروع آزمون به نکات زیر دقت فرمایید",
                   style: Theme.of(context).textTheme.titleBold,
                   color: Theme.of(context).headText()),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              HighlightListView(
+              const HighlightListView(
                 items: [
                   "پس از اتمام زمان پاسخگویی شما قادر به جواب دادن به آزمون نمی‌باشید، پس زمان خود را مدیریت کنید.",
                   "آزمون شامل نمره منفی نمی‌باشد.",

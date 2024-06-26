@@ -1,14 +1,11 @@
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../widgets/listview/highlight_listview.dart';
@@ -25,13 +22,13 @@ class _CourseDetailsState extends State<CourseDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final data = context.read<SubChapterCubit>().state!.chapterModel;
+    final data = context.read<SubChapterCubit>().state.chapterModel;
 
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           decoration: BoxDecoration(
               color: Theme.of(context).cardBackground(),
               borderRadius: DesignConfig.highBorderRadius,
@@ -57,19 +54,19 @@ class _CourseDetailsState extends State<CourseDetails> {
         Stack(
           children: [
             Container(
-              margin: EdgeInsets.all(16),
-              padding: EdgeInsets.all(16).copyWith(bottom: _showMore ? 48 : 16),
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16).copyWith(bottom: _showMore ? 48 : 16),
               decoration: BoxDecoration(
                   boxShadow: DesignConfig.lowShadow,
                   color: Theme.of(context).white(),
                   borderRadius: DesignConfig.highBorderRadius),
               child: Column(
                 children: [
-                  TitleDivider(
+                  const TitleDivider(
                     title: "توضیحات جلسه",
                     hasPadding: false,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Padding(
@@ -95,7 +92,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                   decoration: _showMore
                       ? null
                       : BoxDecoration(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               bottomLeft: DesignConfig.aHighBorderRadius,
                               bottomRight: DesignConfig.aHighBorderRadius),
                           gradient: LinearGradient(

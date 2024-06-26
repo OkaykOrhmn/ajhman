@@ -4,7 +4,6 @@ import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_locale.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/model/days.dart';
@@ -42,10 +41,10 @@ class _GridDaysViewState extends State<GridDaysView> {
       ChangeLocale(context).appLocal!.thursday,
       ChangeLocale(context).appLocal!.friday,
     ];
-    days.forEach((element) {
+    for (var element in days) {
       int index = days.indexOf(element);
       element.dayName = daysName[index];
-    });
+    }
 
     return SizedBox(
       height: (48 * 3) + (16 * 2),

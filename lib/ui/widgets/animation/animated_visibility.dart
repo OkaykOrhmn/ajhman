@@ -17,13 +17,13 @@ class AnimatedVisibility extends StatefulWidget {
   final FadeMode fadeMode;
 
   const AnimatedVisibility({
-    Key? key,
+    super.key,
     required this.isVisible,
     required this.duration,
     required this.child,
     this.fadeMode = FadeMode.both,
     this.curve = Curves.easeIn,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedVisibility> createState() => _AnimatedVisibilityState();

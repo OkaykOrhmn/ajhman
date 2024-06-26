@@ -64,16 +64,16 @@ class _MobileNumberTextFieldState extends State<MobileNumberTextField> {
             borderSide:  BorderSide(color: Theme.of(context).primaryColor),
             borderRadius:DesignConfig.mediumBorderRadius,
           ),
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: errorMain),
+          focusedErrorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: errorMain),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: errorMain),
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: errorMain),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),
         ),

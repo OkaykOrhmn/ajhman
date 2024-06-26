@@ -18,11 +18,11 @@ class TimerInitial extends TimerState {
 }
 
 class TimerRunInProgress extends TimerState {
-  const TimerRunInProgress(int duration) : super(duration);
+  const TimerRunInProgress(super.duration);
 }
 
 class TimerRunPause extends TimerState {
-  const TimerRunPause(int duration) : super(duration);
+  const TimerRunPause(super.duration);
 }
 
 class TimerRunComplete extends TimerState {

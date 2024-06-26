@@ -1,4 +1,3 @@
-import 'package:ajhman/core/enum/comment.dart';
 
 class CommentsResponseModel {
   int? id;
@@ -32,12 +31,12 @@ class CommentsResponseModel {
     text = json['text'];
     resource = json['resource'];
     createdAt = json['createdAt'];
-    user = json['User'] != null ? new User.fromJson(json['User']) : null;
-    replyUser = json['replyUser'] != null ? new User.fromJson(json['replyUser']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
+    replyUser = json['replyUser'] != null ? User.fromJson(json['replyUser']) : null;
     if (json['Replies'] != null) {
       replies = <CommentsResponseModel>[];
       json['Replies'].forEach((v) {
-        replies!.add(new CommentsResponseModel.fromJson(v));
+        replies!.add(CommentsResponseModel.fromJson(v));
       });
     }
     likes = json['likes'];
@@ -48,23 +47,23 @@ class CommentsResponseModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['resource'] = this.resource;
-    data['createdAt'] = this.createdAt;
-    if (this.user != null) {
-      data['User'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['resource'] = resource;
+    data['createdAt'] = createdAt;
+    if (user != null) {
+      data['User'] = user!.toJson();
     }
-    if (this.replies != null) {
-      data['Replies'] = this.replies!.map((v) => v.toJson()).toList();
+    if (replies != null) {
+      data['Replies'] = replies!.map((v) => v.toJson()).toList();
     }
-    data['likes'] = this.likes;
-    data['dislikes'] = this.dislikes;
-    data['UserFeedback'] = this.userFeedback;
-    data['replyUser'] = this.replyUser;
-    data['userId'] = this.userId;
-    data['commentId'] = this.commentId;
+    data['likes'] = likes;
+    data['dislikes'] = dislikes;
+    data['UserFeedback'] = userFeedback;
+    data['replyUser'] = replyUser;
+    data['userId'] = userId;
+    data['commentId'] = commentId;
     return data;
   }
 }
@@ -83,10 +82,10 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
     return data;
   }
 }

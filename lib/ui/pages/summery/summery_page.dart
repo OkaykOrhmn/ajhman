@@ -5,12 +5,9 @@ import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
 import '../../widgets/listview/highlight_listview.dart';
@@ -68,7 +65,7 @@ class _SummeryPageState extends State<SummeryPage> {
                                   text: "نکات مهم اشاره شده در دوره",
                                   style: Theme.of(context).textTheme.titleBold,
                                   color: Theme.of(context).headText()),
-                              SizedBox(
+                              const SizedBox(
                                 height: 16,
                               ),
                               HighlightListView(

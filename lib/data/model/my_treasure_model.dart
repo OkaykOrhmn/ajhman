@@ -9,33 +9,33 @@ class MyTreasureModel {
     if (json['gold'] != null) {
       gold = <Gold>[];
       json['gold'].forEach((v) {
-        gold!.add(new Gold.fromJson(v));
+        gold!.add(Gold.fromJson(v));
       });
     }
     if (json['silver'] != null) {
       silver = <Gold>[];
       json['silver'].forEach((v) {
-        silver!.add(new Gold.fromJson(v));
+        silver!.add(Gold.fromJson(v));
       });
     }
     if (json['bronze'] != null) {
       bronze = <Gold>[];
       json['bronze'].forEach((v) {
-        bronze!.add(new Gold.fromJson(v));
+        bronze!.add(Gold.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.gold != null) {
-      data['gold'] = this.gold!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (gold != null) {
+      data['gold'] = gold!.map((v) => v.toJson()).toList();
     }
-    if (this.silver != null) {
-      data['silver'] = this.silver!.map((v) => v.toJson()).toList();
+    if (silver != null) {
+      data['silver'] = silver!.map((v) => v.toJson()).toList();
     }
-    if (this.bronze != null) {
-      data['bronze'] = this.bronze!.map((v) => v.toJson()).toList();
+    if (bronze != null) {
+      data['bronze'] = bronze!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -57,11 +57,11 @@ class Gold {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['score'] = this.score;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
+    data['score'] = score;
     return data;
   }
 }

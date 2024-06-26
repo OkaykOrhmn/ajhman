@@ -3,7 +3,6 @@ import 'package:ajhman/main.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../color/colors.dart';
 import '../theme_helper.dart';
 
 part 'theme_event.dart';

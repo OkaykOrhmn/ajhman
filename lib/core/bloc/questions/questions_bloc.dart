@@ -19,7 +19,7 @@ class QuestionsBloc extends Bloc<QuestionsEvent, QuestionsState> {
               await questionsRepository.getQuestions(event.id);
 
           emit(QuestionsSuccess(questionsModel: response));
-        } on DioError catch (e) {
+        } on DioError {
           emit(QuestionsFail());
         }
       }
@@ -29,7 +29,7 @@ class QuestionsBloc extends Bloc<QuestionsEvent, QuestionsState> {
           await questionsRepository.putQuestions(
               event.id, event.feedbacksQuestionsModel);
           emit(QuestionsSuccess(questionsModel: event.questionsModel));
-        } on DioError catch (e) {
+        } on DioError {
           emit(QuestionsPutFail(questionsModel: event.questionsModel));
         }
       }

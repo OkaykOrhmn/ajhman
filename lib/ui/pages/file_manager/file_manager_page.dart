@@ -1,22 +1,17 @@
 import 'dart:io';
 
-import 'package:ajhman/core/services/permission_handler.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
-import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:file_manager/file_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:open_app_file/open_app_file.dart';
+// import 'package:url_launcher/url_launcher.dart';
+// import 'package:open_file/open_file.dart';
 
 import '../../../gen/assets.gen.dart';
 
@@ -45,14 +40,14 @@ class _FileManagerPageState extends State<FileManagerPage> {
     super.dispose();
   }
 
-  Future<void> openFileManager() async {
-    final directory = Directory("/storage/emulated/0/Download");
-    if (await canLaunchUrl(directory!.uri)) {
-      await launchUrl(directory!.uri);
-    } else {
-      // Handle the case where the URL cannot be launched
-    }
-  }
+  // Future<void> openFile(String path) async {
+  //   final uri = Uri.file(path);
+  //   if (await canLaunchUrl(uri)) {
+  //     await launchUrl(uri);
+  //   } else {
+  //     // Handle the case where the URL cannot be launched
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +90,9 @@ class _FileManagerPageState extends State<FileManagerPage> {
                                 entities[index]); // open directory
                           } else {
                             // Perform file-related tasks.
-                            await OpenFile.open(entities[index].path);
+                            await OpenAppFile.open(entities[index].path);
+                            // await openFile(entities[index].path);
+
                           }
                         },
                         child: Container(
@@ -140,7 +137,7 @@ class _FileManagerPageState extends State<FileManagerPage> {
                                                   color: Theme.of(context)
                                                       .primaryColor,
                                                 ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               Expanded(

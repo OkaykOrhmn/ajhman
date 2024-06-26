@@ -1,25 +1,19 @@
 import 'package:ajhman/core/bloc/category/category_bloc.dart';
-import 'package:ajhman/core/bloc/category/category_bloc.dart';
 import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/data/args/category_args.dart';
 import 'package:ajhman/data/model/cards/new_course_card_model.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
-import 'package:ajhman/ui/widgets/button/toggle_buttons_row.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
 import 'package:ajhman/ui/widgets/card/news_course_card_placeholder.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
 
-import '../../../core/cubit/home/news_course_home_cubit.dart';
 import '../../../core/enum/tags.dart';
 import '../../../data/model/t_buttons.dart';
 
@@ -84,7 +78,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           .navbarTitle
                           .copyWith(color: Theme.of(context).primaryColor),
                       textAlign: TextAlign.center,
-                      textPadding: EdgeInsets.symmetric(horizontal: 16),
+                      textPadding: const EdgeInsets.symmetric(horizontal: 16),
                     ),
                     isRadio: true,
                     onSelected: (_, index, isSelected) {
@@ -105,7 +99,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       }
                       context
                           .read<CategoryBloc>()
-                          .add(GetAllCategoryCards(categories: [2, 3], tag: t));
+                          .add(GetAllCategoryCards(categories: const [2, 3], tag: t));
                     },
                     buttons: const [
                       "تازه‌ترین‌ها",
@@ -124,7 +118,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   } else if (state is CategorySuccessState) {
                     cards = state.newsCards;
                   }
-                  return cards != null && cards!.isEmpty
+                  return cards != null && cards.isEmpty
                       ? Padding(
                           padding: EdgeInsets.only(
                               top: (MediaQuery.sizeOf(context).width / 2) +
@@ -136,7 +130,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       : VerticalListView(
                           items: cards,
                           placeholder: const NewCourseCardPlaceholder(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 12),
                             type: CardType.normal,
                           ),

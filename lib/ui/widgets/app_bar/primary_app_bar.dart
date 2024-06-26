@@ -1,15 +1,9 @@
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/utils/app_locale.dart';
-import '../../../core/utils/language/bloc/language_bloc.dart';
-import '../../../data/model/language.dart';
 import '../../../gen/assets.gen.dart';
-import '../../theme/bloc/theme_bloc.dart';
 import '../../theme/text/text_styles.dart';
 
 class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {

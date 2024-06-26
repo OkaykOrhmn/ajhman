@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:ajhman/core/cubit/subchapter/sub_chapter_cubit.dart';
 import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
-import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_audio.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_image.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/screens/course_text.dart';
@@ -11,7 +10,6 @@ import 'package:ajhman/ui/pages/course/course_chapter/screens/course_video.dart'
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_comments.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_details.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_header.dart';
-import 'package:ajhman/ui/pages/course/course_chapter/sections/course_rating.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/theme/widget/design_config.dart';
@@ -20,19 +18,15 @@ import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/custom_outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/custom_primary_button.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../../core/bloc/comments/comments_bloc.dart';
-import '../../../../core/bloc/questions/questions_bloc.dart';
-import '../../../../core/routes/route_paths.dart';
 import '../../../../data/args/course_args.dart';
 import '../../../../data/model/chapter_model.dart';
 import '../../../../data/model/course_main_response_model.dart';
 import '../../../../gen/assets.gen.dart';
-import '../../../widgets/loading/three_bounce_loading.dart';
 
 class CourseChapterPage extends StatefulWidget {
   final CourseArgs args;
@@ -65,19 +59,19 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   Widget _chapter(CourseTypes type) {
     switch (type) {
       case CourseTypes.audio:
-        return CourseAudio();
+        return const CourseAudio();
 
       case CourseTypes.image:
-        return CourseImage();
+        return const CourseImage();
 
       case CourseTypes.text:
-        return CourseText();
+        return const CourseText();
 
       case CourseTypes.video:
-        return CourseVideo();
+        return const CourseVideo();
 
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -136,9 +130,9 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                     title: courseArgs.courseData.name.toString(),
                   ),
                   _main(),
-                  CourseDetails(),
-                  SizedBox(height: 24,),
-                  CourseComments(),
+                  const CourseDetails(),
+                  const SizedBox(height: 24,),
+                  const CourseComments(),
                   InkWell(
                     onTap: () {
                       setState(() {
@@ -154,12 +148,12 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topRight: DesignConfig.aHighBorderRadius,
                           topLeft: DesignConfig.aHighBorderRadius,
                         ),
                       ),
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         children: [
                           Row(
@@ -176,7 +170,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                                       .svg(color: Colors.white)
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                           if (subChapters.isEmpty)
@@ -301,7 +295,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                     children: [
                       Assets.icon.outline.arrowRight
                           .svg(color: Theme.of(context).primaryColor, width: 16, height: 16),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       PrimaryText(
@@ -331,7 +325,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                         text: "درس قبلی",
                         style: Theme.of(context).textTheme.rate,
                         color: Theme.of(context).primaryColor),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Assets.icon.outline.arrowLeft1

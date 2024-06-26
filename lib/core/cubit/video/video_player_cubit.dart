@@ -1,6 +1,5 @@
 import 'package:ajhman/data/model/video_player_model.dart';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 class VideoPlayerCubit extends Cubit<VideoPlayerModel> {
   VideoPlayerCubit()

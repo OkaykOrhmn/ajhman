@@ -3,11 +3,8 @@ import 'package:ajhman/data/model/roadmap_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../data/api/api_end_points.dart';
-import '../../../enum/state_status.dart';
 
 part 'course_main_event.dart';
 
@@ -27,7 +24,7 @@ class CourseMainBloc extends Bloc<CourseMainEvent, CourseMainState> {
           } else {
             emit(CourseRoadmapSuccess(response: response));
           }
-        } on DioError catch (e) {
+        } on DioError {
           emit(CourseMainFail());
         }
       }
@@ -42,7 +39,7 @@ class CourseMainBloc extends Bloc<CourseMainEvent, CourseMainState> {
             element.isOpen = false;
           }
           emit(CourseMainSuccess(response: response));
-        } on DioError catch (e) {
+        } on DioError {
           emit(CourseMainFail());
         }
       }

@@ -7,15 +7,15 @@ class QuestionsModel {
     if (json['Questions'] != null) {
       questions = <Questions>[];
       json['Questions'].forEach((v) {
-        questions!.add(new Questions.fromJson(v));
+        questions!.add(Questions.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.questions != null) {
-      data['Questions'] = this.questions!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (questions != null) {
+      data['Questions'] = questions!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -31,18 +31,18 @@ class Questions {
   Questions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     question = json['Question'] != null
-        ? new Question.fromJson(json['Question'])
+        ? Question.fromJson(json['Question'])
         : null;
     score = json['score'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.question != null) {
-      data['Question'] = this.question!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (question != null) {
+      data['Question'] = question!.toJson();
     }
-    data['score'] = this.score;
+    data['score'] = score;
     return data;
   }
 }
@@ -57,8 +57,8 @@ class Question {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }

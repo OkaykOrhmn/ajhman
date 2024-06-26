@@ -12,10 +12,10 @@ class PlannerRequestModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['days'] = this.days;
-    data['startAt'] = this.startAt;
-    data['time'] = this.time;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['days'] = days;
+    data['startAt'] = startAt;
+    data['time'] = time;
     return data;
   }
 }

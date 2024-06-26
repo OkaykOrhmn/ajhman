@@ -1,15 +1,9 @@
-import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/ui/theme/text/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
-import 'package:ajhman/ui/widgets/text/icon_info.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../../../data/model/cards/new_course_card_model.dart';
-import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
 import '../../theme/color/colors.dart';
 import '../../theme/widget/design_config.dart';
@@ -59,16 +53,16 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DefaultPlaceHolder(
-                              child: Container(
+                          const DefaultPlaceHolder(
+                              child: SizedBox(
                                 width: 200,
                                 height: 12,
                               )),
                           const SizedBox(
                             height: 8,
                           ),
-                          DefaultPlaceHolder(
-                              child: Container(
+                          const DefaultPlaceHolder(
+                              child: SizedBox(
                                 width: 130,
                                 height: 12,
                               )),
@@ -84,7 +78,7 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
                               width: 100,
                               decoration: BoxDecoration(
                                   boxShadow: DesignConfig.lowShadow),
-                              child: LinearProgress(value: 0.8, minHeight: 8),
+                              child: const LinearProgress(value: 0.8, minHeight: 8),
                             ),
                           ),
                         ],
@@ -109,19 +103,19 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
   }
 
   Column _infoes() {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DefaultPlaceHolder(
-            child: Container(
+            child: SizedBox(
           width: 100,
           height: 12,
         )),
-        const SizedBox(
+        SizedBox(
           height: 8,
         ),
         DefaultPlaceHolder(
-            child: Container(
+            child: SizedBox(
           width: 100,
           height: 12,
         )),
