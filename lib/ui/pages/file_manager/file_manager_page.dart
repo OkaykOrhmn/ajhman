@@ -18,6 +18,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../gen/assets.gen.dart';
+
 class FileManagerPage extends StatefulWidget {
   const FileManagerPage({super.key});
 
@@ -105,18 +107,39 @@ class _FileManagerPageState extends State<FileManagerPage> {
                               horizontal: 16, vertical: 8),
                           padding: const EdgeInsets.all(16),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               FileManager.basename(entities[index])
                                       .endsWith('.mp3')
-                                  ? const Icon(Icons.music_video_outlined)
+                                  ? Assets.icon.bold.microphone.svg(
+                                      color: Theme.of(context).primaryColor,
+                                    )
                                   : FileManager.basename(entities[index])
                                           .endsWith('.mp4')
-                                      ? const Icon(
-                                          Icons.ondemand_video_outlined)
-                                      : FileManager.isFile(entities[index])
-                                          ? const Icon(Icons.feed_outlined)
-                                          : const Icon(
-                                              Icons.folder_open_outlined),
+                                      ? Assets.icon.bold.video.svg(
+                                          color: Theme.of(context).primaryColor,
+                                        )
+                                      : FileManager.basename(entities[index])
+                                                  .toLowerCase()
+                                                  .endsWith('.png') ||
+                                              FileManager.basename(
+                                                      entities[index])
+                                                  .toLowerCase()
+                                                  .endsWith('.jpg')
+                                          ? Assets.icon.bold.gallery.svg(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            )
+                                          : FileManager.isFile(entities[index])
+                                              ? Assets.icon.bold.documentText
+                                                  .svg(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                )
+                                              : Assets.icon.bold.exam.svg(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
                               SizedBox(
                                 width: 8,
                               ),
