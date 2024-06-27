@@ -8,9 +8,12 @@ import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/services/firebase_api.dart';
 import 'package:ajhman/core/services/notification_service.dart';
+import 'package:ajhman/data/model/notification_data_model.dart';
+import 'package:ajhman/data/model/notification_model.dart';
 import 'package:ajhman/firebase_options.dart';
 
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:connectivity_bloc/connectivity_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -40,19 +43,25 @@ bool isDarkTheme =
     SchedulerBinding.instance.platformDispatcher.platformBrightness ==
         Brightness.dark;
 
-// @pragma('vm:entry-point')
+@pragma('vm:entry-point')
 Future _initPushNotification(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  print("background: ${NotificationDataModel.fromJson(message.data).toJson()}");
+  try {
+    NotificationService.showFirebaseNotification(message);
+  } catch (e) {
+    rethrow;
+  }
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
+    await NotificationService.initializeNotification();
     FirebaseMessaging.onBackgroundMessage(_initPushNotification);
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
     await FirebaseApi().initNotification();
-    await NotificationService.initializeNotification();
   } catch (e) {
     rethrow;
   }

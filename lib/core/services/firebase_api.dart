@@ -1,12 +1,14 @@
-
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import '../../data/model/notification_data_model.dart';
+import '../../data/model/notification_model.dart';
+import 'notification_service.dart';
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> initNotification() async {
-
     await _firebaseMessaging.requestPermission();
 
     try {
@@ -27,14 +29,17 @@ class FirebaseApi {
     FirebaseMessaging.instance.getInitialMessage();
     FirebaseMessaging.onMessageOpenedApp.listen((event) {});
     FirebaseMessaging.onMessage.listen((event) => handleMessage(event));
-
   }
 
-  void handleMessage(RemoteMessage? message) {
+  void handleMessage(RemoteMessage? message) async {
     if (message == null) return;
     //do ever you want with message
-    print('Got a message whilst in the foreground!: ${message.toString()}');
+    print(
+        "forground: ${NotificationDataModel.fromJson(message.data).toJson()}");
+    try {
+      await NotificationService.showFirebaseNotification(message);
+    } catch (e) {
+      rethrow;
+    }
   }
 }
-
-

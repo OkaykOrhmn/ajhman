@@ -1,6 +1,8 @@
+import 'package:ajhman/data/model/notification_data_model.dart';
 import 'package:ajhman/data/model/notification_model.dart';
 import 'package:ajhman/ui/theme/color/colors.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 // import 'package:open_file/open_file.dart';
 
@@ -24,11 +26,11 @@ class NotificationService {
               playSound: true,
               criticalAlerts: true),
         ],
-        channelGroups: [
-          NotificationChannelGroup(
-              channelGroupKey: 'high_important_channel_group',
-              channelGroupName: 'Group 1')
-        ],
+        // channelGroups: [
+        //   NotificationChannelGroup(
+        //       channelGroupKey: 'high_important_channel_group',
+        //       channelGroupName: 'Group 1')
+        // ],
         debug: true);
     await AwesomeNotifications()
         .isNotificationAllowed()
@@ -82,6 +84,17 @@ class NotificationService {
 
   static Future<void> onNotificationDisplayedMethod(
       ReceivedNotification receivedNotification) async {}
+
+  static Future<void> showFirebaseNotification(RemoteMessage message) async {
+    final data = NotificationDataModel.fromJson(message.data);
+    NotificationService.showNotification(NotificationData(
+        title: data.title.toString(),
+        body: data.body.toString(),
+        bigPicture: data.image.toString(),
+        notificationLayout: data.image.toString().isNotEmpty
+            ? NotificationLayout.BigPicture
+            : NotificationLayout.BigText));
+  }
 
   static Future<void> showNotification(NotificationData data) async {
     assert(!data.scheduled || (data.scheduled && data.interval != null));
