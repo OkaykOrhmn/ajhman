@@ -1,5 +1,5 @@
 import 'package:ajhman/data/api/dio_helper.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
+import 'package:ajhman/data/model/new_course_card_model.dart';
 import 'package:dio/dio.dart';
 
 import '../api/api_end_points.dart';
@@ -14,7 +14,8 @@ class LearningRepository implements Learning {
   @override
   Future<List<NewCourseCardModel>> getCards(String path) async {
     try {
-      Response response = await dioHelper.getRequest(ApiEndPoints.mainCourse+path,null);
+      Response response =
+          await dioHelper.getRequest(ApiEndPoints.mainCourse + path, null);
       final List<dynamic> postMaps = response.data;
       return postMaps.map((e) => NewCourseCardModel.fromJson(e)).toList();
     } catch (ex) {

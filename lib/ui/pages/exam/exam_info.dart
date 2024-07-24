@@ -5,16 +5,16 @@ import 'package:ajhman/data/repository/exam_repository.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/exam/screens/exam_comment_screen.dart';
 import 'package:ajhman/ui/pages/exam/screens/exam_info_screen.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/loading_btn.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_btn/loading_btn.dart';
 
-
 class ExamInfo extends StatefulWidget {
   final int courseId;
+
   const ExamInfo({super.key, required this.courseId});
 
   @override
@@ -25,6 +25,8 @@ class _ExamInfoState extends State<ExamInfo> {
   int index = 0;
   final TextEditingController _comment = TextEditingController();
 
+  ExamArgs examArgs =
+      ExamArgs(model: ExamResponseModel(exam: []), comment: '', courseId: 0);
   @override
   void initState() {
     _comment.addListener(() {
@@ -47,64 +49,76 @@ class _ExamInfoState extends State<ExamInfo> {
         }
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).background(),
+          backgroundColor: Theme.of(context).background(),
           appBar: ReversibleAppBar(
               title: index == 0 ? "آزمون دوره" : "آنچه شما یاد گرفته‌اید"),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(16),
-                  child: IndexedStack(
-                    index: index,
-                    children: [
-                      ExamCommentScreen(
-                        comment: _comment,
-                      ),
-                      ExamInfoScreen(comment: _comment.text,),
-                    ],
+          body: Stack(
+            children: [
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.all(16),
+                    child: IndexedStack(
+                      index: index,
+                      children: [
+                        ExamCommentScreen(
+                          comment: _comment,
+                        ),
+                        ExamInfoScreen(
+                          comment: _comment.text,
+                          examArgs: examArgs,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: PrimaryLoadingButton(
-                    title: index == 0 ? 'تایید و ادامه' : "شروع آزمون",
-                    disable: _comment.text.length < 5,
-                    onTap: (Function startLoading, Function stopLoading,
-                        ButtonState btnState) async {
-                      if (btnState == ButtonState.idle) {
-                        startLoading();
-                        FocusScope.of(context).unfocus();
-                        switch (index) {
-                          case 0:
-                            if (_comment.text.length >= 5) {
+              ),
+              Positioned(
+                bottom: 16,
+                left: 16,
+                right: 16,
+                child: PrimaryLoadingButton(
+                  title: index == 0 ? 'تایید و ادامه' : "شروع آزمون",
+                  disable: _comment.text.length < 5,
+                  onTap: (Function startLoading, Function stopLoading,
+                      ButtonState btnState) async {
+                    if (btnState == ButtonState.idle) {
+                      startLoading();
+                      FocusScope.of(context).unfocus();
+                      switch (index) {
+                        case 0:
+                          if (_comment.text.length >= 5) {
+                            try {
+                              ExamResponseModel response =
+                                  await examRepository.getExam(widget.courseId);
+                              examArgs = ExamArgs(
+                                  model: response,
+                                  comment: _comment.text,
+                                  courseId: widget.courseId);
+
                               setState(() {
                                 index += 1;
                               });
-                            }
-
-                            break;
-                          case 1:
-                            try {
-                              ExamResponseModel response =
-                              await examRepository.getExam(widget.courseId);
-                              final args = ExamArgs(
-                                  model: response, comment: _comment.text);
-                              navigatorKey.currentState!.pushReplacementNamed(
-                                  RoutePaths.exam,
-                                  arguments: args);
                             } on DioError {}
-                            break;
-                        }
+                          }
 
-                        stopLoading();
+                          break;
+                        case 1:
+                          navigatorKey.currentState!.pushReplacementNamed(
+                              RoutePaths.exam,
+                              arguments: examArgs);
+
+                          break;
                       }
-                    },
-                  ),
-                )
-              ],
-            ),
+
+                      stopLoading();
+                    }
+                  },
+                ),
+              )
+            ],
           )),
     );
   }

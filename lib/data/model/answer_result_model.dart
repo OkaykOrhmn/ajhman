@@ -3,8 +3,8 @@ class AnswerResultModel {
   int? incorrect;
   int? noAnswer;
   int? total;
+  int? courseId;
 
-  AnswerResultModel({this.correct, this.incorrect, this.noAnswer, this.total});
 
   AnswerResultModel.fromJson(Map<String, dynamic> json) {
     correct = json['correct'];

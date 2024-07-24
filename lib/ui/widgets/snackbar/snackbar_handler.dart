@@ -1,9 +1,8 @@
-
 import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

@@ -1,10 +1,10 @@
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 
 class TitleDivider extends StatelessWidget {
   final String title;
@@ -38,8 +38,10 @@ class TitleDivider extends StatelessWidget {
                         style: Theme.of(context).textTheme.searchHint,
                         color: Theme.of(context).primaryColor,
                       ),
-                      Assets.icon.outline.arrowLeft
-                          .svg(color: Theme.of(context).primaryColor, width: 16, height: 16)
+                      Assets.icon.outline.arrowLeft.svg(
+                          color: Theme.of(context).primaryColor,
+                          width: 16,
+                          height: 16)
                     ],
                   ),
                 )

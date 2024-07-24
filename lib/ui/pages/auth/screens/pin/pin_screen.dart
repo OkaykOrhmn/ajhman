@@ -11,8 +11,8 @@ import '../../../../../core/bloc/ticker/timer_bloc.dart';
 import '../../../../../core/utils/app_locale.dart';
 import '../../../../../data/model/auth/auth_user_otp_request.dart';
 import '../../../../../gen/assets.gen.dart';
-import '../../../../theme/color/colors.dart';
-import '../../../../theme/text/text_styles.dart';
+import '../../../../theme/colors.dart';
+import '../../../../theme/text_styles.dart';
 import '../../../../widgets/button/primary_button.dart';
 import '../../../../widgets/loading/three_bounce_loading.dart';
 

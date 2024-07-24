@@ -10,3 +10,4 @@ class GetInfoChapter extends ChapterEvent{
   GetInfoChapter({required this.chapterId, required this.subChapterId});
 
 }
+

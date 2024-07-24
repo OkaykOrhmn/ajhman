@@ -1,15 +1,11 @@
 class CourseMainArgs {
-  int? courseId;
+  final int? courseId;
+  final int? catId;
+  final String tag;
 
-  CourseMainArgs({this.courseId});
-
-  CourseMainArgs.fromJson(Map<String, dynamic> json) {
-    courseId = json['courseId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['courseId'] = courseId;
-    return data;
-  }
+  CourseMainArgs({
+    required this.courseId,
+    required this.catId,
+    required this.tag,
+  });
 }

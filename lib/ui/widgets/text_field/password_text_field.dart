@@ -1,10 +1,10 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../theme/text/text_styles.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/text_styles.dart';
+import '../../theme/design_config.dart';
 
 class PasswordTextField extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -52,8 +52,14 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
                 child: _passwordVisible
-                    ? Assets.icon.outline.eye.svg(width: 24, height: 24 ,color:  widget.error ? errorMain : grayColor200)
-                    : Assets.icon.outline.eyeSlash.svg(width: 24, height: 24, color:  widget.error ? errorMain : grayColor200),
+                    ? Assets.icon.outline.eye.svg(
+                        width: 24,
+                        height: 24,
+                        color: widget.error ? errorMain : grayColor200)
+                    : Assets.icon.outline.eyeSlash.svg(
+                        width: 24,
+                        height: 24,
+                        color: widget.error ? errorMain : grayColor200),
               )),
           errorText: widget.error
               ? "${ChangeLocale(context).appLocal!.password} ${ChangeLocale(context).appLocal!.wrong}"
@@ -62,7 +68,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           hintText: widget.hint,
           fillColor: backgroundColor200,
           hintStyle: AppTextStyles.primaryTextFieldHint,
-          focusedBorder:  OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Theme.of(context).primaryColor),
             borderRadius: DesignConfig.mediumBorderRadius,
           ),

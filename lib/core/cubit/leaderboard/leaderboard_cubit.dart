@@ -3,6 +3,10 @@ import 'package:meta/meta.dart';
 
 part 'leaderboard_state.dart';
 
-class LeaderboardCubit extends Cubit<LeaderboardState> {
-  LeaderboardCubit() : super(LeaderboardInitial());
+class LeaderboardCubit extends Cubit<int?> {
+  LeaderboardCubit({required final int? examScore}) : super(examScore);
+
+  void setExamScore( int? examScore){
+    emit(examScore);
+  }
 }

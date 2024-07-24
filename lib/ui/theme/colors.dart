@@ -118,190 +118,197 @@ extension ThemeDataApp on ThemeData {
     }
   }
 
-  Color surfacePrimaryColor(){
-    if(brightness == Brightness.light){
+  Color surfacePrimaryColor() {
+    if (brightness == Brightness.light) {
       return this.primaryColor;
-    }else{
+    } else {
       return grayColor800;
     }
   }
 
-  Color white(){
-    if(brightness == Brightness.light){
+  Color white() {
+    if (brightness == Brightness.light) {
       return Colors.white;
-    }else{
+    } else {
       return grayColor800;
     }
   }
 
-  Color black(){
-    if(brightness == Brightness.light){
+  Color black() {
+    if (brightness == Brightness.light) {
       return Colors.black;
-    }else{
+    } else {
       return Colors.white;
     }
   }
 
-  Color onWhite(){
-    if(brightness == Brightness.light){
+  Color onWhite() {
+    if (brightness == Brightness.light) {
       return const Color(0xffeef1f1);
-    }else{
+    } else {
       return grayColor700;
     }
   }
 
-  Color shadow(){
-    if(brightness == Brightness.light){
+  Color shadow() {
+    if (brightness == Brightness.light) {
       return grayColor900;
-    }else{
+    } else {
       return backgroundColor100;
     }
   }
 
-  Color disable(){
-    if(brightness == Brightness.light){
+  Color disable() {
+    if (brightness == Brightness.light) {
       return backgroundColor600;
-    }else{
+    } else {
       return grayColor600;
     }
   }
 
-  Color editTextFilled(){
-    if(brightness == Brightness.light){
+  Color editTextFilled() {
+    if (brightness == Brightness.light) {
       return backgroundColor100;
-    }else{
+    } else {
       return grayColor800;
     }
   }
 
-  Color editTextFont(){
-    if(brightness == Brightness.light){
+  Color editTextFilledAuth() {
+    if (brightness == Brightness.light) {
+      return backgroundColor100;
+    } else {
+      return grayColor700;
+    }
+  }
+
+  Color editTextFont() {
+    if (brightness == Brightness.light) {
       return grayColor600;
-    }else{
-      return grayColor300;
+    } else {
+      return grayColor200;
     }
   }
 
-  Color pinTextFont(){
-    if(brightness == Brightness.light){
+  Color pinTextFont() {
+    if (brightness == Brightness.light) {
       return grayColor800;
-    }else{
+    } else {
       return grayColor100;
     }
   }
 
-  Color background(){
-    if(brightness == Brightness.light){
+  Color background() {
+    if (brightness == Brightness.light) {
       return const Color(0xffeef1f1);
-    }else{
+    } else {
       return grayColor900;
     }
   }
 
-  Color cardBackground(){
-    if(brightness == Brightness.light){
+  Color cardBackground() {
+    if (brightness == Brightness.light) {
       return backgroundColor100;
-    }else{
+    } else {
       return grayColor800;
     }
   }
 
-  Color cardText(){
-    if(brightness == Brightness.light){
+  Color cardText() {
+    if (brightness == Brightness.light) {
       return grayColor700;
-    }else{
+    } else {
       return grayColor50;
     }
   }
 
-  Color progressText(){
-    if(brightness == Brightness.light){
+  Color progressText() {
+    if (brightness == Brightness.light) {
       return grayColor900;
-    }else{
+    } else {
       return grayColor50;
     }
   }
 
-  Color headText(){
-    if(brightness == Brightness.light){
+  Color headText() {
+    if (brightness == Brightness.light) {
       return primaryColor900();
-    }else{
+    } else {
       return grayColor50;
     }
   }
 
-  Color headText2(){
-    if(brightness == Brightness.light){
+  Color headText2() {
+    if (brightness == Brightness.light) {
       return primaryColor800();
-    }else{
+    } else {
       return primaryColor400();
     }
   }
 
-  Color surfaceCard(){
-    if(brightness == Brightness.light){
+  Color surfaceCard() {
+    if (brightness == Brightness.light) {
       return primaryColor50();
-    }else{
+    } else {
       return grayColor400;
     }
   }
 
-  Color secondaryColor(){
-    if(brightness == Brightness.light){
+  Color secondaryColor() {
+    if (brightness == Brightness.light) {
       return secondaryColor600;
-    }else{
+    } else {
       return secondaryColor200;
     }
-
   }
 
-  Color placeholderBaseColor(){
-    if(brightness == Brightness.light){
+  Color placeholderBaseColor() {
+    if (brightness == Brightness.light) {
       return grayColor200;
-    }else{
+    } else {
       return grayColor600;
     }
   }
 
-  Color placeholderHighlightColor(){
-    if(brightness == Brightness.light){
+  Color placeholderHighlightColor() {
+    if (brightness == Brightness.light) {
       return grayColor100;
-    }else{
+    } else {
       return grayColor700;
     }
   }
 
-  Color backgroundSuccess(){
-    if(brightness == Brightness.light){
+  Color backgroundSuccess() {
+    if (brightness == Brightness.light) {
       return successBackground;
-    }else{
+    } else {
       return successFont;
     }
   }
-  Color backgroundError(){
-    if(brightness == Brightness.light){
+
+  Color backgroundError() {
+    if (brightness == Brightness.light) {
       return errorBackground;
-    }else{
+    } else {
       return errorFont;
     }
   }
-  Color fontSuccess(){
-    if(brightness == Brightness.light){
+
+  Color fontSuccess() {
+    if (brightness == Brightness.light) {
       return successFont;
-    }else{
+    } else {
       return successMain;
     }
   }
- Color fontError(){
-    if(brightness == Brightness.light){
+
+  Color fontError() {
+    if (brightness == Brightness.light) {
       return errorFont;
-    }else{
+    } else {
       return errorMain;
     }
   }
-
-
-
 }
 
 const primaryColorLight = primaryColor;

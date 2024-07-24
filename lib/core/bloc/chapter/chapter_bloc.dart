@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
-
 part 'chapter_event.dart';
 
 part 'chapter_state.dart';

@@ -6,7 +6,7 @@ class AnswerCubit extends Cubit<AnswerModel> {
       : super(AnswerModel(
             answerRequestModel: AnswerRequestModel(answers: [],comment: ""), index: 0));
 
-  void changeAnswer(Answers? answers) {
+  Future<void> changeAnswer(Answers? answers) async{
     List<Answers> mainAnswers = state.answerRequestModel.answers!;
     if (answers != null) {
       bool change = false;

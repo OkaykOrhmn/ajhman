@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/widget/design_config.dart';
+import '../../theme/design_config.dart';
 
 class CustomOutlinedPrimaryButton extends StatelessWidget {
   final Widget child;

@@ -3,8 +3,8 @@ import 'package:ajhman/data/args/exam_args.dart';
 import 'package:ajhman/data/model/answer_request_model.dart';
 import 'package:ajhman/data/model/exam_response_model.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
@@ -20,7 +20,7 @@ import '../../../core/utils/usefull_funcs.dart';
 import '../../../data/model/answer_result_model.dart';
 import '../../../data/repository/exam_repository.dart';
 import '../../../gen/assets.gen.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/design_config.dart';
 import '../../widgets/dialogs/dialog_handler.dart';
 import '../../widgets/loading/three_bounce_loading.dart';
 
@@ -210,7 +210,7 @@ class _ExamPageState extends State<ExamPage>
                                   borderRadius: DesignConfig.highBorderRadius,
                                 ),
                                 child: Column(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     PrimaryText(
                                       text: exam.text.toString(),
@@ -231,11 +231,12 @@ class _ExamPageState extends State<ExamPage>
                                           (selected, index, context) {
                                         return Container(
                                           padding: const EdgeInsets.all(8),
-                                          margin:
-                                              const EdgeInsets.symmetric(vertical: 8),
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 8),
                                           decoration: BoxDecoration(
                                               color: selected
-                                                  ? Theme.of(context).primaryColor50()
+                                                  ? Theme.of(context)
+                                                      .primaryColor50()
                                                   : Theme.of(context).onWhite(),
                                               borderRadius: DesignConfig
                                                   .highBorderRadius),
@@ -243,31 +244,39 @@ class _ExamPageState extends State<ExamPage>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Radio<int>(
-                                                groupValue: radioController
-                                                    .selectedIndex,
-                                                activeColor: Theme.of(context).primaryColor,
-                                                value: index,
-                                                onChanged: (val) {
-                                                  radioController
-                                                      .selectIndex(index);
-                                                },
+                                              IgnorePointer(
+                                                ignoring: true,
+                                                child: Radio<int>(
+                                                  groupValue: radioController
+                                                      .selectedIndex,
+                                                  activeColor: Theme.of(context)
+                                                      .primaryColor,
+                                                  value: index,
+                                                  onChanged: (val) {
+                                                    radioController
+                                                        .selectIndex(index);
+                                                  },
+                                                ),
                                               ),
                                               Expanded(
                                                   child: PrimaryText(
                                                 text:
                                                     "${getAlphIndex(index)}${exam.options![index]}",
                                                 style: Theme.of(context)
-                                                    .textTheme.searchHint,
-                                                color: selected? Colors.black :Theme.of(context).pinTextFont(),
+                                                    .textTheme
+                                                    .searchHint,
+                                                color: selected
+                                                    ? Colors.black
+                                                    : Theme.of(context)
+                                                        .pinTextFont(),
                                                 textAlign: TextAlign.start,
                                               )),
                                             ],
                                           ),
                                         );
                                       },
-                                      onSelected: (val, i, selected) {
-                                        context
+                                      onSelected: (val, i, selected) async {
+                                        await context
                                             .read<AnswerCubit>()
                                             .changeAnswer(Answers(
                                                 questionId: exam.id,
@@ -296,8 +305,9 @@ class _ExamPageState extends State<ExamPage>
                                                 answers: state
                                                     .answerRequestModel
                                                     .answers);
-                                        DialogHandler(context).showFinishExamBottomSheet(
-                                            result);
+                                        DialogHandler(context)
+                                            .showFinishExamBottomSheet(result,
+                                                widget.response.courseId);
                                       } else {
                                         final index = state.index + 1;
                                         context
@@ -337,7 +347,7 @@ class _ExamPageState extends State<ExamPage>
                   ? IgnorePointer(
                       ignoring: timOut,
                       child: Container(
-                        color: Colors.white.withOpacity(0.5),
+                        color: Theme.of(context).white().withOpacity(0.5),
                         child: const ThreeBounceLoading(),
                       ),
                     )

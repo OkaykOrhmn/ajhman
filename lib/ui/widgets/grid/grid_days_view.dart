@@ -7,9 +7,9 @@ import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/model/days.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/text/text_styles.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/text_styles.dart';
+import '../../theme/design_config.dart';
 import '../check_box/days_check_box.dart';
 
 class GridDaysView extends StatefulWidget {
@@ -81,7 +81,7 @@ class _GridDaysViewState extends State<GridDaysView> {
             color: Theme.of(context).white(),
             borderRadius: DesignConfig.mediumBorderRadius,
             border: Border.all(
-              width: 2,
+                width: 2,
                 color: days[index].isSelected
                     ? Theme.of(context).primaryColor
                     : Theme.of(context).white())),
@@ -100,11 +100,13 @@ class _GridDaysViewState extends State<GridDaysView> {
                 ),
               ),
               Flexible(
-                  flex: 3,
+                  flex: 2,
                   child: PrimaryText(
                     text: days[index].dayName,
                     style: Theme.of(context).textTheme.rate,
-                    color: days[index].isSelected?Theme.of(context).primaryColor: Theme.of(context).pinTextFont(),
+                    color: days[index].isSelected
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).pinTextFont(),
                   )),
             ],
           ),

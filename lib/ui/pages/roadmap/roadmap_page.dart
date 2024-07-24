@@ -1,21 +1,24 @@
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/model/roadmap_model.dart';
 import 'package:ajhman/data/model/roadmap_view.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
-import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/road.dart';
+import 'package:ajhman/ui/widgets/text/marquee_text.dart';
+import 'package:ajhman/ui/widgets/text/overflow_proof_text.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 
 import '../../../gen/assets.gen.dart';
 
 class RoadMapPage extends StatefulWidget {
   final RoadmapModel response;
+  final String tag;
 
-  const RoadMapPage({super.key, required this.response});
+  const RoadMapPage({super.key, required this.response, required this.tag});
 
   @override
   State<RoadMapPage> createState() => _RoadMapPageState();
@@ -98,7 +101,12 @@ class _RoadMapPageState extends State<RoadMapPage> {
                 VerticalListView(
                     items: widget.response.chapters,
                     item: (context, index) {
-                      RoadmapView view = getRoadMapContainer(true, null);
+                      RoadmapView view = widget
+                                  .response.chapters![index].percent!
+                                  .toDouble() ==
+                              0
+                          ? getLockRoadMapContainer
+                          : getRoadMapContainer(true, null);
                       return Column(
                         crossAxisAlignment: (index + 1) % 2 == 0
                             ? CrossAxisAlignment.end
@@ -124,42 +132,22 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 32.0),
-                                          child: PrimaryText(
-                                            text: widget
-                                                .response.chapters![index].name
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleBold,
-                                            color: view.color,
-                                            textAlign: TextAlign.start,
-                                            maxLines: 2,
-                                          ),
-                                        ),
                                         const SizedBox(
-                                          height: 8,
+                                          height: 12,
                                         ),
-                                        Row(
-                                          children: [
-                                            Assets.icon.outlineMedal.svg(
-                                                color: goldColor,
-                                                width: 16,
-                                                height: 16),
-                                            const SizedBox(
-                                              width: 4,
-                                            ),
-                                            PrimaryText(
-                                                text:
-                                                    "${widget.response.chapters![index].percent} از ۱۰۰",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .searchHint,
-                                                color: Theme.of(context)
-                                                    .pinTextFont())
-                                          ],
+                                        MarqueeText(
+                                          text: widget
+                                              .response.chapters![index].name
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleBold
+                                              .copyWith(color: view.color),
+                                          stop: const Duration(seconds: 2),
+                                          textDirection:
+                                              widget.tag == 'international'
+                                                  ? TextDirection.rtl
+                                                  : TextDirection.ltr,
                                         ),
                                         const SizedBox(
                                           height: 8,
@@ -168,21 +156,91 @@ class _RoadMapPageState extends State<RoadMapPage> {
                                                     .percent ==
                                                 null
                                             ? const SizedBox()
-                                            : Directionality(
-                                                textDirection:
-                                                    TextDirection.ltr,
-                                                child: LinearProgress(
-                                                  value: widget
-                                                          .response
-                                                          .chapters![index]
-                                                          .percent!
-                                                          .toDouble() /
-                                                      100,
-                                                  minHeight: 8,
-                                                  backgroundColor: view.color
-                                                      .withOpacity(0.5),
-                                                  valueColor: view.color,
-                                                ),
+                                            : Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  widget
+                                                              .response
+                                                              .chapters![index]
+                                                              .percent!
+                                                              .toDouble() ==
+                                                          100
+                                                      ? Assets.icon
+                                                          .outlineTickCircle
+                                                          .svg(
+                                                              color:
+                                                                  successMain,
+                                                              width: 12,
+                                                              height: 12)
+                                                      : widget
+                                                                  .response
+                                                                  .chapters![
+                                                                      index]
+                                                                  .percent!
+                                                                  .toDouble() ==
+                                                              0
+                                                          ? Assets.icon.outline
+                                                              .closeCircle
+                                                              .svg(
+                                                                  color:
+                                                                      grayColor,
+                                                                  width: 12,
+                                                                  height: 12)
+                                                          : Assets.icon.outline
+                                                              .moreCircle
+                                                              .svg(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .secondaryColor(),
+                                                                  width: 12,
+                                                                  height: 12),
+                                                  const SizedBox(
+                                                    width: 4,
+                                                  ),
+                                                  widget
+                                                              .response
+                                                              .chapters![index]
+                                                              .percent!
+                                                              .toDouble() ==
+                                                          100
+                                                      ? PrimaryText(
+                                                          text: 'تکمیل شده',
+                                                          style:
+                                                              Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .searchHint,
+                                                          color: successMain)
+                                                      : widget
+                                                                  .response
+                                                                  .chapters![
+                                                                      index]
+                                                                  .percent!
+                                                                  .toDouble() ==
+                                                              0
+                                                          ? Expanded(
+                                                              child: PrimaryText(
+                                                                  text:
+                                                                      'این فصل را هنوز شروع نکرده‌اید',
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .searchHint,
+                                                                  color:
+                                                                      grayColor),
+                                                            )
+                                                          : PrimaryText(
+                                                              text:
+                                                                  'در حال یادگیری',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .searchHint,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .secondaryColor())
+                                                ],
                                               )
                                       ],
                                     ),

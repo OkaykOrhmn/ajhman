@@ -1,5 +1,5 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -46,10 +46,11 @@ class _PrimaryLoadingButtonState extends State<PrimaryLoadingButton>
       height: 46,
       borderRadius: 14,
       animate: false,
-      color: widget.disable ? Theme.of(context).disable() : Theme.of(context).primaryColor,
+      color: widget.disable
+          ? Theme.of(context).disable()
+          : Theme.of(context).primaryColor,
       width: widget.width,
       elevation: widget.disable ? 0 : 2,
-
       roundLoadingShape: false,
       disabledColor: Theme.of(context).primaryColor.withOpacity(0.1),
       loader: Container(
@@ -63,7 +64,7 @@ class _PrimaryLoadingButtonState extends State<PrimaryLoadingButton>
       ),
       onTap: widget.onTap,
       child: PrimaryText(
-        text:  widget.title,
+        text: widget.title,
         style: Theme.of(context).textTheme.title,
         color: Colors.white,
       ),

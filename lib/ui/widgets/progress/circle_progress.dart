@@ -1,8 +1,8 @@
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/color/colors.dart';
+import '../../theme/colors.dart';
 
 class CircleProgress extends StatelessWidget {
   final double value;

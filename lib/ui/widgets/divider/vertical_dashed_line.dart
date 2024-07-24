@@ -1,10 +1,11 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class VerticalDashedLine extends StatelessWidget {
   const VerticalDashedLine(
       {super.key,
-      this.width = 1, this.active,
+      this.width = 1,
+      this.active,
       this.dashSize = 10.0,
       required this.dashed});
 
@@ -15,7 +16,6 @@ class VerticalDashedLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return dashed
         ? LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
@@ -32,7 +32,7 @@ class VerticalDashedLine extends StatelessWidget {
                     height: dashHeight,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                          color: active?? backgroundColor,
+                          color: active ?? backgroundColor,
                           borderRadius: BorderRadius.circular(360)),
                     ),
                   );
@@ -42,7 +42,7 @@ class VerticalDashedLine extends StatelessWidget {
           )
         : VerticalDivider(
             thickness: width,
-            color: active?? backgroundColor,
+            color: active ?? backgroundColor,
           );
   }
 }

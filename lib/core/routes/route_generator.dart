@@ -1,3 +1,4 @@
+import 'package:ajhman/core/bloc/banner/bloc/banner_bloc.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/args/category_args.dart';
 import 'package:ajhman/data/args/course_main_args.dart';
@@ -37,7 +38,9 @@ import '../bloc/search/search_bloc.dart';
 import '../bloc/smart_schedule/planner_cubit.dart';
 import '../bloc/smart_schedule/smart_schedule_bloc.dart';
 import '../bloc/treasure/treasure_bloc.dart';
+import '../cubit/answer/answer_cubit.dart';
 import '../cubit/summery/summery_cubit.dart';
+import '../cubit/timer/timer_cubit.dart';
 
 class RouteGenerator {
   static Route<dynamic> destination(RouteSettings routeSettings) {
@@ -87,6 +90,12 @@ class RouteGenerator {
           BlocProvider<TreasureBloc>(
             create: (buildContext) {
               final bloc = TreasureBloc();
+              return bloc;
+            },
+          ),
+          BlocProvider<BannerBloc>(
+            create: (buildContext) {
+              final bloc = BannerBloc();
               return bloc;
             },
           ),
@@ -172,9 +181,19 @@ class RouteGenerator {
         ));
 
       case RoutePaths.exam:
-        return _createRoute(ExamPage(
-          response: routeSettings.arguments as ExamArgs,
-          // response: ExamResponseModel(),
+        return _createRoute(MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => TimerCubit(),
+            ),
+            BlocProvider(
+              create: (context) => AnswerCubit(),
+            ),
+          ],
+          child: ExamPage(
+            response: routeSettings.arguments as ExamArgs,
+            // response: ExamResponseModel(),
+          ),
         ));
       case RoutePaths.examInfo:
         return _createRoute(ExamInfo(

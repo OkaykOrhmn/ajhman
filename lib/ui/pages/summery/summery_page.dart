@@ -1,15 +1,15 @@
 import 'package:ajhman/core/cubit/summery/summery_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/model/summary_model.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 import '../../widgets/listview/highlight_listview.dart';
 import '../../widgets/text/primary_text.dart';
 

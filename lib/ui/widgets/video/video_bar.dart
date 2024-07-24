@@ -1,5 +1,5 @@
 import 'package:ajhman/data/model/video_player_model.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -10,7 +10,7 @@ import '../../../core/enum/dialogs_status.dart';
 import '../../../core/services/video_handler.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
-import '../../theme/color/colors.dart';
+import '../../theme/colors.dart';
 import '../animation/animated_visibility.dart';
 import '../progress/circle_progress.dart';
 import '../snackbar/snackbar_handler.dart';
@@ -69,8 +69,7 @@ class _VideoBarState extends State<VideoBar> {
                     InkWell(
                       onTap: () async {
                         await context.read<DownloadCubit>().downloadAudio(
-                             widget.audioSource,
-                            widget.name,"ویدیو");
+                            widget.audioSource, widget.name, "ویدیو");
                       },
                       child: BlocConsumer<DownloadCubit, DownloadState>(
                         listener: (downloadContext, state) {
@@ -127,8 +126,8 @@ class _VideoBarState extends State<VideoBar> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(6)),
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 12),
                         child: Center(
                           child: PrimaryText(
                               text: "${state.speed}X",

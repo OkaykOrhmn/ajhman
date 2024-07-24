@@ -1,10 +1,10 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../theme/text/text_styles.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/text_styles.dart';
+import '../../theme/design_config.dart';
 
 class SearchTextField extends StatefulWidget {
   final TextEditingController textEditingController;

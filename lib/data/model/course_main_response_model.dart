@@ -61,9 +61,8 @@ class CourseMainResponseModel {
         chapters!.add(courseMainChapters.fromJson(v));
       });
     }
-    category = json['Category'] != null
-        ? Category.fromJson(json['Category'])
-        : null;
+    category =
+        json['Category'] != null ? Category.fromJson(json['Category']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -101,8 +100,10 @@ class courseMainChapters {
   int? time;
   List<Subchapters>? subchapters;
   bool? isOpen = false;
+  bool? completed = false;
 
-  courseMainChapters({this.id, this.name, this.score, this.subchapters});
+  courseMainChapters(
+      {this.id, this.name, this.score, this.subchapters, this.completed});
 
   courseMainChapters.fromJson(Map<String, dynamic> json) {
     id = json['id'];

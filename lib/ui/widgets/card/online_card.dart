@@ -1,11 +1,11 @@
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 import '../button/primary_button.dart';
 import '../text/primary_text.dart';
 
@@ -46,7 +46,7 @@ class _OnlineCardState extends State<OnlineCard> {
     );
   }
 
-  Padding _info( ) {
+  Padding _info() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -66,7 +66,7 @@ class _OnlineCardState extends State<OnlineCard> {
     );
   }
 
-  Padding _title( ) {
+  Padding _title() {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: PrimaryText(

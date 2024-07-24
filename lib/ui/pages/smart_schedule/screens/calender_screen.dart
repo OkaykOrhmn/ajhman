@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../core/utils/app_locale.dart';
 import '../../../../gen/assets.gen.dart';
-import '../../../theme/text/text_styles.dart';
+import '../../../theme/text_styles.dart';
 import '../../../widgets/grid/grid_days_view.dart';
 
-class CalenderScreen extends StatefulWidget{
+class CalenderScreen extends StatefulWidget {
   const CalenderScreen({super.key});
 
   @override
@@ -21,10 +21,10 @@ class _CalenderScreenState extends State<CalenderScreen> {
           padding: const EdgeInsets.only(top: 24),
           child: Center(
               child: Text(
-                ChangeLocale(context).appLocal!.choiceDay,
-                textAlign: TextAlign.center,
-                style: body1,
-              )),
+            ChangeLocale(context).appLocal!.choiceDay,
+            textAlign: TextAlign.center,
+            style: body1,
+          )),
         ),
         const Padding(
           padding: EdgeInsets.fromLTRB(16, 18, 16, 0),

@@ -1,7 +1,7 @@
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/color/colors.dart';
+import '../../theme/colors.dart';
 import '../text/primary_text.dart';
 
 class HighlightListView extends StatefulWidget {
@@ -36,9 +36,11 @@ class _HighlightListViewState extends State<HighlightListView> {
                       : Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             Padding(
-                              padding:  const EdgeInsets.symmetric(horizontal: 8.0).copyWith(top: 6),
-                              child:   Icon(
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0)
+                                      .copyWith(top: 6),
+                              child: Icon(
                                 Icons.circle,
                                 size: 8,
                                 color: Theme.of(context).editTextFont(),

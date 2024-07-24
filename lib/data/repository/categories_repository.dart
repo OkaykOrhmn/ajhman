@@ -1,6 +1,6 @@
 import 'package:ajhman/core/enum/tags.dart';
 import 'package:ajhman/data/api/dio_helper.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
+import 'package:ajhman/data/model/new_course_card_model.dart';
 import 'package:dio/dio.dart';
 
 import '../api/api_end_points.dart';
@@ -13,11 +13,12 @@ class CategoriesRepository implements Category {
   CategoriesRepository(this.dioHelper);
 
   @override
-  Future<List<NewCourseCardModel>> getCards(List<int> categories,Tags tag) async {
+  Future<List<NewCourseCardModel>> getCards(
+      List<int> categories, Tags tag) async {
     try {
-      Map<String, dynamic>? q = { "categories": categories};
-      if(tag.value !=null){
-        q.addAll({"tag":tag.value});
+      Map<String, dynamic>? q = {"categories": categories};
+      if (tag.value != null) {
+        q.addAll({"tag": tag.value});
       }
       Response response =
           await dioHelper.getRequest(ApiEndPoints.mainCourse, q);
@@ -30,5 +31,5 @@ class CategoriesRepository implements Category {
 }
 
 abstract class Category {
-  Future<List<NewCourseCardModel>> getCards(List<int> categories,Tags tag);
+  Future<List<NewCourseCardModel>> getCards(List<int> categories, Tags tag);
 }

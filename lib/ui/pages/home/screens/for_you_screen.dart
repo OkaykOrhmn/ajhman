@@ -1,7 +1,7 @@
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
 import 'package:ajhman/ui/widgets/divider/vertical_dashed_line.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
@@ -35,7 +35,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
       child: Column(
         children: [
           Container(
-            decoration:  BoxDecoration(
+            decoration: BoxDecoration(
               color: Theme.of(context).cardBackground(),
               borderRadius: DesignConfig.highBorderRadius,
             ),
@@ -45,9 +45,8 @@ class _ForYouScreenState extends State<ForYouScreen> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).secondaryColor(),
-                    borderRadius: DesignConfig.highBorderRadius
-                  ),
+                      color: Theme.of(context).secondaryColor(),
+                      borderRadius: DesignConfig.highBorderRadius),
                   padding: const EdgeInsetsDirectional.symmetric(vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -84,9 +83,9 @@ class _ForYouScreenState extends State<ForYouScreen> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: state.response.isEmpty
-                      ?  Padding(
-                          padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height/20),
-                          child: const EmptyScreen(),
+                      ? const Padding(
+                          padding: EdgeInsets.only(top: 64),
+                          child: EmptyScreen(),
                         )
                       : VerticalListView(
                           item: (context, index) {
@@ -120,19 +119,22 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                         Container(
                                           width: 32,
                                           height: 32,
-                                          padding: const EdgeInsets.only(top: 4),
+                                          padding:
+                                              const EdgeInsets.only(top: 4),
                                           decoration: BoxDecoration(
                                               color: state.response[index]
                                                           .status ==
                                                       "learned"
-                                                  ? Theme.of(context).primaryColor
+                                                  ? Theme.of(context)
+                                                      .primaryColor
                                                   : backgroundColor100,
                                               border: state.response[index]
                                                           .status ==
                                                       "learning"
                                                   ? Border.all(
                                                       width: 1,
-                                                      color: Theme.of(context).primaryColor)
+                                                      color: Theme.of(context)
+                                                          .primaryColor)
                                                   : null,
                                               shape: BoxShape.circle),
                                           child: Center(
@@ -147,16 +149,17 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                                       : state.response[index]
                                                                   .status ==
                                                               "learned"
-                                                          ? Theme.of(context).primaryColor
+                                                          ? Theme.of(context)
+                                                              .primaryColor
                                                           : grayColor600)),
                                         ),
                                         Expanded(
                                           child: VerticalDashedLine(
-                                            active:
-                                                state.response[index].status ==
-                                                        "learned"
-                                                    ? Theme.of(context).primaryColor
-                                                    : null,
+                                            active: state.response[index]
+                                                        .status ==
+                                                    "learned"
+                                                ? Theme.of(context).primaryColor
+                                                : null,
                                             dashed:
                                                 state.response[index].status ==
                                                     "learned",

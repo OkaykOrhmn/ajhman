@@ -1,8 +1,6 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../../data/model/notification_data_model.dart';
-import '../../data/model/notification_model.dart';
 import 'notification_service.dart';
 
 class FirebaseApi {

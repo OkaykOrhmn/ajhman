@@ -1,9 +1,9 @@
-
 import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/data/model/chapter_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/audio/audio_player_wave.dart';
+import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,11 +42,16 @@ class _CourseAudioState extends State<CourseAudio> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          PrimaryImageNetwork(
-              // src:
-              // "https://www.figma.com/file/Qe9pcE7Ts9ZtdwPvUUlBmA/image/ff1d273ecaa678018bbc0b2e8ad787cda708a713",
-              src: banner.source.toString(),
-              aspectRatio: 16 / 9),
+          InkWell(
+            onTap: () {
+              DialogHandler(context).showImageDialog(banner.source.toString());
+            },
+            child: PrimaryImageNetwork(
+                // src:
+                // "https://www.figma.com/file/Qe9pcE7Ts9ZtdwPvUUlBmA/image/ff1d273ecaa678018bbc0b2e8ad787cda708a713",
+                src: banner.source.toString(),
+                aspectRatio: 16 / 9),
+          ),
           const SizedBox(
             height: 16,
           ),

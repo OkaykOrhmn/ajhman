@@ -7,7 +7,7 @@ import '../../../../../core/bloc/auth/auth_screen_bloc.dart';
 import '../../../../../core/bloc/otp/otp_bloc.dart';
 import '../../../../../core/utils/app_locale.dart';
 import '../../../../../data/model/auth/auth_login_user_request.dart';
-import '../../../../theme/text/text_styles.dart';
+import '../../../../theme/text_styles.dart';
 import '../../../../widgets/button/loading_btn.dart';
 import '../../../../widgets/text_field/password_text_field.dart';
 import '../../../../widgets/text_field/primary_text_field.dart';
@@ -49,7 +49,6 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
               _validPassword = false;
             }
             state.otpStatus = OtpStatus.start;
-
           });
         }
       },

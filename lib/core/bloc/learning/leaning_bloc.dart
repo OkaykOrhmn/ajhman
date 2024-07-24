@@ -1,4 +1,4 @@
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
+import 'package:ajhman/data/model/new_course_card_model.dart';
 import 'package:ajhman/data/repository/learning_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -16,12 +16,11 @@ class LeaningBloc extends Bloc<LeaningEvent, LeaningState> {
         try {
           List<NewCourseCardModel> response =
               await learningRepository.getCards(event.path);
-          if(response.isEmpty){
+          if (response.isEmpty) {
             emit(LeaningEmpty());
-          }else{
+          } else {
             emit(LeaningSuccess(response: response));
           }
-
         } on DioError {
           emit(LeaningFail());
         }

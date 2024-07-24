@@ -2,15 +2,15 @@ import 'dart:math';
 
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/data/model/planner_request_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../core/utils/app_locale.dart';
-import '../../../theme/text/text_styles.dart';
-import '../../../theme/widget/design_config.dart';
+import '../../../theme/text_styles.dart';
+import '../../../theme/design_config.dart';
 import '../../../widgets/button/toggle_button_time.dart';
 
 class TimerScreen extends StatefulWidget {
@@ -135,19 +135,25 @@ class _TimerScreenState extends State<TimerScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const SizedBox(width: 4,),
+                    const SizedBox(
+                      width: 4,
+                    ),
                     PrimaryText(
                       text: "دقیقه",
                       style: Theme.of(context).textTheme.rate,
                       color: Theme.of(context).cardText(),
                     ),
-                    const SizedBox(width: 4,),
+                    const SizedBox(
+                      width: 4,
+                    ),
                     PrimaryText(
                       text: "ساعت",
                       style: Theme.of(context).textTheme.rate,
                       color: Theme.of(context).cardText(),
                     ),
-                  const SizedBox(width: 4,)
+                    const SizedBox(
+                      width: 4,
+                    )
                   ],
                 ),
                 const SizedBox(

@@ -1,5 +1,5 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +10,16 @@ class EmptyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        PrimaryText(text: "چیزی در این صفحه وجود ندارد", style: Theme.of(context).textTheme.headerBold, color: Theme.of(context).pinTextFont()),
-        const SizedBox(height: 12,),
+        PrimaryText(
+            text: "چیزی در این صفحه وجود ندارد",
+            style: Theme.of(context).textTheme.headerBold,
+            color: Theme.of(context).pinTextFont()),
+        const SizedBox(
+          height: 12,
+        ),
         Assets.image.emptyMessageFrame.svg()
       ],
     );

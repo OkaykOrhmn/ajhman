@@ -1,9 +1,9 @@
 import 'package:ajhman/ui/pages/home/screens/for_you_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/home_screen.dart';
-import 'package:ajhman/ui/pages/home/screens/learning/learning_screen.dart';
+import 'package:ajhman/ui/pages/home/screens/learning_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/my_treasure_screen.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/bottom_navigation/bottom_navigation_Btn.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -75,7 +74,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                           //this is why click effect Inkwell not work
-                          color:  Theme.of(context).white(),
+                          color: Theme.of(context).white(),
                           boxShadow: DesignConfig.mediumShadow,
                           borderRadius: const BorderRadius.only(
                               topRight: DesignConfig.aHighBorderRadius,

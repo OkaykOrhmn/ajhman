@@ -19,9 +19,9 @@ class ApiEndPoints {
   static String learning = '/learning';
   static String learned = '/learned';
   static String roadmap = '/roadmap';
-  static String  question = '/question';
-  static String  exam = '/exam';
-  static String  leaderboard = '/leaderboard';
-  static String  planner = '/user/planner';
-
+  static String question = '/question';
+  static String exam = '/exam';
+  static String leaderboard = '/leaderboard';
+  static String planner = '/user/planner';
+  static String banner = '/home/banner';
 }

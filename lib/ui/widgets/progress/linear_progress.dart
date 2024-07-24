@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 
 class LinearProgress extends StatelessWidget {
   final double value;
@@ -23,7 +23,8 @@ class LinearProgress extends StatelessWidget {
       backgroundColor: backgroundColor ?? backgroundColor600,
       borderRadius: DesignConfig.highBorderRadius,
       minHeight: minHeight,
-      valueColor: AlwaysStoppedAnimation<Color>(valueColor ?? Theme.of(context).primaryColor600()),
+      valueColor: AlwaysStoppedAnimation<Color>(
+          valueColor ?? Theme.of(context).primaryColor600()),
     );
   }
 }

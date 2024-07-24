@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/color/colors.dart';
+import '../../theme/colors.dart';
 
 class DaysCheckBox extends StatefulWidget {
   final bool value;
   final Function(bool?)? onChange;
-
 
   const DaysCheckBox({super.key, required this.value, this.onChange});
 
@@ -17,7 +16,7 @@ class _DaysCheckBoxState extends State<DaysCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-        side:  BorderSide(
+        side: BorderSide(
           color: Theme.of(context).cardText(),
         ),
         activeColor: Theme.of(context).primaryColor,

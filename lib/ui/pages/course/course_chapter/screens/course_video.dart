@@ -1,6 +1,6 @@
 import 'package:ajhman/data/model/video_player_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/video/video_bar.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
@@ -81,11 +81,10 @@ class _CourseVideoState extends State<CourseVideo> {
     if (videoHandler
         .customVideoPlayerController.videoPlayerController.value.isPlaying) {
       videoHandler.customVideoPlayerController.videoPlayerController.pause();
-      videoHandler.customVideoPlayerController.videoPlayerController
-          .dispose();
+      videoHandler.customVideoPlayerController.videoPlayerController.dispose();
     }
     context.read<VideoPlayerCubit>().reset();
-  
+
     super.dispose();
   }
 

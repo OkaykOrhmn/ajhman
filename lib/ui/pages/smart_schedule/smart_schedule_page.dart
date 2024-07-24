@@ -1,9 +1,8 @@
-
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/smart_schedule/screens/time_screen.dart';
 import 'package:ajhman/ui/pages/smart_schedule/screens/timer_screen.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/widgets/app_bar/primary_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
@@ -48,7 +47,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
           if (state is SmartScheduleSuccess) {
             navigatorKey.currentState!.pop();
             SnackBarHandler(context)
-                .show("با موفقیت انتخاب شد!", DialogStatus.success, true);
+                .show("با موفقیت انجام شد!", DialogStatus.success, true);
           } else if (state is SmartScheduleError) {
             SnackBarHandler(context)
                 .show("خطا! دوباره امتحان کنید.", DialogStatus.error, true);
@@ -70,8 +69,8 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
       child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Theme.of(context).surfaceCard()
-              , borderRadius: BorderRadius.circular(20)),
+              color: Theme.of(context).surfaceCard(),
+              borderRadius: BorderRadius.circular(20)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,9 +100,6 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
             child: PrimaryButton(
                 title: ChangeLocale(context).appLocal!.confirm.toUpperCase(),
                 onClick: () {
-
-
-
                   late SmartScheduleEvent cl = SmartScheduleToCalender();
                   if (state is SmartScheduleCalender) {
                     if (context.read<PlannerCubit>().state.days == null ||
@@ -116,7 +112,6 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
                     }
                     cl = SmartScheduleToTime();
                   } else if (state is SmartScheduleTime) {
-
                     if (context.read<PlannerCubit>().state.time == null) {
                       SnackBarHandler(context).show(
                           "زمان را انتخاب کنید!", DialogStatus.warning, true);

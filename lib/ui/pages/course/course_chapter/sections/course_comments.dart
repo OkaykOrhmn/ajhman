@@ -4,9 +4,9 @@ import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/add_comment_request_model.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/comment/comment_layout.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
@@ -20,7 +20,8 @@ import '../../../../theme/bloc/theme_bloc.dart';
 import '../../../../widgets/button/loading_btn.dart';
 
 class CourseComments extends StatefulWidget {
-  const CourseComments({super.key});
+  final bool eng;
+  const CourseComments({super.key, this.eng = false});
 
   @override
   State<CourseComments> createState() => _CourseCommentsState();
@@ -44,14 +45,14 @@ class _CourseCommentsState extends State<CourseComments> {
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(16),
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
           color: Theme.of(context).cardBackground(),
           borderRadius: DesignConfig.highBorderRadius),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _header(),
-           Padding(
+          Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Divider(
               height: 1,
@@ -148,24 +149,30 @@ class _CourseCommentsState extends State<CourseComments> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const TitleDivider(
-          title: "یک لقمه یادگیری",
+        TitleDivider(
+          title: widget.eng ? 'A bite to learn' : "یک لقمه یادگیری",
           hasPadding: false,
         ),
         const SizedBox(
           height: 16,
         ),
         _commentTextField(
-            "اطلاعات خود را با همکارانتان به اشتراک بگذارید ",
-            "مثال: برای کسب امتیاز بیشتر باید در مذاکره آرام باشیم",
+            widget.eng
+                ? "Share your information with your colleagues"
+                : "اطلاعات خود را با همکارانتان به اشتراک بگذارید ",
+            widget.eng
+                ? "Example: To get more points, we must be calm in the negotiation"
+                : "مثال: برای کسب امتیاز بیشتر باید در مذاکره آرام باشیم",
             true,
             _text),
         const SizedBox(
           height: 16,
         ),
         _commentTextField(
-            "افزودن منابع ",
-            "در صورت نیاز منابع خود را به صورت لینک وارد کنید",
+            widget.eng ? "Add resources" : "افزودن منابع ",
+            widget.eng
+                ? "If necessary, enter your sources as links"
+                : "در صورت نیاز منابع خود را به صورت لینک وارد کنید",
             false,
             _resource),
         const SizedBox(
@@ -173,7 +180,7 @@ class _CourseCommentsState extends State<CourseComments> {
         ),
         PrimaryLoadingButton(
             disable: false,
-            title: "تایید و ارسال",
+            title: widget.eng ? "Confirm and send" : "تایید و ارسال",
             onTap: (Function startLoading, Function stopLoading,
                 ButtonState btnState) async {
               if (_text.text.isNotEmpty) {
@@ -233,8 +240,9 @@ class _CourseCommentsState extends State<CourseComments> {
                         text: '*',
                         style: Theme.of(context).textTheme.title.copyWith(
                             color: errorMain,
-                            fontSize: Theme.of(context).textTheme.title.fontSize! *
-                                context.read<ThemeBloc>().state.fontSize)),
+                            fontSize:
+                                Theme.of(context).textTheme.title.fontSize! *
+                                    context.read<ThemeBloc>().state.fontSize)),
                   ]
                 : null,
           ),
@@ -256,8 +264,10 @@ class _CourseCommentsState extends State<CourseComments> {
             maxLines: null,
             decoration: InputDecoration.collapsed(
               hintText: hint,
-              hintStyle:
-                  Theme.of(context).textTheme.searchHint.copyWith(color: Theme.of(context).editTextFont()),
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .searchHint
+                  .copyWith(color: Theme.of(context).editTextFont()),
             ),
           ),
         ),

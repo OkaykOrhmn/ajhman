@@ -3,18 +3,20 @@ import 'dart:ui';
 import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/data/model/answer_request_model.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/button/custom_outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/loading_btn.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
+import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif/gif.dart';
 import 'package:loading_btn/loading_btn.dart';
@@ -106,6 +108,54 @@ class DialogHandler {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> showImageDialog(String src) async {
+    ThemeData themeData = Theme.of(context);
+    await showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (context) => Dialog(
+        insetPadding: EdgeInsets.zero,
+        backgroundColor: Colors.transparent,
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Stack(
+                children: [
+                  InteractiveViewer(
+                    panEnabled: true, // Set it to false to prevent panning.
+                    minScale: 0.5,
+                    maxScale: 4,
+
+                    child: Center(
+                      child: Stack(
+                        children: [
+                          PrimaryImageNetwork(
+                            src: src,
+                            aspectRatio: 16 / 9,
+                            radius: BorderRadius.zero,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      top: 24,
+                      right: 24,
+                      child: InkWell(
+                          onTap: () => pop(),
+                          child: Assets.icon.bold.closeCircle.svg(
+                              color: Theme.of(context).black(),
+                              width: 24,
+                              height: 24)))
+                ],
+              )),
         ),
       ),
     );
@@ -383,7 +433,8 @@ class DialogHandler {
         });
   }
 
-  Future<void> showFinishExamBottomSheet(AnswerRequestModel answers) async {
+  Future<void> showFinishExamBottomSheet(
+      AnswerRequestModel answers, int courseId) async {
     ThemeData themeData = Theme.of(context);
     await showModalBottomSheet(
         context: context,
@@ -434,7 +485,9 @@ class DialogHandler {
                               startLoading();
                               try {
                                 AnswerResultModel response =
-                                    await examRepository.postExam(4, answers);
+                                    await examRepository.postExam(
+                                        courseId, answers);
+                                response.courseId = courseId;
                                 pop();
                                 navigatorKey.currentState!.pushReplacementNamed(
                                     RoutePaths.examResult,

@@ -1,8 +1,8 @@
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/text/text_styles.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/text_styles.dart';
+import '../../theme/design_config.dart';
 
 class OutlinedPrimaryButton extends StatelessWidget {
   final String title;
@@ -19,15 +19,15 @@ class OutlinedPrimaryButton extends StatelessWidget {
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
               foregroundColor: Theme.of(context).primaryColor,
-              side:  BorderSide(color: Theme.of(context).primaryColor),
+              side: BorderSide(color: Theme.of(context).primaryColor),
               shape: const RoundedRectangleBorder(
-                borderRadius:DesignConfig.mediumBorderRadius,
+                borderRadius: DesignConfig.mediumBorderRadius,
               )),
           onPressed: onClick,
           child: PrimaryText(
-           text:  title,
+            text: title,
             color: Theme.of(context).primaryColor,
-            style: AppTextStyles.outlinedPrimaryButtonText,
+            style: Theme.of(context).textTheme.searchHint,
           )),
     );
   }

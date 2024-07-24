@@ -1,6 +1,6 @@
 import 'package:ajhman/gen/assets.gen.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/loading_btn.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';

@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/cubit/audio/audio_player_cubit.dart';
 import '../../../core/services/audio_handler.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 import '../loading/three_bounce_loading.dart';
 import 'audio_bar.dart';
 
@@ -71,7 +71,6 @@ class _AudioPlayerWaveState extends State<AudioPlayerWave> {
       audioHandler.positionSubscriptionS?.cancel();
       audioHandler.playerCompleteSubscriptionS?.cancel();
       audioHandler.playerStateChangeSubscriptionS?.cancel();
-
     }
 
     super.dispose();

@@ -1,15 +1,15 @@
 import 'package:ajhman/core/enum/card_type.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
+import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/icon_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 import '../button/primary_button.dart';
 import '../text/primary_text.dart';
 
@@ -18,7 +18,8 @@ class NewCourseCardPlaceholder extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final double? width;
   final double? height;
-  const NewCourseCardPlaceholder({super.key, this.padding, required this.type, this.width, this.height});
+  const NewCourseCardPlaceholder(
+      {super.key, this.padding, required this.type, this.width, this.height});
 
   @override
   State<NewCourseCardPlaceholder> createState() => _RecentCurseCardState();
@@ -72,7 +73,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
       case CardType.onLearning:
         return Column(
           children: [
-             Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
@@ -118,7 +119,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
       case CardType.completed:
         return Column(
           children: [
-             Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Divider(
                 height: 1,
@@ -265,8 +266,9 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
 
   Container _rateBar(String rate) {
     return Container(
-      decoration:  BoxDecoration(
-          color: Theme.of(context).white(), borderRadius: DesignConfig.highBorderRadius),
+      decoration: BoxDecoration(
+          color: Theme.of(context).white(),
+          borderRadius: DesignConfig.highBorderRadius),
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       child: Center(
         child: Row(

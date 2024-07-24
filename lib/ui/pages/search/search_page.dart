@@ -1,7 +1,7 @@
 import 'package:ajhman/core/bloc/search/search_bloc.dart';
 import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/gen/assets.gen.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
@@ -15,8 +15,8 @@ import 'package:group_button/group_button.dart';
 
 import '../../../core/enum/card_type.dart';
 import '../../../main.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 import '../../widgets/card/new_course_card.dart';
 import '../../widgets/card/news_course_card_placeholder.dart';
 
@@ -90,25 +90,32 @@ class _SearchPageState extends State<SearchPage> {
                   buttonIndexedBuilder: (selected, index, context) {
                     return Container(
                       decoration: BoxDecoration(
-                          border: Border.all(color: Theme.of(context).primaryColor, width: 1),
+                          border: Border.all(
+                              color: Theme.of(context).primaryColor, width: 1),
                           borderRadius: DesignConfig.veryHighBorderRadius,
-                          color: selected ? Theme.of(context).primaryColor : Theme.of(context).white()),
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                          color: selected
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).white()),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 16),
                       margin: const EdgeInsets.symmetric(horizontal: 8),
                       child: Row(
                         children: [
                           SvgGenImage(types[index].outlined).svg(
                               width: 16,
                               height: 16,
-                              color: selected ? Colors.white : Theme.of(context).primaryColor),
+                              color: selected
+                                  ? Colors.white
+                                  : Theme.of(context).primaryColor),
                           const SizedBox(
                             width: 8,
                           ),
                           PrimaryText(
                               text: types[index].title,
                               style: mThemeData.textTheme.title,
-                              color: selected ? Colors.white : Theme.of(context).primaryColor)
+                              color: selected
+                                  ? Colors.white
+                                  : Theme.of(context).primaryColor)
                         ],
                       ),
                     );
@@ -119,13 +126,11 @@ class _SearchPageState extends State<SearchPage> {
                         courseTypes = types[index];
                       } else {
                         courseTypes = null;
-
                       }
-                      if(_search.text.isNotEmpty){
+                      if (_search.text.isNotEmpty) {
                         context.read<SearchBloc>().add(GetAllSearch(
                             type: courseTypes?.type, search: _search.text));
                       }
-
                     });
                   },
                   buttons: types,
@@ -136,29 +141,27 @@ class _SearchPageState extends State<SearchPage> {
               if (state is SearchSuccess) {
                 return VerticalListView(
                   placeholder: const NewCourseCardPlaceholder(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     type: CardType.normal,
                   ),
                   item: (context, index) => NewCourseCard(
                     index: index,
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16)
-                        .copyWith(top: index == 0 ? 0 : 8),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16)
+                            .copyWith(top: index == 0 ? 0 : 8),
                     response: state.response[index],
                   ),
                   items: state.response,
                 );
               } else if (state is SearchEmpty) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.sizeOf(context).height / 10),
-                  child: const EmptyScreen(),
+                return const Padding(
+                  padding: EdgeInsets.only(top: 86.0),
+                  child: EmptyScreen(),
                 );
               } else if (state is SearchLoading) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.sizeOf(context).height / 10),
-                  child: const ThreeBounceLoading(),
+                return const Padding(
+                  padding: EdgeInsets.only(top: 220.0),
+                  child: ThreeBounceLoading(),
                 );
               } else {
                 return const SizedBox();

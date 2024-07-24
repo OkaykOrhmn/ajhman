@@ -1,10 +1,10 @@
-
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/core/utils/extentions.dart';
 import 'package:ajhman/data/model/planner_request_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,6 @@ import '../../../../data/model/t_buttons.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../widgets/button/little_primary_button.dart';
 import '../../../widgets/button/toggle_buttons_row.dart';
-
 
 class TimeScreen extends StatefulWidget {
   const TimeScreen({super.key});
@@ -115,13 +114,16 @@ class _TimeScreenState extends State<TimeScreen> {
             color: Theme.of(context).cardText(),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-          child: ToggleButtonsRow(
-            buttons: buttons,
-            extraClick: (index) {
-              _minInput.clear();
-            },
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+            child: ToggleButtonsRow(
+              buttons: buttons,
+              extraClick: (index) {
+                _minInput.clear();
+              },
+            ),
           ),
         ),
         TimeInput(context),
@@ -152,7 +154,7 @@ class _TimeScreenState extends State<TimeScreen> {
                       }
                       print("change");
                     },
-                    style:  Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.title,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,

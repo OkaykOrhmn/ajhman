@@ -1,4 +1,4 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalDashedLine extends StatelessWidget {
@@ -15,7 +15,6 @@ class HorizontalDashedLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return dashed
         ? LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
@@ -32,7 +31,7 @@ class HorizontalDashedLine extends StatelessWidget {
                     height: dashHeight,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                          color: active?? backgroundColor,
+                          color: active ?? backgroundColor,
                           borderRadius: BorderRadius.circular(360)),
                     ),
                   );
@@ -42,7 +41,7 @@ class HorizontalDashedLine extends StatelessWidget {
           )
         : Divider(
             thickness: height,
-      color: active?? backgroundColor,
+            color: active ?? backgroundColor,
           );
   }
 }

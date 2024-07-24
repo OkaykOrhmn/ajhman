@@ -1,4 +1,3 @@
-
 import 'package:ajhman/ui/widgets/button/loading_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,7 @@ import 'package:pinput/pinput.dart';
 import '../../../../../core/bloc/auth/auth_screen_bloc.dart';
 import '../../../../../core/bloc/otp/otp_bloc.dart';
 import '../../../../../core/utils/app_locale.dart';
-import '../../../../theme/text/text_styles.dart';
+import '../../../../theme/text_styles.dart';
 import '../../../../widgets/text_field/mobile_number_text_field.dart';
 
 class LoginOtpScreen extends StatefulWidget {
@@ -88,64 +87,64 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
 
   Column fields(BuildContext context) {
     return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  ChangeLocale(context).appLocal!.pleaseEnterMobileNumber,
-                  style: body1,
-                ),
-              ),
-              MobileNumberTextField(
-                readOnly: _loading,
-                error: _errorPhoneNumber,
-                textEditingController: _phoneNumber,
-                onChange: (s) {
-                  setState(() {
-                    _errorPhoneNumber = false;
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            ChangeLocale(context).appLocal!.pleaseEnterMobileNumber,
+            style: body1,
+          ),
+        ),
+        MobileNumberTextField(
+          readOnly: _loading,
+          error: _errorPhoneNumber,
+          textEditingController: _phoneNumber,
+          onChange: (s) {
+            setState(() {
+              _errorPhoneNumber = false;
 
-                    if (s.isNotEmpty) {
-                      if (s.startsWith("09")) {
-                        _errorPhoneNumber = false;
-                        if (s.length == 11) {
-                          _validPhoneNumber = true;
-                        } else {
-                          _validPhoneNumber = false;
-                        }
-                      } else {
-                        _errorPhoneNumber = true;
-                      }
-                    } else {
-                      _errorPhoneNumber = true;
-                    }
-                  });
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              // TextButton(
-              //     style: AppButtonsStyle.linkPrimaryTextButton,
-              //     onPressed: () {
-              //       setState(() {
-              //         context
-              //             .read<AuthScreensBloc>()
-              //             .add(AuthNavigatePasswordEvent());
-              //       });
-              //     },
-              //     child: Row(
-              //       mainAxisSize: MainAxisSize.min,
-              //       children: [
-              //         Assets.icon.outline.login
-              //             .svg(color: primaryColor, width: 16),
-              //         const SizedBox(
-              //           width: 8,
-              //         ),
-              //         Text(ChangeLocale(context).appLocal!.loginWithPassword),
-              //       ],
-              //     ))
-            ],
-          );
+              if (s.isNotEmpty) {
+                if (s.startsWith("09")) {
+                  _errorPhoneNumber = false;
+                  if (s.length == 11) {
+                    _validPhoneNumber = true;
+                  } else {
+                    _validPhoneNumber = false;
+                  }
+                } else {
+                  _errorPhoneNumber = true;
+                }
+              } else {
+                _errorPhoneNumber = true;
+              }
+            });
+          },
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        // TextButton(
+        //     style: AppButtonsStyle.linkPrimaryTextButton,
+        //     onPressed: () {
+        //       setState(() {
+        //         context
+        //             .read<AuthScreensBloc>()
+        //             .add(AuthNavigatePasswordEvent());
+        //       });
+        //     },
+        //     child: Row(
+        //       mainAxisSize: MainAxisSize.min,
+        //       children: [
+        //         Assets.icon.outline.login
+        //             .svg(color: primaryColor, width: 16),
+        //         const SizedBox(
+        //           width: 8,
+        //         ),
+        //         Text(ChangeLocale(context).appLocal!.loginWithPassword),
+        //       ],
+        //     ))
+      ],
+    );
   }
 }

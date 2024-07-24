@@ -1,6 +1,6 @@
 import 'package:ajhman/data/model/notification_data_model.dart';
 import 'package:ajhman/data/model/notification_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

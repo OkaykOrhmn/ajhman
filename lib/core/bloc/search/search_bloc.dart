@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
-import '../../../data/model/cards/new_course_card_model.dart';
+import '../../../data/model/new_course_card_model.dart';
 import '../../../data/repository/course_repository.dart';
 
 part 'search_event.dart';

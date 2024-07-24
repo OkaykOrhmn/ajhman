@@ -1,8 +1,8 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../theme/widget/design_config.dart';
+import '../../theme/design_config.dart';
 
 class DefaultPlaceHolder extends StatelessWidget {
   final Widget child;
@@ -16,7 +16,8 @@ class DefaultPlaceHolder extends StatelessWidget {
       highlightColor: Theme.of(context).placeholderHighlightColor(),
       child: Container(
           decoration: BoxDecoration(
-              color: Theme.of(context).white(), borderRadius: DesignConfig.highBorderRadius),
+              color: Theme.of(context).white(),
+              borderRadius: DesignConfig.highBorderRadius),
           child: child),
     );
   }

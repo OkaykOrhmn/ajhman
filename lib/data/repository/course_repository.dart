@@ -1,5 +1,5 @@
 import 'package:ajhman/data/api/dio_helper.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
+import 'package:ajhman/data/model/new_course_card_model.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/data/model/my_treasure_model.dart';
@@ -41,17 +41,19 @@ class CourseRepository implements Course {
   }
 
   @override
-  Future<List<NewCourseCardModel>> getSearch(String? type,
-      String search) async {
+  Future<List<NewCourseCardModel>> getSearch(
+      String? type, String search) async {
     try {
       Map<String, dynamic>? q = {
         "q": search,
       };
       if (type != null) {
-        q.addAll({ "type": type,});
+        q.addAll({
+          "type": type,
+        });
       }
-      Response response = await dioHelper.getRequest(
-          ApiEndPoints.mainCourse, q);
+      Response response =
+          await dioHelper.getRequest(ApiEndPoints.mainCourse, q);
       final List<dynamic> postMaps = response.data;
       return postMaps.map((e) => NewCourseCardModel.fromJson(e)).toList();
     } catch (ex) {
@@ -60,11 +62,10 @@ class CourseRepository implements Course {
   }
 
   @override
-  Future<List<NewCourseCardModel>> getForYou() async{
+  Future<List<NewCourseCardModel>> getForYou() async {
     try {
-
       Response response = await dioHelper.getRequest(
-          ApiEndPoints.mainCourse+ApiEndPoints.forYou, null);
+          ApiEndPoints.mainCourse + ApiEndPoints.forYou, null);
       final List<dynamic> postMaps = response.data;
       return postMaps.map((e) => NewCourseCardModel.fromJson(e)).toList();
     } catch (ex) {
@@ -72,13 +73,11 @@ class CourseRepository implements Course {
     }
   }
 
-
   @override
-  Future<MyTreasureModel> getTreasure() async{
+  Future<MyTreasureModel> getTreasure() async {
     try {
-
       Response response = await dioHelper.getRequest(
-          ApiEndPoints.mainCourse+ApiEndPoints.treasure, null);
+          ApiEndPoints.mainCourse + ApiEndPoints.treasure, null);
       final postMaps = response.data;
       return MyTreasureModel.fromJson(postMaps);
     } catch (ex) {
@@ -87,9 +86,8 @@ class CourseRepository implements Course {
   }
 
   @override
-  Future<SummaryModel> getSummery(int id) async{
+  Future<SummaryModel> getSummery(int id) async {
     try {
-
       Response response = await dioHelper.getRequest(
           '${ApiEndPoints.mainCourse}/$id${ApiEndPoints.summary}', null);
       final postMaps = response.data;
@@ -100,11 +98,10 @@ class CourseRepository implements Course {
   }
 
   @override
-  Future<Response> getRegCourse(int id) async{
+  Future<Response> getRegCourse(int id) async {
     try {
-
       Response response = await dioHelper.postRequest(
-          '${ApiEndPoints.mainCourse}/$id${ApiEndPoints.register}', null,null);
+          '${ApiEndPoints.mainCourse}/$id${ApiEndPoints.register}', null, null);
       return response;
     } catch (ex) {
       rethrow;
@@ -112,9 +109,8 @@ class CourseRepository implements Course {
   }
 
   @override
-  Future<LeaderboardModel> getLeaderboard(int id) async{
+  Future<LeaderboardModel> getLeaderboard(int id) async {
     try {
-
       Response response = await dioHelper.getRequest(
           '${ApiEndPoints.mainCourse}/$id${ApiEndPoints.leaderboard}', null);
       return LeaderboardModel.fromJson(response.data);

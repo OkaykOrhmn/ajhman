@@ -3,7 +3,7 @@ import 'package:ajhman/data/args/course_main_args.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/pages/course/course_info_page.dart';
 import 'package:ajhman/ui/pages/roadmap/roadmap_page.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:flutter/material.dart';
@@ -42,52 +42,63 @@ class _CourseMainPageState extends State<CourseMainPage> {
       appBar: const ReversibleAppBar(title: "محتوای دوره"),
       body: BlocConsumer<CourseMainBloc, CourseMainState>(
         builder: (context, state) {
-
           if (state is CourseMainSuccess) {
             return CourseInfoPage(response: state.response);
           } else if (state is CourseRoadmapSuccess) {
-            return Stack(
-              children: [
-                RoadMapPage(
-                  response: state.response,
+            if (widget.args.catId == 6) {
+              return Center(
+                child: Gif(
+                  image: Assets.gif.roadMapLoading.provider(),
+                  autostart: Autostart.loop,
                 ),
-                Positioned(
-                    bottom: 24,
-                    left: 16,
-                    right: 16,
-                    child: OutlinePrimaryLoadingButton(
-                      title: "رفتن به صفحه دوره",
-                      onTap: (Function startLoading, Function stopLoading,
-                          ButtonState btnState) async {
-                        if (btnState == ButtonState.idle) {
-                          startLoading();
+              );
+            } else {
+              return Stack(
+                children: [
+                  RoadMapPage(
+                    response: state.response,
+                    tag: widget.args.tag.toString(),
+                  ),
+                  Positioned(
+                      bottom: 24,
+                      left: 16,
+                      right: 16,
+                      child: OutlinePrimaryLoadingButton(
+                        title: "رفتن به صفحه دوره",
+                        onTap: (Function startLoading, Function stopLoading,
+                            ButtonState btnState) async {
+                          if (btnState == ButtonState.idle) {
+                            startLoading();
 
-                          context
-                              .read<QuestionsBloc>()
-                              .add(GetAllQuestions(id: widget.args.courseId!));
+                            context.read<QuestionsBloc>().add(
+                                GetAllQuestions(id: widget.args.courseId!));
 
-                          await context.read<QuestionsBloc>().stream.firstWhere(
-                              (state) =>
-                                  state is QuestionsSuccess ||
-                                  state is QuestionsFail);
+                            await context
+                                .read<QuestionsBloc>()
+                                .stream
+                                .firstWhere((state) =>
+                                    state is QuestionsSuccess ||
+                                    state is QuestionsFail);
 
-                          context.read<CourseMainBloc>().add(GetCourseMainInfo(
-                              courseId: widget.args.courseId!));
+                            context.read<CourseMainBloc>().add(
+                                GetCourseMainInfo(
+                                    courseId: widget.args.courseId!));
 
-                          await context
-                              .read<CourseMainBloc>()
-                              .stream
-                              .firstWhere((state) =>
-                                  state is CourseMainSuccess ||
-                                  state is CourseMainFail);
+                            await context
+                                .read<CourseMainBloc>()
+                                .stream
+                                .firstWhere((state) =>
+                                    state is CourseMainSuccess ||
+                                    state is CourseMainFail);
 
-                          stopLoading();
-                        }
-                      },
-                      disable: false,
-                    ))
-              ],
-            );
+                            stopLoading();
+                          }
+                        },
+                        disable: false,
+                      ))
+                ],
+              );
+            }
           } else {
             return Center(
               child: Gif(
@@ -97,7 +108,7 @@ class _CourseMainPageState extends State<CourseMainPage> {
             );
           }
         },
-        listener: (BuildContext context, CourseMainState state) {
+        listener: (BuildContext context, CourseMainState state) async {
           if (state is CourseRoadmapEmpty) {
             context
                 .read<CourseMainBloc>()
@@ -109,6 +120,20 @@ class _CourseMainPageState extends State<CourseMainPage> {
             SnackBarHandler(context).show(
                 "خطایی رخ داده دوباره امتحان کنید!", DialogStatus.error, true);
             navigatorKey.currentState!.pop();
+          } else if (widget.args.catId == 6) {
+            context
+                .read<QuestionsBloc>()
+                .add(GetAllQuestions(id: widget.args.courseId!));
+
+            await context.read<QuestionsBloc>().stream.firstWhere(
+                (state) => state is QuestionsSuccess || state is QuestionsFail);
+
+            context
+                .read<CourseMainBloc>()
+                .add(GetCourseMainInfo(courseId: widget.args.courseId!));
+
+            await context.read<CourseMainBloc>().stream.firstWhere((state) =>
+                state is CourseMainSuccess || state is CourseMainFail);
           }
         },
       ),

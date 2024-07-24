@@ -1,17 +1,16 @@
 import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
-import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:ajhman/ui/widgets/image/profile_image_network.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
+import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,8 +97,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                             future: getProfile(),
                                             builder: (context, snapshot) {
                                               return ProfileImageNetwork(
-                                                  src: getImageUrl(
-                                                      snapshot.data!.image),
+                                                  src: snapshot.data!.image
+                                                      .toString(),
                                                   width: 72,
                                                   height: 72);
                                             }),
@@ -392,8 +391,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 borderRadius: DesignConfig.lowBorderRadius),
                             padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 18),
-                            margin:
-                                const EdgeInsetsDirectional.symmetric(vertical: 4),
+                            margin: const EdgeInsetsDirectional.symmetric(
+                                vertical: 4),
                             child: Center(
                               child: PrimaryText(
                                   text:
@@ -413,7 +412,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                               .read<ThemeBloc>()
                                               .state
                                               .fontSize -
-                                          0.5,
+                                          0.2,
+                                      min: 0.8,
                                       thumbColor:
                                           Theme.of(context).primaryColor700(),
                                       activeColor:
@@ -423,7 +423,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         setState(() {
                                           context.read<ThemeBloc>().add(
                                               ThemeSizeEvent(
-                                                  fontSize: v + 0.5));
+                                                  fontSize: v + 0.2));
                                         });
                                       })))
                         ],
@@ -521,8 +521,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   onTap: () async {
                     await clearToken();
                     await clearProfile();
-                    navigatorKey.currentState!
-                        .restorablePopAndPushNamed(RoutePaths.splash);
+                    Navigator.of(context).pushNamed(RoutePaths.splash);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16),

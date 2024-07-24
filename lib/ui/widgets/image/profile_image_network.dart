@@ -1,9 +1,10 @@
+import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/design_config.dart';
 
 class ProfileImageNetwork extends StatelessWidget {
   final String src;
@@ -26,7 +27,7 @@ class ProfileImageNetwork extends StatelessWidget {
         child: ClipRRect(
           borderRadius: DesignConfig.circularBorderRadius,
           child: CachedNetworkImage(
-            imageUrl: src,
+            imageUrl: ApiEndPoints.baseURL + src,
             placeholder: (context, url) => Shimmer.fromColors(
                 baseColor: Colors.grey[300]!,
                 highlightColor: Colors.grey[100]!,

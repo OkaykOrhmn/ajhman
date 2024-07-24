@@ -1,12 +1,12 @@
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
+import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
 import 'package:flutter/material.dart';
 
 import '../../../main.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 import '../text/primary_text.dart';
 
 class RecentCourseCardPlaceholder extends StatefulWidget {
@@ -55,20 +55,10 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
                         children: [
                           const DefaultPlaceHolder(
                               child: SizedBox(
-                                width: 200,
-                                height: 12,
-                              )),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          const DefaultPlaceHolder(
-                              child: SizedBox(
-                                width: 130,
-                                height: 12,
-                              )),
-                          const SizedBox(
-                            height: 24
-                          ),
+                            width: 160,
+                            height: 12,
+                          )),
+                          const SizedBox(height: 24),
                           _infoes(),
                           const SizedBox(
                             height: 24,
@@ -78,7 +68,8 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
                               width: 100,
                               decoration: BoxDecoration(
                                   boxShadow: DesignConfig.lowShadow),
-                              child: const LinearProgress(value: 0.8, minHeight: 8),
+                              child: const LinearProgress(
+                                  value: 0.8, minHeight: 8),
                             ),
                           ),
                         ],

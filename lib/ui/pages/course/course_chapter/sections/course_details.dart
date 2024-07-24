@@ -1,17 +1,19 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../widgets/listview/highlight_listview.dart';
 
 class CourseDetails extends StatefulWidget {
-  const CourseDetails({super.key});
+  final bool eng;
+  const CourseDetails({super.key, this.eng = false});
 
   @override
   State<CourseDetails> createState() => _CourseDetailsState();
@@ -26,44 +28,47 @@ class _CourseDetailsState extends State<CourseDetails> {
 
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          margin: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: Theme.of(context).cardBackground(),
-              borderRadius: DesignConfig.highBorderRadius,
-              boxShadow: DesignConfig.lowShadow),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              PrimaryText(
-                text: "آنچه در این دوره می‌آموزیم",
-                style: Theme.of(context).textTheme.dialogTitle,
-                color: Theme.of(context).headText(),
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              HighlightListView(
-                items: data.highlight!,
-              )
-            ],
-          ),
-        ),
+        // Container(
+        //   padding: const EdgeInsets.all(16),
+        //   margin: const EdgeInsets.all(16),
+        //   decoration: BoxDecoration(
+        //       color: Theme.of(context).cardBackground(),
+        //       borderRadius: DesignConfig.highBorderRadius,
+        //       boxShadow: DesignConfig.lowShadow),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       PrimaryText(
+        //         text: widget.eng
+        //             ? "What we learn in this course"
+        //             : "آنچه در این دوره می‌آموزیم",
+        //         style: Theme.of(context).textTheme.dialogTitle,
+        //         color: Theme.of(context).headText(),
+        //         textAlign: TextAlign.start,
+        //       ),
+        //       const SizedBox(
+        //         height: 16,
+        //       ),
+        //       HighlightListView(
+        //         items: data.highlight!,
+        //       )
+        //     ],
+        //   ),
+        // ),
         Stack(
           children: [
             Container(
               margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(16).copyWith(bottom: _showMore ? 48 : 16),
+              padding: const EdgeInsets.all(16)
+                  .copyWith(bottom: _showMore ? 48 : 16),
               decoration: BoxDecoration(
                   boxShadow: DesignConfig.lowShadow,
                   color: Theme.of(context).white(),
                   borderRadius: DesignConfig.highBorderRadius),
               child: Column(
                 children: [
-                  const TitleDivider(
-                    title: "توضیحات جلسه",
+                  TitleDivider(
+                    title: widget.eng ? "Session Description" : "توضیحات جلسه",
                     hasPadding: false,
                   ),
                   const SizedBox(
@@ -71,12 +76,21 @@ class _CourseDetailsState extends State<CourseDetails> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: PrimaryText(
-                      text: data.description.toString(),
-                      style: Theme.of(context).textTheme.title,
-                      color: Theme.of(context).progressText(),
-                      textAlign: TextAlign.justify,
-                      maxLines: _showMore ? null : 10,
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxHeight: _showMore
+                            ? double.infinity
+                            : (Theme.of(context).textTheme.title.fontSize! * 6),
+                      ),
+                      child: SingleChildScrollView(
+                        physics: NeverScrollableScrollPhysics(),
+                        child: HtmlWidget(
+                          data.description.toString(),
+                          textStyle: Theme.of(context).textTheme.title.copyWith(
+                                color: Theme.of(context).headText(),
+                              ),
+                        ),
+                      ),
                     ),
                   )
                 ],
@@ -87,7 +101,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                 left: 16,
                 right: 16,
                 child: Container(
-                  height: 90,
+                  height: 64,
                   alignment: Alignment.bottomCenter,
                   decoration: _showMore
                       ? null

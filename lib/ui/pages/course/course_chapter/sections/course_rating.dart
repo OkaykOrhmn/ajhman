@@ -1,9 +1,9 @@
 import 'package:ajhman/core/bloc/questions/questions_bloc.dart';
 import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/data/model/feedbacks_questions_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
@@ -99,7 +99,8 @@ class _CourseRatingState extends State<CourseRating> {
                             ),
                             PrimaryText(
                                 text: "4.2",
-                                style: Theme.of(context).textTheme.headerLargeBold,
+                                style:
+                                    Theme.of(context).textTheme.headerLargeBold,
                                 color: Theme.of(context).cardText()),
                             const SizedBox(
                               width: 16,
@@ -177,7 +178,12 @@ class _CourseRatingState extends State<CourseRating> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      PrimaryText(text: _radioButtons[index],style: Theme.of(context).textTheme.title,color: Theme.of(context).progressText(),),
+                                      PrimaryText(
+                                        text: _radioButtons[index],
+                                        style:
+                                            Theme.of(context).textTheme.title,
+                                        color: Theme.of(context).progressText(),
+                                      ),
                                       Radio<int>(
                                         groupValue:
                                             radioController.selectedIndex,

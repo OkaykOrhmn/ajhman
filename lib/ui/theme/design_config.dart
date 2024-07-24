@@ -1,5 +1,5 @@
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,47 +35,45 @@ class DesignConfig {
   // );
 
   static List<BoxShadow> get defaultShadow => [
-    BoxShadow(
-      color: Theme.of(context!).white().withOpacity(0.25),
-      blurRadius: 16,
-      spreadRadius: 0,
-    )
-  ];
+        BoxShadow(
+          color: Theme.of(context!).white().withOpacity(0.25),
+          blurRadius: 16,
+          spreadRadius: 0,
+        )
+      ];
 
   static List<BoxShadow> get mediumShadow => [
-    BoxShadow(
-      color: const Color(0XFF1B3C59).withOpacity(0.25),
-      blurRadius: 10,
-      spreadRadius: 0,
-
-    )
-  ];
+        BoxShadow(
+          color: const Color(0XFF1B3C59).withOpacity(0.25),
+          blurRadius: 10,
+          spreadRadius: 0,
+        )
+      ];
 
   static List<BoxShadow> get lowShadow => [
-    BoxShadow(
-      color: const Color(0XFF1B3C59).withOpacity(0.1),
-      blurRadius: 10,
-      spreadRadius: 0,
+        BoxShadow(
+          color: const Color(0XFF1B3C59).withOpacity(0.1),
+          blurRadius: 10,
+          spreadRadius: 0,
+        )
+      ];
 
-    )
-  ];
-
-  static EdgeInsetsGeometry horizontalListViwItemPadding(double size, int index, int count){
-
+  static EdgeInsetsGeometry horizontalListViwItemPadding(
+      double size, int index, int count) {
     return index == 0
-        ?  EdgeInsets.fromLTRB((size/2), size, size, size)
+        ? EdgeInsets.fromLTRB((size / 2), size, size, size)
         : index == count
-            ?  EdgeInsets.fromLTRB(size, size, (size/2), size)
-        :  EdgeInsets.symmetric(horizontal: (size/2), vertical: size);
+            ? EdgeInsets.fromLTRB(size, size, (size / 2), size)
+            : EdgeInsets.symmetric(horizontal: (size / 2), vertical: size);
   }
 
-  static EdgeInsetsGeometry verticalListViwItemPadding(double size, int index, int count){
-
+  static EdgeInsetsGeometry verticalListViwItemPadding(
+      double size, int index, int count) {
     return index == 0
-        ?  EdgeInsets.fromLTRB(size, 0, size, size)
+        ? EdgeInsets.fromLTRB(size, 0, size, size)
         : index == count
-        ?  EdgeInsets.fromLTRB(size, size, size, 0)
-        :  EdgeInsets.symmetric(horizontal: size, vertical: (size/2));
+            ? EdgeInsets.fromLTRB(size, size, size, 0)
+            : EdgeInsets.symmetric(horizontal: size, vertical: (size / 2));
   }
 
   // static String get fontFamily => context!.read<ThemeProvider>().fontFamily;
@@ -89,19 +87,19 @@ class DesignConfig {
   static const Duration highAnimationDuration = Duration(milliseconds: 400);
 
   static SystemUiOverlayStyle get systemUiOverlayStyle => SystemUiOverlayStyle(
-    statusBarIconBrightness:
-    brightness == Brightness.dark ? Brightness.light : Brightness.dark,
-    statusBarColor: Theme.of(context!).colorScheme.surface,
-    systemNavigationBarColor: Theme.of(context!).colorScheme.surface,
-    systemNavigationBarDividerColor: Colors.transparent,
-    systemNavigationBarIconBrightness:
-    brightness == Brightness.dark ? Brightness.light : Brightness.dark,
-  );
+        statusBarIconBrightness:
+            brightness == Brightness.dark ? Brightness.light : Brightness.dark,
+        statusBarColor: Theme.of(context!).colorScheme.surface,
+        systemNavigationBarColor: Theme.of(context!).colorScheme.surface,
+        systemNavigationBarDividerColor: Colors.transparent,
+        systemNavigationBarIconBrightness:
+            brightness == Brightness.dark ? Brightness.light : Brightness.dark,
+      );
 
   static void updateSystemUiOverlayStyle() {
     Future.delayed(
       DesignConfig.lowAnimationDuration,
-          () => SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle),
+      () => SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle),
     );
   }
 }

@@ -1,33 +1,32 @@
-
+import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/main.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../ui/theme/color/colors.dart';
+import '../../ui/theme/colors.dart';
 import '../../ui/widgets/video/custome_full_screen_video.dart';
 
 String longVideo =
     "https://trailer.uptvs.com/trailer/Despicable-Me-4-Trailer.mp4";
 
-class VideoHandler{
-
-  CustomVideoPlayerController get customVideoPlayerController => _customVideoPlayerController;
+class VideoHandler {
+  CustomVideoPlayerController get customVideoPlayerController =>
+      _customVideoPlayerController;
 
   late VideoPlayerController _videoPlayerController;
   late CustomVideoPlayerController _customVideoPlayerController;
   late CustomVideoPlayerWebController _customVideoPlayerWebController;
-  late CustomVideoPlayerWebSettings _customVideoPlayerWebSettings ;
+  late CustomVideoPlayerWebSettings _customVideoPlayerWebSettings;
   // late CustomVideoPlayerSettings _customVideoPlayerSettings ;
 
-
-
-  VideoHandler(BuildContext context ,String url, Function() whenInitialize){
-    _customVideoPlayerWebSettings =   CustomVideoPlayerWebSettings(
-      src: url,
+  VideoHandler(BuildContext context, String url, Function() whenInitialize) {
+    _customVideoPlayerWebSettings = CustomVideoPlayerWebSettings(
+      src: ApiEndPoints.baseURL + url,
     );
-     _videoPlayerController = VideoPlayerController.network(
-      longVideo,
+    // ignore: deprecated_member_use
+    _videoPlayerController = VideoPlayerController.network(
+      ApiEndPoints.baseURL + url,
     )..initialize().then((value) => whenInitialize());
     _customVideoPlayerController = CustomVideoPlayerController(
       context: context,
@@ -44,10 +43,14 @@ class VideoHandler{
         controlBarPadding: const EdgeInsets.only(bottom: 40),
         settingsButtonAvailable: false,
         seekDuration: const Duration(seconds: 5),
-        customVideoPlayerProgressBarSettings: CustomVideoPlayerProgressBarSettings(
-            backgroundColor: Theme.of(navigatorKey.currentContext!).primaryColor50(),
-            bufferedColor: Theme.of(navigatorKey.currentContext!).primaryColor100(),
-            progressColor: Theme.of(navigatorKey.currentContext!).primaryColor),
+        customVideoPlayerProgressBarSettings:
+            CustomVideoPlayerProgressBarSettings(
+                backgroundColor:
+                    Theme.of(navigatorKey.currentContext!).primaryColor50(),
+                bufferedColor:
+                    Theme.of(navigatorKey.currentContext!).primaryColor100(),
+                progressColor:
+                    Theme.of(navigatorKey.currentContext!).primaryColor),
         controlBarDecoration: const BoxDecoration(
           color: Colors.transparent,
         ),
@@ -62,7 +65,6 @@ class VideoHandler{
     _customVideoPlayerWebController = CustomVideoPlayerWebController(
       webVideoPlayerSettings: _customVideoPlayerWebSettings,
     );
-
   }
 
   Future<void> enterFullscreen() async {
@@ -87,10 +89,13 @@ class VideoHandler{
   Future<void> exitFullscreen() async {
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     await SystemChrome.setEnabledSystemUIMode(
-      customVideoPlayerController.customVideoPlayerSettings.systemUIModeAfterFullscreen,
-      overlays: customVideoPlayerController.customVideoPlayerSettings.systemUIOverlaysAfterFullscreen,
+      customVideoPlayerController
+          .customVideoPlayerSettings.systemUIModeAfterFullscreen,
+      overlays: customVideoPlayerController
+          .customVideoPlayerSettings.systemUIOverlaysAfterFullscreen,
     );
-    await SystemChrome.setPreferredOrientations(customVideoPlayerController.customVideoPlayerSettings
+    await SystemChrome.setPreferredOrientations(customVideoPlayerController
+        .customVideoPlayerSettings
         .deviceOrientationsAfterFullscreen); // reset device orientation values
     navigatorKey.currentState!.pop();
   }
@@ -124,5 +129,4 @@ class VideoHandler{
       SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     }
   }
-
 }

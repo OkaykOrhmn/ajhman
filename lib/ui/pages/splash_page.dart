@@ -1,7 +1,7 @@
 import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
+import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/snackbar/snackbar_handler.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,6 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +42,14 @@ class _SplashPageState extends State<SplashPage> {
                 listener: (context, state) {
               if (state is ProfileSuccess) {
                 setProfile(state.response);
-                navigatorKey.currentState!.pushNamed(RoutePaths.home);
+                Navigator.of(context).pushNamed(RoutePaths.home);
               } else if (state is ProfileFailConnection) {
                 SnackBarHandler(context).show(
                     "اینترنت خود را بررسی کنید", DialogStatus.error, true);
               } else if (state is ProfileFail) {
-                navigatorKey.currentState!.pushReplacementNamed(RoutePaths.auth);
+                Navigator.of(context).popUntil(
+                    (route) => route.settings.name == RoutePaths.splash);
+                Navigator.of(context).pushNamed(RoutePaths.auth);
               }
             }, builder: (context, state) {
               return Column(
@@ -62,13 +63,11 @@ class _SplashPageState extends State<SplashPage> {
                   Center(
                     child: state is ProfileFailConnection
                         ? PrimaryButton(
-                      title: "تلاش مجدد",
-                      onClick: () {
-                        context
-                            .read<ProfileBloc>()
-                            .add(GetProfileInfo());
-                      },
-                    )
+                            title: "تلاش مجدد",
+                            onClick: () {
+                              context.read<ProfileBloc>().add(GetProfileInfo());
+                            },
+                          )
                         : const ThreeBounceLoading(),
                   ),
                 ],

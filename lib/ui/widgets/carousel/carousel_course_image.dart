@@ -1,6 +1,7 @@
 import 'package:ajhman/data/model/chapter_model.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
+import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_state.dart';
@@ -35,7 +36,7 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
   final CustomCarouselController _buttonCarouselController =
       CustomCarouselController();
   final CarouselOptions _carouselOptions = CarouselOptions(
-    aspectRatio: 16 / 10,
+    aspectRatio: 16 / 9,
     viewportFraction: 1,
     initialPage: 0,
     disableCenter: true,
@@ -82,16 +83,19 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                       duration: const Duration(milliseconds: 800));
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4)
-                      .copyWith(right: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 4)
+                          .copyWith(right: 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).white().withOpacity(0.5),
                     borderRadius: const BorderRadius.only(
                         topLeft: DesignConfig.aHighBorderRadius,
                         bottomLeft: DesignConfig.aHighBorderRadius),
                   ),
-                  child: Assets.icon.outline.arrowLeft
-                      .svg(width: 16, height: 16, color: Theme.of(context).headText()),
+                  child: Assets.icon.outline.arrowLeft.svg(
+                      width: 16,
+                      height: 16,
+                      color: Theme.of(context).headText()),
                 ),
               ),
               InkWell(
@@ -108,16 +112,19 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
                       duration: const Duration(milliseconds: 800));
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4)
-                      .copyWith(left: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 4)
+                          .copyWith(left: 16),
                   decoration: BoxDecoration(
                     color: Theme.of(context).white().withOpacity(0.5),
                     borderRadius: const BorderRadius.only(
                         bottomRight: DesignConfig.aHighBorderRadius,
                         topRight: DesignConfig.aHighBorderRadius),
                   ),
-                  child: Assets.icon.outline.arrowRight1
-                      .svg(width: 16, height: 16, color: Theme.of(context).headText()),
+                  child: Assets.icon.outline.arrowRight1.svg(
+                      width: 16,
+                      height: 16,
+                      color: Theme.of(context).headText()),
                 ),
               ),
             ],
@@ -142,7 +149,7 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
             child: SmoothPageIndicator(
                 controller: _buttonCarouselController.state!.pageController!,
                 count: widget.items.length,
-                effect:  ExpandingDotsEffect(
+                effect: ExpandingDotsEffect(
                     dotWidth: 8,
                     dotHeight: 8,
                     activeDotColor: Theme.of(context).primaryColor,
@@ -156,7 +163,7 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
   }
 
   Padding _banner(BuildContext context, int itemIndex) {
-    print( widget.items[itemIndex]!.source);
+    print(widget.items[itemIndex]!.source);
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
@@ -164,10 +171,16 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
         decoration: const BoxDecoration(
             color: CupertinoColors.white,
             borderRadius: DesignConfig.highBorderRadius),
-        child:  PrimaryImageNetwork(
-            // src: "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            src: widget.items[itemIndex]!.source.toString(),
-            aspectRatio: 16 / 10),
+        child: InkWell(
+          onTap: () {
+            DialogHandler(context)
+                .showImageDialog(widget.items[itemIndex]!.source.toString());
+          },
+          child: PrimaryImageNetwork(
+              // src: "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+              src: widget.items[itemIndex]!.source.toString(),
+              aspectRatio: 16 / 9),
+        ),
       ),
     );
   }

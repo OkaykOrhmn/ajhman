@@ -10,9 +10,9 @@ import 'package:ajhman/ui/pages/course/course_chapter/screens/course_video.dart'
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_comments.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_details.dart';
 import 'package:ajhman/ui/pages/course/course_chapter/sections/course_header.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/animation/animated_visibility.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/button/custom_outlined_primary_button.dart';
@@ -45,6 +45,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   final ScrollController mainScrollController = ScrollController();
   Timer? timer;
   bool isOpen = false;
+  late bool isInternational = widget.args.isInternational;
   late BuildContext sContext;
 
   @override
@@ -97,6 +98,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
       sContext.read<SubChapterCubit>().setData(CourseArgs(
           chapterId: widget.args.chapterId,
           courseData: widget.args.courseData,
+          isInternational: widget.args.isInternational,
           chapterModel: state.response));
       sContext
           .read<CommentsBloc>()
@@ -107,7 +109,8 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ReversibleAppBar(title: "محتوای دوره"),
+      appBar: ReversibleAppBar(
+          title: isInternational ? "course content" : "محتوای دوره"),
       backgroundColor: Theme.of(context).background(),
       body: BlocProvider<SubChapterCubit>(
         create: (context) => SubChapterCubit(courseArgs),
@@ -121,104 +124,124 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
               }
             }
 
-            return SingleChildScrollView(
-              controller: mainScrollController,
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  CourseHeader(
-                    title: courseArgs.courseData.name.toString(),
-                  ),
-                  _main(),
-                  const CourseDetails(),
-                  const SizedBox(height: 24,),
-                  const CourseComments(),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        isOpen = !isOpen;
-                        timer = Timer.periodic(
-                            const Duration(milliseconds: 1),
-                            (Timer t) => mainScrollController.jumpTo(
-                                mainScrollController.position.maxScrollExtent));
-                        Future.delayed(const Duration(milliseconds: 400))
-                            .then((value) => timer?.cancel());
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: const BorderRadius.only(
-                          topRight: DesignConfig.aHighBorderRadius,
-                          topLeft: DesignConfig.aHighBorderRadius,
+            return Directionality(
+              textDirection:
+                  isInternational ? TextDirection.ltr : TextDirection.rtl,
+              child: SingleChildScrollView(
+                controller: mainScrollController,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    CourseHeader(
+                        title: courseArgs.courseData.name.toString(),
+                        eng: isInternational),
+                    _main(),
+                    CourseDetails(
+                      eng: isInternational,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    CourseComments(
+                      eng: isInternational,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          isOpen = !isOpen;
+                          timer = Timer.periodic(
+                              const Duration(milliseconds: 1),
+                              (Timer t) => mainScrollController.jumpTo(
+                                  mainScrollController
+                                      .position.maxScrollExtent));
+                          Future.delayed(const Duration(milliseconds: 400))
+                              .then((value) => timer?.cancel());
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: const BorderRadius.only(
+                            topRight: DesignConfig.aHighBorderRadius,
+                            topLeft: DesignConfig.aHighBorderRadius,
+                          ),
                         ),
-                      ),
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              PrimaryText(
-                                  text: "زیرفصل‌های دوره",
-                                  style: Theme.of(context).textTheme.dialogTitle,
-                                  color: Colors.white),
-                              true
-                                  ? Assets.icon.outline.arrowUp
-                                      .svg(color: Colors.white)
-                                  : Assets.icon.outline.arrowDown
-                                      .svg(color: Colors.white)
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          if (subChapters.isEmpty)
-                            const SizedBox()
-                          else
-                            AnimatedVisibility(
-                                isVisible: isOpen,
-                                duration: DesignConfig.lowAnimationDuration,
-                                child: Container(
-                                  constraints:
-                                      const BoxConstraints(maxHeight: 400),
-                                  child: Directionality(
-                                    textDirection: TextDirection.ltr,
-                                    child: RawScrollbar(
-                                      thumbVisibility: true,
-                                      trackVisibility: true,
-                                      radius: DesignConfig.aHighBorderRadius,
-                                      trackColor: Theme.of(context).primaryColor100(),
-                                      thumbColor: Theme.of(context).primaryColor700(),
-                                      trackRadius:
-                                          DesignConfig.aVeryHighBorderRadius,
-                                      interactive: true,
-                                      controller: scrollController,
-                                      child: Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 18.0),
-                                          child: ListView.builder(
-                                              controller: scrollController,
-                                              itemCount: subChapters.length,
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const BouncingScrollPhysics(),
-                                              itemBuilder: (context, index) {
-                                                return _subchapterLayout(
-                                                    index, subChapters[index]);
-                                              }),
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                PrimaryText(
+                                    text: isInternational
+                                        ? "Subchapters of the course"
+                                        : widget.args.courseData.category!.id ==
+                                                6
+                                            ? "فصل های کتاب"
+                                            : "زیرفصل‌های دوره",
+                                    style:
+                                        Theme.of(context).textTheme.dialogTitle,
+                                    color: Colors.white),
+                                true
+                                    ? Assets.icon.outline.arrowUp
+                                        .svg(color: Colors.white)
+                                    : Assets.icon.outline.arrowDown
+                                        .svg(color: Colors.white)
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            if (subChapters.isEmpty)
+                              const SizedBox()
+                            else
+                              AnimatedVisibility(
+                                  isVisible: isOpen,
+                                  duration: DesignConfig.lowAnimationDuration,
+                                  child: Container(
+                                    constraints:
+                                        const BoxConstraints(maxHeight: 400),
+                                    child: Directionality(
+                                      textDirection: TextDirection.ltr,
+                                      child: RawScrollbar(
+                                        thumbVisibility: true,
+                                        trackVisibility: true,
+                                        radius: DesignConfig.aHighBorderRadius,
+                                        trackColor:
+                                            Theme.of(context).primaryColor100(),
+                                        thumbColor:
+                                            Theme.of(context).primaryColor700(),
+                                        trackRadius:
+                                            DesignConfig.aVeryHighBorderRadius,
+                                        interactive: true,
+                                        controller: scrollController,
+                                        child: Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 18.0),
+                                            child: ListView.builder(
+                                                controller: scrollController,
+                                                itemCount: subChapters.length,
+                                                shrinkWrap: true,
+                                                physics:
+                                                    const BouncingScrollPhysics(),
+                                                itemBuilder: (context, index) {
+                                                  return _subchapterLayout(
+                                                      index,
+                                                      subChapters[index]);
+                                                }),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ))
-                        ],
+                                  ))
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             );
           },
@@ -240,7 +263,9 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
           margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
-              color: subchapter.visited! ? backgroundColor200 : Theme.of(context).primaryColor50()),
+              color: subchapter.visited!
+                  ? backgroundColor200
+                  : Theme.of(context).primaryColor50()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -257,8 +282,8 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                       color: grayColor900)
                 ],
               ),
-              Assets.icon.outline.arrowLeft
-                  .svg(color: Theme.of(context).primaryColor, width: 18, height: 18)
+              Assets.icon.outline.arrowLeft.svg(
+                  color: Theme.of(context).primaryColor, width: 18, height: 18)
             ],
           ),
         ),
@@ -269,6 +294,10 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
   Column _main() {
     ChapterModel subchapter =
         sContext.read<SubChapterCubit>().state.chapterModel;
+    final pervImg = Assets.icon.outline.arrowLeft1
+        .svg(color: Theme.of(context).primaryColor, width: 16, height: 16);
+    final nextImg = Assets.icon.outline.arrowRight
+        .svg(color: Theme.of(context).primaryColor, width: 16, height: 16);
     return Column(
       children: [
         _chapter(courseTypes),
@@ -278,37 +307,36 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomOutlinedPrimaryButton(
-                  onClick: subchapter.id != subChapters.last.id
-                      ? () {
-                          int index = subchapter.id!;
-                          for (var element in subChapters) {
-                            if (element.id == subchapter.id) {
-                              index = subChapters.indexOf(element);
-                            }
+              subchapter.id != subChapters.last.id
+                  ? CustomOutlinedPrimaryButton(
+                      onClick: () {
+                        int index = subchapter.id!;
+                        for (var element in subChapters) {
+                          if (element.id == subchapter.id) {
+                            index = subChapters.indexOf(element);
                           }
-                          final subchapterId = subChapters[index + 1].id!;
-                          _changeSubChapter(subchapterId);
                         }
-                      : null,
-                  child: Row(
-                    children: [
-                      Assets.icon.outline.arrowRight
-                          .svg(color: Theme.of(context).primaryColor, width: 16, height: 16),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      PrimaryText(
-                          text: "درس بعدی",
-                          style: Theme.of(context).textTheme.rate,
-                          color: Theme.of(context).primaryColor),
-                    ],
-                  )),
-              CustomPrimaryButton(
-                color: Theme.of(context).white(),
-                elevation: 0,
-                onClick: subchapter.id != subChapters.first.id
-                    ? () {
+                        final subchapterId = subChapters[index + 1].id!;
+                        _changeSubChapter(subchapterId);
+                      },
+                      child: Row(
+                        children: [
+                          isInternational ? pervImg : nextImg,
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          PrimaryText(
+                              text: isInternational ? "Next" : "بعدی",
+                              style: Theme.of(context).textTheme.rate,
+                              color: Theme.of(context).primaryColor),
+                        ],
+                      ))
+                  : const SizedBox(),
+              subchapter.id != subChapters.first.id
+                  ? CustomPrimaryButton(
+                      color: Theme.of(context).white(),
+                      elevation: 0,
+                      onClick: () {
                         int index = subchapter.id!;
                         for (var element in subChapters) {
                           if (element.id == subchapter.id) {
@@ -317,22 +345,21 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                         }
                         final subchapterId = subChapters[index - 1].id!;
                         _changeSubChapter(subchapterId);
-                      }
-                    : null,
-                child: Row(
-                  children: [
-                    PrimaryText(
-                        text: "درس قبلی",
-                        style: Theme.of(context).textTheme.rate,
-                        color: Theme.of(context).primaryColor),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Assets.icon.outline.arrowLeft1
-                        .svg(color: Theme.of(context).primaryColor, width: 16, height: 16),
-                  ],
-                ),
-              ),
+                      },
+                      child: Row(
+                        children: [
+                          PrimaryText(
+                              text: isInternational ? "Previous" : "قبلی",
+                              style: Theme.of(context).textTheme.rate,
+                              color: Theme.of(context).primaryColor),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          isInternational ? nextImg : pervImg
+                        ],
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         )

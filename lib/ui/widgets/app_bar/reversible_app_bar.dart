@@ -3,8 +3,8 @@ import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/text/text_styles.dart';
+import '../../theme/colors.dart';
+import '../../theme/text_styles.dart';
 
 class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -15,7 +15,7 @@ class ReversibleAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor:Theme.of(context).surfacePrimaryColor(),
+      backgroundColor: Theme.of(context).surfacePrimaryColor(),
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

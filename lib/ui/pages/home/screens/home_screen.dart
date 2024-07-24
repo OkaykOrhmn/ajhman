@@ -1,17 +1,25 @@
+import 'package:ajhman/core/bloc/banner/bloc/banner_bloc.dart';
+import 'package:ajhman/core/cubit/home/books_home_cubit.dart';
 import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
+import 'package:ajhman/core/cubit/home/selected_index_cubit.dart';
+import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/args/category_args.dart';
-import 'package:ajhman/data/model/cards/new_course_card_model.dart';
+import 'package:ajhman/data/model/new_course_card_model.dart';
+import 'package:ajhman/data/shared_preferences/profile_data.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/card/new_course_card.dart';
 import 'package:ajhman/ui/widgets/card/recent_course_card.dart';
 import 'package:ajhman/ui/widgets/card/recent_course_card_placeholder.dart';
+import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
+import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,10 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final items = [1, 2, 3, 4];
   List<NewCourseCardModel>? newsCards;
   List<NewCourseCardModel>? recentCards;
+  List<NewCourseCardModel>? booksCard;
 
   @override
   void initState() {
     context.read<NewsCourseHomeCubit>().getNews();
+    context.read<BooksHomeCubit>().getBooks();
+    context.read<BannerBloc>().add(GetAllBanners());
     super.initState();
   }
 
@@ -65,28 +76,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       children: [
                         TitleDivider(
-                            title: "دوره‌های اخیرا دیده شده", btn: () {}),
+                            title: "در حال یادگیری",
+                            btn: () {
+                              context
+                                  .read<SelectedIndexCubit>()
+                                  .changeSelectedIndex(2, 'یادگیری');
+                              context
+                                  .read<SelectedTabCubit>()
+                                  .changeSelectedIndex(1);
+                            }),
+                        const SizedBox(
+                          height: 12,
+                        ),
                         SizedBox(
-                          height: context.read<ThemeBloc>().state.fontSize >= 1
-                              ? (200 + (context.read<ThemeBloc>().state.fontSize * 10))
-                              : (200 -  (context.read<ThemeBloc>().state.fontSize * 10)),                          width: MediaQuery.sizeOf(context).width,
+                          height: 180 +
+                              (context.read<ThemeBloc>().state.fontSize * 10),
+                          width: MediaQuery.sizeOf(context).width,
                           child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
                               itemCount: recentCards!.length,
                               itemExtent:
-                              context.read<ThemeBloc>().state.fontSize >= 1
-                                  ? (MediaQuery.sizeOf(context).width / 1.2 +
-                                  (context
-                                      .read<ThemeBloc>()
-                                      .state
-                                      .fontSize *
-                                      30))
-                                  : (MediaQuery.sizeOf(context).width / 1.2 -
-                                  (context
-                                      .read<ThemeBloc>()
-                                      .state
-                                      .fontSize *
-                                      60)),
+                                  MediaQuery.sizeOf(context).width / 1.2,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return RecentCourseCard(
@@ -99,26 +109,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               }),
                         ),
-                        const SizedBox(
-                          height: 24,
-                        ),
                       ],
                     );
                   }
                 } else {
                   return Column(
                     children: [
-                      TitleDivider(
-                          title: "دوره‌های اخیرا دیده شده", btn: () {}),
+                      TitleDivider(title: "در حال یادگیری", btn: () {}),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       SizedBox(
-                        height: context.read<ThemeBloc>().state.fontSize >= 1
-                            ? (210 + (context.read<ThemeBloc>().state.fontSize * 10))
-                            : (210 -  (context.read<ThemeBloc>().state.fontSize * 10)),
+                        height: 190,
                         width: MediaQuery.sizeOf(context).width,
                         child: ListView.builder(
                             physics: const BouncingScrollPhysics(),
                             itemCount: 4,
-                            itemExtent: MediaQuery.sizeOf(context).width / 1.1,
+                            itemExtent: MediaQuery.sizeOf(context).width / 1.2,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return RecentCourseCardPlaceholder(
@@ -129,25 +136,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             }),
                       ),
-                      const SizedBox(
-                        height: 24,
-                      ),
                     ],
                   );
                 }
               },
             ),
-
+            const SizedBox(
+              height: 24,
+            ),
             BlocBuilder<NewsCourseHomeCubit, List<NewCourseCardModel>?>(
               builder: (context, state) {
                 if (state == null) {
                   return Column(
                     children: [
                       TitleDivider(title: "جدیدترین دوره ها", btn: () {}),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       SizedBox(
-                        height: context.read<ThemeBloc>().state.fontSize >= 1
-                            ? (340 + (context.read<ThemeBloc>().state.fontSize * 10))
-                            : (340 -  (context.read<ThemeBloc>().state.fontSize * 10)),
+                        height: 340,
                         width: MediaQuery.sizeOf(context).width,
                         child: ListView.builder(
                             physics: const BouncingScrollPhysics(),
@@ -178,44 +185,115 @@ class _HomeScreenState extends State<HomeScreen> {
                             btn: () {
                               navigatorKey.currentState!.pushNamed(
                                   RoutePaths.category,
-                                  arguments:
-                                      CategoryArgs(categoriesId: [1, 2, 3], title: 'دوره ها'));
+                                  arguments: CategoryArgs(
+                                      categoriesId: [1, 2, 3, 4, 5, 6],
+                                      title: 'دوره ها'));
                             }),
+                        const SizedBox(
+                          height: 12,
+                        ),
                         SizedBox(
-                          height: context.read<ThemeBloc>().state.fontSize >= 1
-                              ? (500 +
-                                  (context.read<ThemeBloc>().state.fontSize *
-                                      10))
-                              : (500 -
-                                  (context.read<ThemeBloc>().state.fontSize *
-                                      100)),
+                          height: 420 +
+                              (context.read<ThemeBloc>().state.fontSize * 10),
                           width: MediaQuery.sizeOf(context).width,
                           child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
                               itemCount: newsCards!.length,
                               itemExtent:
-                                  context.read<ThemeBloc>().state.fontSize >= 1
-                                      ? (MediaQuery.sizeOf(context).width / 1.2 +
-                                          (context
-                                                  .read<ThemeBloc>()
-                                                  .state
-                                                  .fontSize *
-                                              30))
-                                      : (MediaQuery.sizeOf(context).width / 1.2 -
-                                          (context
-                                                  .read<ThemeBloc>()
-                                                  .state
-                                                  .fontSize *
-                                              60)),
+                                  MediaQuery.sizeOf(context).width / 1.2,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return NewCourseCard(
                                   // width: MediaQuery.sizeOf(context).width / 1.1,
+                                  expanded: true,
+
                                   padding:
                                       DesignConfig.horizontalListViwItemPadding(
                                           16, index, items.length),
                                   index: index,
                                   response: newsCards![index],
+                                );
+                              }),
+                        ),
+                      ],
+                    );
+                  }
+                }
+              },
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            BlocBuilder<BooksHomeCubit, List<NewCourseCardModel>?>(
+              builder: (context, state) {
+                if (state == null) {
+                  return Column(
+                    children: [
+                      TitleDivider(
+                        title: "یک لقمه کتاب",
+                        btn: () {},
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      SizedBox(
+                        height: 340,
+                        width: MediaQuery.sizeOf(context).width,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: 4,
+                            itemExtent: MediaQuery.sizeOf(context).width / 1.2,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return NewCourseCardPlaceholder(
+                                // width: MediaQuery.sizeOf(context).width / 1.1,
+                                padding:
+                                    DesignConfig.horizontalListViwItemPadding(
+                                        16, index, items.length),
+                                type: CardType.normal,
+                              );
+                            }),
+                      ),
+                    ],
+                  );
+                } else {
+                  if (state.isEmpty) {
+                    return const SizedBox();
+                  } else {
+                    booksCard = state;
+                    return Column(
+                      children: [
+                        TitleDivider(
+                            title: "یک لقمه کتاب",
+                            btn: () {
+                              navigatorKey.currentState!.pushNamed(
+                                  RoutePaths.category,
+                                  arguments: CategoryArgs(
+                                      categoriesId: [6],
+                                      title: "یک لقمه کتاب"));
+                            }),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        SizedBox(
+                          height: 450 +
+                              (context.read<ThemeBloc>().state.fontSize * 12),
+                          width: MediaQuery.sizeOf(context).width,
+                          child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: booksCard!.length,
+                              itemExtent:
+                                  MediaQuery.sizeOf(context).width / 1.2,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return NewCourseCard(
+                                  // width: MediaQuery.sizeOf(context).width / 1.1,
+                                  expanded: true,
+                                  padding:
+                                      DesignConfig.horizontalListViwItemPadding(
+                                          16, index, items.length),
+                                  index: index,
+                                  response: booksCard![index],
                                 );
                               }),
                         ),
@@ -239,15 +317,41 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 24),
-            child: PrimaryText(
-                text: "ظهر بخیر آقای عامری",
-                style: mThemeData.textTheme.titleBold,
-                color: Colors.white),
+            padding: const EdgeInsets.only(top: 24, bottom: 12),
+            child: FutureBuilder(
+                future: getProfile(),
+                builder: (context, snapshot) {
+                  String name = '';
+                  if (snapshot.hasData) {
+                    name = snapshot.data!.name.toString();
+                  }
+                  return PrimaryText(
+                      text: "ظهر بخیر $name 👋",
+                      style: mThemeData.textTheme.titleBold,
+                      color: Colors.white);
+                }),
           ),
-          const CarouseBanners(
-            items: ["1", "2", "3", "4"],
-          ),
+          BlocBuilder<BannerBloc, BannerState>(builder: (context, state) {
+            if (state is BannerLoading) {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+                child: DefaultPlaceHolder(
+                    child: Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: const BoxDecoration(
+                            color: CupertinoColors.white,
+                            borderRadius: DesignConfig.highBorderRadius),
+                        child: const PrimaryImageNetwork(
+                            src: '', aspectRatio: 16 / 9))),
+              );
+            } else if (state is BannerSuccess) {
+              return CarouseBanners(
+                items: state.response,
+              );
+            } else {
+              return const SizedBox();
+            }
+          }),
           const SizedBox(
             height: 24,
           )
@@ -302,7 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _iconBtn(1, "توسعه فردی", Assets.icon.twotone.userOctagon),
               _iconBtn(
-                  2, "مدیریت کسب و کار", Assets.icon.twotone.presentionChart),
+                  2, "مدیریت و رهبری", Assets.icon.twotone.presentionChart),
               _iconBtn(3, "آژمان پلاس", Assets.icon.twotone.crown),
             ],
           ),

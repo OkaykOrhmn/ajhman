@@ -12,10 +12,10 @@ class NotificationDataModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['body'] = this.body;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['body'] = body;
+    data['image'] = image;
     return data;
   }
 }

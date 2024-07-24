@@ -1,16 +1,17 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 
 class ExamCommentScreen extends StatelessWidget {
-  final TextEditingController comment ;
+  final TextEditingController comment;
   const ExamCommentScreen({super.key, required this.comment});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
           height: 8,
@@ -36,7 +37,9 @@ class ExamCommentScreen extends StatelessWidget {
             hintStyle: Theme.of(context).textTheme.searchHint,
             fillColor: Theme.of(context).primaryColor,
             focusedBorder: OutlineInputBorder(
-              borderSide:  BorderSide(color: Theme.of(context).primaryColor,),
+              borderSide: BorderSide(
+                color: Theme.of(context).primaryColor,
+              ),
               borderRadius: DesignConfig.highBorderRadius,
             ),
             border: const OutlineInputBorder(
@@ -44,6 +47,14 @@ class ExamCommentScreen extends StatelessWidget {
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: PrimaryText(
+              text: "حداقل 5 حرف بنویسید!!",
+              style: Theme.of(context).textTheme.title,
+              color: Theme.of(context).progressText(),
+              textAlign: TextAlign.start),
+        )
       ],
     );
   }

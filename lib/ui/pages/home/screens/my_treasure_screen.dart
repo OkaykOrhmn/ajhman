@@ -1,11 +1,10 @@
-import 'package:ajhman/core/utils/usefull_funcs.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
+import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +52,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                           decoration: BoxDecoration(
                               borderRadius: DesignConfig.highBorderRadius,
                               boxShadow: DesignConfig.lowShadow,
-                              color:Theme.of(context).onWhite()),
+                              color: Theme.of(context).onWhite()),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -64,7 +63,9 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                               ),
                               PrimaryText(
                                   text: "گواهینامه‌های طلایی",
-                                  style: Theme.of(context).textTheme.headerLargeBold,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headerLargeBold,
                                   color: goldColor),
                             ],
                           ),
@@ -122,7 +123,9 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                               ),
                               PrimaryText(
                                   text: "گواهینامه‌های نقره‌ای",
-                                  style: Theme.of(context).textTheme.headerLargeBold,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headerLargeBold,
                                   color: silverColor),
                             ],
                           ),
@@ -174,7 +177,9 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                               ),
                               PrimaryText(
                                   text: "گواهینامه‌های برنزی",
-                                  style: Theme.of(context).textTheme.headerLargeBold,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headerLargeBold,
                                   color: bronzeColor),
                             ],
                           ),
@@ -204,7 +209,11 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
                 ],
               );
             } else {
-              return VerticalListView(item: (_,index)=>const SizedBox(),items: null,placeholder: _goldCardPlaceholder(),);
+              return VerticalListView(
+                item: (_, index) => const SizedBox(),
+                items: null,
+                placeholder: _goldCardPlaceholder(),
+              );
             }
           },
         ),
@@ -310,7 +319,7 @@ class _MyTreasureScreenState extends State<MyTreasureScreen> {
           SizedBox(
             width: 130,
             child: PrimaryImageNetwork(
-              src: getImageUrl(data.image..toString()),
+              src: data.image.toString(),
               aspectRatio: 16 / 9,
               radius: DesignConfig.lowBorderRadius,
             ),

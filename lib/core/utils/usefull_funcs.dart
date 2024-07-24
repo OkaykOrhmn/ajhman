@@ -2,9 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:ajhman/core/enum/levels.dart';
-import 'package:ajhman/data/api/api_end_points.dart';
-import 'package:ajhman/data/model/chapter_model.dart';
-import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/roadmap_view.dart';
 import 'package:ajhman/ui/theme/theme_helper.dart';
 import 'package:intl/intl.dart';
@@ -32,15 +29,15 @@ CourseTypes getType(String? type) {
     result = CourseTypes.image;
   } else if (type == CourseTypes.audio.type) {
     result = CourseTypes.audio;
+  } else if (type == CourseTypes.any.type) {
+    result = CourseTypes.any;
   }
   return result;
 }
 
 String getTypeImage(int? level) => Levels.values[level!].value;
 
-String getImageUrl(String? image) => ApiEndPoints.baseURL + image.toString();
-
-String getChapterNumber(int index ,bool isInternational) {
+String getChapterNumber(int index, bool isInternational) {
   final list = [
     "اول",
     "دوم",
@@ -70,41 +67,61 @@ String getChapterNumber(int index ,bool isInternational) {
     "بیست وهشتم",
     "بیست ونهم",
     "سیم",
+    "سی و یکم",
+    "سی و دوم",
+    "سی و سوم",
+    "سی و چارم",
+    "سی و پنجم",
+    "سی و ششم",
+    "سی و هفتم",
+    "سی و هشتم",
+    "سی و نهم",
+    "چهلمین",
   ];
 
-  final listEn= [
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine",
-  "ten",
-  "eleven",
-  "twelve",
-  "thirteen",
-  "fourteen",
-  "fifteen",
-  "sixteen",
-  "seventeen",
-  "eighteen",
-  "nineteen",
-  "twenty",
-  "twenty-one",
-  "twenty-two",
-  "twenty-three",
-  "twenty-four",
-  "twenty-five",
-  "twenty-six",
-  "twenty-seven",
-  "twenty-eight",
-  "twenty-nine",
-  "thirty",
+  final listEn = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
+    "twenty",
+    "twenty-one",
+    "twenty-two",
+    "twenty-three",
+    "twenty-four",
+    "twenty-five",
+    "twenty-six",
+    "twenty-seven",
+    "twenty-eight",
+    "twenty-nine",
+    "thirty",
+    "thirty-one",
+    "thirty-two",
+    "thirty-three",
+    "thirty-four",
+    "thirty-five",
+    "thirty-six",
+    "thirty-seven",
+    "thirty-eight",
+    "thirty-nine",
+    "forty",
   ];
-  return isInternational?listEn[index]: list[index];
+  return isInternational ? listEn[index] : list[index];
 }
 
 double daysBetween(DateTime from, DateTime to) {
@@ -129,14 +146,14 @@ CourseTypes? getTypeOfCourse(String type) {
 }
 
 RoadmapView getLockRoadMapContainer =
-    RoadmapView(const Color(0xffD6D6D6), Assets.shape.shape4);
+    RoadmapView(const Color(0xffD6D6D6), Assets.shape.shape3);
 
 RoadmapView getRoadMapContainer(bool inRandom, RoadmapView? lastRoadMapView) {
   List<RoadmapView> colors = [
     RoadmapView(const Color(0xffFF5EEA), Assets.shape.shape),
     RoadmapView(const Color(0xff50FDAE), Assets.shape.shape1),
     RoadmapView(const Color(0xffFEC86F), Assets.shape.shape2),
-    RoadmapView(const Color(0xfff817cff), Assets.shape.shape4),
+    RoadmapView(const Color(0xff817cff), Assets.shape.shape4),
     RoadmapView(const Color(0xffFB7A3E), Assets.shape.shape5),
     RoadmapView(const Color(0xffA6DC59), Assets.shape.shape7),
   ];
@@ -164,10 +181,6 @@ double getProgressCard(String progress) {
     final indexOf = p.indexOf("/");
     final value = p.substring(0, indexOf);
     final all = p.substring(indexOf + 1);
-    print(p);
-    print(indexOf);
-    print(value);
-    print(all);
     if (all.startsWith("0")) {
       return 0;
     }
@@ -223,5 +236,3 @@ String getIsoTimeDate(String string) {
     return "";
   }
 }
-
-

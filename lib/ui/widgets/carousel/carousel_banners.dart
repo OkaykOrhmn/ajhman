@@ -1,12 +1,12 @@
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
+import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 
 class CarouseBanners extends StatefulWidget {
   final List<String> items;
@@ -33,7 +33,6 @@ class _CarouseBannersState extends State<CarouseBanners> {
   final CustomCarouselController _buttonCarouselController =
       CustomCarouselController();
   final CarouselOptions _carouselOptions = CarouselOptions(
-    height: 160,
     aspectRatio: 16 / 9,
     viewportFraction: 1,
     initialPage: 0,
@@ -60,7 +59,7 @@ class _CarouseBannersState extends State<CarouseBanners> {
           itemCount: widget.items.length,
           itemBuilder:
               (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  _banner(context, itemIndex),
+                  _banner(context, widget.items[itemIndex]),
         ),
         Positioned(
           bottom: 12,
@@ -72,7 +71,7 @@ class _CarouseBannersState extends State<CarouseBanners> {
     );
   }
 
-  FutureBuilder<Null> _bannerIndicator( ) {
+  FutureBuilder<Null> _bannerIndicator() {
     return FutureBuilder(
       future: _buttonCarouselController.onReady,
       builder: (context, snapshot) {
@@ -88,10 +87,10 @@ class _CarouseBannersState extends State<CarouseBanners> {
               child: SmoothPageIndicator(
                   controller: _buttonCarouselController.state!.pageController!,
                   count: widget.items.length,
-                  effect: const ExpandingDotsEffect(
+                  effect: WormEffect(
                       dotWidth: 8,
                       dotHeight: 8,
-                      activeDotColor: Colors.black,
+                      activeDotColor: Theme.of(context).primaryColor,
                       dotColor: Colors.white)),
             ),
           );
@@ -102,19 +101,19 @@ class _CarouseBannersState extends State<CarouseBanners> {
     );
   }
 
-  Padding _banner(BuildContext context, int itemIndex) {
+  Padding _banner(BuildContext context, String src) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
         width: MediaQuery.sizeOf(context).width,
-        height: 140,
         decoration: const BoxDecoration(
             color: CupertinoColors.white,
             borderRadius: DesignConfig.highBorderRadius),
-        child: const PrimaryImageNetwork(
-            src:
-                "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-            aspectRatio: 16 / 9),
+        child: InkWell(
+            onTap: () {
+              DialogHandler(context).showImageDialog(src);
+            },
+            child: PrimaryImageNetwork(src: src, aspectRatio: 16 / 9)),
       ),
     );
   }

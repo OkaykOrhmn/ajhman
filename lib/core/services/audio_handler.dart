@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioHandler {
@@ -29,9 +30,7 @@ class AudioHandler {
   AudioHandler(String url) {
     _player = AudioPlayer();
     _player.setReleaseMode(ReleaseMode.stop);
-    _player
-        .play(UrlSource(url))
-        .then((value) {
+    _player.play(UrlSource(ApiEndPoints.baseURL + url)).then((value) {
       _player.pause();
       isLoading = false;
       _playerState = PlayerState.paused;

@@ -1,15 +1,22 @@
 import 'package:ajhman/data/model/answer_result_model.dart';
 import 'package:ajhman/main.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
+import 'package:ajhman/ui/widgets/button/loading_btn.dart';
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
-import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:ajhman/ui/widgets/progress/circle_progress.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_btn/loading_btn.dart';
 
+import '../../../core/cubit/leaderboard/leaderboard_cubit.dart';
+import '../../../core/routes/route_paths.dart';
+import '../../../data/model/leaderboard_model.dart';
+import '../../../data/repository/course_repository.dart';
 import '../../../gen/assets.gen.dart';
 
 class ExamResultPage extends StatefulWidget {
@@ -31,6 +38,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
   @override
   void initState() {
     result = widget.result;
+
     super.initState();
   }
 
@@ -38,7 +46,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
   Widget build(BuildContext context) {
     if (result.correct != null && result.correct != 0) {
       correctValue = result.correct! / result.total!;
-      success = correctValue > 0.8;
+      success = correctValue >= 0.6;
     }
 
     if (result.incorrect != null && result.incorrect != 0) {
@@ -48,6 +56,12 @@ class _ExamResultPageState extends State<ExamResultPage> {
     if (result.noAnswer != null && result.noAnswer != 0) {
       noAnswerValue = result.noAnswer! / result.total!;
     }
+
+    // if (context.read<LeaderboardCubit>().state != null &&
+    //     context.read<LeaderboardCubit>().state! <
+    //         (correctValue * 100).round()) {
+    context.read<LeaderboardCubit>().setExamScore((correctValue * 100).round());
+    // }
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -130,14 +144,29 @@ class _ExamResultPageState extends State<ExamResultPage> {
                     const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
                 child: Column(
                   children: [
-                    const PrimaryButton(
+                    PrimaryLoadingButton(
                       title: "رفتن به لیدر بورد",
-                      fill: true,
+                      onTap: (Function startLoading, Function stopLoading,
+                          ButtonState btnState) async {
+                        if (btnState == ButtonState.idle) {
+                          startLoading();
+                          try {
+                            LeaderboardModel response = await courseRepository
+                                .getLeaderboard(widget.result.courseId!);
+                            navigatorKey.currentState!.pushReplacementNamed(
+                                RoutePaths.leaderboard,
+                                arguments: response);
+                          } on DioError {}
+
+                          stopLoading();
+                        }
+                      },
+                      disable: false,
                     ),
                     OutlinedPrimaryButton(
                       title: "بازگشت به خانه",
                       fill: true,
-                      onClick: (){
+                      onClick: () {
                         navigatorKey.currentState!.pop();
                       },
                     ),

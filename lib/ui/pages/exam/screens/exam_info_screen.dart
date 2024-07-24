@@ -1,15 +1,18 @@
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/data/args/exam_args.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
-import '../../../theme/color/colors.dart';
-import '../../../theme/widget/design_config.dart';
+import '../../../theme/colors.dart';
+import '../../../theme/design_config.dart';
 import '../../../widgets/listview/highlight_listview.dart';
 import '../../../widgets/text/primary_text.dart';
 
-class ExamInfoScreen extends StatefulWidget{
+class ExamInfoScreen extends StatefulWidget {
   final String comment;
-  const ExamInfoScreen({super.key, required this.comment});
+  final ExamArgs examArgs;
+  const ExamInfoScreen(
+      {super.key, required this.comment, required this.examArgs});
 
   @override
   State<ExamInfoScreen> createState() => _ExamInfoScreenState();
@@ -21,7 +24,7 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
     return Column(
       children: [
         PrimaryText(
-            text: "آزمون فنون مذاکره",
+            text: "آزمون",
             style: Theme.of(context).textTheme.dialogTitle,
             color: Theme.of(context).headText()),
         const SizedBox(
@@ -29,22 +32,26 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
         ),
         Container(
           padding: const EdgeInsets.all(16),
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
               color: Theme.of(context).white()),
           child: Column(
             children: [
-              _examInfoIconRow("۱۰ سوال", "سوال ۴ گزینه‌ای",
-                  Assets.icon.outline.task),
+              _examInfoIconRow("${widget.examArgs.model.exam!.length} سوال",
+                  "سوال ۴ گزینه‌ای", Assets.icon.outline.task),
               const SizedBox(
                 height: 16,
               ),
-              _examInfoIconRow("۲ دقیقه", "زمان پاسخگویی به سوال",
+              _examInfoIconRow(
+                  "${widget.examArgs.model.exam!.length * 2} دقیقه",
+                  "زمان پاسخگویی به سوال",
                   Assets.icon.outline.clock),
               const SizedBox(
                 height: 16,
               ),
-              _examInfoIconRow("۸ سوال", "نمره قبولی در آزمون",
+              _examInfoIconRow(
+                  "${((widget.examArgs.model.exam!.length * 80) / 100).round()} سوال",
+                  "نمره قبولی در آزمون",
                   Assets.icon.outlineTickCircle),
             ],
           ),
@@ -90,12 +97,15 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
         Container(
           width: 40,
           height: 40,
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             color: Theme.of(context).white(),
             shape: BoxShape.circle,
           ),
           child: Center(
-              child: icon.svg(width: 16, height: 16, color: Theme.of(context).secondaryColor())),
+              child: icon.svg(
+                  width: 16,
+                  height: 16,
+                  color: Theme.of(context).secondaryColor())),
         ),
         const SizedBox(
           width: 8,
@@ -119,5 +129,4 @@ class _ExamInfoScreenState extends State<ExamInfoScreen> {
       ],
     );
   }
-
 }

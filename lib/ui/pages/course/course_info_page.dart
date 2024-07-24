@@ -7,25 +7,30 @@ import 'package:ajhman/data/args/course_args.dart';
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/audio/audio_player_wave.dart';
 import 'package:ajhman/ui/widgets/button/outline_primary_loading_button.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
-import 'package:ajhman/ui/widgets/states/place_holder/default_place_holder.dart';
+import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
+import 'package:ajhman/ui/widgets/text/marquee_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:loading_btn/loading_btn.dart';
+import 'package:marquee/marquee.dart';
 
 import '../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../core/cubit/home/news_course_home_cubit.dart';
+import '../../../core/cubit/leaderboard/leaderboard_cubit.dart';
 import '../../../core/utils/language/bloc/language_bloc.dart';
 import '../../../data/model/language.dart';
 import '../../../data/shared_preferences/profile_data.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
-import '../../theme/color/colors.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/colors.dart';
+import '../../theme/design_config.dart';
 import '../../widgets/animation/animated_visibility.dart';
 import '../../widgets/button/loading_btn.dart';
 import '../../widgets/image/primary_image_network.dart';
@@ -62,8 +67,10 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
         isInternational = true;
       });
     }
-    audioHandler =
-        AudioHandler(ApiEndPoints.baseURL + widget.response.audio.toString());
+    if (widget.response.category!.id == 6 && widget.response.audio != null) {
+      audioHandler = AudioHandler(widget.response.audio.toString());
+    }
+    context.read<LeaderboardCubit>().setExamScore(widget.response.examScore);
     super.initState();
   }
 
@@ -92,14 +99,19 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             CourseRating(
               id: data.id!,
             ),
-            data.category!.id == 6 ? _bookAudioDownload() : _pointsPlatform(),
+            data.category!.id == 6
+                ? data.audio != null
+                    ? _bookAudioDownload()
+                    : const SizedBox()
+                : _pointsPlatform(),
             data.chapters!.isNotEmpty ? _chapters() : const SizedBox(),
-            data.registered != null && data.registered!
+            data.registered != null && data.registered! ||
+                    data.category!.id == 6
                 ? const SizedBox()
                 : Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: PrimaryLoadingButton(
-                        title: 'ثبت‌نام',
+                        title: isInternational ? "Register" : 'ثبت‌نام',
                         disable: false,
                         onTap: (Function startLoading, Function stopLoading,
                             ButtonState btnState) async {
@@ -110,10 +122,12 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                               setState(() {
                                 widget.response.registered = true;
                               });
-                              DialogHandler(context).showRegCourseDialog(
-                                  "دوره ${data.name} با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
-                                  "متوجه شدم");
-                              context.read<NewsCourseHomeCubit>().getNews();
+                              Future.delayed(Duration.zero, () {
+                                DialogHandler(context).showRegCourseDialog(
+                                    "دوره ${data.name} با موفقیت به بخش یادگیری حساب کاربری شما اضافه شد.",
+                                    "متوجه شدم");
+                                context.read<NewsCourseHomeCubit>().getNews();
+                              });
                             } on DioError {}
                           }
 
@@ -142,7 +156,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             ),
             child: PrimaryImageNetwork(
                 // src: "https://s3-alpha-sig.figma.com/img/3f9b/aad8/77bb617140ad8559927012205237ce01?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Snv8nK5EGr8NvHp4mj0wsxxtBVycYzhqCGZD5Ax8j-JT6ZpmEJ-nG5zNsHin6KSTaKka-av0R4QQ--XoX5zxdiQjTtKC32faE5sXtNnYIRBa3C12y-yq2q3WZ9RlmgRveutvI96Ag4Au9bLtXoa0ZYCrdXs1S2NArDN0FUfxDEuLwuYN7H9mSxLbNfH783YRuCESs9qzjb1u4tG4RSN9J96qSQmKfjvpfRvyqE2nzUDBV3hOPUhtIzRHFUHsjpFJ42ZRHtRLbCDn1xpeHEvPP4Skz5m8BHz-vWSW09Y-37~P-~YRgVL6DsqfCaGnzv7HxLw3jKrz9uFDtovhobMdEQ__",
-                src: getImageUrl(data.image),
+                src: data.image.toString(),
                 aspectRatio: 16 / 9),
           ),
         ),
@@ -186,12 +200,14 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 child: IconInfo(
                     icon: Assets.icon.outline.user,
                     desc:
-                        "${data.users} ${isInternational ? "Participants" : 'فراگیر'}")),
+                        "${data.users} ${isInternational ? "Participants" : 'فراگیر'}",
+                    eng: isInternational)),
             Expanded(
                 child: IconInfo(
                     icon: Assets.icon.outline.clock,
                     desc:
-                        "${data.time} ${isInternational ? "Hours" : 'ساعت'}")),
+                        "${data.time} ${isInternational ? "Minutes" : 'دقیقه'}",
+                    eng: isInternational)),
           ],
         ),
         const SizedBox(
@@ -204,11 +220,13 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 child: IconInfo(
                     icon: Assets.icon.outline.chart,
                     desc:
-                        "${isInternational ? "Level" : 'سطح'} ${getLevel(data.level, isInternational)}")),
+                        "${isInternational ? "Level" : 'سطح'} ${getLevel(data.level, isInternational)}",
+                    eng: isInternational)),
             Expanded(
                 child: IconInfo(
                     icon: Assets.icon.outline.note2,
-                    desc: data.category!.name.toString())),
+                    desc: data.category!.name.toString(),
+                    eng: isInternational)),
           ],
         ),
       ],
@@ -231,8 +249,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             ),
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.note2,
-                  desc: "${data.pages} صفحه"),
+                  icon: Assets.icon.outline.note2, desc: "${data.pages} صفحه"),
             ),
           ],
         ),
@@ -318,7 +335,11 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                               padding: const EdgeInsets.only(top: 2),
                               child: PrimaryText(
                                   text: "3.2",
-                                  style: Theme.of(context).textTheme.searchHint,
+                                  style: isInternational
+                                      ? Theme.of(context)
+                                          .textTheme
+                                          .searchHintEng
+                                      : Theme.of(context).textTheme.searchHint,
                                   color: Theme.of(context).cardText()),
                             ),
                             const SizedBox(
@@ -337,11 +358,12 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  PrimaryText(
-                    text: data.description.toString(),
-                    style: Theme.of(context).textTheme.title,
-                    color: Theme.of(context).headText(),
-                    textAlign: TextAlign.justify,
+                  HtmlWidget(
+                    data.description.toString(),
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(color: Theme.of(context).headText()),
                   ),
                 ],
               ),
@@ -375,100 +397,105 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   }
 
   Widget _pointsPlatform() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-            color: Theme.of(context).cardBackground(),
-            borderRadius: DesignConfig.highBorderRadius),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocBuilder<LeaderboardCubit, int?>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+                color: Theme.of(context).cardBackground(),
+                borderRadius: DesignConfig.highBorderRadius),
+            child: Column(
               children: [
-                FutureBuilder(
-                    future: getProfile(),
-                    builder: (context, snapshot) {
-                      return ProfileImageNetwork(
-                          width: 64,
-                          height: 64,
-                          src: getImageUrl(snapshot.data!.image));
-                    }),
-                const SizedBox(
-                  width: 8,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FutureBuilder(
+                        future: getProfile(),
+                        builder: (context, snapshot) {
+                          return ProfileImageNetwork(
+                              width: 64,
+                              height: 64,
+                              src: snapshot.data!.image.toString());
+                        }),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          PrimaryText(
+                              text:
+                                  isInternational ? "Your Score" : "نمره‌ی شما",
+                              style: Theme.of(context).textTheme.titleBold,
+                              color: Theme.of(context).pinTextFont()),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          state == null ? const SizedBox() : _resultExam(state),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                                color: state != null && state > 60
+                                    ? Theme.of(context).backgroundSuccess()
+                                    : Theme.of(context).backgroundError(),
+                                borderRadius: DesignConfig.highBorderRadius),
+                            child: Center(
+                              child: PrimaryText(
+                                  text: state == null
+                                      ? isInternational
+                                          ? "No test given"
+                                          : "آزمونی داده نشده"
+                                      : "${state > 60 ? isInternational ? 'accepted' : "پذیرفته" : isInternational ? 'rejection' : "رد"} ${isInternational ? 'in the exam' : 'شده در آزمون'}",
+                                  style: Theme.of(context).textTheme.title,
+                                  color: state != null && state > 60
+                                      ? successMain
+                                      : errorMain),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PrimaryText(
-                          text: isInternational ? "Your Score" : "نمره‌ی شما",
-                          style: Theme.of(context).textTheme.titleBold,
-                          color: Theme.of(context).pinTextFont()),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      data.examScore == null
-                          ? const SizedBox()
-                          : _resultExam(data.examScore!),
-                      Container(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).backgroundSuccess(),
-                            borderRadius: DesignConfig.highBorderRadius),
-                        child: Center(
-                          child: PrimaryText(
-                              text: data.examScore == null
-                                  ? isInternational
-                                      ? "No test given"
-                                      : "آزمونی داده نشده"
-                                  : "${80 > 60 ? isInternational ? 'accepted' : "پذیرفته" : isInternational ? 'rejection' : "رد"} ${isInternational ? 'in the exam' : 'شده در آزمون'}",
-                              style: Theme.of(context).textTheme.title,
-                              color: 80 > 60 ? successMain : errorMain),
-                        ),
-                      ),
-                    ],
+                const SizedBox(
+                  height: 16,
+                ),
+                Center(
+                    child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width,
+                  child: OutlinePrimaryLoadingButton(
+                    title: isInternational
+                        ? 'Go to the Leaderboard'
+                        : "رفتن به سکوی امتیازات",
+                    onTap: (Function startLoading, Function stopLoading,
+                        ButtonState btnState) async {
+                      if (btnState == ButtonState.idle) {
+                        startLoading();
+                        try {
+                          LeaderboardModel response =
+                              await courseRepository.getLeaderboard(data.id!);
+                          navigatorKey.currentState!.pushNamed(
+                              RoutePaths.leaderboard,
+                              arguments: response);
+                        } on DioError {}
+
+                        stopLoading();
+                      }
+                    },
+                    disable: false,
                   ),
-                )
+                )),
               ],
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Center(
-                child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: OutlinePrimaryLoadingButton(
-                title: isInternational
-                    ? 'Go to the Leaderboard'
-                    : "رفتن به سکوی امتیازات",
-                onTap: (Function startLoading, Function stopLoading,
-                    ButtonState btnState) async {
-                  if (btnState == ButtonState.idle) {
-                    startLoading();
-                    try {
-                      LeaderboardModel response =
-                          await courseRepository.getLeaderboard(4);
-                      if (response.user != null && response.users != null) {
-                        navigatorKey.currentState!.pushNamed(
-                            RoutePaths.leaderboard,
-                            arguments: response);
-                      }
-                    } on DioError {}
-
-                    stopLoading();
-                  }
-                },
-                disable: false,
-              ),
-            )),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -574,12 +601,9 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   Widget _chapters() {
     return Column(
       children: [
-        (data.tag != null && data.tag == 'mini') || data.category!.id == 6
+        (data.tag != null && data.tag == 'mini') || data.category!.id! == 6
             ? const SizedBox()
-            : TitleDivider(
-                title: isInternational
-                    ? 'Chapters'
-                    : "${data.category!.id == 6 ? 'ی کتاب' : ''}سرفصل‌ها"),
+            : TitleDivider(title: isInternational ? 'Chapters' : "سرفصل ها"),
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: ListView.builder(
@@ -622,13 +646,26 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
   Container _chapterLayout(int index) {
     final chapter = data.chapters![index];
     final isShow = chapter.isOpen!;
-    bool completed = true;
-    chapter.subchapters?.forEach((element) {
-      if (element.visited == false) {
-        completed = false;
-        return;
+    chapter.completed = true;
+    if (data.category!.id != 6) {
+      chapter.subchapters?.forEach((element) {
+        if (element.visited == false) {
+          chapter.completed = false;
+          return;
+        }
+      });
+
+      if (chapter != data.chapters!.first) {
+        if (data.chapters![index - 1].completed == null) {
+          chapter.completed = null;
+        } else {
+          if (!data.chapters![index - 1].completed!) {
+            chapter.completed = null;
+          }
+        }
       }
-    });
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(16),
@@ -654,24 +691,33 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                         text: (data.tag != null && data.tag == 'mini')
                             ? "شروع مینی دوره"
                             : data.category!.id == 6
-                                ? 'سرفصل‌های کتاب'
+                                ? 'فصل های کتاب'
                                 : "${isInternational ? 'Chapter' : "فصل"} ${getChapterNumber(index, isInternational)}",
                         style: Theme.of(context).textTheme.dialogTitle,
                         color: Theme.of(context).primaryColor),
                     const SizedBox(
                       width: 8,
                     ),
-                    completed
-                        ? PrimaryText(
-                            text: isInternational ? '(Pass)' : "(گذرانده)",
-                            style: Theme.of(context).textTheme.titleBold,
-                            color: successMain)
-                        : PrimaryText(
-                            text: isInternational
-                                ? "(In Progress)"
-                                : "(در حال یادگیری)",
-                            style: Theme.of(context).textTheme.titleBold,
-                            color: warningMain),
+                    data.category!.id == 6
+                        ? const SizedBox()
+                        : chapter.completed == null
+                            ? Assets.icon.outline.lock
+                                .svg(color: Theme.of(context).secondaryColor())
+                            : chapter.completed!
+                                ? PrimaryText(
+                                    text: isInternational
+                                        ? '(Pass)'
+                                        : "(گذرانده)",
+                                    style:
+                                        Theme.of(context).textTheme.titleBold,
+                                    color: successMain)
+                                : PrimaryText(
+                                    text: isInternational
+                                        ? "(In Progress)"
+                                        : "(در حال یادگیری)",
+                                    style:
+                                        Theme.of(context).textTheme.titleBold,
+                                    color: warningMain),
                   ],
                 ),
                 (data.tag != null && data.tag == 'mini') ||
@@ -697,10 +743,16 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  PrimaryText(
-                      text: chapter.name.toString(),
-                      style: Theme.of(context).textTheme.title,
-                      color: Theme.of(context).pinTextFont()),
+                  data.category!.id == 6
+                      ? const SizedBox()
+                      : MarqueeText(
+                          text: chapter.name.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .title
+                              .copyWith(color: Theme.of(context).pinTextFont()),
+                          stop: const Duration(seconds: 2),
+                        ),
                   const SizedBox(
                     height: 16,
                   ),
@@ -733,9 +785,13 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                         PrimaryText(
                                             text:
                                                 "${chapter.subchapters!.length} ${(data.tag != null && data.tag == 'mini') ? 'قسمت' : isInternational ? 'Subchapter' : 'زیر فصل'}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .searchHint,
+                                            style: isInternational
+                                                ? Theme.of(context)
+                                                    .textTheme
+                                                    .searchHintEng
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .searchHint,
                                             color: Theme.of(context)
                                                 .secondaryColor())
                                       ],
@@ -761,10 +817,14 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                         ),
                                         PrimaryText(
                                             text:
-                                                "${chapter.time} ${isInternational ? 'Hours' : 'ساعت'}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .searchHint,
+                                                "${chapter.time} ${isInternational ? 'Minutes' : 'دقیقه'}",
+                                            style: isInternational
+                                                ? Theme.of(context)
+                                                    .textTheme
+                                                    .searchHintEng
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .searchHint,
                                             color: Theme.of(context)
                                                 .secondaryColor())
                                       ],
@@ -791,9 +851,13 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                         PrimaryText(
                                             text:
                                                 "${chapter.score} ${isInternational ? 'Points' : 'امتیاز'}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .searchHint,
+                                            style: isInternational
+                                                ? Theme.of(context)
+                                                    .textTheme
+                                                    .searchHintEng
+                                                : Theme.of(context)
+                                                    .textTheme
+                                                    .searchHint,
                                             color: Theme.of(context)
                                                 .secondaryColor())
                                       ],
@@ -864,6 +928,14 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     const SizedBox(
                       width: 8,
                     ),
+                    data.registered! &&
+                            data.chapters!.last.completed != null &&
+                            data.chapters!.last.completed!
+                        ? const SizedBox()
+                        : Assets.icon.outline.lock.svg(
+                            color: Theme.of(context).secondaryColor(),
+                            width: 18,
+                            height: 18)
                   ],
                 ),
                 isShowLast
@@ -960,7 +1032,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                       Subchapters(
                           name: isInternational
                               ? 'Summary of the course'
-                              : "جمع‌بندی دوره")),
+                              : "جمع‌بندی")),
                   _subchapterLayoutExam(
                       1,
                       Assets.icon.outline.exam,
@@ -991,7 +1063,13 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     final subchapter = chapter.subchapters![index];
     CourseTypes type = getType(subchapter.type!);
     return InkWell(
-      onTap: data.registered!
+      onTap: (data.registered! &&
+                  chapter.completed != null &&
+                  (index == 0 ||
+                      (subchapter != chapter.subchapters!.first &&
+                          chapter.subchapters![index - 1].visited != null &&
+                          chapter.subchapters![index - 1].visited!))) ||
+              data.category!.id == 6
           ? () async {
               context.read<ChapterBloc>().add(GetInfoChapter(
                   chapterId: chapter.id!, subChapterId: subchapter.id!));
@@ -1005,7 +1083,11 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                     arguments: CourseArgs(
                         courseData: widget.response,
                         chapterModel: state.response,
+                        isInternational: isInternational,
                         chapterId: chapter.id!));
+                setState(() {
+                  chapter.subchapters![index].visited = true;
+                });
               });
             }
           : null,
@@ -1017,26 +1099,41 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
           decoration: BoxDecoration(
               borderRadius: DesignConfig.highBorderRadius,
               color: subchapter.visited!
-                  ? Theme.of(context).cardBackground()
+                  ? Theme.of(context).onWhite()
                   : Theme.of(context).primaryColor50()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  SvgGenImage(type.icon)
-                      .svg(color: successMain, width: 16, height: 16),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  PrimaryText(
-                      text:
-                          "${(data.tag != null && data.tag == 'mini') ? 'قسمت ${getChapterNumber(index, false)}: ' : ''}${subchapter.name.toString()}",
-                      style: Theme.of(context).textTheme.searchHint,
-                      color: grayColor900)
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    SvgGenImage(type.icon)
+                        .svg(color: successMain, width: 16, height: 16),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: MarqueeText(
+                        text:
+                            "${(data.tag != null && data.tag == 'mini') ? 'قسمت ${getChapterNumber(index, false)}: ' : ''}${subchapter.name.toString()}",
+                        style: Theme.of(context).textTheme.searchHint.copyWith(
+                            color: subchapter.visited!
+                                ? Theme.of(context).progressText()
+                                : grayColor900),
+                        stop: const Duration(seconds: 2),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              data.registered!
+              (data.registered! &&
+                          chapter.completed != null &&
+                          (index == 0 ||
+                              (subchapter != chapter.subchapters!.first &&
+                                  chapter.subchapters![index - 1].visited !=
+                                      null &&
+                                  chapter.subchapters![index - 1].visited!))) ||
+                      data.category!.id == 6
                   ? isInternational
                       ? Assets.icon.outline.arrowRight1.svg(
                           color: Theme.of(context).primaryColor,
@@ -1057,57 +1154,81 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
 
   Widget _subchapterLayoutExam(
       int index, SvgGenImage icon, Subchapters subchapter) {
-    return InkWell(
-      onTap: data.registered!
-          ? () {
-              String r;
-              if (index == 0) {
-                r = RoutePaths.summery;
-              } else {
-                r = RoutePaths.examInfo;
+    return BlocBuilder<ChapterBloc, ChapterState>(builder: (context, state) {
+      return InkWell(
+        onTap: data.registered! &&
+                data.chapters!.last.completed != null &&
+                data.chapters!.last.completed!
+            ? () {
+                String r;
+                if (index == 0) {
+                  r = RoutePaths.summery;
+                } else {
+                  r = RoutePaths.examInfo;
+                }
+                Navigator.of(context).pushNamed(r, arguments: data.id!);
               }
-              Navigator.of(context).pushNamed(r, arguments: data.id!);
-            }
-          : null,
-      child: Center(
-        child: Container(
-          width: MediaQuery.sizeOf(context).width,
-          padding: const EdgeInsets.all(18),
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(
-              borderRadius: DesignConfig.highBorderRadius,
-              color: Theme.of(context).primaryColor50()),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  icon.svg(color: successMain, width: 16, height: 16),
-                  const SizedBox(
-                    width: 8,
+            : null,
+        child: Center(
+          child: Container(
+            width: MediaQuery.sizeOf(context).width,
+            padding: const EdgeInsets.all(18),
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+                borderRadius: DesignConfig.highBorderRadius,
+                color: data.examScore == 100
+                    ? Theme.of(context).onWhite()
+                    : Theme.of(context).primaryColor50()),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      icon.svg(color: successMain, width: 16, height: 16),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: MarqueeText(
+                          text: subchapter.name.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .searchHint
+                              .copyWith(
+                                  color: data.examScore == 100
+                                      ? Theme.of(context).progressText()
+                                      : grayColor900),
+                          stop: const Duration(seconds: 2),
+                        ),
+                      )
+                    ],
                   ),
-                  PrimaryText(
-                      text: subchapter.name.toString(),
-                      style: Theme.of(context).textTheme.searchHint,
-                      color: grayColor900)
-                ],
-              ),
-              data.registered!
-                  ? isInternational
-                      ? Assets.icon.outline.arrowRight1.svg(
-                          color: Theme.of(context).primaryColor,
-                          width: 18,
-                          height: 18)
-                      : Assets.icon.outline.arrowLeft.svg(
-                          color: Theme.of(context).primaryColor,
-                          width: 18,
-                          height: 18)
-                  : Assets.icon.outline.lock
-                      .svg(color: grayColor700, width: 18, height: 18)
-            ],
+                ),
+                data.registered! &&
+                        data.chapters!.last.completed != null &&
+                        data.chapters!.last.completed!
+                    ? isInternational
+                        ? Assets.icon.outline.arrowRight1.svg(
+                            color: Theme.of(context).primaryColor,
+                            width: 18,
+                            height: 18)
+                        : data.examScore == 100
+                            ? Assets.icon.outline.tickSquare.svg(
+                                color: Theme.of(context).primaryColor,
+                                width: 18,
+                                height: 18)
+                            : Assets.icon.outline.arrowLeft.svg(
+                                color: Theme.of(context).primaryColor,
+                                width: 18,
+                                height: 18)
+                    : Assets.icon.outline.lock
+                        .svg(color: grayColor700, width: 18, height: 18)
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

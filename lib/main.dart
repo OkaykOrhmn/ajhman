@@ -1,7 +1,7 @@
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
-import 'package:ajhman/core/cubit/answer/answer_cubit.dart';
 import 'package:ajhman/core/cubit/download/download_cubit.dart';
+import 'package:ajhman/core/cubit/home/books_home_cubit.dart';
 import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
@@ -9,11 +9,9 @@ import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/services/firebase_api.dart';
 import 'package:ajhman/core/services/notification_service.dart';
 import 'package:ajhman/data/model/notification_data_model.dart';
-import 'package:ajhman/data/model/notification_model.dart';
 import 'package:ajhman/firebase_options.dart';
 
 import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:connectivity_bloc/connectivity_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -29,7 +27,7 @@ import 'core/bloc/questions/questions_bloc.dart';
 import 'core/bloc/ticker/timer_bloc.dart';
 import 'core/cubit/home/selected_index_cubit.dart';
 import 'core/cubit/image_picker/image_picker_cubit.dart';
-import 'core/cubit/timer/timer_cubit.dart';
+import 'core/cubit/leaderboard/leaderboard_cubit.dart';
 import 'core/routes/route_generator.dart';
 import 'core/utils/app_locale.dart';
 import 'core/utils/language/bloc/language_bloc.dart';
@@ -38,7 +36,6 @@ import 'core/utils/timer/timer.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 ThemeData mThemeData = Theme.of(navigatorKey.currentContext!);
 String token = '';
-double fontSize = 1;
 bool isDarkTheme =
     SchedulerBinding.instance.platformDispatcher.platformBrightness ==
         Brightness.dark;
@@ -63,7 +60,7 @@ void main() async {
         options: DefaultFirebaseOptions.currentPlatform);
     await FirebaseApi().initNotification();
   } catch (e) {
-    rethrow;
+    // rethrow;
   }
 
   runApp(MultiBlocProvider(providers: [
@@ -127,13 +124,13 @@ void main() async {
       create: (context) => AudioPlayerCubit(),
     ),
     BlocProvider(
-      create: (context) => TimerCubit(),
-    ),
-    BlocProvider(
-      create: (context) => AnswerCubit(),
+      create: (context) => LeaderboardCubit(examScore: null),
     ),
     BlocProvider(
       create: (context) => NewsCourseHomeCubit(),
+    ),
+    BlocProvider(
+      create: (context) => BooksHomeCubit(),
     ),
     BlocProvider(
       create: (context) => DownloadCubit(),

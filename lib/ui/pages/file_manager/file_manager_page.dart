@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/app_bar/reversible_app_bar.dart';
 import 'package:ajhman/ui/widgets/loading/three_bounce_loading.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
@@ -92,7 +92,6 @@ class _FileManagerPageState extends State<FileManagerPage> {
                             // Perform file-related tasks.
                             await OpenAppFile.open(entities[index].path);
                             // await openFile(entities[index].path);
-
                           }
                         },
                         child: Container(

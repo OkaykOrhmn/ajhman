@@ -1,8 +1,8 @@
 import 'package:ajhman/ui/pages/auth/screens/login_otp/login_otp_screen.dart';
 import 'package:ajhman/ui/pages/auth/screens/login_password/login_password_screen.dart';
 import 'package:ajhman/ui/pages/auth/screens/pin/pin_screen.dart';
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +25,6 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).primaryColor50(),
-
         body: Column(
           children: [header(context), body()],
         ));
@@ -36,7 +35,7 @@ class _AuthPageState extends State<AuthPage> {
       child: Container(
         color: Theme.of(context).primaryColor,
         child: Container(
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
               color: Theme.of(context).white(),
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(24), topRight: Radius.circular(24))),
@@ -87,7 +86,7 @@ class _AuthPageState extends State<AuthPage> {
   Container header(BuildContext context) {
     return Container(
       height: MediaQuery.sizeOf(context).height / 3,
-      decoration:  BoxDecoration(color: Theme.of(context).primaryColor),
+      decoration: BoxDecoration(color: Theme.of(context).primaryColor),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

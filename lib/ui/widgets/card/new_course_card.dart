@@ -1,8 +1,9 @@
-
-import 'package:ajhman/ui/theme/color/colors.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/colors.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
+import 'package:ajhman/ui/widgets/text/marquee_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/cubit/home/selected_index_cubit.dart';
@@ -12,11 +13,11 @@ import '../../../core/routes/route_paths.dart';
 import '../../../core/utils/language/bloc/language_bloc.dart';
 import '../../../core/utils/usefull_funcs.dart';
 import '../../../data/args/course_main_args.dart';
-import '../../../data/model/cards/new_course_card_model.dart';
+import '../../../data/model/new_course_card_model.dart';
 import '../../../data/model/language.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../main.dart';
-import '../../theme/widget/design_config.dart';
+import '../../theme/design_config.dart';
 import '../button/primary_button.dart';
 import '../image/primary_image_network.dart';
 import '../progress/linear_progress.dart';
@@ -29,6 +30,7 @@ class NewCourseCard extends StatefulWidget {
   final NewCourseCardModel response;
   final double? width;
   final double? height;
+  final bool expanded;
 
   const NewCourseCard(
       {super.key,
@@ -36,7 +38,8 @@ class NewCourseCard extends StatefulWidget {
       this.padding,
       required this.response,
       this.width,
-      this.height});
+      this.height,
+      this.expanded = false});
 
   @override
   State<NewCourseCard> createState() => _RecentCurseCardState();
@@ -67,43 +70,45 @@ class _RecentCurseCardState extends State<NewCourseCard> {
       child: InkWell(
         onTap: () {
           navigatorKey.currentState!.pushNamed(RoutePaths.courseMain,
-              arguments: CourseMainArgs(courseId: response.id));
+              arguments: CourseMainArgs(
+                  courseId: response.id,
+                  catId: response.category!.id!,
+                  tag: response.tag.toString()));
         },
         child: Padding(
           padding: widget.padding ?? EdgeInsets.zero,
-          child: Center(
-            child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: DesignConfig.highBorderRadius,
-                    boxShadow: DesignConfig.lowShadow,
-                    color: Theme.of(context).white()),
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _image(getImageUrl(response.image.toString()), "3.4"),
-                    Directionality(
-                      textDirection: isInternational
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _title(),
-                            response.category!.id == 6
-                                ? _bookInfoes()
-                                : _infoes(),
-                            _footer(),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                )),
-          ),
+          child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: DesignConfig.highBorderRadius,
+                  boxShadow: DesignConfig.lowShadow,
+                  color: Theme.of(context).white()),
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _image(response.image.toString(), "3.4"),
+                  mainCardInfo(),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+
+  Directionality mainCardInfo() {
+    return Directionality(
+      textDirection: isInternational ? TextDirection.ltr : TextDirection.rtl,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            _title(),
+            response.category!.id == 6 ? _bookInfoes() : _infoes(),
+            _footer(),
+          ],
         ),
       ),
     );
@@ -134,17 +139,32 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                       width: 8,
                     ),
                     PrimaryText(
-                        text: response.progress.toString(),
-                        style: Theme.of(context).textTheme.navbarTitle,
+                        text: isInternational
+                            ? response.progress.toString()
+                            : response.progress
+                                .toString()
+                                .split('')
+                                .reversed
+                                .join(),
+                        style: isInternational
+                            ? Theme.of(context).textTheme.navbarTitleEng
+                            : Theme.of(context).textTheme.navbarTitle,
                         color: Theme.of(context).progressText()),
                   ],
                 ),
                 PrimaryButton(
-                    title: "ادامه یادگیری",
+                    title: response.category!.id == 6
+                        ? "ادامه مطالعه"
+                        : isInternational
+                            ? 'Learning'
+                            : "ادامه یادگیری",
                     onClick: () {
                       navigatorKey.currentState!.pushNamed(
                           RoutePaths.courseMain,
-                          arguments: CourseMainArgs(courseId: response.id));
+                          arguments: CourseMainArgs(
+                              courseId: response.id,
+                              catId: response.category!.id!,
+                              tag: response.tag.toString()));
                     })
               ],
             )
@@ -163,14 +183,20 @@ class _RecentCurseCardState extends State<NewCourseCard> {
             ),
             PrimaryButton(
               fill: true,
-              title: response.registered! ? "ورود" : "ثبت‌نام",
-              onClick: response.canStart != null && response.canStart!
-                  ? () {
-                      navigatorKey.currentState!.pushNamed(
-                          RoutePaths.courseMain,
-                          arguments: CourseMainArgs(courseId: response.id!));
-                    }
-                  : null,
+              title: response.registered! || response.category!.id == 6
+                  ? isInternational
+                      ? 'Login'
+                      : "ورود"
+                  : isInternational
+                      ? 'Register'
+                      : "ثبت‌نام",
+              onClick: () {
+                navigatorKey.currentState!.pushNamed(RoutePaths.courseMain,
+                    arguments: CourseMainArgs(
+                        courseId: response.id!,
+                        catId: response.category!.id!,
+                        tag: response.tag.toString()));
+              },
             ),
           ],
         );
@@ -191,7 +217,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                 Row(
                   children: [
                     PrimaryText(
-                        text: "امتیاز شما: ",
+                        text: isInternational ? 'Your Point: ' : "امتیاز شما: ",
                         style: Theme.of(context).textTheme.navbarTitle,
                         color: Theme.of(context).editTextFont()),
                     PrimaryText(
@@ -201,7 +227,9 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                   ],
                 ),
                 PrimaryButton(
-                  title: "دریافت گواهینامه",
+                  title: isInternational
+                      ? 'Get a certificate'
+                      : "دریافت گواهینامه",
                   onClick: () {
                     context
                         .read<SelectedIndexCubit>()
@@ -226,15 +254,19 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           children: [
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.user,
-                  desc:
-                      "${response.users.toString()} ${isInternational ? 'Participants' : 'فراگیر'}"),
+                icon: Assets.icon.user,
+                desc:
+                    "${response.users.toString()} ${isInternational ? 'Participants' : 'فراگیر'}",
+                eng: isInternational,
+              ),
             ),
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.clock,
-                  desc:
-                      "${response.time.toString()} ${isInternational ? 'Hours' : 'ساعت'}"),
+                icon: Assets.icon.outline.clock,
+                desc:
+                    "${response.time.toString()} ${isInternational ? 'Minutes' : 'دقیفه'}",
+                eng: isInternational,
+              ),
             ),
           ],
         ),
@@ -246,14 +278,18 @@ class _RecentCurseCardState extends State<NewCourseCard> {
           children: [
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.chart,
-                  desc:
-                      "${isInternational ? 'Level' : 'سطح'} ${getLevel(response.level, isInternational)}"),
+                icon: Assets.icon.outline.chart,
+                desc:
+                    "${isInternational ? 'Level' : 'سطح'} ${getLevel(response.level, isInternational)}",
+                eng: isInternational,
+              ),
             ),
             Expanded(
               child: IconInfo(
-                  icon: Assets.icon.outline.note2,
-                  desc: response.category!.name.toString()),
+                icon: Assets.icon.outline.note2,
+                desc: response.category!.name.toString(),
+                eng: isInternational,
+              ),
             ),
           ],
         ),
@@ -278,7 +314,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
             Expanded(
               child: IconInfo(
                   icon: Assets.icon.outline.note2,
-                  desc: response.pages.toString()),
+                  desc: "${response.pages} صفحه"),
             ),
           ],
         ),
@@ -329,19 +365,18 @@ class _RecentCurseCardState extends State<NewCourseCard> {
   Padding _title() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Container(
-        height: (Theme.of(context).textTheme.titleBold.fontSize! * 3),
-        constraints: const BoxConstraints(
-          minWidth: 100,
-          maxWidth: 190,
-        ),
-        child: PrimaryText(
-          text: response.name.toString(),
-          style: Theme.of(context).textTheme.titleBold,
-          textAlign: TextAlign.start,
-          color: Theme.of(context).progressText(),
-          maxLines: 2,
-        ),
+      child: MarqueeText(
+        text: response.name.toString(),
+        style: isInternational
+            ? Theme.of(context)
+                .textTheme
+                .titleBoldEng
+                .copyWith(color: Theme.of(context).progressText())
+            : Theme.of(context)
+                .textTheme
+                .titleBold
+                .copyWith(color: Theme.of(context).progressText()),
+        stop: Duration(seconds: 2),
       ),
     );
   }
@@ -374,7 +409,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                       color: Theme.of(context).white().withOpacity(0.5),
                       boxShadow: DesignConfig.lowShadow,
                       borderRadius: DesignConfig.highBorderRadius),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -404,7 +440,8 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                       color: Theme.of(context).white().withOpacity(0.5),
                       boxShadow: DesignConfig.lowShadow,
                       borderRadius: DesignConfig.highBorderRadius),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

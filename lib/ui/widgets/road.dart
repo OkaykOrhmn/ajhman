@@ -1,8 +1,7 @@
-import 'package:ajhman/ui/theme/widget/design_config.dart';
+import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/divider/vertical_dashed_line.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-
 
 import 'divider/horizontal_dashed_line.dart';
 
@@ -11,7 +10,8 @@ class Road extends StatefulWidget {
   final int? length;
   final double? height;
 
-  const Road({super.key, required this.index, required this.length, this.height});
+  const Road(
+      {super.key, required this.index, required this.length, this.height});
 
   @override
   State<Road> createState() => _RoadState();
@@ -31,13 +31,13 @@ class _RoadState extends State<Road> {
     return Center(
       child: SizedBox(
         width: 80,
-        height: widget.height?? 120,
+        height: widget.height ?? 130,
         child: Stack(
           children: [
             top(),
             isEven ? left() : right(),
             // Positioned(
-            //     left: 12,
+            //     left: 11.5,
             //     right: 18,
             //     bottom: 0,
             //     top: 18,
@@ -85,37 +85,47 @@ class _RoadState extends State<Road> {
         child: Stack(
           children: [
             Container(
-              width: 30,
+              width: 25,
               padding: const EdgeInsets.only(bottom: 0, top: 18),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: widget.length == null? DesignConfig.aVeryHighBorderRadius: Radius.zero,
-                    bottomRight: widget.length == null? DesignConfig.aVeryHighBorderRadius: Radius.zero,
-                    topRight: isEven? Radius.zero:DesignConfig.aVeryHighBorderRadius,
-                    topLeft: isEven? DesignConfig.aVeryHighBorderRadius:Radius.zero,
+                    bottomLeft: widget.length == null
+                        ? DesignConfig.aVeryHighBorderRadius
+                        : Radius.zero,
+                    bottomRight: widget.length == null
+                        ? DesignConfig.aVeryHighBorderRadius
+                        : Radius.zero,
+                    topRight: isEven
+                        ? Radius.zero
+                        : DesignConfig.aVeryHighBorderRadius,
+                    topLeft: isEven
+                        ? DesignConfig.aVeryHighBorderRadius
+                        : Radius.zero,
                   ),
                   gradient: const LinearGradient(colors: [
                     Color(0xff4A4A4A),
                     Color(0xff575757),
                   ])),
-              child: const VerticalDashedLine(width: 2,active: Colors.white, dashed: true,dashSize: 8,),
-
+              child: const VerticalDashedLine(
+                width: 2,
+                active: Colors.white,
+                dashed: true,
+                dashSize: 8,
+              ),
             ),
             Positioned(
-                top: 14,
-                right: 14,
+                top: 11.5,
+                right: 11.5,
                 child: Container(
                   height: 8,
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
                       border: const Border(
-                        top: BorderSide(color: Colors.white,width: 2),
-                        right: BorderSide(color: Colors.white,width: 2),
-                      )
-                  ),
+                        top: BorderSide(color: Colors.white, width: 2),
+                        right: BorderSide(color: Colors.white, width: 2),
+                      )),
                 ))
-
           ],
         ));
   }
@@ -128,37 +138,42 @@ class _RoadState extends State<Road> {
         child: Stack(
           children: [
             Container(
-              width: 30,
-              padding: const EdgeInsets.only(bottom: 12, top: 18),
+              width: 25,
+              padding: const EdgeInsets.only(bottom: 11.5, top: 18),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.zero,
-                    topLeft: DesignConfig.aVeryHighBorderRadius,
-                    bottomLeft: widget.length == null? DesignConfig.aVeryHighBorderRadius: Radius.zero,
-                    bottomRight: widget.length == null? DesignConfig.aVeryHighBorderRadius: Radius.zero
-                  ),
+                      topRight: Radius.zero,
+                      topLeft: DesignConfig.aVeryHighBorderRadius,
+                      bottomLeft: widget.length == null
+                          ? DesignConfig.aVeryHighBorderRadius
+                          : Radius.zero,
+                      bottomRight: widget.length == null
+                          ? DesignConfig.aVeryHighBorderRadius
+                          : Radius.zero),
                   gradient: const LinearGradient(colors: [
                     Color(0xff4A4A4A),
                     Color(0xff575757),
                   ])),
-              child: const VerticalDashedLine(width: 2,active: Colors.white, dashed: true,dashSize: 8,),
-
+              child: const VerticalDashedLine(
+                width: 2,
+                active: Colors.white,
+                dashed: true,
+                dashSize: 8,
+              ),
             ),
             Positioned(
-                top: 14,
-                left: 14,
+                top: 11.5,
+                left: 11.5,
                 child: Container(
                   height: 8,
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
                       border: const Border(
-                        top: BorderSide(color: Colors.white,width: 2),
-                        left: BorderSide(color: Colors.white,width: 2),
-                      )
-                  ),
+                        top: BorderSide(color: Colors.white, width: 2),
+                        left: BorderSide(color: Colors.white, width: 2),
+                      )),
                 ))
-
           ],
         ));
   }
@@ -171,13 +186,14 @@ class _RoadState extends State<Road> {
         child: Stack(
           children: [
             Container(
-              height: 30,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              height: 25,
+              padding: const EdgeInsets.symmetric(horizontal: 11.5),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topRight:
-                        isEven ? Radius.zero : DesignConfig.aVeryHighBorderRadius,
-                    topLeft:   isEven
+                    topRight: isEven
+                        ? Radius.zero
+                        : DesignConfig.aVeryHighBorderRadius,
+                    topLeft: isEven
                         ? DesignConfig.aVeryHighBorderRadius
                         : Radius.zero,
                     bottomLeft: DesignConfig.aVeryHighBorderRadius,
@@ -187,37 +203,39 @@ class _RoadState extends State<Road> {
                     Color(0xff4A4A4A),
                     Color(0xff575757),
                   ])),
-              child: const HorizontalDashedLine(height: 2,active: Colors.white, dashed: true,dashSize: 10,),
+              child: const HorizontalDashedLine(
+                height: 2,
+                active: Colors.white,
+                dashed: true,
+                dashSize: 10,
+              ),
             ),
             Positioned(
-                top: 8,
-                left: 12,
+                top: 6,
+                left: 11.5,
                 child: Container(
                   height: 8,
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
                       border: const Border(
-                        bottom: BorderSide(color: Colors.white,width: 2),
-                        left: BorderSide(color: Colors.white,width: 2),
-                      )
-                  ),
+                        bottom: BorderSide(color: Colors.white, width: 2),
+                        left: BorderSide(color: Colors.white, width: 2),
+                      )),
                 )),
             Positioned(
-                top: 8,
-                right: 12,
+                top: 6,
+                right: 11.5,
                 child: Container(
                   height: 8,
                   width: 8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(2),
                       border: const Border(
-                        bottom: BorderSide(color: Colors.white,width: 2),
-                        right: BorderSide(color: Colors.white,width: 2),
-                      )
-                  ),
+                        bottom: BorderSide(color: Colors.white, width: 2),
+                        right: BorderSide(color: Colors.white, width: 2),
+                      )),
                 ))
-
           ],
         ));
   }

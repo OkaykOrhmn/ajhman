@@ -1,7 +1,7 @@
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/services/audio_handler.dart';
 import 'package:ajhman/data/model/audio_player_model.dart';
-import 'package:ajhman/ui/theme/text/text_styles.dart';
+import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/progress/circle_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,7 @@ import 'package:volume_controller/volume_controller.dart';
 import '../../../core/cubit/download/download_cubit.dart';
 import '../../../core/enum/dialogs_status.dart';
 import '../../../gen/assets.gen.dart';
-import '../../theme/color/colors.dart';
+import '../../theme/colors.dart';
 import '../snackbar/snackbar_handler.dart';
 import '../text/primary_text.dart';
 
@@ -67,8 +67,7 @@ class _AudioBarState extends State<AudioBar> {
                 InkWell(
                   onTap: () async {
                     await context.read<DownloadCubit>().downloadAudio(
-                         widget.audioSource,
-                        widget.name,"فایل صوتی");
+                        widget.audioSource, widget.name, "فایل صوتی");
                   },
                   child: BlocConsumer<DownloadCubit, DownloadState>(
                     listener: (contextD, state) {
@@ -93,8 +92,10 @@ class _AudioBarState extends State<AudioBar> {
                           text: "${state.pr}",
                         );
                       } else {
-                        return Assets.icon.outline.download
-                            .svg(width: 24, height: 24, color: Theme.of(context).pinTextFont());
+                        return Assets.icon.outline.download.svg(
+                            width: 24,
+                            height: 24,
+                            color: Theme.of(context).pinTextFont());
                       }
                     },
                   ),
