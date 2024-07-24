@@ -1,14 +1,12 @@
-import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+// ignore_for_file: deprecated_member_use
 
+import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/model/auth/auth_user_otp_error.dart';
 import '../../../data/model/auth/auth_user_otp_request.dart';
 import '../../../data/model/auth/auth_user_otp_response.dart';
 import '../../../data/repository/auth_user_otp_repository.dart';
-
 part 'pin_event.dart';
-
 part 'pin_state.dart';
 
 class PinBloc extends Bloc<PinEvent, PinState> {

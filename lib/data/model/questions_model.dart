@@ -30,9 +30,8 @@ class Questions {
 
   Questions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    question = json['Question'] != null
-        ? Question.fromJson(json['Question'])
-        : null;
+    question =
+        json['Question'] != null ? Question.fromJson(json['Question']) : null;
     score = json['score'];
   }
 

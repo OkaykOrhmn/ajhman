@@ -87,7 +87,6 @@ class _CourseCommentsState extends State<CourseComments> {
         } else if (state is CommentChangeFail) {
           comments = state.response;
         }
-        print("comments : $comments");
         if (state is CommentSuccess ||
             state is CommentAddFail ||
             state is CommentChangeFail) {

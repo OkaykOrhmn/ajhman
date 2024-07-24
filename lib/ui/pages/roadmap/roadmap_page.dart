@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/model/roadmap_model.dart';
 import 'package:ajhman/data/model/roadmap_view.dart';
@@ -7,10 +9,8 @@ import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/listview/vertical_listview.dart';
 import 'package:ajhman/ui/widgets/road.dart';
 import 'package:ajhman/ui/widgets/text/marquee_text.dart';
-import 'package:ajhman/ui/widgets/text/overflow_proof_text.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
-import 'package:marquee/marquee.dart';
 
 import '../../../gen/assets.gen.dart';
 
@@ -85,7 +85,6 @@ class _RoadMapPageState extends State<RoadMapPage> {
                               Color(0xff4A4A4A),
                               Color(0xff575757),
                             ])),
-                        // child: VerticalDashedLine(width: 2,active: Colors.white, dashed: true),
                       ),
                     ),
                     VerticalListView(

@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
 import 'api_end_points.dart';
 import 'options.dart';
 
@@ -26,16 +24,26 @@ class DioHelper {
 
   Dio get sendRequest => _dio;
 
-  Future<Response> getRequest(String apiEndPoint,Map<String, dynamic>? queryParameters) async {
-    return await sendRequest.get(apiEndPoint, options: await getDioOptions(),queryParameters: queryParameters);
+  Future<Response> getRequest(
+      String apiEndPoint, Map<String, dynamic>? queryParameters) async {
+    return await sendRequest.get(apiEndPoint,
+        options: await getDioOptions(), queryParameters: queryParameters);
   }
 
-  Future<Response> putRequest(String apiEndPoint,Object? data,) async {
-    return await sendRequest.put(apiEndPoint,data: data, options: await getDioOptions());
+  Future<Response> putRequest(
+    String apiEndPoint,
+    Object? data,
+  ) async {
+    return await sendRequest.put(apiEndPoint,
+        data: data, options: await getDioOptions());
   }
 
-  Future<Response> deleteRequest(String apiEndPoint,Object? data,) async {
-    return await sendRequest.delete(apiEndPoint,data: data, options: await getDioOptions());
+  Future<Response> deleteRequest(
+    String apiEndPoint,
+    Object? data,
+  ) async {
+    return await sendRequest.delete(apiEndPoint,
+        data: data, options: await getDioOptions());
   }
 
   Future<Response> postRequest(String apiEndPoint, Object? data,

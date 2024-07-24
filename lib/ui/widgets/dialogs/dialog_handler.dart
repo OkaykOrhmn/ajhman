@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package, empty_catches, deprecated_member_use
+
 import 'dart:ui';
 
 import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
@@ -16,7 +18,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif/gif.dart';
 import 'package:loading_btn/loading_btn.dart';
@@ -32,54 +33,54 @@ class DialogHandler {
 
   DialogHandler(this.context);
 
-  // Future<void> showErrorDialog(
-  //     String title, String btnTitle, Function()? onTap) async {
-  //   ThemeData themeData = Theme.of(context);
-  //   await showDialog(
-  //     barrierDismissible: false,
-  //     context: context,
-  //     builder: (context) => Dialog(
-  //       backgroundColor: Colors.white,
-  //       insetPadding: const EdgeInsets.all(16),
-  //       shape: const RoundedRectangleBorder(
-  //           borderRadius: DesignConfig.highBorderRadius),
-  //       child: SizedBox(
-  //         width: MediaQuery.sizeOf(context).width,
-  //         child: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           children: [
-  //             Padding(
-  //               padding: const EdgeInsets.symmetric(vertical: 30),
-  //               child: Container(
-  //                   decoration: const BoxDecoration(
-  //                       shape: BoxShape.circle, color: errorBackground),
-  //                   padding: const EdgeInsets.all(6),
-  //                   child: Assets.icon.bold.closeCircle.svg()),
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.symmetric(horizontal: 32.0),
-  //               child: PrimaryText(
-  //                   text: title,
-  //                   style: themeData.textTheme.dialogTitle,
-  //                   color: Colors.black),
-  //             ),
-  //             Container(
-  //                 width: MediaQuery.sizeOf(context).width / 2,
-  //                 padding: const EdgeInsets.symmetric(vertical: 24),
-  //                 child: PrimaryButton(
-  //                   title: btnTitle,
-  //                   onClick: onTap,
-  //                 ))
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  /* Future<void> showErrorDialog(
+      String title, String btnTitle, Function()? onTap) async {
+    ThemeData themeData = Theme.of(context);
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.white,
+        insetPadding: const EdgeInsets.all(16),
+        shape: const RoundedRectangleBorder(
+            borderRadius: DesignConfig.highBorderRadius),
+        child: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Container(
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: errorBackground),
+                    padding: const EdgeInsets.all(6),
+                    child: Assets.icon.bold.closeCircle.svg()),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: PrimaryText(
+                    text: title,
+                    style: themeData.textTheme.dialogTitle,
+                    color: Colors.black),
+              ),
+              Container(
+                  width: MediaQuery.sizeOf(context).width / 2,
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: PrimaryButton(
+                    title: btnTitle,
+                    onClick: onTap,
+                  ))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  */
 
   Future<void> showWelcomeDialog() async {
-    ThemeData themeData = Theme.of(context);
     await showDialog(
       barrierDismissible: false,
       context: context,
@@ -114,7 +115,6 @@ class DialogHandler {
   }
 
   Future<void> showImageDialog(String src) async {
-    ThemeData themeData = Theme.of(context);
     await showDialog(
       barrierDismissible: true,
       context: context,
@@ -308,31 +308,6 @@ class DialogHandler {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Container(
-                    //   decoration: const BoxDecoration(
-                    //     borderRadius: DesignConfig.mediumBorderRadius,
-                    //     color: backgroundColor100,
-                    //   ),
-                    //   width: 100,
-                    //   height: 100,
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       Assets.icon.outline.profileCircle
-                    //           .svg(width: 32, height: 32, color: Theme.of(context).primaryColor),
-                    //       const SizedBox(
-                    //         height: 8,
-                    //       ),
-                    //       PrimaryText(
-                    //           text: "آواتار",
-                    //           style: themeData.textTheme.title,
-                    //           color: grayColor900)
-                    //     ],
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   width: 16,
-                    // ),
                     InkWell(
                       onTap: () async {
                         context.read<ImagePickerCubit>().getImageFromGallery();

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:ajhman/main.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';
@@ -16,15 +18,8 @@ class VideoHandler {
 
   late VideoPlayerController _videoPlayerController;
   late CustomVideoPlayerController _customVideoPlayerController;
-  late CustomVideoPlayerWebController _customVideoPlayerWebController;
-  late CustomVideoPlayerWebSettings _customVideoPlayerWebSettings;
-  // late CustomVideoPlayerSettings _customVideoPlayerSettings ;
 
   VideoHandler(BuildContext context, String url, Function() whenInitialize) {
-    _customVideoPlayerWebSettings = CustomVideoPlayerWebSettings(
-      src: ApiEndPoints.baseURL + url,
-    );
-    // ignore: deprecated_member_use
     _videoPlayerController = VideoPlayerController.network(
       ApiEndPoints.baseURL + url,
     )..initialize().then((value) => whenInitialize());
@@ -34,8 +29,6 @@ class VideoHandler {
       customVideoPlayerSettings: CustomVideoPlayerSettings(
         showSeekButtons: false,
         playbackSpeedButtonAvailable: false,
-        // showMuteButton: false,
-
         showDurationPlayed: false,
         showDurationRemaining: false,
         showFullscreenButton: false,
@@ -61,10 +54,6 @@ class VideoHandler {
       //   "720p": _videoPlayerController,
       // },
     );
-
-    _customVideoPlayerWebController = CustomVideoPlayerWebController(
-      webVideoPlayerSettings: _customVideoPlayerWebSettings,
-    );
   }
 
   Future<void> enterFullscreen() async {
@@ -81,8 +70,6 @@ class VideoHandler {
       },
     );
     _setOrientationForVideo();
-    // SystemChrome.setEnabledSystemUIMode(
-    //     _customVideoPlayerSettings.systemUIModeInsideFullscreen);
     await navigatorKey.currentState!.push(route);
   }
 
@@ -108,24 +95,17 @@ class VideoHandler {
     final bool isLandscapeVideo = videoWidth > videoHeight;
     final bool isPortraitVideo = videoWidth < videoHeight;
 
-    /// if video has more width than height set landscape orientation
     if (isLandscapeVideo) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
-    }
-
-    /// otherwise set portrait orientation
-    else if (isPortraitVideo) {
+    } else if (isPortraitVideo) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
       ]);
-    }
-
-    /// if they are equal allow both
-    else {
+    } else {
       SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     }
   }

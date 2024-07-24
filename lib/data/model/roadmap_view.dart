@@ -1,8 +1,7 @@
 import 'dart:ui';
-
 import 'package:ajhman/gen/assets.gen.dart';
 
-class RoadmapView{
+class RoadmapView {
   Color color;
   SvgGenImage shape;
 

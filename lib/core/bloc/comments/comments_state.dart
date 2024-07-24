@@ -1,6 +1,5 @@
 part of 'comments_bloc.dart';
 
-@immutable
 enum CommentStatus {
   init,
   loading,
@@ -23,13 +22,12 @@ class CommentChange extends CommentsState {
   final List<CommentsResponseModel> response;
 
   CommentChange({required this.response});
-
 }
+
 class CommentChangeFail extends CommentsState {
   final List<CommentsResponseModel> response;
 
   CommentChangeFail({required this.response});
-
 }
 
 class CommentAdd extends CommentsState {}

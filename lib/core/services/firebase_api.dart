@@ -1,4 +1,7 @@
+// ignore_for_file: empty_catches
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../data/model/notification_data_model.dart';
 import 'notification_service.dart';
@@ -11,7 +14,9 @@ class FirebaseApi {
 
     try {
       final fCMToken = await _firebaseMessaging.getToken();
-      print("fCMToken: $fCMToken");
+      if (kDebugMode) {
+        print("fCMToken: $fCMToken");
+      }
     } catch (e) {}
 
     await _firebaseMessaging.requestPermission(
@@ -32,8 +37,10 @@ class FirebaseApi {
   void handleMessage(RemoteMessage? message) async {
     if (message == null) return;
     //do ever you want with message
-    print(
-        "forground: ${NotificationDataModel.fromJson(message.data).toJson()}");
+    if (kDebugMode) {
+      print(
+          "forground: ${NotificationDataModel.fromJson(message.data).toJson()}");
+    }
     try {
       await NotificationService.showFirebaseNotification(message);
     } catch (e) {

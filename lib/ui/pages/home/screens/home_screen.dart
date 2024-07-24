@@ -1,4 +1,6 @@
-import 'package:ajhman/core/bloc/banner/bloc/banner_bloc.dart';
+// ignore_for_file: deprecated_member_use_from_same_package
+
+import 'package:ajhman/core/bloc/banner/banner_bloc.dart';
 import 'package:ajhman/core/cubit/home/books_home_cubit.dart';
 import 'package:ajhman/core/cubit/home/news_course_home_cubit.dart';
 import 'package:ajhman/core/cubit/home/selected_index_cubit.dart';
@@ -38,7 +40,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _searchText = TextEditingController();
   final items = [1, 2, 3, 4];
   List<NewCourseCardModel>? newsCards;
   List<NewCourseCardModel>? recentCards;

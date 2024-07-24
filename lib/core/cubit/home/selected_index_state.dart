@@ -1,6 +1,6 @@
+// ignore_for_file: must_be_immutable
 part of 'selected_index_cubit.dart';
 
-@immutable
 class SelectedIndexState extends Equatable {
   int index;
   String title;

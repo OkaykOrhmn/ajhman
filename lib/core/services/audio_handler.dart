@@ -88,44 +88,4 @@ class AudioHandler {
     // _playerState = PlayerState.stopped;
     audioPosition = Duration.zero;
   }
-
-// void _initStreams() {
-//   durationSubscription = player.onDurationChanged.listen((duration) {
-//     setState(() => _duration = duration);
-//   });
-//
-//   _positionSubscription = player.onPositionChanged.listen(
-//     (p) {
-//       setState(() {
-//         _position = p;
-//         for (var i = 0; i < bars.length / 10; i++) {
-//           if (i <= _position!.inSeconds) {
-//             bars[i].color = primaryColor;
-//           }
-//         }
-//       });
-//     },
-//   );
-//
-//   _playerCompleteSubscription = player.onPlayerComplete.listen((event) {
-//     setState(() {
-//       _playerState = PlayerState.stopped;
-//       _position = Duration.zero;
-//     });
-//   });
-//
-//   _playerCompleteSubscription = player.onSeekComplete.listen((event) {
-//     setState(() {
-//       print(
-//           "Complete------------------------------------------------------------");
-//     });
-//   });
-//
-//   _playerStateChangeSubscription =
-//       player.onPlayerStateChanged.listen((state) {
-//     setState(() {
-//       _playerState = state;
-//     });
-//   });
-// }
 }

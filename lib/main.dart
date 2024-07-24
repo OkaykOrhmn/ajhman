@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:ajhman/core/bloc/profile/profile_bloc.dart';
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/cubit/download/download_cubit.dart';
@@ -15,6 +17,7 @@ import 'package:ajhman/ui/theme/bloc/theme_bloc.dart';
 import 'package:connectivity_bloc/connectivity_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -29,9 +32,8 @@ import 'core/cubit/home/selected_index_cubit.dart';
 import 'core/cubit/image_picker/image_picker_cubit.dart';
 import 'core/cubit/leaderboard/leaderboard_cubit.dart';
 import 'core/routes/route_generator.dart';
-import 'core/utils/app_locale.dart';
-import 'core/utils/language/bloc/language_bloc.dart';
-import 'core/utils/timer/timer.dart';
+import 'core/bloc/language/language_bloc.dart';
+import 'core/utils/timer.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 ThemeData mThemeData = Theme.of(navigatorKey.currentContext!);
@@ -43,11 +45,16 @@ bool isDarkTheme =
 @pragma('vm:entry-point')
 Future _initPushNotification(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  print("background: ${NotificationDataModel.fromJson(message.data).toJson()}");
+  if (kDebugMode) {
+    print(
+        "background: ${NotificationDataModel.fromJson(message.data).toJson()}");
+  }
   try {
     NotificationService.showFirebaseNotification(message);
   } catch (e) {
-    rethrow;
+    if (kDebugMode) {
+      print(e);
+    }
   }
 }
 
@@ -60,7 +67,9 @@ void main() async {
         options: DefaultFirebaseOptions.currentPlatform);
     await FirebaseApi().initNotification();
   } catch (e) {
-    // rethrow;
+    if (kDebugMode) {
+      print(e);
+    }
   }
 
   runApp(MultiBlocProvider(providers: [
@@ -148,7 +157,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    ChangeLocale changeLocale = ChangeLocale(context);
+    // ChangeLocale changeLocale = ChangeLocale(context);
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         ThemeData themeData = state.themeData;
@@ -157,10 +166,6 @@ class _MyAppState extends State<MyApp> {
         }
         return BlocBuilder<LanguageBloc, LanguageState>(
           builder: (context, lang) {
-            // return BlocBuilder<ConnectivityBloc, ConnectivityState>(
-            //   builder: (context, state) {
-            //     if (state is ConnectivitySuccessState ||
-            //         state is ConnectivityInitialState) {
             return MaterialApp(
               theme: themeData,
               navigatorKey: navigatorKey,
@@ -186,16 +191,7 @@ class _MyAppState extends State<MyApp> {
               onGenerateRoute: (settings) =>
                   RouteGenerator.destination(settings),
             );
-            // } else if (state is ConnectivityFailureState) {
-            //   return NoConnectivityScreen(
-            //     themeData: themeData,
-            //   );
-            // } else {
-            //   return SizedBox();
-            // }
           },
-          // );
-          // },
         );
       },
     );

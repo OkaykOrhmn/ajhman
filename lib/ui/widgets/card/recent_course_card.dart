@@ -1,5 +1,5 @@
 import 'package:ajhman/core/routes/route_paths.dart';
-import 'package:ajhman/core/utils/language/bloc/language_bloc.dart';
+import 'package:ajhman/core/bloc/language/language_bloc.dart';
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/args/course_main_args.dart';
 import 'package:ajhman/data/model/language.dart';

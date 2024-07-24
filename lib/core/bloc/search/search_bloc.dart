@@ -1,12 +1,10 @@
-import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+// ignore_for_file: deprecated_member_use
 
+import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/model/new_course_card_model.dart';
 import '../../../data/repository/course_repository.dart';
-
 part 'search_event.dart';
-
 part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {

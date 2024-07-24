@@ -17,7 +17,6 @@ class NotificationData {
   final int? interval;
   final int? progress;
 
-
   NotificationData({
     this.id,
     required this.title,

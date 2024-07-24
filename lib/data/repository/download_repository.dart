@@ -1,6 +1,4 @@
-
 import 'package:dio/dio.dart';
-
 import '../api/dio_helper.dart';
 
 final downloadRepository = DownloadRepository(DioHelper());
@@ -12,21 +10,18 @@ class DownloadRepository implements Download {
   DownloadRepository(this.dioHelper);
 
   @override
-  Future<Response> getAudio(String url,  String path,
-      Function(int, int)? progress) async {
-    // try {
+  Future<Response> getAudio(
+      String url, String path, Function(int, int)? progress) async {
     final response = await dioHelper.sendRequest.download(url, path,
         cancelToken: downloadCancelToken,
         deleteOnError: true,
         onReceiveProgress: progress);
     return response;
-    // } catch (e) {
-    //   rethrow;
-    // }
   }
 
   @override
-  Future<Response> getVideo(String url, String name, String path, Function(int p1, int p2)? progress) async{
+  Future<Response> getVideo(String url, String name, String path,
+      Function(int p1, int p2)? progress) async {
     final response = await dioHelper.sendRequest.get(url,
         cancelToken: downloadCancelToken,
         options: Options(

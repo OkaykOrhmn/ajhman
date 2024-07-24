@@ -36,7 +36,6 @@ class PrimaryImageNetwork extends StatelessWidget {
                       color: Theme.of(context).white(),
                     )),
                 errorWidget: (context, url, error) {
-                  print("errr--------------------------------$error");
                   return Center(
                     child: Assets.image.moon.moon.image(),
                   );

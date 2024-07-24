@@ -1,10 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajhman/ui/pages/home/screens/for_you_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/home_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/learning_screen.dart';
 import 'package:ajhman/ui/pages/home/screens/my_treasure_screen.dart';
 import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/theme/design_config.dart';
-import 'package:ajhman/ui/widgets/bottom_navigation/bottom_navigation_Btn.dart';
+import 'package:ajhman/ui/widgets/bottom_navigation/bottom_navigation_btn.dart';
 import 'package:ajhman/ui/widgets/dialogs/dialog_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,40 +72,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   left: 0,
                   right: 0,
                   child: Container(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                          //this is why click effect Inkwell not work
-                          color: Theme.of(context).white(),
-                          boxShadow: DesignConfig.mediumShadow,
-                          borderRadius: const BorderRadius.only(
-                              topRight: DesignConfig.aHighBorderRadius,
-                              topLeft: DesignConfig.aHighBorderRadius)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          BottomNavigationBtn(
-                              index: 0,
-                              title: "خانه",
-                              selectedIcon: Assets.icon.bold.home,
-                              unselectedIcon: Assets.icon.outline.home),
-                          BottomNavigationBtn(
-                              index: 1,
-                              title: "گنجینه من",
-                              selectedIcon: Assets.icon.bold.ranking,
-                              unselectedIcon: Assets.icon.outline.ranking),
-                          BottomNavigationBtn(
-                              index: 2,
-                              title: "یادگیری",
-                              selectedIcon: Assets.icon.bold.documentText,
-                              unselectedIcon: Assets.icon.outline.documentText),
-                          BottomNavigationBtn(
-                              index: 3,
-                              title: "برای تو",
-                              selectedIcon: Assets.icon.bold.lamp,
-                              unselectedIcon: Assets.icon.outline.lamp)
-                        ],
-                      ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                        //this is why click effect Inkwell not work
+                        color: Theme.of(context).white(),
+                        boxShadow: DesignConfig.mediumShadow,
+                        borderRadius: const BorderRadius.only(
+                            topRight: DesignConfig.aHighBorderRadius,
+                            topLeft: DesignConfig.aHighBorderRadius)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BottomNavigationBtn(
+                            index: 0,
+                            title: "خانه",
+                            selectedIcon: Assets.icon.bold.home,
+                            unselectedIcon: Assets.icon.outline.home),
+                        BottomNavigationBtn(
+                            index: 1,
+                            title: "گنجینه من",
+                            selectedIcon: Assets.icon.bold.ranking,
+                            unselectedIcon: Assets.icon.outline.ranking),
+                        BottomNavigationBtn(
+                            index: 2,
+                            title: "یادگیری",
+                            selectedIcon: Assets.icon.bold.documentText,
+                            unselectedIcon: Assets.icon.outline.documentText),
+                        BottomNavigationBtn(
+                            index: 3,
+                            title: "برای تو",
+                            selectedIcon: Assets.icon.bold.lamp,
+                            unselectedIcon: Assets.icon.outline.lamp)
+                      ],
                     ),
                   ))
             ],

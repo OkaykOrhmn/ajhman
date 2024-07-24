@@ -1,6 +1,5 @@
 part of 'profile_bloc.dart';
 
-@immutable
 sealed class ProfileEvent {}
 
-class GetProfileInfo extends ProfileEvent{}
+class GetProfileInfo extends ProfileEvent {}

@@ -1,12 +1,14 @@
+import 'package:ajhman/data/model/answer_model.dart';
 import 'package:ajhman/data/model/answer_request_model.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AnswerCubit extends Cubit<AnswerModel> {
   AnswerCubit()
       : super(AnswerModel(
-            answerRequestModel: AnswerRequestModel(answers: [],comment: ""), index: 0));
+            answerRequestModel: AnswerRequestModel(answers: [], comment: ""),
+            index: 0));
 
-  Future<void> changeAnswer(Answers? answers) async{
+  Future<void> changeAnswer(Answers? answers) async {
     List<Answers> mainAnswers = state.answerRequestModel.answers!;
     if (answers != null) {
       bool change = false;
@@ -30,13 +32,4 @@ class AnswerCubit extends Cubit<AnswerModel> {
     emit(AnswerModel(
         answerRequestModel: state.answerRequestModel, index: index));
   }
-
-
-}
-
-class AnswerModel {
-  final AnswerRequestModel answerRequestModel;
-  final int index;
-
-  AnswerModel({required this.answerRequestModel, required this.index});
 }

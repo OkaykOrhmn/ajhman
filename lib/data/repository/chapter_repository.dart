@@ -15,7 +15,8 @@ class ChapterRepository implements Chapter {
   Future<ChapterModel> getChapter(int chapter, int subchapter) async {
     try {
       Response response = await dioHelper.getRequest(
-          "${ApiEndPoints.chapter}/$chapter${ApiEndPoints.subchapter}/$subchapter",null);
+          "${ApiEndPoints.chapter}/$chapter${ApiEndPoints.subchapter}/$subchapter",
+          null);
       final postMaps = response.data;
       return ChapterModel.fromJson(postMaps);
     } catch (ex) {

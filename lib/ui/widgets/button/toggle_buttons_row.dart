@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, empty_catches
+
 import 'package:ajhman/ui/widgets/button/outlined_primary_button.dart';
 import 'package:ajhman/ui/widgets/button/primary_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,12 +19,6 @@ class ToggleButtonsRow extends StatefulWidget {
 }
 
 class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
-  // [
-  // TButtons("", false),
-  // TButtons("", false),
-  // TButtons("", true),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     List<TButtons> buttons = widget.buttons;
@@ -46,8 +42,8 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
         return Expanded(
           child: buttons[index].active
               ? Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: PrimaryButton(
+                  padding: const EdgeInsets.all(6.0),
+                  child: PrimaryButton(
                     title: buttons[index].name,
                     onClick: () {
                       setState(() {
@@ -55,10 +51,10 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
                       });
                     },
                   ),
-              )
+                )
               : Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: OutlinedPrimaryButton(
+                  padding: const EdgeInsets.all(6.0),
+                  child: OutlinedPrimaryButton(
                     title: buttons[index].name,
                     onClick: () {
                       setState(() {
@@ -66,7 +62,7 @@ class _ToggleButtonsRowState extends State<ToggleButtonsRow> {
                       });
                     },
                   ),
-              ),
+                ),
         );
       }),
     );

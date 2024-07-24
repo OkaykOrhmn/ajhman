@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member, deprecated_member_use
+
 import 'package:image_picker/image_picker.dart';
 
 final imagePickerHandler = ImagePickerHandler();

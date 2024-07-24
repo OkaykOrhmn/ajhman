@@ -189,17 +189,8 @@ class _TimerScreenState extends State<TimerScreen>
                         inactiveColor: grayColor50,
                         min: 0,
                         max: 24,
-                        // labelPlacement: LabelPlacement.onTicks,
                         value: _hValue.round().toDouble(),
-                        // interval: 1,
-                        // showTicks: false,
-                        // showLabels: false,
-                        // enableTooltip: true,
-                        // tooltipShape: SfPaddleTooltipShape(),
-                        // showDividers: true,
-                        // minorTicksPerInterval: 1,
                         onChanged: (value) {
-                          final val = value;
                           setState(() {
                             if (value >= 1) {
                               _hValue = value;
@@ -224,18 +215,10 @@ class _TimerScreenState extends State<TimerScreen>
                     : Slider(
                         activeColor: Theme.of(context).primaryColor,
                         inactiveColor: grayColor50,
-                        // dateFormat: DateFormat.H(),
                         min: 0,
                         max: 60,
-                        // labelPlacement: LabelPlacement.onTicks,
                         value: _mValue.round().toDouble(),
-                        // interval: 15,
-                        // showTicks: true,
-                        // showLabels: true,
-                        // enableTooltip: true,
-                        // minorTicksPerInterval: 1,
                         onChanged: (value) {
-                          final val = value;
                           setState(() {
                             if (value <= 59) {
                               _mValue = value;

@@ -76,7 +76,6 @@ class _CourseVideoState extends State<CourseVideo> {
 
   @override
   void dispose() {
-    print("hi");
     videoHandler.customVideoPlayerController.dispose();
     if (videoHandler
         .customVideoPlayerController.videoPlayerController.value.isPlaying) {

@@ -15,7 +15,8 @@ class ProfileRepository implements ProfileInformation {
   @override
   Future<ProfileResponseModel> getProfile() async {
     try {
-      Response response = await dioHelper.getRequest(ApiEndPoints.profile,null);
+      Response response =
+          await dioHelper.getRequest(ApiEndPoints.profile, null);
       final postMaps = response.data;
       return ProfileResponseModel.fromJson(postMaps);
     } catch (ex) {
@@ -23,11 +24,11 @@ class ProfileRepository implements ProfileInformation {
     }
   }
 
-
   @override
   Future<Response> deleteProfile() async {
     try {
-      Response response = await dioHelper.deleteRequest(ApiEndPoints.userProfile,null);
+      Response response =
+          await dioHelper.deleteRequest(ApiEndPoints.userProfile, null);
       return response;
     } catch (ex) {
       rethrow;
@@ -37,7 +38,8 @@ class ProfileRepository implements ProfileInformation {
   @override
   Future<Response> putPlanner(PlannerRequestModel plannerRequestModel) async {
     try {
-      Response response = await dioHelper.putRequest(ApiEndPoints.planner,plannerRequestModel);
+      Response response =
+          await dioHelper.putRequest(ApiEndPoints.planner, plannerRequestModel);
       return response;
     } catch (ex) {
       rethrow;
@@ -45,9 +47,10 @@ class ProfileRepository implements ProfileInformation {
   }
 
   @override
-  Future<Response> putProfileImage(FormData  image) async {
+  Future<Response> putProfileImage(FormData image) async {
     try {
-      Response response = await dioHelper.putRequest(ApiEndPoints.userProfile,image);
+      Response response =
+          await dioHelper.putRequest(ApiEndPoints.userProfile, image);
       return response;
     } catch (ex) {
       rethrow;
@@ -57,7 +60,8 @@ class ProfileRepository implements ProfileInformation {
   @override
   Future<Response> deleteProfileImage() async {
     try {
-      Response response = await dioHelper.putRequest(ApiEndPoints.userProfile,null);
+      Response response =
+          await dioHelper.putRequest(ApiEndPoints.userProfile, null);
       return response;
     } catch (ex) {
       rethrow;
@@ -69,6 +73,6 @@ abstract class ProfileInformation {
   Future<ProfileResponseModel> getProfile();
   Future<Response> deleteProfile();
   Future<Response> putPlanner(PlannerRequestModel plannerRequestModel);
-  Future<Response> putProfileImage(FormData  image);
+  Future<Response> putProfileImage(FormData image);
   Future<Response> deleteProfileImage();
 }

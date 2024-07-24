@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package
+
 import 'dart:io';
 
 import 'package:ajhman/ui/theme/colors.dart';
@@ -10,8 +12,6 @@ import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:open_app_file/open_app_file.dart';
-// import 'package:url_launcher/url_launcher.dart';
-// import 'package:open_file/open_file.dart';
 
 import '../../../gen/assets.gen.dart';
 
@@ -40,21 +40,10 @@ class _FileManagerPageState extends State<FileManagerPage> {
     super.dispose();
   }
 
-  // Future<void> openFile(String path) async {
-  //   final uri = Uri.file(path);
-  //   if (await canLaunchUrl(uri)) {
-  //     await launchUrl(uri);
-  //   } else {
-  //     // Handle the case where the URL cannot be launched
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        print("getCurrentDirectory: ${controller.getCurrentPath}");
-        print("isRootDirectory: ${await controller.isRootDirectory()}");
         if (controller.getCurrentPath ==
             '/storage/emulated/0/Android/data/com.example.ajhman/files/downloads') {
           return true;
@@ -156,18 +145,6 @@ class _FileManagerPageState extends State<FileManagerPage> {
                 },
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: PrimaryButton(
-            //     title: "بازکردن در فایل ها",
-            //     onClick: () async {
-            //       await openFileManager();
-            //       // await OpenFile.open(
-            //       //     '/storage/emulated/0/Android/data/com.example.ajhman/files/downloads');
-            //     },
-            //     fill: true,
-            //   ),
-            // )
           ],
         ),
       ),

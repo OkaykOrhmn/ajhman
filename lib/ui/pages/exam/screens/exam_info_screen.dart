@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/data/args/exam_args.dart';
 import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:flutter/material.dart';

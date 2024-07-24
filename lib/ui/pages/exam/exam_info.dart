@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, empty_catches
+
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/args/exam_args.dart';
 import 'package:ajhman/data/model/exam_response_model.dart';

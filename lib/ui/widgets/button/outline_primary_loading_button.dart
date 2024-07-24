@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';

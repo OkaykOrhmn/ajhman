@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/cubit/comment/feed_comment_cubit.dart';
 import 'package:ajhman/core/enum/comment.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';

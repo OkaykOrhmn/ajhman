@@ -1,9 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajhman/data/model/new_course_card_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<List<NewCourseCardModel>?> {

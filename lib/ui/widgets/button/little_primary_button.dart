@@ -16,10 +16,13 @@ class LittlePrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(8),
-
         ),
         child: Center(
-          child: Icon(icon,color: Colors.white,size: 16,),
+          child: Icon(
+            icon,
+            color: Colors.white,
+            size: 16,
+          ),
         ),
       ),
     );

@@ -1,9 +1,10 @@
+// ignore_for_file: deprecated_member_use, implementation_imports
+
 import 'package:ajhman/core/cubit/video/video_player_cubit.dart';
 import 'package:ajhman/core/services/video_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:appinio_video_player/src/embedded_video_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class CostumeFullscreenVideo extends StatelessWidget {
   final VideoHandler videoHandler;
@@ -12,17 +13,6 @@ class CostumeFullscreenVideo extends StatelessWidget {
     super.key,
     required this.videoHandler,
   });
-
-  // Future<void> _exitFullscreen() async {
-  //   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  //   await SystemChrome.setEnabledSystemUIMode(
-  //     customVideoPlayerController.customVideoPlayerSettings.systemUIModeAfterFullscreen,
-  //     overlays: customVideoPlayerController.customVideoPlayerSettings.systemUIOverlaysAfterFullscreen,
-  //   );
-  //   await SystemChrome.setPreferredOrientations(customVideoPlayerController.customVideoPlayerSettings
-  //       .deviceOrientationsAfterFullscreen); // reset device orientation values
-  //   navigatorKey.currentState!.pop();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +30,8 @@ class CostumeFullscreenVideo extends StatelessWidget {
           child: Stack(
             children: [
               EmbeddedVideoPlayer(
-                customVideoPlayerController: videoHandler.customVideoPlayerController,
+                customVideoPlayerController:
+                    videoHandler.customVideoPlayerController,
                 isFullscreen: true,
               ),
               // VideoBar(videoHandler: videoHandler)

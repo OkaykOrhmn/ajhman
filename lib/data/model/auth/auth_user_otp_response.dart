@@ -29,4 +29,3 @@ class AuthUserToken {
     return data;
   }
 }
-

@@ -1,16 +1,15 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/marquee_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../core/cubit/home/selected_index_cubit.dart';
 import '../../../core/cubit/mark/mark_cubit.dart';
 import '../../../core/enum/course_types.dart';
 import '../../../core/routes/route_paths.dart';
-import '../../../core/utils/language/bloc/language_bloc.dart';
+import '../../../core/bloc/language/language_bloc.dart';
 import '../../../core/utils/usefull_funcs.dart';
 import '../../../data/args/course_main_args.dart';
 import '../../../data/model/new_course_card_model.dart';
@@ -376,7 +375,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
                 .textTheme
                 .titleBold
                 .copyWith(color: Theme.of(context).progressText()),
-        stop: Duration(seconds: 2),
+        stop: const Duration(seconds: 2),
       ),
     );
   }
@@ -464,7 +463,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
     );
   }
 
-  Container _rateBar(String rate) {
+  /* Container _rateBar(String rate) {
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).white(),
@@ -494,6 +493,7 @@ class _RecentCurseCardState extends State<NewCourseCard> {
       ),
     );
   }
+  */
 
   Widget _bookMark() {
     return BlocProvider(

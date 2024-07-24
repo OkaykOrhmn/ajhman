@@ -6,20 +6,18 @@ class VideoPlayerModel {
   double speed = 1;
 
   VideoPlayerModel(
-      {
-      required this.mute,
+      {required this.mute,
       required this.pause,
       required this.fullScreen,
       required this.showControls,
       required this.speed});
 
   VideoPlayerModel copyWith(
-      {
-      bool? mute,
+      {bool? mute,
       bool? pause,
       bool? fullScreen,
       bool? showControls,
-        double? speed}) {
+      double? speed}) {
     return VideoPlayerModel(
         mute: mute ?? this.mute,
         pause: pause ?? this.pause,

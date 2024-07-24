@@ -56,14 +56,14 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
         },
         builder: (context, state) {
           return Column(
-            children: [StepsBar(state), Expanded(child: StepsView(state))],
+            children: [stepsBar(state), Expanded(child: stepsView(state))],
           );
         },
       ),
     );
   }
 
-  Widget StepsView(SmartScheduleState state) {
+  Widget stepsView(SmartScheduleState state) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 40),
       child: Container(
@@ -84,13 +84,13 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
                             ? const TimerScreen()
                             : const ThreeBounceLoading(),
               ),
-              ChangeStateButtons(context, state)
+              changeStateButtons(context, state)
             ],
           )),
     );
   }
 
-  Widget ChangeStateButtons(BuildContext context, SmartScheduleState state) {
+  Widget changeStateButtons(BuildContext context, SmartScheduleState state) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       child: Row(
@@ -149,7 +149,7 @@ class _SmartSchedulePageState extends State<SmartSchedulePage> {
     );
   }
 
-  Widget StepsBar(SmartScheduleState state) {
+  Widget stepsBar(SmartScheduleState state) {
     bool activeCalender = false;
     bool activeTime = false;
     bool activeTimer = false;

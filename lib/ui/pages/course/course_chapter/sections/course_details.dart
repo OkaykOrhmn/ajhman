@@ -1,7 +1,8 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/theme/design_config.dart';
-import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:ajhman/ui/widgets/text/title_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../../../core/cubit/subchapter/sub_chapter_cubit.dart';
 import '../../../../../gen/assets.gen.dart';
-import '../../../../widgets/listview/highlight_listview.dart';
 
 class CourseDetails extends StatefulWidget {
   final bool eng;
@@ -83,7 +83,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                             : (Theme.of(context).textTheme.title.fontSize! * 6),
                       ),
                       child: SingleChildScrollView(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         child: HtmlWidget(
                           data.description.toString(),
                           textStyle: Theme.of(context).textTheme.title.copyWith(

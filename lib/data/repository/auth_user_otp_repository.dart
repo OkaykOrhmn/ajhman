@@ -3,7 +3,6 @@ import 'package:ajhman/data/model/auth/auth_login_user_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_request.dart';
 import 'package:ajhman/data/model/auth/auth_user_otp_response.dart';
 import 'package:dio/dio.dart';
-
 import '../api/api_end_points.dart';
 
 final authLoginUserRepository = AuthLoginUserRepository(DioHelper());
@@ -18,7 +17,6 @@ class AuthLoginUserRepository implements AuthRegisterUserOtp {
     try {
       Response response = await dioHelper.sendRequest
           .get("${ApiEndPoints.authRegisterUserOtp}/$number");
-      final postMaps = response.data;
       return response;
     } catch (ex) {
       rethrow;
@@ -28,11 +26,8 @@ class AuthLoginUserRepository implements AuthRegisterUserOtp {
   @override
   Future<AuthUserToken> postOtp(AuthUserOtpRequest request) async {
     try {
-      print("req is: ${request.toJson()}");
       Response response = await dioHelper.sendRequest
-          .post(ApiEndPoints.authLoginUserOtp, data: request.toJson()
-
-      );
+          .post(ApiEndPoints.authLoginUserOtp, data: request.toJson());
       final postMaps = response.data;
       return AuthUserToken.fromJson(postMaps);
     } catch (ex) {
@@ -51,7 +46,6 @@ class AuthLoginUserRepository implements AuthRegisterUserOtp {
       rethrow;
     }
   }
-
 }
 
 abstract class AuthRegisterUserOtp {

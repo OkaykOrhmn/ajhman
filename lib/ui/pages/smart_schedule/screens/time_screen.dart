@@ -1,10 +1,11 @@
+// ignore_for_file: empty_catches
+
 import 'package:ajhman/core/bloc/smart_schedule/planner_cubit.dart';
 import 'package:ajhman/core/utils/extentions.dart';
 import 'package:ajhman/data/model/planner_request_model.dart';
 import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_locale.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,6 @@ class _TimeScreenState extends State<TimeScreen> {
         try {
           if (int.parse(element.name.withOutLabel) ==
               int.parse(_minInput.text.withOutLabel)) {
-            print("true");
             element.active = true;
           } else {
             element.active = false;
@@ -126,13 +126,13 @@ class _TimeScreenState extends State<TimeScreen> {
             ),
           ),
         ),
-        TimeInput(context),
+        timeInput(context),
         Expanded(child: Assets.image.timerFrame.image())
       ],
     );
   }
 
-  Padding TimeInput(BuildContext context) {
+  Padding timeInput(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 24, right: 24),
       child: Row(
@@ -152,7 +152,6 @@ class _TimeScreenState extends State<TimeScreen> {
                         _minInput.selection = TextSelection.collapsed(
                             offset: _minInput.text.length);
                       }
-                      print("change");
                     },
                     style: Theme.of(context).textTheme.title,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],

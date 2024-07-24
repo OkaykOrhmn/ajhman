@@ -77,7 +77,7 @@ class _AnimatedVisibilityState extends State<AnimatedVisibility>
       widget.fadeMode == FadeMode.vertical || widget.fadeMode == FadeMode.both;
   bool get _isHorizontal =>
       widget.fadeMode == FadeMode.horizontal ||
-          widget.fadeMode == FadeMode.both;
+      widget.fadeMode == FadeMode.both;
 
   @override
   Widget build(BuildContext context) {

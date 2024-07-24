@@ -36,46 +36,11 @@ class _RoadState extends State<Road> {
           children: [
             top(),
             isEven ? left() : right(),
-            // Positioned(
-            //     left: 11.5,
-            //     right: 18,
-            //     bottom: 0,
-            //     top: 18,
-            //     child: DottedBorder(
-            //       strokeWidth: 2,
-            //       color: Colors.white,
-            //       borderType: BorderType.RRect,
-            //       radius: Radius.circular(10),
-            //       dashPattern: [5, 5],
-            //       child: Container(
-            //         width: 200,
-            //         height: 100,
-            //         color: Colors.transparent,
-            //       ),
-            //     )),
-
-            // bottom(),
           ],
         ),
       ),
     );
   }
-
-  // Positioned bottom() {
-  //   return Positioned(
-  //       right: 0,
-  //       bottom: 0,
-  //       left: 0,
-  //       child: Container(
-  //         height: 40,
-  //         decoration: BoxDecoration(
-  //             borderRadius: DesignConfig.veryHighBorderRadius,
-  //             gradient: LinearGradient(colors: [
-  //               Color(0xff4A4A4A),
-  //               Color(0xff575757),
-  //             ])),
-  //       ));
-  // }
 
   Positioned right() {
     return Positioned(
@@ -239,87 +204,6 @@ class _RoadState extends State<Road> {
           ],
         ));
   }
-
-  Widget _roadLine() {
-    const double size = 24;
-    const border =
-        BorderSide(width: size, color: Colors.black, style: BorderStyle.solid);
-    final top = BorderSide(
-        width: widget.index != 1 ? size / 2 : size,
-        color: Colors.black,
-        style: BorderStyle.solid);
-    final bottom = BorderSide(
-        width: widget.index != 5 ? size / 2 : size,
-        color: Colors.black,
-        style: BorderStyle.solid);
-    return Center(
-      child: Stack(
-        children: [
-          Container(
-            width: 70,
-            height: 120,
-            decoration: BoxDecoration(
-              border: Border(
-                top: top,
-                bottom: bottom,
-                right: isEven ? BorderSide.none : border,
-                left: isEven ? border : BorderSide.none,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: size / 3,
-            right: size / 3,
-            bottom: 0,
-            child: DashedRect(
-              color: Colors.red,
-              strokeWidth: 2.0,
-              gap: 8.0,
-              dashedContainerAlign: [
-                isEven ? DashedContainerAlign.left : DashedContainerAlign.right,
-              ],
-            ),
-          ),
-          Positioned(
-            top: size / 3,
-            left: 0,
-            right: 0,
-            bottom: size / 3,
-            child: DashedRect(
-              color: Colors.red,
-              strokeWidth: 2.0,
-              gap: 8.0,
-              dashedContainerAlign: [
-                widget.index == 1
-                    ? DashedContainerAlign.top
-                    : DashedContainerAlign.none,
-                widget.index == 5
-                    ? DashedContainerAlign.bottom
-                    : DashedContainerAlign.none,
-              ],
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: DashedRect(
-              color: Colors.red,
-              strokeWidth: 2.0,
-              gap: 8.0,
-              dashedContainerAlign: [
-                widget.index != 5
-                    ? DashedContainerAlign.bottom
-                    : DashedContainerAlign.none,
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 enum DashedContainerAlign { none, top, left, bottom, right }
@@ -339,16 +223,14 @@ class DashedRect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.all(strokeWidth / 2),
-        child: CustomPaint(
-          painter: DashRectPainter(
-              color: color,
-              strokeWidth: strokeWidth,
-              gap: gap,
-              dashedContainerAlign: dashedContainerAlign),
-        ),
+    return Padding(
+      padding: EdgeInsets.all(strokeWidth / 2),
+      child: CustomPaint(
+        painter: DashRectPainter(
+            color: color,
+            strokeWidth: strokeWidth,
+            gap: gap,
+            dashedContainerAlign: dashedContainerAlign),
       ),
     );
   }

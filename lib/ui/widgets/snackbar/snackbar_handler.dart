@@ -15,30 +15,25 @@ class SnackBarHandler {
   show(String message, DialogStatus status, bool isTop) {
     Color background = Colors.white;
     Color border = Colors.white;
-    Color text = Colors.black;
     switch (status) {
       case DialogStatus.success:
         background = successBackground;
         border = successMain;
-        text = successFont;
         break;
 
       case DialogStatus.error:
         background = errorBackground;
         border = errorMain;
-        text = errorFont;
         break;
 
       case DialogStatus.info:
         background = infoBackground;
         border = infoMain;
-        text = infoFont;
         break;
 
       case DialogStatus.warning:
         background = warningBackground;
         border = warningMain;
-        text = warningFont;
         break;
     }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

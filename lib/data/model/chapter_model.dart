@@ -8,11 +8,11 @@ class ChapterModel {
 
   ChapterModel(
       {this.id,
-        this.name,
-        this.description,
-        this.highlight,
-        this.type,
-        this.media});
+      this.name,
+      this.description,
+      this.highlight,
+      this.type,
+      this.media});
 
   ChapterModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

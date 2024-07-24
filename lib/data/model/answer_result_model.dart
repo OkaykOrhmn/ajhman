@@ -5,7 +5,6 @@ class AnswerResultModel {
   int? total;
   int? courseId;
 
-
   AnswerResultModel.fromJson(Map<String, dynamic> json) {
     correct = json['correct'];
     incorrect = json['incorrect'];

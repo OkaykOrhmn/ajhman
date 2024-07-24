@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/data/model/video_player_model.dart';
 import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -119,8 +121,6 @@ class _VideoBarState extends State<VideoBar> {
                             .customVideoPlayerController.videoPlayerController
                             .setPlaybackSpeed(
                                 context.read<VideoPlayerCubit>().state.speed);
-                        print(
-                            "${videoHandler.customVideoPlayerController.videoPlayerController.value.playbackSpeed}--------------");
                       },
                       child: Container(
                         decoration: BoxDecoration(

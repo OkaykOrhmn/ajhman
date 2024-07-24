@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/data/args/course_main_args.dart';
 import 'package:ajhman/main.dart';
@@ -11,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gif/gif.dart';
 import 'package:loading_btn/loading_btn.dart';
 
-import '../../../core/bloc/course/main/course_main_bloc.dart';
+import '../../../core/bloc/course/course_main_bloc.dart';
 import '../../../core/bloc/questions/questions_bloc.dart';
 import '../../../gen/assets.gen.dart';
 import '../../widgets/button/outline_primary_loading_button.dart';

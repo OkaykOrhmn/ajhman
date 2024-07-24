@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:ajhman/core/services/permission_handler.dart';
 import 'package:ajhman/data/api/api_end_points.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,13 +10,9 @@ class StorageHandler {
         .requestPermission(Permission.accessMediaLocation);
     final m = await permissionHandler
         .requestPermission(Permission.manageExternalStorage);
-    await permissionHandler
-        .requestPermission(Permission.mediaLibrary);
+    await permissionHandler.requestPermission(Permission.mediaLibrary);
     if (a && m) {
       Directory? appDocDir = await getDownloadsDirectory();
-      // if (Platform.isAndroid) {
-      //   appDocDir =  Directory('/storage/emulated/0/Download');
-      // }
       final Directory appDocDirFolder = Directory(appDocDir!.path);
       if (await appDocDirFolder.exists()) {
         return appDocDirFolder;
@@ -62,8 +57,7 @@ class StorageHandler {
     if (await file.exists()) {
       return "exist";
     } else {
-
-    return file.path;
+      return file.path;
     }
   }
 }

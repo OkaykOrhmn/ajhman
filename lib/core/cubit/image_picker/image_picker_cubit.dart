@@ -1,10 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages, deprecated_member_use
+
 import 'package:ajhman/core/services/image_picker.dart';
 import 'package:ajhman/core/services/permission_handler.dart';
 import 'package:ajhman/data/repository/profile_repository.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http_parser/http_parser.dart';
 

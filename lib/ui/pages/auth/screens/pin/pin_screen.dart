@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/utils/extentions.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';

@@ -58,14 +58,14 @@ class _GridDaysViewState extends State<GridDaysView> {
             crossAxisSpacing: 8,
           ),
           itemBuilder: (context, index) {
-            return DaysLayout(index);
+            return daysLayout(index);
           }),
     );
   }
 
   final planner = PlannerRequestModel(days: []);
 
-  Widget DaysLayout(int index) {
+  Widget daysLayout(int index) {
     return InkWell(
       onTap: () {
         setState(() {

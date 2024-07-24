@@ -4,9 +4,6 @@ import 'package:ajhman/ui/theme/colors.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-// import 'package:open_file/open_file.dart';
-
-import '../../data/api/api_end_points.dart';
 
 class NotificationService {
   static Future<void> initializeNotification() async {
@@ -48,36 +45,10 @@ class NotificationService {
   }
 
   static Future<void> onActionReceivedMethod(
-      ReceivedAction receivedAction) async {
-    print(
-        "receivedAction.buttonKeyPressed: ${receivedAction.buttonKeyPressed}");
-    print("receivedAction.buttonKeyInput: ${receivedAction.buttonKeyInput}");
-    // final payload = receivedAction.payload ?? {};
-    // if (payload['navigatie'] == 'true') {
-    //   //do something
-    // }
-    if (receivedAction.buttonKeyPressed == "openFile") {
-      final payload = receivedAction.payload ?? {};
-      final String dir = payload['path'].toString();
-      final String fileName = payload['url']
-          .toString()
-          .replaceAll(ApiEndPoints.baseURL, '')
-          .substring(1)
-          .replaceAll("/", '_');
-      // await OpenFile.open(dir.replaceAll(fileName, ''));
-    }
-  }
+      ReceivedAction receivedAction) async {}
 
   static Future<void> onDismissActionReceivedMethod(
-      ReceivedAction receivedAction) async {
-    // print(
-    //     "receivedAction.buttonKeyPressed: ${receivedAction.buttonKeyPressed}");
-    // if (receivedAction.buttonKeyPressed == 'cancelDownload') {
-    //   downloadCancelToken.cancel();
-    //   await AwesomeNotifications()
-    //       .cancel(int.parse(receivedAction.payload!["id"].toString()));
-    // }
-  }
+      ReceivedAction receivedAction) async {}
 
   static Future<void> onNotificationCreatedMethod(
       ReceivedNotification receivedNotification) async {}
@@ -98,8 +69,6 @@ class NotificationService {
 
   static Future<void> showNotification(NotificationData data) async {
     assert(!data.scheduled || (data.scheduled && data.interval != null));
-    // assert(data.notificationLayout != NotificationLayout.ProgressBar &&
-    //     data.progress != null);
     await AwesomeNotifications().createNotification(
         content: NotificationContent(
             id: data.id ?? DateTime.now().millisecondsSinceEpoch ~/ 1000,

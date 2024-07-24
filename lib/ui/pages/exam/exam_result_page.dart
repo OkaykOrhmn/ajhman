@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, empty_catches
+
 import 'package:ajhman/data/model/answer_result_model.dart';
 import 'package:ajhman/main.dart';
 import 'package:ajhman/ui/theme/colors.dart';
@@ -57,11 +59,7 @@ class _ExamResultPageState extends State<ExamResultPage> {
       noAnswerValue = result.noAnswer! / result.total!;
     }
 
-    // if (context.read<LeaderboardCubit>().state != null &&
-    //     context.read<LeaderboardCubit>().state! <
-    //         (correctValue * 100).round()) {
     context.read<LeaderboardCubit>().setExamScore((correctValue * 100).round());
-    // }
 
     return WillPopScope(
       onWillPop: () async => false,

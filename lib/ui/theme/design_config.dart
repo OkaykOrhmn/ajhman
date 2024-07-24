@@ -29,11 +29,6 @@ class DesignConfig {
   static const Radius aHighBorderRadius = Radius.circular(16);
   static const Radius aVeryHighBorderRadius = Radius.circular(24);
 
-  // static Border get cardBorder => Border.all(
-  //   color: Theme.of(context!).colorScheme.cardBorder,
-  //   width: 0.5,
-  // );
-
   static List<BoxShadow> get defaultShadow => [
         BoxShadow(
           color: Theme.of(context!).white().withOpacity(0.25),
@@ -75,9 +70,6 @@ class DesignConfig {
             ? EdgeInsets.fromLTRB(size, size, size, 0)
             : EdgeInsets.symmetric(horizontal: size, vertical: (size / 2));
   }
-
-  // static String get fontFamily => context!.read<ThemeProvider>().fontFamily;
-  // static double get fontScale => context!.read<ThemeProvider>().fontScale;
 
   static Brightness get brightness => Theme.of(context!).brightness;
   static bool get isDark => brightness == Brightness.dark;

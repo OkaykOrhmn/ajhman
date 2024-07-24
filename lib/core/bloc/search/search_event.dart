@@ -1,6 +1,5 @@
 part of 'search_bloc.dart';
 
-@immutable
 sealed class SearchEvent {}
 
 class GetAllSearch extends SearchEvent {
@@ -11,4 +10,5 @@ class GetAllSearch extends SearchEvent {
 }
 
 class ClearAllSearch extends SearchEvent {}
+
 class TypingSearch extends SearchEvent {}

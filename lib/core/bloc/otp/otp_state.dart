@@ -1,16 +1,15 @@
+// ignore_for_file: must_be_immutable
+
 part of 'otp_bloc.dart';
 
-enum OtpStatus { start,back, success, error, loading }
+enum OtpStatus { start, back, success, error, loading }
 
 @immutable
 class OtpState extends Equatable {
   final String message;
-   OtpStatus otpStatus;
+  OtpStatus otpStatus;
 
-   OtpState(
-      {
-      this.message = "",
-      this.otpStatus = OtpStatus.start});
+  OtpState({this.message = "", this.otpStatus = OtpStatus.start});
 
   OtpState copyWith(
       {String? phoneNumber,
@@ -23,6 +22,5 @@ class OtpState extends Equatable {
   }
 
   @override
-  List<Object> get props => [ message, otpStatus];
+  List<Object> get props => [message, otpStatus];
 }
-

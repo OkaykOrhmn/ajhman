@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/new_course_card_model.dart';
 import '../../../data/repository/categories_repository.dart';

@@ -51,9 +51,8 @@ class NewCourseCardModel {
     level = json['level'];
     image = json['image'];
     type = json['type'];
-    category = json['Category'] != null
-        ? Category.fromJson(json['Category'])
-        : null;
+    category =
+        json['Category'] != null ? Category.fromJson(json['Category']) : null;
     time = json['time'];
     users = json['users'];
     score = json['score'];

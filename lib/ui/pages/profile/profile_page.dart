@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_build_context_synchronously
+
 import 'package:ajhman/core/cubit/image_picker/image_picker_cubit.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/shared_preferences/auth_token.dart';
@@ -343,33 +345,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               decoration: const BoxDecoration(
                                   borderRadius: DesignConfig.lowBorderRadius,
                                   color: primaryColor),
-                              // child: Stack(
-                              //   children: [
-                              //     Positioned(
-                              //       bottom: 0,
-                              //       left: 0,
-                              //       right: 0,
-                              //       child: Column(
-                              //         children: [
-                              //           Container(
-                              //             width: 16,
-                              //             height: 16,
-                              //             decoration: BoxDecoration(
-                              //                 color: Colors.white,
-                              //                 shape: BoxShape.circle),
-                              //           ),
-                              //           Container(
-                              //             width: 4,
-                              //             height: 8,
-                              //             decoration: BoxDecoration(
-                              //                 color: Colors.white,
-                              //                 shape: BoxShape.rectangle),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
                             ),
                           )),
                         ],

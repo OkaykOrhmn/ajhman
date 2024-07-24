@@ -1,13 +1,9 @@
-import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
 import 'package:flutter/material.dart';
-
-import '../../../main.dart';
 import '../../theme/colors.dart';
 import '../../theme/design_config.dart';
-import '../text/primary_text.dart';
 
 class RecentCourseCardPlaceholder extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
@@ -114,7 +110,7 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
     );
   }
 
-  Container _title(String text) {
+  /* Container _title(String text) {
     return Container(
       child: PrimaryText(
         text: text,
@@ -125,6 +121,7 @@ class _RecentCourseCardState extends State<RecentCourseCardPlaceholder> {
       ),
     );
   }
+  */
 
   Widget _image(String src) {
     return PrimaryImageNetwork(src: src, aspectRatio: 1 / 1);

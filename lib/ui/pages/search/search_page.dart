@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/bloc/search/search_bloc.dart';
 import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/gen/assets.gen.dart';

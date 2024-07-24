@@ -1,12 +1,9 @@
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/main.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../theme_helper.dart';
-
 part 'theme_event.dart';
-
 part 'theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
@@ -53,7 +50,6 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
 
       if (event is ThemePrimaryEvent) {
         final bool hasDarkTheme = await isDark();
-        final Color primary = await getPrimaryColor();
         emit(hasDarkTheme
             ? ThemeState(
                 themeData: ThemeData(
@@ -68,5 +64,3 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     });
   }
 }
-
-

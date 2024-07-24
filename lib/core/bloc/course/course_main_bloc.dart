@@ -1,13 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajhman/data/model/course_main_response_model.dart';
 import 'package:ajhman/data/model/roadmap_model.dart';
 import 'package:ajhman/data/repository/course_repository.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
-
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'course_main_event.dart';
-
 part 'course_main_state.dart';
 
 class CourseMainBloc extends Bloc<CourseMainEvent, CourseMainState> {

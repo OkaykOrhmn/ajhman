@@ -1,14 +1,10 @@
 import 'dart:io';
-
 import 'package:ajhman/data/repository/download_repository.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/model/notification_model.dart';
 import '../../services/notification_service.dart';
 import '../../services/storage_handler.dart';
-
 part 'download_state.dart';
 
 class DownloadCubit extends Cubit<DownloadState> {
@@ -17,9 +13,6 @@ class DownloadCubit extends Cubit<DownloadState> {
   Function(int, int)? _loadingNotification(
       int id, String path, String name, String type) {
     return (count, total) async {
-      print("count: $count");
-      print("total: $total");
-      print("((count * 100) / total): ${((count * 100) / total)}");
       if (Platform.isAndroid) {
         final progress = ((count * 100) / total).round();
         if (count != total && (state as DownloadLoading).pr != progress) {
@@ -34,20 +27,14 @@ class DownloadCubit extends Cubit<DownloadState> {
             payload: {"path": path, "name": name, "id": id.toString()},
             progress: progress,
             locked: true,
-            // actionButtons: [
-            //   NotificationActionButton(
-            //       key: 'cancelDownload',
-            //       label: 'لغو',
-            //       autoDismissible: false,
-            //       actionType: ActionType.DismissAction),
-            // ]
           ));
         }
       }
     };
   }
 
-  Future<void> downloadAudio(String url, List<String> names, String type) async {
+  Future<void> downloadAudio(
+      String url, List<String> names, String type) async {
     emit(DownloadLoading(pr: 0));
     final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     try {
@@ -59,7 +46,12 @@ class DownloadCubit extends Cubit<DownloadState> {
       } else {
         await downloadRepository.getAudio(
             url, path, _loadingNotification(id, path, names.last, type));
-        final p = {"path": path, "name": names.last, "url": url, "id": id.toString()};
+        final p = {
+          "path": path,
+          "name": names.last,
+          "url": url,
+          "id": id.toString()
+        };
         await Future.delayed(
             const Duration(milliseconds: 500),
             () => NotificationService.showNotification(NotificationData(
@@ -73,11 +65,6 @@ class DownloadCubit extends Cubit<DownloadState> {
                           label: 'بستن',
                           autoDismissible: true,
                           actionType: ActionType.DismissAction),
-                      // NotificationActionButton(
-                      //   key: 'openFile',
-                      //   label: 'باز کردن فایل',
-                      //   autoDismissible: true,
-                      // ),
                     ])));
         emit(DownloadSuccess());
       }
@@ -98,5 +85,4 @@ class DownloadCubit extends Cubit<DownloadState> {
       emit(DownloadFail(error: error));
     }
   }
-
 }

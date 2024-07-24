@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/enum/dialogs_status.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/main.dart';
@@ -34,7 +36,6 @@ class _SplashPageState extends State<SplashPage> {
       body: FutureBuilder(
           future: getToken(),
           builder: (context, snapshot) {
-            print(snapshot.data);
             if (snapshot.hasData) {
               token = snapshot.data!;
             }

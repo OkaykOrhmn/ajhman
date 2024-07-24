@@ -1,5 +1,5 @@
 class Days {
-   String dayName;
+  String dayName;
   bool isSelected;
 
   Days(this.dayName, this.isSelected);

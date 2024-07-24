@@ -1,7 +1,5 @@
 part of 'roadmap_bloc.dart';
 
-
-@immutable
 class RoadmapState extends Equatable {
   final StateStatus status;
   final RoadmapModel? data;
@@ -9,8 +7,8 @@ class RoadmapState extends Equatable {
   const RoadmapState({this.status = StateStatus.loading, this.data});
 
   RoadmapState copyWith(
-      {required StateStatus status,required String type, RoadmapModel? data}) {
-    return RoadmapState(status: status , data: data ?? this.data);
+      {required StateStatus status, required String type, RoadmapModel? data}) {
+    return RoadmapState(status: status, data: data ?? this.data);
   }
 
   @override

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, empty_catches, deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/enum/course_types.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/core/services/audio_handler.dart';
@@ -15,16 +17,14 @@ import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
 import 'package:ajhman/ui/widgets/text/marquee_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:loading_btn/loading_btn.dart';
-import 'package:marquee/marquee.dart';
 
 import '../../../core/bloc/chapter/chapter_bloc.dart';
 import '../../../core/cubit/home/news_course_home_cubit.dart';
 import '../../../core/cubit/leaderboard/leaderboard_cubit.dart';
-import '../../../core/utils/language/bloc/language_bloc.dart';
+import '../../../core/bloc/language/language_bloc.dart';
 import '../../../data/model/language.dart';
 import '../../../data/shared_preferences/profile_data.dart';
 import '../../../gen/assets.gen.dart';
@@ -1047,7 +1047,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
     );
   }
 
-  SizedBox _subchapters(courseMainChapters chapter) {
+  SizedBox _subchapters(CourseMainChapters chapter) {
     return SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: ListView.builder(
@@ -1059,7 +1059,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
             }));
   }
 
-  Widget _subchapterLayout(int index, courseMainChapters chapter) {
+  Widget _subchapterLayout(int index, CourseMainChapters chapter) {
     final subchapter = chapter.subchapters![index];
     CourseTypes type = getType(subchapter.type!);
     return InkWell(

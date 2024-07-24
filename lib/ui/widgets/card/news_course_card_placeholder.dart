@@ -3,11 +3,7 @@ import 'package:ajhman/ui/theme/text_styles.dart';
 import 'package:ajhman/ui/widgets/image/primary_image_network.dart';
 import 'package:ajhman/ui/widgets/progress/linear_progress.dart';
 import 'package:ajhman/ui/widgets/states/default_place_holder.dart';
-import 'package:ajhman/ui/widgets/text/icon_info.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../gen/assets.gen.dart';
 import '../../theme/colors.dart';
 import '../../theme/design_config.dart';
 import '../button/primary_button.dart';
@@ -157,78 +153,6 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
     }
   }
 
-  Column _infoes() {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: DefaultPlaceHolder(
-                  child: Expanded(
-                    child: IconInfo(
-                        icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: DefaultPlaceHolder(
-                  child: Expanded(
-                    child: IconInfo(
-                        icon: Assets.icon.outline.microphone,
-                        desc: "محتوای صوتی"),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: DefaultPlaceHolder(
-                  child: Expanded(
-                    child: IconInfo(
-                        icon: Assets.icon.outline.moreCircle, desc: "۴۵۴۷۶۸۶"),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: DefaultPlaceHolder(
-                  child: Expanded(
-                    child: IconInfo(
-                        icon: Assets.icon.outline.microphone,
-                        desc: "محتوای صوتی"),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-      ],
-    );
-  }
-
   Padding _title() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -264,7 +188,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
     );
   }
 
-  Container _rateBar(String rate) {
+  /* Container _rateBar(String rate) {
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).white(),
@@ -294,6 +218,7 @@ class _RecentCurseCardState extends State<NewCourseCardPlaceholder> {
       ),
     );
   }
+  */
 
 // Widget _bookMark() {
 //   // return BlocProvider(

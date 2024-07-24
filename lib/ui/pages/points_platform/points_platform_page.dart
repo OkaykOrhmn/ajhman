@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/utils/usefull_funcs.dart';
 import 'package:ajhman/data/model/leaderboard_model.dart';
 import 'package:ajhman/gen/assets.gen.dart';
@@ -247,13 +249,6 @@ class _PointsPlatformPageState extends State<PointsPlatformPage> {
                         text: user.name.toString(),
                         style: Theme.of(context).textTheme.rate,
                         color: Theme.of(context).progressText()),
-                    /*       SizedBox(
-                      height: 8,
-                    ),
-                    PrimaryText(
-                        text: " کارمند بخش انبار",
-                        style: Theme.of(context).textTheme.navbarTitle,
-                        color: grayColor800),*/
                   ],
                 )
               ],

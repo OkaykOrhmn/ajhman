@@ -1,9 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'auth_screen_event.dart';
-
 part 'auth_screen_state.dart';
 
 class AuthScreensBloc extends Bloc<AuthScreensEvent, AuthScreensState> {

@@ -11,12 +11,12 @@ class AddCommentResponseModel {
 
   AddCommentResponseModel(
       {this.id,
-        this.text,
-        this.resource,
-        this.createdAt,
-        this.commentId,
-        this.userId,
-        this.replyUser});
+      this.text,
+      this.resource,
+      this.createdAt,
+      this.commentId,
+      this.userId,
+      this.replyUser});
 
   AddCommentResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

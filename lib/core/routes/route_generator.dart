@@ -1,4 +1,4 @@
-import 'package:ajhman/core/bloc/banner/bloc/banner_bloc.dart';
+import 'package:ajhman/core/bloc/banner/banner_bloc.dart';
 import 'package:ajhman/core/routes/route_paths.dart';
 import 'package:ajhman/data/args/category_args.dart';
 import 'package:ajhman/data/args/course_main_args.dart';
@@ -21,14 +21,13 @@ import 'package:ajhman/ui/pages/splash_page.dart';
 import 'package:ajhman/ui/pages/summery/summery_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../data/args/course_args.dart';
 import '../../ui/pages/course/course_main_page.dart';
 import '../../ui/pages/smart_schedule/smart_schedule_page.dart';
 import '../bloc/auth/auth_screen_bloc.dart';
 import '../bloc/category/category_bloc.dart';
 import '../bloc/comments/comments_bloc.dart';
-import '../bloc/course/main/course_main_bloc.dart';
+import '../bloc/course/course_main_bloc.dart';
 import '../bloc/for_you/for_you_bloc.dart';
 import '../bloc/learning/leaning_bloc.dart';
 import '../bloc/otp/otp_bloc.dart';

@@ -1,6 +1,5 @@
 part of 'pin_bloc.dart';
 
-@immutable
 sealed class PinEvent {}
 
 class PostOtp extends PinEvent {

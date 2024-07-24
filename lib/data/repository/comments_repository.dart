@@ -16,7 +16,8 @@ class CommentsRepository implements Comment {
       int chapter, int subchapter) async {
     try {
       Response response = await dioHelper.getRequest(
-          "${ApiEndPoints.chapter}/$chapter${ApiEndPoints.subchapter}/$subchapter${ApiEndPoints.comment}",null);
+          "${ApiEndPoints.chapter}/$chapter${ApiEndPoints.subchapter}/$subchapter${ApiEndPoints.comment}",
+          null);
       final List<dynamic> postMaps = response.data;
       return postMaps.map((e) => CommentsResponseModel.fromJson(e)).toList();
     } catch (ex) {

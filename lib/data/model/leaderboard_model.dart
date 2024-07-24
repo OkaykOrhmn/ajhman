@@ -37,12 +37,12 @@ class Users {
 
   Users(
       {this.name,
-        this.image,
-        this.current,
-        this.score,
-        this.submitedAt,
-        this.licenses,
-        this.courses});
+      this.image,
+      this.current,
+      this.score,
+      this.submitedAt,
+      this.licenses,
+      this.courses});
 
   Users.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -81,14 +81,14 @@ class User {
 
   User(
       {this.name,
-        this.image,
-        this.examAnswer,
-        this.score,
-        this.licenses,
-        this.courses,
-        this.current,
-        this.submitedAt,
-        this.rating});
+      this.image,
+      this.examAnswer,
+      this.score,
+      this.licenses,
+      this.courses,
+      this.current,
+      this.submitedAt,
+      this.rating});
 
   User.fromJson(Map<String, dynamic> json) {
     name = json['name'];

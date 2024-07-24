@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/data/model/chapter_model.dart';
 import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/theme/design_config.dart';
@@ -163,7 +165,6 @@ class _CarouseBannersState extends State<CarouseCourseImage> {
   }
 
   Padding _banner(BuildContext context, int itemIndex) {
-    print(widget.items[itemIndex]!.source);
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(

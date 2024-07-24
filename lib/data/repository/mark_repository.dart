@@ -13,7 +13,8 @@ class MarkRepository implements Mark {
   @override
   Future<Response> postMark(int id) async {
     try {
-      Response response = await dioHelper.postRequest("${ApiEndPoints.mainCourse}/$id${ApiEndPoints.mark}",null,null);
+      Response response = await dioHelper.postRequest(
+          "${ApiEndPoints.mainCourse}/$id${ApiEndPoints.mark}", null, null);
       return response;
     } catch (ex) {
       rethrow;
@@ -21,9 +22,10 @@ class MarkRepository implements Mark {
   }
 
   @override
-  Future<Response> deleteMark(int id) async{
+  Future<Response> deleteMark(int id) async {
     try {
-      Response response = await dioHelper.deleteRequest("${ApiEndPoints.mainCourse}/$id${ApiEndPoints.mark}",null);
+      Response response = await dioHelper.deleteRequest(
+          "${ApiEndPoints.mainCourse}/$id${ApiEndPoints.mark}", null);
       return response;
     } catch (ex) {
       rethrow;

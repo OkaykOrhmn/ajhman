@@ -3,7 +3,10 @@
 /// github: https://github.com/imlegend19
 ///
 
+// ignore_for_file: library_private_types_in_public_api
+
 library skeleton_text;
+
 import 'package:flutter/material.dart';
 
 class SkeletonAnimation extends StatefulWidget {

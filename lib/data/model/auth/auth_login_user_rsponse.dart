@@ -9,7 +9,7 @@ class AuthLoginUserRsponse {
 
   AuthLoginUserRsponse.fromJson(Map<String, dynamic> json) {
     message =
-    json['message'] != null ? Message.fromJson(json['message']) : null;
+        json['message'] != null ? Message.fromJson(json['message']) : null;
     statusCode = json['statusCode'];
     timestamp = json['timestamp'];
     path = json['path'];

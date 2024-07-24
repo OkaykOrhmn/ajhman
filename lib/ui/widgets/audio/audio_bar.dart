@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package, use_build_context_synchronously
+
 import 'package:ajhman/core/cubit/audio/audio_player_cubit.dart';
 import 'package:ajhman/core/services/audio_handler.dart';
 import 'package:ajhman/data/model/audio_player_model.dart';

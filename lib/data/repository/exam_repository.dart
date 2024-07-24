@@ -29,7 +29,7 @@ class ExamRepository implements Examm {
   Future<AnswerResultModel> postExam(int id, AnswerRequestModel request) async {
     try {
       Response response = await dioHelper.postRequest(
-          "${ApiEndPoints.mainCourse}/$id${ApiEndPoints.exam}", request,null);
+          "${ApiEndPoints.mainCourse}/$id${ApiEndPoints.exam}", request, null);
       return AnswerResultModel.fromJson(response.data);
     } catch (ex) {
       rethrow;

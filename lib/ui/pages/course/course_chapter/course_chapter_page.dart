@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'dart:async';
 
 import 'package:ajhman/core/cubit/subchapter/sub_chapter_cubit.dart';
@@ -182,7 +184,7 @@ class _CourseChapterPageState extends State<CourseChapterPage> {
                                     style:
                                         Theme.of(context).textTheme.dialogTitle,
                                     color: Colors.white),
-                                true
+                                isOpen
                                     ? Assets.icon.outline.arrowUp
                                         .svg(color: Colors.white)
                                     : Assets.icon.outline.arrowDown

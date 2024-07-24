@@ -1,13 +1,14 @@
 import 'package:ajhman/data/model/audio_player_model.dart';
-import 'package:bloc/bloc.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AudioPlayerCubit extends Cubit<AudioPlayerModel> {
-  AudioPlayerCubit() : super(AudioPlayerModel(volume: 1, pause: true, speed: 1));
+  AudioPlayerCubit()
+      : super(AudioPlayerModel(volume: 1, pause: true, speed: 1));
 
-  void reset(){
+  void reset() {
     emit(AudioPlayerModel(volume: 1, pause: true, speed: 1));
   }
+
   void setVolume(double v) {
     emit(state.copyWith(volume: v));
   }

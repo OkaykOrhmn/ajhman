@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/ui/pages/auth/screens/login_otp/login_otp_screen.dart';
 import 'package:ajhman/ui/pages/auth/screens/login_password/login_password_screen.dart';
 import 'package:ajhman/ui/pages/auth/screens/pin/pin_screen.dart';

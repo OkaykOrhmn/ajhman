@@ -1,8 +1,7 @@
 part of 'auth_screen_bloc.dart';
 
-enum AuthScreens {  otp, password, pin, loading }
+enum AuthScreens { otp, password, pin, loading }
 
-@immutable
 class AuthScreensState extends Equatable {
   final String phoneNumber;
   final String password;
@@ -19,13 +18,12 @@ class AuthScreensState extends Equatable {
       {String? phoneNumber,
       String? password,
       String? message,
-        AuthScreens? authScreen}) {
+      AuthScreens? authScreen}) {
     return AuthScreensState(
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      password: password ?? this.password,
-      message: message ?? this.message,
-        authScreen: authScreen ?? this.authScreen
-    );
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        password: password ?? this.password,
+        message: message ?? this.message,
+        authScreen: authScreen ?? this.authScreen);
   }
 
   @override

@@ -15,8 +15,8 @@ class QuestionsRepository implements Questions {
   @override
   Future<QuestionsModel> getQuestions(int id) async {
     try {
-      Response response =
-          await dioHelper.getRequest("${ApiEndPoints.mainCourse}/$id${ApiEndPoints.question}", null);
+      Response response = await dioHelper.getRequest(
+          "${ApiEndPoints.mainCourse}/$id${ApiEndPoints.question}", null);
       final postMaps = response.data;
       return QuestionsModel.fromJson(postMaps);
     } catch (ex) {
@@ -25,11 +25,12 @@ class QuestionsRepository implements Questions {
   }
 
   @override
-  Future<Response> putQuestions(int id,
-      FeedbacksQuestionsModel feedbacksQuestionsModel) async {
+  Future<Response> putQuestions(
+      int id, FeedbacksQuestionsModel feedbacksQuestionsModel) async {
     try {
-      Response response =
-      await dioHelper.putRequest("${ApiEndPoints.mainCourse}/$id${ApiEndPoints.question}", feedbacksQuestionsModel);
+      Response response = await dioHelper.putRequest(
+          "${ApiEndPoints.mainCourse}/$id${ApiEndPoints.question}",
+          feedbacksQuestionsModel);
       return response;
     } catch (ex) {
       rethrow;
@@ -40,6 +41,6 @@ class QuestionsRepository implements Questions {
 abstract class Questions {
   Future<QuestionsModel> getQuestions(int id);
 
-  Future<Response> putQuestions(int id,
-      FeedbacksQuestionsModel feedbacksQuestionsModel);
+  Future<Response> putQuestions(
+      int id, FeedbacksQuestionsModel feedbacksQuestionsModel);
 }

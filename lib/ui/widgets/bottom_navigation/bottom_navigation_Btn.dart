@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package, file_names
+
 import 'package:ajhman/gen/assets.gen.dart';
 import 'package:ajhman/ui/theme/colors.dart';
 import 'package:ajhman/ui/theme/text_styles.dart';

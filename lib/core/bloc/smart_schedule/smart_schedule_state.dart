@@ -1,6 +1,5 @@
 part of 'smart_schedule_bloc.dart';
 
-@immutable
 sealed class SmartScheduleState {}
 
 final class SmartScheduleInitial extends SmartScheduleState {}
@@ -18,4 +17,5 @@ final class SmartScheduleError extends SmartScheduleState {
 }
 
 final class SmartScheduleSuccess extends SmartScheduleState {}
+
 final class SmartScheduleLoading extends SmartScheduleState {}

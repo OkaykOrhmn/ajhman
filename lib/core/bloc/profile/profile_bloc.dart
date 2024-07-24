@@ -1,12 +1,8 @@
 import 'package:ajhman/data/model/profile_response_model.dart';
 import 'package:ajhman/data/repository/profile_repository.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
-
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'profile_event.dart';
-
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
@@ -17,12 +13,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         try {
           ProfileResponseModel response = await profileRepository.getProfile();
           emit(ProfileSuccess(response: response));
+          // ignore: deprecated_member_use
         } on DioError catch (e) {
-          String error = 'normal';
           if (e.type == DioExceptionType.connectionError ||
               e.type == DioExceptionType.connectionTimeout) {
             emit(ProfileFailConnection());
-          }else{
+          } else {
             emit(ProfileFail());
           }
         }

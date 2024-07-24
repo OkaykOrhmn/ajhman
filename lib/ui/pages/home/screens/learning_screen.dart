@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:ajhman/core/bloc/learning/leaning_bloc.dart';
 import 'package:ajhman/core/cubit/learn/selected_tab_cubit.dart';
 import 'package:ajhman/core/enum/card_type.dart';
@@ -9,7 +11,6 @@ import 'package:ajhman/ui/theme/design_config.dart';
 import 'package:ajhman/ui/widgets/states/empty_screen.dart';
 import 'package:ajhman/ui/widgets/text/primary_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../data/model/new_course_card_model.dart';
@@ -34,7 +35,6 @@ class _LearningScreenState extends State<LearningScreen>
   void initState() {
     super.initState();
     _controller = TabController(length: 3, vsync: this);
-    context.read<LeaningBloc>().add(ClearCards());
     _controller.index = context.read<SelectedTabCubit>().state;
 
     context.read<SelectedTabCubit>().changeSelectedIndex(_controller.index);
@@ -50,26 +50,7 @@ class _LearningScreenState extends State<LearningScreen>
         path = ApiEndPoints.marked;
         break;
     }
-    context.read<LeaningBloc>().add(ClearCards());
     context.read<LeaningBloc>().add(GetCards(path: path));
-
-    _controller.addListener(() {
-      context.read<SelectedTabCubit>().changeSelectedIndex(_controller.index);
-      String path = '';
-      switch (_controller.index) {
-        case 0:
-          path = ApiEndPoints.learned;
-          break;
-        case 1:
-          path = ApiEndPoints.learning;
-          break;
-        case 2:
-          path = ApiEndPoints.marked;
-          break;
-      }
-      context.read<LeaningBloc>().add(ClearCards());
-      context.read<LeaningBloc>().add(GetCards(path: path));
-    });
   }
 
   @override
@@ -88,22 +69,22 @@ class _LearningScreenState extends State<LearningScreen>
         children: [
           _tabBar(),
           Expanded(
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      BlocBuilder<LeaningBloc, LeaningState>(
-                        builder: (context, state) {
-                          if (state is LeaningSuccess) {
-                            items = state.response;
-                          } else if (state is LeaningEmpty) {
-                            items = [];
-                          } else if (state is LeaningLoading) {
-                            items = null;
-                          }
-                          return Column(
+            child: BlocBuilder<LeaningBloc, LeaningState>(
+              builder: (context, state) {
+                if (state is LeaningSuccess) {
+                  items = state.response;
+                } else if (state is LeaningEmpty) {
+                  items = [];
+                } else if (state is LeaningLoading) {
+                  items = null;
+                }
+                return Stack(
+                  children: [
+                    SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          Column(
                             children: [
                               state is LeaningLoading
                                   ? const SizedBox()
@@ -164,21 +145,23 @@ class _LearningScreenState extends State<LearningScreen>
                                 items: items,
                               ),
                             ],
-                          );
-                        },
+                          ),
+                          const SizedBox(
+                            height: 100,
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 100,
-                      )
-                    ],
-                  ),
-                ),
-                Positioned.fill(
-                  child: items != null && items!.isEmpty
-                      ? const Center(child: EmptyScreen())
-                      : const SizedBox(),
-                )
-              ],
+                    ),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: MediaQuery.sizeOf(context).height,
+                      child: items != null && items!.isEmpty
+                          ? const Center(child: EmptyScreen())
+                          : const SizedBox(),
+                    )
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -199,12 +182,17 @@ class _LearningScreenState extends State<LearningScreen>
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _tabBtn(0, state, Assets.icon.outlineTickCircle,
-                  Assets.icon.boldTickCircle, "تکمیل شده"),
+              _tabBtn(
+                  0,
+                  state,
+                  Assets.icon.outlineTickCircle,
+                  Assets.icon.boldTickCircle,
+                  "تکمیل شده",
+                  ApiEndPoints.learned),
               _tabBtn(1, state, Assets.icon.outlineNote, Assets.icon.boldNote,
-                  "در حال یادگیری"),
+                  "در حال یادگیری", ApiEndPoints.learning),
               _tabBtn(2, state, Assets.icon.outlineArchive,
-                  Assets.icon.boldArchive, "نشان شده"),
+                  Assets.icon.boldArchive, "نشان شده", ApiEndPoints.marked),
             ],
           );
         },
@@ -213,7 +201,7 @@ class _LearningScreenState extends State<LearningScreen>
   }
 
   InkWell _tabBtn(int index, int state, SvgGenImage icon, SvgGenImage fillIcon,
-      String title) {
+      String title, String path) {
     return InkWell(
       onTap: () {
         _controller.animateTo(
@@ -221,6 +209,7 @@ class _LearningScreenState extends State<LearningScreen>
           duration: const Duration(milliseconds: 500),
         );
         context.read<SelectedTabCubit>().changeSelectedIndex(index);
+        context.read<LeaningBloc>().add(GetCards(path: path));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

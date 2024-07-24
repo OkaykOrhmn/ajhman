@@ -1,14 +1,11 @@
+// ignore_for_file: deprecated_member_use
 import 'package:ajhman/data/model/add_comment_request_model.dart';
 import 'package:ajhman/data/model/comments_response_model.dart';
 import 'package:ajhman/data/repository/comments_repository.dart';
 import 'package:ajhman/data/shared_preferences/profile_data.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
-
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'comments_event.dart';
-
 part 'comments_state.dart';
 
 class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
@@ -40,7 +37,8 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           response.dislikes = 0;
           response.userFeedback = null;
           response.userFeedback = null;
-          response.user = User(id: profile.id,name: profile.name,image: profile.image);
+          response.user =
+              User(id: profile.id, name: profile.name, image: profile.image);
           event.data.insert(0, response);
           emit(CommentSuccess(response: event.data));
         } on DioError {
@@ -50,21 +48,19 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
 
       if (event is ChangeComment) {
         try {
-
-           await commentsRepository.putFeed(
-              event.chapterId, event.subChapterId, event.comment.id!,event.comment.userFeedback);
+          await commentsRepository.putFeed(event.chapterId, event.subChapterId,
+              event.comment.id!, event.comment.userFeedback);
 
           for (var element in event.data) {
-            if(element.id == event.comment.id){
+            if (element.id == event.comment.id) {
               element = event.comment;
               break;
             }
-            if(element.replies != null){
+            if (element.replies != null) {
               for (var element in element.replies!) {
-                if(element.id == event.comment.id){
+                if (element.id == event.comment.id) {
                   element = event.comment;
                   break;
-
                 }
               }
             }
@@ -72,7 +68,6 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           emit(CommentSuccess(response: event.data));
         } on DioError {
           emit(CommentChangeFail(response: event.data));
-
         }
       }
     });

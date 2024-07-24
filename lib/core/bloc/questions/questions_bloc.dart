@@ -1,12 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajhman/data/model/feedbacks_questions_model.dart';
 import 'package:ajhman/data/model/questions_model.dart';
 import 'package:ajhman/data/repository/questions_repository.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'questions_event.dart';
-
 part 'questions_state.dart';
 
 class QuestionsBloc extends Bloc<QuestionsEvent, QuestionsState> {

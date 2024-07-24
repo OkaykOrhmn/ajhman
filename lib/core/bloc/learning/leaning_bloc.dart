@@ -1,11 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajhman/data/model/new_course_card_model.dart';
 import 'package:ajhman/data/repository/learning_repository.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'leaning_event.dart';
-
 part 'leaning_state.dart';
 
 class LeaningBloc extends Bloc<LeaningEvent, LeaningState> {
@@ -24,9 +23,6 @@ class LeaningBloc extends Bloc<LeaningEvent, LeaningState> {
         } on DioError {
           emit(LeaningFail());
         }
-      }
-      if (event is ClearCards) {
-        emit(LeaningLoading());
       }
     });
   }
