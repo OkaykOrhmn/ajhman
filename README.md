@@ -1,21 +1,9 @@
 # ajhman
 
-A new Flutter project.
+A Flutter project Application.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+![میکرولرنینگ](https://github.com/user-attachments/assets/b0cd5e70-57fa-4323-8765-46608a05192c)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-flutter gen-l10n
-dart pub run build_runner build       
-flutter packages pub run build_runner build
-
+![میکرولرنینگ2](https://github.com/user-attachments/assets/6ae7bf10-eaf8-4f69-862b-dfc3bc719779)
